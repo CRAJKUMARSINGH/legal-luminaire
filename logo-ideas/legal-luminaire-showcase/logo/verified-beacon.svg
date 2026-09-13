@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-labelledby="title desc">
+  <title id="title">Legal Luminaire Verified Beacon</title>
+  <desc id="desc">A navy legal shield containing a golden beacon, quotation mark and verification beam.</desc>
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162B4A"/>
+      <stop offset="1" stop-color="#0B172C"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0C967"/>
+      <stop offset="1" stop-color="#C68C28"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#061024" flood-opacity=".25"/>
+    </filter>
+  </defs>
+
+  <path d="M400 44 685 142v236c0 171-112 303-285 379C227 681 115 549 115 378V142Z"
+        fill="url(#navy)" stroke="#D7A84B" stroke-width="14" filter="url(#shadow)"/>
+
+  <!-- citation quotation mark -->
+  <path d="M205 270h114v128h-66c4 38 24 61 61 72v62c-80-15-120-67-120-156V270Zm166 0h114v128h-66c4 38 24 61 61 72v62c-80-15-120-67-120-156V270Z"
+        fill="#D7A84B" opacity=".22"/>
+
+  <!-- beacon light -->
+  <path d="m400 145 108 190H292Z" fill="#F0C967" opacity=".12"/>
+  <path d="M400 145 332 265h136Z" fill="url(#gold)"/>
+  <path d="M349 265h102l29 42H320Z" fill="#E6B84D"/>
+  <path d="M363 307h74v206h-74z" fill="url(#gold)"/>
+  <path d="m342 513h116l34 42H308Z" fill="#C68C28"/>
+
+  <!-- verification beam/check -->
+  <path d="m300 420 75 75 160-179" fill="none" stroke="#F7E5A5" stroke-width="30"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="532" cy="316" r="18" fill="#F7E5A5"/>
+
+  <!-- small Indian saffron accent -->
+  <path d="M274 595h252" stroke="#E87532" stroke-width="9" stroke-linecap="round" opacity=".9"/>
+</svg>

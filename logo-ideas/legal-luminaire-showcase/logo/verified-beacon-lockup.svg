@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 500" role="img" aria-labelledby="title desc">
+  <title id="title">Legal Luminaire Verified Beacon lockup</title>
+  <desc id="desc">The Verified Beacon icon with the Legal Luminaire wordmark and tagline.</desc>
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#162B4A"/>
+      <stop offset="1" stop-color="#0B172C"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F0C967"/>
+      <stop offset="1" stop-color="#C68C28"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(42 42) scale(.52)">
+    <path d="M400 44 685 142v236c0 171-112 303-285 379C227 681 115 549 115 378V142Z"
+          fill="url(#navy)" stroke="#D7A84B" stroke-width="14"/>
+    <path d="M205 270h114v128h-66c4 38 24 61 61 72v62c-80-15-120-67-120-156V270Zm166 0h114v128h-66c4 38 24 61 61 72v62c-80-15-120-67-120-156V270Z"
+          fill="#D7A84B" opacity=".22"/>
+    <path d="M400 145 332 265h136Z" fill="url(#gold)"/>
+    <path d="M349 265h102l29 42H320Z" fill="#E6B84D"/>
+    <path d="M363 307h74v206h-74z" fill="url(#gold)"/>
+    <path d="m342 513 116 0 34 42H308Z" fill="#C68C28"/>
+    <path d="m300 420 75 75 160-179" fill="none" stroke="#F7E5A5" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M274 595h252" stroke="#E87532" stroke-width="9" stroke-linecap="round"/>
+  </g>
+  <text x="455" y="225" fill="#10243E" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing="4">LEGAL</text>
+  <text x="455" y="325" fill="#10243E" font-family="Georgia, 'Times New Roman', serif" font-size="94" font-weight="700" letter-spacing="4">LUMINAIRE</text>
+  <text x="461" y="388" fill="#657187" font-family="Arial, Helvetica, sans-serif" font-size="26" letter-spacing="6">VERIFIED CITATIONS · SAFER DRAFTS</text>
+  <path d="M458 414h670" stroke="#D7A84B" stroke-width="5" stroke-linecap="round"/>
+</svg>
