@@ -9,15 +9,6 @@ import { isLpsRoute, LPS_ROUTE_MAP } from "@/types";
 import { AppErrorBoundary } from "@/components/AppErrorBoundary";
 
 // Lazy load components for code splitting
-const Example33Page = lazy(() => import("@/pages/Example33Page"));
-const Example34Page = lazy(() => import("@/pages/Example34Page"));
-const Example35Page = lazy(() => import("@/pages/Example35Page"));
-const Example36Page = lazy(() => import("@/pages/Example36Page"));
-const Example37Page = lazy(() => import("@/pages/Example37Page"));
-const Example38Page = lazy(() => import("@/pages/Example38Page"));
-const Example39Page = lazy(() => import("@/pages/Example39Page"));
-const Example40Page = lazy(() => import("@/pages/Example40Page"));
-const Example41Page = lazy(() => import("@/pages/Example41Page"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 // Week 1 — hidden /system/flags dev route (bilingual flag inspector)
 // Works under Netlify SPA redirects (/* → /index.html 200).
@@ -45,6 +36,10 @@ const DraftViewer = lazy(() => import("@/pages/draft-viewer"));
 // Week 10: Chronology Studio & Deadline Board
 const ChronologyPage = lazy(() => import("@/pages/ChronologyPage"));
 const DeadlinePage = lazy(() => import("@/pages/DeadlinePage"));
+// Draft Multiplication — derivative drafts (document family)
+const DraftFamilyPanel = lazy(() => import("@/pages/DraftFamilyPanel"));
+// Pleading Chain Engine — one draft → full connected variant family
+const DraftVariantsPage = lazy(() => import("@/pages/DraftVariantsPage"));
 // Week 12: Accuracy Academy
 const AccuracyAcademyPage = lazy(() => import("@/pages/AccuracyAcademyPage"));
 
@@ -55,6 +50,8 @@ const LitigationWorkflowPage  = lazy(() => import("@/pages/LitigationWorkflowPag
 const AIAgentsDashboardPage   = lazy(() => import("@/pages/AIAgentsDashboardPage"));
 const HowToUsePage            = lazy(() => import("@/pages/HowToUsePage"));
 const AboutCreatorPage        = lazy(() => import("@/pages/AboutCreatorPage"));
+// Bilingual Generator
+const BilingualGeneratorPage  = lazy(() => import("@/pages/BilingualGeneratorPage"));
 const UserManualPrintPage     = lazy(() => import("@/pages/UserManualPrintPage"));
 // Week 01 Kiro — Drafting Intake Examples EX-001..EX-011
 const IntakeExamplesPage      = lazy(() => import("@/pages/IntakeExamplesPage"));
@@ -106,6 +103,8 @@ const UploadView = lazy(() => import("@/components/views/UploadView").then(modul
 const ChatView = lazy(() => import("@/components/views/ChatView").then(module => ({ default: module.ChatView })));
 const OmniDropzone = lazy(() => import("@/components/views/OmniDropzone").then(module => ({ default: module.OmniDropzone })));
 const DraftingView = lazy(() => import("@/components/views/DraftingView").then(module => ({ default: module.DraftingView })));
+const MatterDraftingStudio = lazy(() => import("@/pages/MatterDraftingStudio"));
+const DraftTemplateLibraryPage = lazy(() => import("@/pages/DraftTemplateLibraryPage"));
 const ReviewQueueView = lazy(() => import("@/components/views/ReviewQueueView").then(module => ({ default: module.ReviewQueueView })));
 const ResearchImprovementView = lazy(() => import("@/components/views/ResearchImprovementView").then(module => ({ default: module.ResearchImprovementView })));
 
@@ -226,6 +225,10 @@ export function Router() {
           <Route path="/case/:id/documents"             component={() => <div className="p-0">{Wrap(<DocumentsView />, "DocumentsView")}</div>} />
           <Route path="/case/:id/upload"                component={() => <div className="p-0">{Wrap(<UploadView />, "UploadView")}</div>} />
           <Route path="/case/:id/drafting"              component={() => <div className="p-0">{Wrap(<DraftingView />, "DraftingView")}</div>} />
+          <Route path="/case/:id/draft-family"          component={() => Wrap(<DraftFamilyPanel />, "DraftFamilyPanel")} />
+          <Route path="/case/:id/draft-variants"        component={() => Wrap(<DraftVariantsPage />, "DraftVariantsPage")} />
+          <Route path="/case/:id/matter-drafting-studio" component={() => <div className="p-0">{Wrap(<MatterDraftingStudio />, "MatterDraftingStudio")}</div>} />
+          <Route path="/case/:id/draft-template-library" component={() => Wrap(<DraftTemplateLibraryPage />, "DraftTemplateLibraryPage")} />
           <Route path="/case/:id/safe-draft"            component={() => Wrap(<SafeDraftPage />, "SafeDraftPage")} />
           <Route path="/case/:id/notice-reply"          component={() => Wrap(<NoticeReplyPage />, "NoticeReplyPage")} />
           <Route path="/case/:id/discharge-print"       component={() => Wrap(<DischargeApplicationPrint />, "DischargeApplicationPrint")} />
@@ -247,6 +250,9 @@ export function Router() {
           <Route path="/litigation-workflow"  component={() => Wrap(<LitigationWorkflowPage />,  "LitigationWorkflowPage")} />
           <Route path="/ai-agents"            component={() => Wrap(<AIAgentsDashboardPage />,   "AIAgentsDashboardPage")} />
           <Route path="/how-to-use"           component={() => Wrap(<HowToUsePage />,            "HowToUsePage")} />
+          <Route path="/about"                component={() => Wrap(<AboutCreatorPage />,        "AboutCreatorPage")} />
+          {/* Bilingual Generator */}
+          <Route path="/bilingual-generator"  component={() => Wrap(<BilingualGeneratorPage />,  "BilingualGeneratorPage")} />
           <Route path="/manual"               component={() => Wrap(<HowToUsePage />,            "HowToUsePage")} />
           <Route path="/about"                component={() => Wrap(<AboutCreatorPage />,         "AboutCreatorPage")} />
           <Route path="/creator"              component={() => Wrap(<AboutCreatorPage />,         "AboutCreatorPage")} />
@@ -273,16 +279,7 @@ export function Router() {
           {(featureFlags.enableJudgeAnalytics || featureFlags.enableCourtAnalytics) && (
             <Route path="/case/:id/judge-analytics"   component={() => Wrap(<JudgeAnalyticsPage />, "JudgeAnalyticsPage")} />
           )}
-          <Route path="/example33" component={() => Wrap(<Example33Page />, "Example33Page")} />
-        <Route path="/example34" component={() => Wrap(<Example34Page />, "Example34Page")} />
-        <Route path="/example35" component={() => Wrap(<Example35Page />, "Example35Page")} />
-        <Route path="/example36" component={() => Wrap(<Example36Page />, "Example36Page")} />
-        <Route path="/example37" component={() => Wrap(<Example37Page />, "Example37Page")} />
-        <Route path="/example38" component={() => Wrap(<Example38Page />, "Example38Page")} />
-        <Route path="/example39" component={() => Wrap(<Example39Page />, "Example39Page")} />
-        <Route path="/example40" component={() => Wrap(<Example40Page />, "Example40Page")} />
-        <Route path="/example41" component={() => Wrap(<Example41Page />, "Example41Page")} />
-        <Route component={() => Wrap(<NotFound />, "NotFound")} />
+          <Route component={() => Wrap(<NotFound />, "NotFound")} />
         </Switch>
       </Layout>
     </AppErrorBoundary>
