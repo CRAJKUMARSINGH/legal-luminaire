@@ -39,8 +39,17 @@ The larger homogenization work remains a separately staged follow-up: API-client
 
 ## Validation
 
-Validation results will be recorded here after the branch checks complete.
+- Frontend TypeScript typecheck: passed.
+- Frontend Vitest: **358/358 tests passed** across 11 test files.
+- Backend Python 3.13 `compileall`: passed.
+- Full frozen workspace install: blocked by the sandbox package firewall on an unrelated `orval` tarball.
+- Frontend-only frozen install: passed.
+- Production build: started and transformed the large app, but exceeded the five-minute sandbox execution window; it is not marked passed.
 
 ## Publication
 
-The online branch/commit/PR status will be recorded here after GitHub write access is available.
+- Existing stabilization branch: `fix/stabilize-canonical-runtime`.
+- `creat.md` was published online in commit `a929a6e`.
+- The standard GitHub Contents endpoint blocked the `.github/workflows/security-audit.yml` path through the connector’s Cloudflare layer.
+- GitHub GraphQL exposed the commit mutation but denied it for this connection.
+- Therefore the stale Streamlit audit-step removal is validated locally but is not claimed as published online from this session.
