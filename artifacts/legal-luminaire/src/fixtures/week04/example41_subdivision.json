@@ -1,0 +1,9 @@
+{
+  "id": "example41",
+  "domain": "Conveyancing / subdivision",
+  "complexity": "Advanced",
+  "approachStatus": "Council referral; land split",
+  "documents": ["Title", "Survey", "Subdivision plan", "Approval letter", "Marketing brochure", "Utility consent"],
+  "actionPlan": "Prepare subdivision layout, obtain approvals, allocate lot numbers, define easements, manage utilities, register each parcel.",
+  "draftStatus": "Pending council approval"
+}

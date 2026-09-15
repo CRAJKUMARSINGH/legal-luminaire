@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { DocumentProgressIndicator } from "@/components/DocumentProgressIndicator";
 import { useCaseContext } from "@/context/CaseContext";
+import { apiRequest } from "@/lib/api-client";
 
 // ── Local upload-state machine ─────────────────────────────────────────────
 type UploadPhase = "idle" | "uploading" | "success" | "error";
@@ -83,7 +84,7 @@ export const UploadView = () => {
     formData.append("case_id", caseId);
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/upload-document", {
+      const res = await apiRequest("/upload-document", {
         method: "POST",
         body: formData,
       });
@@ -265,7 +266,7 @@ export const UploadView = () => {
           <p>
             File upload and RAG indexing require the Python backend with ChromaDB/Pinecone
             vector store running on{" "}
-            <code className="text-xs bg-amber-100 px-1 py-0.5 rounded">localhost:8000</code>.
+            <code className="text-xs bg-amber-100 px-1 py-0.5 rounded">VITE_API_URL</code>.
             Once deployed, uploaded files will be auto-indexed and available to the AI Drafter
             agents. If the backend is unavailable, upload attempts will show a clear error
             message above.

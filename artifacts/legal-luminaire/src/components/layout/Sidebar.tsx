@@ -13,10 +13,10 @@ export function Sidebar({ open, onClose }: SidebarProps) {
   const [location] = useLocation();
   const { selectedCase, selectedCaseId, setSelectedCaseId, cases, isDemoMode } = useCaseContext();
   const [collapsed, setCollapsed] = useState<Record<NavGroupId, boolean>>({
-    setup: false, research: false, drafting: false, review: false,
+    setup: false, research: false, drafting: false, review: false, week04: false,
   });
   const [moreOpen, setMoreOpen] = useState<Record<NavGroupId, boolean>>({
-    setup: false, research: false, drafting: false, review: false,
+    setup: false, research: false, drafting: false, review: false, week04: false,
   });
 
   const hrefFor = (item: NavItem) => (item.caseScoped ? `/case/${selectedCase.id}${item.path}` : item.path);
