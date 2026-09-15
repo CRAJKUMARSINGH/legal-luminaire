@@ -53,3 +53,6 @@ The larger homogenization work remains a separately staged follow-up: API-client
 - The standard GitHub Contents endpoint blocked the `.github/workflows/security-audit.yml` path through the connector’s Cloudflare layer.
 - GitHub GraphQL exposed the commit mutation but denied it for this connection.
 - Therefore the stale Streamlit audit-step removal is validated locally but is not claimed as published online from this session.
+- PR #4 is open against `main`.
+- Remote CI: backend syntax passed; frontend CI failed at the pre-existing `/verification-report` alias smoke test.
+- Remote security-audit: failed at the backend and Node dependency audits; the stale Streamlit step was skipped only after the backend audit failed, not removed from the remote workflow.
