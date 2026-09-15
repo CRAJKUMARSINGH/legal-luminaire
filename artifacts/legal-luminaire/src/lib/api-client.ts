@@ -3,7 +3,22 @@
  * Connects React frontend to Python FastAPI backend
  */
 
-const BASE_URL = import.meta.env.VITE_API_URL || "/api/v1";
+export const API_BASE = (import.meta.env.VITE_API_URL || "/api/v1").replace(/\/$/, "");
+
+export function apiUrl(path: string): string {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE}${normalizedPath}`;
+}
+
+export function apiRequest(path: string, init?: RequestInit): Promise<Response> {
+  const isMultipart = init?.body instanceof FormData;
+  return fetch(apiUrl(path), {
+    ...init,
+    headers: isMultipart
+      ? init?.headers
+      : { "Content-Type": "application/json", ...init?.headers },
+  });
+}
 
 export type ResearchMode = "research" | "draft";
 
@@ -53,11 +68,8 @@ export interface HealthResponse {
   chroma_ready: boolean;
 }
 
-async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    headers: { "Content-Type": "application/json", ...init?.headers },
-    ...init,
-  });
+export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await apiRequest(path, init);
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }));
     throw new Error(err.detail || `API error ${res.status}`);
@@ -77,7 +89,7 @@ export const apiClient = {
   async uploadFiles(caseId: string, files: File[]): Promise<UploadResponse> {
     const form = new FormData();
     files.forEach((f) => form.append("files", f));
-    const res = await fetch(`${BASE_URL}/cases/${caseId}/upload`, {
+    const res = await apiRequest(`/cases/${caseId}/upload`, {
       method: "POST",
       body: form,
     });

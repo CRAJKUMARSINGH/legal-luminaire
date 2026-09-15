@@ -1,0 +1,9 @@
+{
+  "id": "example35",
+  "domain": "Conveyancing / mortgage",
+  "complexity": "Expert",
+  "approachStatus": "Bank referral; borrower needs plain language",
+  "documents": ["Sanction", "Title", "Company/partnership records", "Co-owner consent", "Search", "Valuation", "Insurance", "Resolutions"],
+  "actionPlan": "Confirm facility, mortgagor, title, prior charge, authority, possession, covenants, insurance, default and release; certified searches.",
+  "draftStatus": "Prior-charge search"
+}

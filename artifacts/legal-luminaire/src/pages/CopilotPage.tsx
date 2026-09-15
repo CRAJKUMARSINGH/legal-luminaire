@@ -10,6 +10,7 @@ import { useCaseContext } from "@/context/CaseContext";
 import { CitationChip } from "@/features/copilot/CitationChip";
 import { integrationFlags } from "@/lib/featureFlags";
 import { Link } from "wouter";
+import { apiRequest } from "@/lib/api-client";
 
 interface CopilotMessage {
   id: string;
@@ -126,8 +127,7 @@ export function CopilotPage() {
 
     // Check backend API first, fallback to verified client-side synthetic model
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
-      const res = await fetch(`${API_BASE}/copilot/ask`, {
+      const res = await apiRequest("/copilot/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

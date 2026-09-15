@@ -1,4 +1,4 @@
-﻿import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,7 @@ import { DemoModeCard } from "@/components/home/DemoModeCard";
 import { RecentCasesWidget } from "@/components/home/RecentCasesWidget";
 import { OnboardingHero } from "@/components/home/OnboardingHero";
 import { DEFAULT_CASE_ID, getChargesArray } from "@/lib/case-store";
+import { apiRequest } from "@/lib/api-client";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
@@ -99,7 +100,7 @@ export default function Home() {
   // Fetch overdue deadlines for dashboard (Week 10)
   useEffect(() => {
     if (selectedCaseId) {
-      fetch(`/api/v1/case/${selectedCaseId}/deadlines/urgent`)
+      apiRequest(`/case/${selectedCaseId}/deadlines/urgent`)
         .then(res => res.json())
         .then(data => {
           const overdue = data.items?.filter((item: any) => item.status === "OVERDUE") || [];
@@ -132,7 +133,7 @@ export default function Home() {
   return (
     <div className="space-y-6 p-6 max-w-7xl mx-auto">
 
-      {/* Onboarding hero: shown ONLY when no case is loaded yet */
+      {/* Onboarding hero: shown ONLY when no case is loaded yet */}
       {!selectedCase && <OnboardingHero />}
 
       {/* ── Demo Mode (1 click) ──────────────────────────────────────────── */}

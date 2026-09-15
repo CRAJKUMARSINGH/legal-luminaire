@@ -2,14 +2,14 @@
 
 ### **The AI legal workbench that physically blocks unverified citations from reaching court.**
 
-> Accuracy-first · Bilingual EN/HI · Local-first privacy · 26 synthetic trial cases · 349 tests passing
+> Accuracy-first · Bilingual EN/HI · Local-first privacy · 26 synthetic trial cases · 358 tests passing
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript)](https://www.typescriptlang.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 [![Netlify Status](https://img.shields.io/badge/demo-live%20on%20Netlify-00C7B7?logo=netlify)](https://legal-luminaire.netlify.app)
-[![Tests](https://img.shields.io/badge/tests-349%20passing-brightgreen)](artifacts/legal-luminaire/src/__tests__)
+[![Tests](https://img.shields.io/badge/tests-358%20passing-brightgreen)](artifacts/legal-luminaire/src/__tests__)
 [![pnpm](https://img.shields.io/badge/pnpm-10-F69220?logo=pnpm)](https://pnpm.io)
 [![Vibeathon 2026](https://img.shields.io/badge/ILTN%20Vibeathon-2026-blue)](https://vibecode.law/showcase)
 
@@ -183,7 +183,7 @@ All experimental flags default to `false`. Toggling them in `/system/flags` (dev
 | Routing | Wouter — single `src/routes.tsx` with 55+ lazy-loaded routes |
 | Backend | Python FastAPI + CrewAI + LangChain + ChromaDB (RAG) |
 | AI model | Anthropic Claude API — Sonnet 5 (everyday) / Opus 5 (research) |
-| Tests | Vitest — 349 tests (343 core + 6 Academy), all passing |
+| Tests | Vitest — 358 tests, all passing |
 | CI | GitHub Actions — typecheck + build + flag-lint + spec-lint |
 | Hosting | Netlify — SPA redirects, security headers, Node 22 |
 | Monorepo | pnpm 10 workspace (`pnpm-workspace.yaml`) |

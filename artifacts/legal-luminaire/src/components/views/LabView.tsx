@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/api-client";
 
 type LabResult = {
   parameter: string;
@@ -39,7 +40,7 @@ export const LabView = () => {
     formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/extract-lab-report", {
+      const res = await apiRequest("/extract-lab-report", {
         method: "POST",
         body: formData,
       });

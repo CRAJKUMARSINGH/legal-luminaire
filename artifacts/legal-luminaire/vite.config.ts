@@ -35,7 +35,10 @@ export default defineConfig({
         }
       }
     },
-    sourcemap: true,
+    // Production source maps multiplied the already large multi-route bundle
+    // beyond the memory available to the deployment builder. Keep debugging
+    // source maps in local development rather than making deploys fragile.
+    sourcemap: false,
   },
   server: {
     port: 5173,

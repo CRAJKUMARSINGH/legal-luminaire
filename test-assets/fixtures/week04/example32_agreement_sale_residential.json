@@ -1,0 +1,9 @@
+{
+  "id": "example32",
+  "domain": "Conveyancing / agreement",
+  "complexity": "Intermediate",
+  "approachStatus": "First transaction; buyer wants safe template",
+  "documents": ["Title chain", "Encumbrance", "Seller ID", "Layout", "Bank letter", "Taxes", "Payment proof", "Broker messages"],
+  "actionPlan": "Verify title/approvals; define conditions, documents, escrow, possession, risk, taxes, stamp/registration and remedies; retain explicit blanks.",
+  "draftStatus": "Negotiation only"
+}

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * UserManualPrintPage — printable PDF user manual.
  * Route: /user-manual-pdf  alias: /manual-pdf
  * Use: File -> Print -> Save as PDF in Chrome/Edge
@@ -148,7 +148,7 @@ NETLIFY DEPLOYMENT (one-click)
   3. Build + publish from netlify.toml (auto-detected)
 
 OPTIONAL ENV VARS (demo works without any)
-  VITE_BACKEND_URL   FastAPI URL (default: http://127.0.0.1:8000)
+  VITE_API_URL       FastAPI API base URL (default: /api/v1)
   OPENAI_API_KEY     for AI drafting backend
   TAVILY_API_KEY     for research backend`
   },

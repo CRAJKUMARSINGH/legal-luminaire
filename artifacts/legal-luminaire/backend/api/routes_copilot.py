@@ -181,7 +181,7 @@ def _build_citations(chunks: list) -> List[CopilotCitation]:
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
 @router.get(
-    "/health",
+    "/copilot/health",
     summary="Copilot feature health check",
     description=(
         "Returns the current activation state of the ask_copilot feature flag. "

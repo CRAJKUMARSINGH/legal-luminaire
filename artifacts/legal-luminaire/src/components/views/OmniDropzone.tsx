@@ -17,6 +17,7 @@ import type {
 } from "@/types";
 import { ReviewView } from "./ReviewView";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/api-client";
 
 // ── Local types ────────────────────────────────────────────────────────────
 type PreviewMetadata = NonNullable<PreviewResponse["metadata"]>;
@@ -77,7 +78,7 @@ export const OmniDropzone = () => {
     formData.append("file", files[0]);
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/omni-preview", {
+      const res = await apiRequest("/omni-preview", {
         method: "POST",
         body: formData,
       });
@@ -130,7 +131,7 @@ export const OmniDropzone = () => {
     const t2 = setTimeout(() => setStatusText("Running AI Structured Extraction..."), 2000);
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/omni-ingest", {
+      const res = await apiRequest("/omni-ingest", {
         method: "POST",
         body: formData,
       });
@@ -213,7 +214,7 @@ export const OmniDropzone = () => {
 
       // Auto-Research — failure here is non-fatal; user is informed via toast
       try {
-        const researchRes = await fetch("http://localhost:8000/api/v1/auto-research", {
+        const researchRes = await apiRequest("/auto-research", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

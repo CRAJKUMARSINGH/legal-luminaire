@@ -390,8 +390,9 @@ async def case_status(case_id: str):
 
 # ── Research & Draft ───────────────────────────────────────────────────────────
 
-@router.post("/cases/{case_id}/research")
-async def run_research(case_id: str, req: ResearchRequest, background_tasks: BackgroundTasks):
+# Legacy implementation retained temporarily for reference. The registered
+# implementation below is the canonical route and includes observability.
+async def _legacy_run_research(case_id: str, req: ResearchRequest, background_tasks: BackgroundTasks):
     """
     Enqueue a multi-agent research/draft job. Returns a job_id immediately.
     Poll GET /cases/{case_id}/research/{job_id} for status and result.
