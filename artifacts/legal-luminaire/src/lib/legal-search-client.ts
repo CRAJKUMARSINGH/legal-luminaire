@@ -1,9 +1,8 @@
 /**
- * Client for the API server's free-text legal citation search.
- * Calls /api/legal-search?q=… on the workspace's api-server artifact.
+ * Client for FastAPI's free-text legal citation search.
+ * All requests use the canonical /api/v1 API boundary.
  */
-
-const API_BASE = (import.meta.env.VITE_LEGAL_SEARCH_API as string | undefined) ?? "/api";
+import { apiFetch } from "./api-client";
 
 export type SearchKind = "precedent" | "statute" | "standard";
 
@@ -48,17 +47,9 @@ export async function searchLegalCorpus(
   if (options.limit) params.set("limit", String(options.limit));
   if (options.kind) params.set("kind", options.kind);
 
-  const res = await fetch(`${API_BASE}/legal-search?${params.toString()}`);
-  if (!res.ok) {
-    throw new Error(`Search failed: ${res.status} ${res.statusText}`);
-  }
-  return res.json() as Promise<LegalSearchResponse>;
+  return apiFetch<LegalSearchResponse>(`/legal-search?${params.toString()}`);
 }
 
 export async function getCorpusStats(): Promise<LegalCorpusStats> {
-  const res = await fetch(`${API_BASE}/legal-search/corpus-stats`);
-  if (!res.ok) {
-    throw new Error(`Stats failed: ${res.status} ${res.statusText}`);
-  }
-  return res.json() as Promise<LegalCorpusStats>;
+  return apiFetch<LegalCorpusStats>("/legal-search/corpus-stats");
 }

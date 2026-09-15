@@ -11,6 +11,7 @@ import {
 import { CitationChip } from "./CitationChip";
 import { integrationFlags } from "@/lib/featureFlags";
 import { useCaseContext } from "@/context/CaseContext";
+import { apiRequest } from "@/lib/api-client";
 
 // Types for copilot functionality
 export interface CopilotMessage {
@@ -192,7 +193,6 @@ export function CopilotPanel() {
   };
 
   const queryCopilot = async (sessionId: string, query: string) => {
-    const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
     const caseId = selectedCase?.id || "case-01";
 
     // Format request payload strictly matching CopilotAskRequest
@@ -205,7 +205,7 @@ export function CopilotPanel() {
     let assistantMessage: CopilotMessage;
 
     try {
-      const response = await fetch(`${API_BASE}/copilot/ask`, {
+      const response = await apiRequest("/copilot/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

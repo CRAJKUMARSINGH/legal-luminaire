@@ -6,6 +6,7 @@ import {
   FilePlus,
 } from "lucide-react";
 import { useCaseContext } from "@/context/CaseContext";
+import { apiRequest } from "@/lib/api-client";
 import { apiClient, type ResearchResponse, type HealthResponse } from "@/lib/api-client";
 import { caseLawMatrix } from "@/data/caseData";
 import { findCitationsInText } from "@/lib/citation-formatter";
@@ -88,7 +89,7 @@ export default function AIDraftEngine() {
   const handlePreload = async () => {
     setPreloading(true);
     try {
-      const res = await fetch("/api/v1/cases/case01/preload", { method: "POST" });
+      const res = await apiRequest("/cases/case01/preload", { method: "POST" });
       const data = await res.json();
       if (data.success) {
         setUploadResult({ chunks: data.total_chunks, files: [`${data.files_indexed} files indexed`] });
@@ -161,7 +162,7 @@ export default function AIDraftEngine() {
     setChatInput("");
     setChatLoading(true);
     try {
-      const res = await fetch("/api/v1/chat", {
+      const res = await apiRequest("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ case_id: selectedCaseId, message: chatInput, history: chatHistory.slice(-6) }),
@@ -179,10 +180,10 @@ export default function AIDraftEngine() {
     setVerifying(true); setVerifyResult(null);
     try {
       if (verifyCitation) {
-        const res = await fetch(`/api/v1/verify-citation?case_name=${encodeURIComponent(verifyCitation)}`);
+        const res = await apiRequest(`/verify-citation?case_name=${encodeURIComponent(verifyCitation)}`);
         setVerifyResult(await res.json());
       } else if (verifyStandard) {
-        const res = await fetch(`/api/v1/verify-standard?code=${encodeURIComponent(verifyStandard)}`);
+        const res = await apiRequest(`/verify-standard?code=${encodeURIComponent(verifyStandard)}`);
         setVerifyResult(await res.json());
       }
     } catch (e) {

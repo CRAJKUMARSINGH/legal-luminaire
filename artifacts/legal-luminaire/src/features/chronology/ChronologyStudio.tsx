@@ -10,6 +10,7 @@ import {
   Download, Copy, Filter, Calendar, AlertTriangle
 } from "lucide-react";
 import { useCaseContext } from "@/context/CaseContext";
+import { apiRequest } from "@/lib/api-client";
 
 interface ChronologyEntry {
   id: string;
@@ -52,7 +53,7 @@ export function ChronologyStudio() {
   const generateChronology = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/v1/case/${caseId}/chronology/propose`, {
+      const response = await apiRequest(`/case/${caseId}/chronology/propose`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ case_id: caseId, include_document_events: true }),
@@ -73,7 +74,7 @@ export function ChronologyStudio() {
 
   const handleEntryAction = async (entryId: string, action: "accept" | "reject" | "edit") => {
     try {
-      const response = await fetch(`/api/v1/case/${caseId}/chronology/action`, {
+      const response = await apiRequest(`/case/${caseId}/chronology/action`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
