@@ -15,13 +15,73 @@ from typing import Any
 from crewai import Crew, Task, Process
 
 from agents.researcher import create_researcher_agent
+from agents.enhanced_researcher import EnhancedResearcherAgent, create_enhanced_researcher_task
 from agents.standards_verifier import create_standards_verifier_agent
 from agents.fact_checker import create_fact_checker_agent
 from agents.drafter import create_drafter_agent
 from agents.hallucination_breaker import check_hallucination
+from agents.chain_custody_specialist import create_chain_custody_specialist_agent, analyze_chain_custody_procedure
+from agents.tools.legal_verifier import CrossDatabaseConsensus
 from rag.query_classifier import classify_query, get_drafter_style_instruction
+from rag.standards_database import ISStandardsDatabase
+from rag.case_isolated_store import CaseIsolatedDocumentStore
+import re
 
 logger = logging.getLogger(__name__)
+
+
+def extract_citations_from_output(text: str) -> list[str]:
+    """Extract case citations from generated text for verification"""
+    # Pattern to match common Indian legal citation formats
+    citation_patterns = [
+        r'\bv\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+SCC\s+\d+',  # Standard SCC format
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+SCC\s+\d+',  # Full case name
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\d{4}\s+INSC\s+\d+',  # INSC format
+        r'\b\d{4}\s+SCC\s+OnLine\s+\w+\s+\d+',  # SCC Online format
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+GLR\s+\d+',  # GLR format
+    ]
+    
+    citations = []
+    for pattern in citation_patterns:
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        citations.extend(matches)
+    
+    # Deduplicate while preserving order
+    seen = set()
+    unique_citations = []
+    for citation in citations:
+        if citation not in seen:
+            seen.add(citation)
+            unique_citations.append(citation)
+    
+    return unique_citations
+
+
+def extract_citations_from_output(text: str) -> list[str]:
+    """Extract case citations from generated text for verification"""
+    # Pattern to match common Indian legal citation formats
+    citation_patterns = [
+        r'\bv\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+SCC\s+\d+',  # Standard SCC format
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+SCC\s+\d+',  # Full case name
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\d{4}\s+INSC\s+\d+',  # INSC format
+        r'\b\d{4}\s+SCC\s+OnLine\s+\w+\s+\d+',  # SCC Online format
+        r'\b[\w\s&]+\s+v\.\s+[\w\s&]+\s+\(\d{4}\)\s+\d+\s+GLR\s+\d+',  # GLR format
+    ]
+    
+    citations = []
+    for pattern in citation_patterns:
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        citations.extend(matches)
+    
+    # Deduplicate while preserving order
+    seen = set()
+    unique_citations = []
+    for citation in citations:
+        if citation not in seen:
+            seen.add(citation)
+            unique_citations.append(citation)
+    
+    return unique_citations
 
 
 def run_legal_crew(
@@ -68,64 +128,27 @@ def run_legal_crew(
     defects_str = "; ".join(procedural_defects)
     ctx_snippet = case_context[:2500] if case_context else "[No uploaded documents]"
 
-    researcher = create_researcher_agent()
+    # Initialize enhanced verification systems
+    standards_db = ISStandardsDatabase()
+    consensus_verifier = CrossDatabaseConsensus()
+    case_store = CaseIsolatedDocumentStore()
+    
+    # Use enhanced researcher with direct API access
+    enhanced_researcher = EnhancedResearcherAgent()
+    researcher = enhanced_researcher.create_agent()
     verifier   = create_standards_verifier_agent()
     checker    = create_fact_checker_agent()
+    chain_custody = create_chain_custody_specialist_agent()
     drafter    = create_drafter_agent()
 
-    # ── Task 1: Research & verify precedents ───────────────────────────────────
-    task_research = Task(
-        description=f"""
-CASE CONTEXT (from uploaded documents):
-{ctx_snippet}
-
-USER QUERY: {query}
-INCIDENT TYPE: {incident_type}
-EVIDENCE TYPE: {evidence_type}
-PROCEDURAL DEFECTS: {defects_str}
-
-YOUR TASK — Search and verify ALL relevant precedents:
-
-DATABASES TO SEARCH (in order of priority):
-1. Manupatra — Indian SC/HC judgments (primary)
-2. SCC Online — Supreme Court cases
-3. Indian Kanoon — full-text search
-4. BIS Portal — IS codes (bis.gov.in)
-5. ASTM International — technical standards
-6. CPWD Manual 2023 — construction norms
-
-FACT-FIT GATE (MANDATORY — DO NOT SKIP):
-For EACH precedent you retrieve, score it:
-  [A] Incident type match (0-40 pts)
-  [B] Evidence type match (0-35 pts)
-  [C] Procedural defect match (0-25 pts)
-  TOTAL >= 70 → "exact match" (primary authority)
-  TOTAL 50-69 → "analogous" (use with qualification)
-  TOTAL 30-49 → "weak" (supporting only)
-  TOTAL < 30 → "rejected" — DO NOT USE.
-
-MANDATORY SEARCHES:
-1. "Kattavellai Devakar State Tamil Nadu 2025 INSC 845 chain of custody"
-2. "Union of India Prafulla Kumar Samal 1979 3 SCC 4 discharge"
-3. "State Bihar Ramesh Singh 1977 4 SCC 39 discharge prima facie"
-4. "Jacob Mathew State Punjab 2005 6 SCC 1 negligence"
-5. "State Maharashtra Damu 2000 6 SCC 269 forensic evidence"
-6. "State Punjab Baldev Singh 1999 6 SCC 172 mandatory procedure"
-7. "Uttarakhand High Court chain of custody forensic 2026"
-8. "Rajasthan High Court school collapse Piplodi Banswara 2025"
-9. "Sushil Sharma State Delhi 2014 4 SCC 317 expert opinion"
-
-For EACH precedent found:
-- Verify on indiankanoon.org using indian_kanoon_search tool
-- Use browse_page to read the actual judgment text
-- Score fact-fit: incident match (0-40) + evidence match (0-35) + procedural match (0-25)
-- Quote the EXACT holding verbatim from the source
-- Mark as VERIFIED/SECONDARY/PENDING/REJECTED
-
-Output structured list of verified precedents with all fields.
-""",
-        agent=researcher,
-        expected_output="Structured list of verified precedents with citations, holdings, fit scores, and source URLs.",
+    # ── Task 1: Enhanced Research & verify precedents ─────────────────────────────
+    # Use enhanced researcher with direct API access
+    task_research = create_enhanced_researcher_task(
+        query=query,
+        case_context=ctx_snippet,
+        incident_type=incident_type,
+        evidence_type=evidence_type,
+        procedural_defects=procedural_defects
     )
 
     # ── Task 2: Verify IS/ASTM standards ──────────────────────────────────────
@@ -158,10 +181,46 @@ Output: CODE, TITLE, SCOPE, APPLIES_TO_THIS_CASE, KEY_CLAUSES, SOURCE_URL, VERDI
         context=[task_research],
     )
 
-    # ── Task 3: Fact-check and produce clean verified list ─────────────────────
+    # ── Task 3: Chain-of-custody analysis ───────────────────────────────────────
+    task_chain_custody = Task(
+        description=f"""
+CASE CONTEXT: {ctx_snippet[:1500]}
+
+INCIDENT TYPE: {incident_type}
+EVIDENCE TYPE: {evidence_type}
+PROCEDURAL DEFECTS: {defects_str}
+
+YOUR TASK — Specialized chain-of-custody analysis:
+
+1. Analyze sampling procedure against IS 3535, IS 2250, ASTM C780, ASTM C1324
+2. Identify weather condition violations (rain/storm sampling)
+3. Verify contractor representative presence requirements
+4. Check sampling location representativeness (minimum 5 locations)
+5. Validate sealing and chain-of-custody documentation
+6. Detect standard mismatches (IS 1199 vs IS 2250 for hardened mortar)
+7. Generate detailed Hindi/English assessment
+8. Create legal arguments for discharge application
+9. Identify relevant precedents (Kattavellai 2025, Uttarakhand HC 2026, Rajasthan HC 2025)
+10. Generate expert witness examination points
+11. Create cross-reference matrix (violation → IS clause → precedent)
+
+OUTPUT REQUIREMENTS:
+- Detailed assessment in both Hindi and English
+- Legal arguments formatted for court use
+- Precedent analysis with exact citations
+- Expert witness examination questions
+- Cross-reference matrix table
+- Overall compliance score with recommendation
+""",
+        agent=chain_custody,
+        expected_output="Comprehensive chain-of-custody analysis with legal arguments, precedents, expert witness points, and cross-reference matrix.",
+        context=[task_research, task_verify_standards],
+    )
+
+    # ── Task 4: Fact-check and produce clean verified list ─────────────────────
     task_fact_check = Task(
         description=f"""
-Review the researcher's precedents and verifier's standards outputs.
+Review the researcher's precedents, verifier's standards outputs, and chain-custody analysis.
 
 YOUR TASK:
 1. For each PRIMARY precedent: use cross_database_consensus to check all 3 databases.
@@ -191,7 +250,7 @@ Output: VERIFIED_LIST, REJECTED_LIST, DIVERGENT_CITATIONS, FATAL_ERRORS, STANDAR
 """,
         agent=checker,
         expected_output="Clean verified list of precedents and standards, with rejected list, divergent citations, and fatal errors flagged.",
-        context=[task_research, task_verify_standards],
+        context=[task_research, task_verify_standards, task_chain_custody],
     )
 
     # ── Task 4: Draft the discharge application ────────────────────────────────
@@ -239,20 +298,21 @@ Output: VERIFIED_LIST, REJECTED_LIST, DIVERGENT_CITATIONS, FATAL_ERRORS, STANDAR
             if mode == "draft"
             else "Research report with verified precedents, standards analysis, and argument blocks."
         ),
-        context=[task_research, task_verify_standards, task_fact_check],
+        context=[task_research, task_verify_standards, task_chain_custody, task_fact_check],
     )
 
     crew = Crew(
-        agents=[researcher, verifier, checker, drafter],
-        tasks=[task_research, task_verify_standards, task_fact_check, task_draft],
+        agents=[researcher, verifier, chain_custody, checker, drafter],
+        tasks=[task_research, task_verify_standards, task_chain_custody, task_fact_check, task_draft],
         process=Process.sequential,
         verbose=True,
+        memory=True,
     )
 
     try:
         result = crew.kickoff()
         tasks_output = []
-        agent_names = ["researcher", "standards_verifier", "fact_checker", "drafter"]
+        agent_names = ["researcher", "standards_verifier", "chain_custody", "fact_checker", "drafter"]
         for i, task_result in enumerate(crew.tasks):
             agent_name = agent_names[i] if i < len(agent_names) else f"agent_{i}"
             output_text = ""
@@ -262,10 +322,18 @@ Output: VERIFIED_LIST, REJECTED_LIST, DIVERGENT_CITATIONS, FATAL_ERRORS, STANDAR
 
         final_output = str(result) if result else ""
 
-        # ── Hallucination Circuit Breaker ──────────────────────────────────────
+        # ── Enhanced Accuracy Verification ─────────────────────────────────────
         chunks = retrieved_chunks or []
         hallucination_report = check_hallucination(final_output, chunks)
+        
+        # Additional verification for citations
+        extracted_citations = extract_citations_from_output(final_output)
+        citation_verifications = []
+        if extracted_citations:
+            citation_verifications = consensus_verifier.verify_precedent_batch(extracted_citations)
+        
         logger.info(f"Hallucination gate verdict: {hallucination_report.verdict}")
+        logger.info(f"Citation verification count: {len(citation_verifications)}")
 
         if hallucination_report.blocked:
             return {
@@ -279,6 +347,7 @@ Output: VERIFIED_LIST, REJECTED_LIST, DIVERGENT_CITATIONS, FATAL_ERRORS, STANDAR
                     f"Ungrounded items: {hallucination_report.ungrounded[:5]}"
                 ),
                 "query_profile": profile.to_dict(),
+                "citation_verifications": citation_verifications,
             }
 
         return {
@@ -288,6 +357,7 @@ Output: VERIFIED_LIST, REJECTED_LIST, DIVERGENT_CITATIONS, FATAL_ERRORS, STANDAR
             "tasks_output": tasks_output,
             "error": None,
             "query_profile": profile.to_dict(),
+            "citation_verifications": citation_verifications,
         }
 
     except Exception as e:
