@@ -7,6 +7,7 @@ import {
   ChevronLeft, ChevronRight, Filter
 } from "lucide-react";
 import { useCaseContext } from "@/context/CaseContext";
+import { apiRequest } from "@/lib/api-client";
 
 interface DeadlineItem {
   rule_id: string;
@@ -55,7 +56,7 @@ export function DeadlineBoard() {
   const fetchDeadlines = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/v1/case/${caseId}/deadlines`);
+      const response = await apiRequest(`/case/${caseId}/deadlines`);
       
       if (!response.ok) {
         throw new Error("Failed to fetch deadlines");

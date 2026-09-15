@@ -94,7 +94,7 @@ function fromStub(
   meta: { caseNo?: string; court: string; charges?: string; accused?: string; client?: string; opponent?: string },
   grounds: Grounds,
   precedents: Precedents,
-  prayer: string[],
+  prayer: ReadonlyArray<string>,
 ): CaseRecord {
   const now = new Date().toISOString();
   const parties: CaseRecord["parties"] = [];
@@ -130,7 +130,7 @@ function fromStub(
     timeline: [],
     standards: [],
     documents: [],
-    prayerClauses: prayer,
+    prayerClauses: [...prayer],
     verificationBlocks: precedents.map((p) => ({
       id: `vb-${p.id}`, claim: `${p.name} ${p.citation}`, status: p.status,
       evidence: p.statusNote, blockedFromDraft: p.blockedFromDraft,

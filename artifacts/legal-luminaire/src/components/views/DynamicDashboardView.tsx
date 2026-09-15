@@ -16,6 +16,7 @@ import { useLocation } from 'wouter';
 import { useState, useEffect } from 'react';
 import { ForensicRadar } from '@/components/charts/ForensicRadar';
 import { TimelineHeatmap } from '@/components/charts/TimelineHeatmap';
+import { apiRequest } from "@/lib/api-client";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const variant = status === "VERIFIED" ? "default" : status === "SECONDARY" ? "secondary" : "outline";
@@ -34,10 +35,9 @@ export function DynamicDashboardView() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
     const fetchStats = async () => {
       try {
-        const res = await fetch(`${API_BASE}/cases/${selectedCase.id}/stats`);
+        const res = await apiRequest(`/cases/${selectedCase.id}/stats`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         setStats(data);

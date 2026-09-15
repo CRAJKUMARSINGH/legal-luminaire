@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCaseContext } from "@/context/CaseContext";
 import { useToast } from "@/hooks/use-toast";
 import { DocumentProgressIndicator } from "@/components/DocumentProgressIndicator";
+import { apiRequest } from "@/lib/api-client";
 
 type DraftType = "BRIEF" | "DISCHARGE" | "BAIL_439";
 
@@ -47,7 +48,7 @@ export const DraftingView = () => {
 
   const updateStatus = async (newStatus: string) => {
     try {
-      await fetch(`http://localhost:8000/api/v1/cases/${selectedCase.id}`, {
+      await apiRequest(`/cases/${selectedCase.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...selectedCase, review_status: newStatus })
@@ -62,7 +63,7 @@ export const DraftingView = () => {
     const activeType = typeOverride || draftType;
     setIsGenerating(true);
     try {
-      const res = await fetch("http://localhost:8000/api/v1/generate-draft", {
+      const res = await apiRequest("/generate-draft", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -100,7 +101,7 @@ export const DraftingView = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:8000/api/v1/verify-citations", {
+      const res = await apiRequest("/verify-citations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ citations: uniqueCitations })

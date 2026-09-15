@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCaseContext } from "@/context/CaseContext";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "@/components/ui/badge";
+import { apiRequest } from "@/lib/api-client";
 
 type WitnessType = "IO" | "FSL_EXPERT" | "SEIZURE_WITNESS";
 
@@ -32,7 +33,7 @@ export default function OralArguments() {
   const generateAIExam = async () => {
     setIsGenerating(true);
     try {
-      const res = await fetch("http://localhost:8000/api/v1/generate-cross-exam", {
+      const res = await apiRequest("/generate-cross-exam", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

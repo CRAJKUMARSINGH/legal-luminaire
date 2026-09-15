@@ -1,0 +1,9 @@
+{
+  "id": "example33",
+  "domain": "Conveyancing / sale deed",
+  "complexity": "Advanced",
+  "approachStatus": "Returning client; closing next week; encumbrance remains",
+  "documents": ["Title", "Release", "Search", "Tax", "KYC", "Consideration", "Plan", "Possession memo", "Draft deed"],
+  "actionPlan": "Reconcile parties, title, schedule, consideration, encumbrance, possession, covenants, indemnity and originals; no backdating; condition closing.",
+  "draftStatus": "Execution blocked"
+}

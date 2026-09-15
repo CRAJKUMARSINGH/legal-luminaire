@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { apiFetch } from "@/lib/api-client";
 
 type SearchResult = {
   statutes: any[];
@@ -29,8 +30,7 @@ export const SearchView = () => {
     
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/api/v1/legal-search?q=${val}`);
-      const data = await res.json();
+      const data = await apiFetch<SearchResult>(`/legal-search?q=${encodeURIComponent(val)}`);
       setResults(data);
     } catch (err) {
       console.error("Search failed", err);

@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { apiRequest } from "@/lib/api-client";
 
 export type StreamStage = "researcher" | "verifier" | "drafter" | "streaming" | "complete" | "error";
 
@@ -29,7 +30,7 @@ export function useDraftStream() {
     setState({ stage: "researcher", content: "", isStreaming: true, message: "Initiating research..." });
 
     try {
-      const response = await fetch("/api/legal/draft", {
+      const response = await apiRequest("/legal/draft", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

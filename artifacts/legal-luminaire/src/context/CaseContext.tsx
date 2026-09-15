@@ -7,6 +7,7 @@ import { CaseRecord, defaultCase, loadCases, saveCases, loadSelectedCaseId, save
 import { CASE_TEMPLATES, generateCaseFromTemplate } from "@/lib/case-templates";
 import type { CaseTemplate } from "@/lib/multi-case-store";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/api-client";
 import { buildCaseRecord, recordIdForDemo } from "@/cases/registry";
 import { loadRecentCases, pushRecentCase, type RecentCaseEntry } from "@/lib/recent-cases";
 
@@ -29,9 +30,6 @@ export type CaseContextType = {
 };
 
 const CaseContext = createContext<CaseContextType | null>(null);
-
-// Support both live app (/api) and local backend (/api/v1)
-const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
 
 export function CaseProvider({ children }: { children: React.ReactNode }) {
   // Always load from localStorage first — backend is optional enhancement
@@ -76,11 +74,11 @@ export function CaseProvider({ children }: { children: React.ReactNode }) {
   // Optionally sync from backend — never blocks UI, tries live app prefix first
   useEffect(() => {
     async function syncFromBackend() {
-      // Try live app prefix first (/api), then local backend (/api/v1)
-      const endpoints = ["/api/cases", `${API_BASE}/cases`];
+      // The FastAPI service is the only canonical backend.
+      const endpoints = ["/cases"];
       for (const url of endpoints) {
         try {
-          const res = await fetch(url, { signal: AbortSignal.timeout(3000) });
+          const res = await apiRequest(url, { signal: AbortSignal.timeout(3000) });
           if (res.ok) {
             const data = await res.json();
             if (Array.isArray(data) && data.length > 0) {
@@ -147,7 +145,7 @@ export function CaseProvider({ children }: { children: React.ReactNode }) {
     });
     setSelectedCaseId(record.id);
     // Fire-and-forget backend sync
-    fetch(`${API_BASE}/cases`, {
+    apiRequest("/cases", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(record),
@@ -162,7 +160,7 @@ export function CaseProvider({ children }: { children: React.ReactNode }) {
       if (selectedCaseId === id && next.length > 0) setSelectedCaseId(next[0].id);
       return next;
     });
-    fetch(`${API_BASE}/cases/${id}`, { method: "DELETE" }).catch(() => {});
+    apiRequest(`/cases/${id}`, { method: "DELETE" }).catch(() => {});
   };
 
   const duplicateCase = (id: string) => {
