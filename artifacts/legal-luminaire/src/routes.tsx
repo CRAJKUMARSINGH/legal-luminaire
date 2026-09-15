@@ -172,6 +172,7 @@ export function Router() {
 
           {/* Defense Master Routes */}
           <Route path="/cross-check-report" component={() => Wrap(<CrossCheckReport />, "CrossCheckReport")} />
+          {/* legacy alias: keep the historical verification-report URL working. */}
           <Route path="/verification-report" component={() => Wrap(<CrossCheckReport />, "CrossCheckReport")} />
           <Route path="/defense-brief" component={() => Wrap(<DefenseBrief />, "DefenseBrief")} />
           <Route path="/fsl-analysis" component={() => Wrap(<FslAnalysis />, "FslAnalysis")} />
