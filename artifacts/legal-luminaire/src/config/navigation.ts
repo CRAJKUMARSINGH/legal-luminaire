@@ -93,9 +93,6 @@ export const NAV_GROUPS: NavGroup[] = [
     groupLabelEn: "Drafting",
     items: [
       { path: "/bilingual-generator", label: "द्विभाषी जनरेटर", labelEn: "Bilingual Generator", icon: Languages, caseScoped: false, badge: "NEW" },
-      { path: "/matter-drafting-studio", label: "वाद प्रारूप स्टूडियो", labelEn: "Matter Drafting Studio", icon: FileText, caseScoped: true, badge: "NEW" },
-      { path: "/draft-template-library", label: "ड्राफ्ट टेम्पलेट लाइब्रेरी", labelEn: "Template Library", icon: BookOpen, caseScoped: true, badge: "NEW" },
-      { path: "/draft-variants", label: "⚡ प्लीडिंग चेन", labelEn: "Pleading Chain Engine", icon: Sparkles, caseScoped: true, badge: "NEW" },
       { path: "/ai-draft-engine", label: "AI ड्राफ्ट इंजन", labelEn: "AI Draft Engine",    icon: Sparkles, caseScoped: true },
       { path: "/safe-draft",      label: "सेफ ड्राफ्ट",   labelEn: "Safe Draft Editor", icon: ShieldCheck, caseScoped: true, badge: "NEW" },
       { path: "/discharge-application", label: "प्रार्थना-पत्र", labelEn: "Discharge App",   icon: Scale,    caseScoped: true },
