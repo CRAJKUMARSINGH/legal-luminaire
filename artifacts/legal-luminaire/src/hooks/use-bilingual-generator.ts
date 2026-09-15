@@ -98,12 +98,12 @@ export function useBilingualGenerator() {
     };
     
     const docInfo = docTypeMap[documentType] || { name: "Legal Document", nameHindi: "कानूनी दस्तावेज़" };
-    const docName = outputLanguage === "hindi" ? docInfo.nameHindi : docInfo.name;
+    const docName = outputLanguage === "Hindi" ? docInfo.nameHindi : docInfo.name;
     
     // Build content from form data
     let content = `${docName}\n\n`;
     
-    if (outputLanguage === "hindi") {
+    if (outputLanguage === "Hindi") {
       Object.entries(formData).forEach(([key, value]) => {
         if (value) {
           // Simple translation mapping for common fields
