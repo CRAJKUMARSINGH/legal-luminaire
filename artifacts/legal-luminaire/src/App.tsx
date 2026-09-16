@@ -32,14 +32,14 @@ export default function App() {
       fallbackDescription="A top-level error occurred. Please refresh the application or navigate to the home page."
     >
       <QueryClientProvider client={queryClient}>
-        <AccuracyProvider>
-          <CaseProvider>
+        <CaseProvider>
+          <AccuracyProvider>
             <TooltipProvider>
               <Router />
               <Toaster />
             </TooltipProvider>
-          </CaseProvider>
-        </AccuracyProvider>
+          </AccuracyProvider>
+        </CaseProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
   );

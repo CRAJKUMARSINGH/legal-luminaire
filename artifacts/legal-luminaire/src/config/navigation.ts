@@ -109,6 +109,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { path: "/ldr-motion", label: "Draft Motion", labelEn: "Draft Motion", icon: FilePlus, caseScoped: false, badge: "LDR" },
       { path: "/defense-brief", label: "Defense Brief", labelEn: "Defense Brief", icon: ShieldCheck, caseScoped: false, badge: "LDM" },
       { path: "/infra-arb", label: "इन्फ्रा आर्बिट्रेशन", labelEn: "Infra Arbitration", icon: Scale, caseScoped: false, badge: "NEW" },
+      { path: "/infra-arb-claims", label: "Infra Arb Claims", labelEn: "Infra Arb Claims (TC-22-26)", icon: Scale, caseScoped: false, badge: "ARB" },
     ],
   },
   {

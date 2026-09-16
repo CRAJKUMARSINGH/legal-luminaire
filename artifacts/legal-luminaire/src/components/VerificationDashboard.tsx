@@ -97,8 +97,7 @@ export function VerificationDashboard({
             </div>
             <Progress 
               value={hallucinationReport.hallucination_score * 100} 
-              className="h-2"
-              indicatorClassName="bg-orange-500"
+              className="h-2 [&>div]:bg-orange-500"
             />
           </div>
 

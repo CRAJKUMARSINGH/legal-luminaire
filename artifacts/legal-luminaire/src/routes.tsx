@@ -92,6 +92,8 @@ const LPS_PrintLetterPage = lazy(() => import("@/pages/LPS_PrintLetterPage"));
 const LPS_SampleAnalysisPage = lazy(() => import("@/pages/LPS_SampleAnalysisPage"));
 const LPS_StandardsPage = lazy(() => import("@/pages/LPS_StandardsPage"));
 
+const InfraArbClaimPage = lazy(() => import("@/pages/InfraArbClaimPage"));
+
 // Lazy load heavy view components
 const DynamicDashboardView = lazy(() => import("@/components/views/DynamicDashboardView").then(module => ({ default: module.DynamicDashboardView })));
 const CaseSelector = lazy(() => import("@/components/case-selector").then(module => ({ default: module.CaseSelector })));
@@ -170,6 +172,7 @@ export function Router() {
           <Route path="/improvement-lab" component={() => <div className="p-0">{Wrap(<ResearchImprovementView />, "ResearchImprovementView")}</div>} />
           <Route path="/forensic-faq" component={() => Wrap(<ForensicFAQ />, "ForensicFAQ")} />
           <Route path="/infra-arb" component={() => Wrap(<InfraArbBrowser />, "InfraArbBrowser")} />
+          <Route path="/infra-arb-claims" component={() => Wrap(<InfraArbClaimPage />, "InfraArbClaimPage")} />
           <Route path="/demo-browser" component={() => Wrap(<DemoCaseBrowser />, "DemoCaseBrowser")} />
           <Route path="/citation-search" component={() => Wrap(<CitationSearchPage />, "CitationSearchPage")} />
           <Route path="/authority/:id" component={() => Wrap(<CitationAuthorityPage />, "CitationAuthorityPage")} />
