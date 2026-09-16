@@ -7,3 +7,5 @@ export function BilingualGeneratorPage() {
     </div>
   );
 }
+
+export default BilingualGeneratorPage;

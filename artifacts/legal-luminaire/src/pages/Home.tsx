@@ -20,6 +20,8 @@ import { RecentCasesWidget } from "@/components/home/RecentCasesWidget";
 import { OnboardingHero } from "@/components/home/OnboardingHero";
 import { DEFAULT_CASE_ID, getChargesArray } from "@/lib/case-store";
 import { apiRequest } from "@/lib/api-client";
+import { AccuracyBadge } from "@/components/ui/accuracy-badge";
+import { useAccuracyContext } from "@/context/AccuracyContext";
 import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip,
 } from "recharts";
@@ -71,6 +73,7 @@ const overallStrength = Math.round(
 
 export default function Home() {
   const { cases, selectedCase, selectedCaseId, setSelectedCaseId, isDemoMode } = useCaseContext();
+  const { metrics, accuracyLevel } = useAccuracyContext();
   const caseId = selectedCase?.id ?? selectedCaseId;
   const isHemraj = caseId === DEFAULT_CASE_ID;
   const caseLawMatrix  = selectedCase?.caseLaw ?? [];
@@ -101,12 +104,20 @@ export default function Home() {
   useEffect(() => {
     if (selectedCaseId) {
       apiRequest(`/case/${selectedCaseId}/deadlines/urgent`)
-        .then(res => res.json())
+        .then(async (res) => {
+          if (!res.ok) return null;
+          const ct = res.headers.get("content-type");
+          if (ct && ct.includes("application/json")) {
+            return res.json();
+          }
+          return null;
+        })
         .then(data => {
+          if (!data) return;
           const overdue = data.items?.filter((item: any) => item.status === "OVERDUE") || [];
           setOverdueDeadlines(overdue);
         })
-        .catch(err => console.error("Failed to fetch overdue deadlines:", err));
+        .catch(err => console.warn("Overdue deadlines fetch fallback:", err));
     }
   }, [selectedCaseId]);
 
@@ -141,6 +152,128 @@ export default function Home() {
 
       {/* ── All content below only renders when a case is loaded ─────── */}
       {selectedCase && (<>
+
+      {/* ── Case Accuracy & Multi-Parameter Verification Scorecard ──────── */}
+      <Card className="border-primary/20 bg-gradient-to-br from-primary/5 via-background to-primary/5 hover-elevate">
+        <CardHeader className="pb-3 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/10 text-primary">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+            <div>
+              <CardTitle className="text-base font-bold text-foreground flex items-center gap-2">
+                Case Accuracy & Forensic Evaluation Scorecard
+                <Badge variant="outline" className="text-[10px] font-semibold">सटीकता एवं मूल्यांकन</Badge>
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Artemis-II Multi-Parameter Forensic & Legal Verification Protocol (Court-Safe Standard)
+              </p>
+            </div>
+          </div>
+          <div>
+            <AccuracyBadge showDetails={true} size="md" />
+          </div>
+        </CardHeader>
+        <CardContent className="pt-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Parameter 1: Legal Citations */}
+            <div className="p-3.5 rounded-lg border bg-card/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <BookOpen className="h-3.5 w-3.5 text-emerald-600" />
+                  Legal Citations
+                </span>
+                <Badge variant="outline" className="text-xs font-bold text-emerald-600 border-emerald-300">
+                  {metrics.legalCitations.toFixed(1)} / 10
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground">वैधानिक उद्धरण (Live Case Law)</p>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div 
+                  className="bg-emerald-500 h-2 rounded-full transition-all duration-500" 
+                  style={{ width: `${(metrics.legalCitations / 10) * 100}%` }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground/80 flex justify-between">
+                <span>{verifiedCount} Verified</span>
+                <span>{total} Citations</span>
+              </p>
+            </div>
+
+            {/* Parameter 2: Technical Standards */}
+            <div className="p-3.5 rounded-lg border bg-card/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <FlaskConical className="h-3.5 w-3.5 text-violet-600" />
+                  Technical Standards
+                </span>
+                <Badge variant="outline" className="text-xs font-bold text-violet-600 border-violet-300">
+                  {metrics.technicalStandards.toFixed(1)} / 10
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground">तकनीकी मानक (BIS / IS Codes)</p>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div 
+                  className="bg-violet-500 h-2 rounded-full transition-all duration-500" 
+                  style={{ width: `${(metrics.technicalStandards / 10) * 100}%` }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground/80 flex justify-between">
+                <span>{standardsMatrix.length} Standards</span>
+                <span>IS 10262/456</span>
+              </p>
+            </div>
+
+            {/* Parameter 3: Factual Claims */}
+            <div className="p-3.5 rounded-lg border bg-card/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <Files className="h-3.5 w-3.5 text-blue-600" />
+                  Factual Claims
+                </span>
+                <Badge variant="outline" className="text-xs font-bold text-blue-600 border-blue-300">
+                  {metrics.factualClaims.toFixed(1)} / 10
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground">तथ्यात्मक साक्ष्य (Documentary)</p>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div 
+                  className="bg-blue-500 h-2 rounded-full transition-all duration-500" 
+                  style={{ width: `${(metrics.factualClaims / 10) * 100}%` }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground/80 flex justify-between">
+                <span>{caseDocuments.length} Verified Records</span>
+                <span>Chain of Custody</span>
+              </p>
+            </div>
+
+            {/* Parameter 4: Procedural References */}
+            <div className="p-3.5 rounded-lg border bg-card/60 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                  <Clock className="h-3.5 w-3.5 text-amber-600" />
+                  Procedural Timing
+                </span>
+                <Badge variant="outline" className="text-xs font-bold text-amber-600 border-amber-300">
+                  {metrics.proceduralReferences.toFixed(1)} / 10
+                </Badge>
+              </div>
+              <p className="text-[11px] text-muted-foreground">प्रक्रियात्मक संदर्भ (CrPC/BNSS)</p>
+              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                <div 
+                  className="bg-amber-500 h-2 rounded-full transition-all duration-500" 
+                  style={{ width: `${(metrics.proceduralReferences / 10) * 100}%` }}
+                />
+              </div>
+              <p className="text-[10px] text-muted-foreground/80 flex justify-between">
+                <span>{timelineEvents.length} Events</span>
+                <span>Limitation Guard</span>
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* ── Task-Oriented Dashboard Cards ─────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

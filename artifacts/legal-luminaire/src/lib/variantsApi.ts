@@ -54,17 +54,17 @@ async function parseJson<T>(res: Response): Promise<T> {
 
 export const variantsApi = {
   subjects: () =>
-    streamRequest("/variants/subjects").then(res => parseJson<{ id: string; label: Bilingual }[]>(res)),
+    streamRequest("/variants/subjects").then((res: Response) => parseJson<{ id: string; label: Bilingual }[]>(res)),
 
   family: (subject: string) =>
-    streamRequest(`/variants/families?subject=${encodeURIComponent(subject)}`).then(res => parseJson<VariantFamily>(res)),
+    streamRequest(`/variants/families?subject=${encodeURIComponent(subject)}`).then((res: Response) => parseJson<VariantFamily>(res)),
 
   matterContext: (base_draft_md: string, caseId: string, subject: string) =>
     streamRequest("/variants/matter-context", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ base_draft_md, case_id: caseId, subject }),
-    }).then(res => parseJson<MatterContext>(res)),
+    }).then((res: Response) => parseJson<MatterContext>(res)),
 
   /** SSE stream of the generated variant. Calls onDelta per chunk. */
   generateStream: (
@@ -120,5 +120,5 @@ export const variantsApi = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ q, limit }),
-    }).then(res => parseJson<{ results: CitationHit[] }>(res)),
+    }).then((res: Response) => parseJson<{ results: CitationHit[] }>(res)),
 }

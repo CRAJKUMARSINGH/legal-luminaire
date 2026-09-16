@@ -166,3 +166,15 @@ export function slugifyCase(input: string): string {
   );
 }
 
+export function mergeIncomingCases(local: CaseRecord[], incoming: any[]): CaseRecord[] {
+  const result = [...local];
+  const localIds = new Set(local.map((c) => c.id));
+  for (const item of incoming) {
+    if (item && typeof item === "object" && item.id && !localIds.has(item.id)) {
+      result.push(item as CaseRecord);
+      localIds.add(item.id);
+    }
+  }
+  return result;
+}
+

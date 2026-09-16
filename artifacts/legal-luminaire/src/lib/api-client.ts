@@ -154,3 +154,26 @@ export const extendedApiClient = {
     return apiFetch("/cases/case01/preload", { method: "POST" });
   },
 };
+
+/**
+ * streamRequest — wrapper around fetch that returns a raw Response.
+ * Used by variantsApi.ts for SSE streaming and regular REST calls.
+ */
+export function streamRequest(path: string, init?: RequestInit): Promise<Response> {
+  return fetch(apiUrl(path), {
+    ...init,
+    headers: {
+      ...(init?.headers ?? {}),
+    },
+  });
+}
+
+/**
+ * fetchPublicText — fetches a publicly accessible text resource by full URL.
+ * Used by MatterDraftingStudio.tsx to load remote text content.
+ */
+export async function fetchPublicText(url: string): Promise<string> {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`fetchPublicText: ${res.status} ${res.statusText}`);
+  return res.text();
+}

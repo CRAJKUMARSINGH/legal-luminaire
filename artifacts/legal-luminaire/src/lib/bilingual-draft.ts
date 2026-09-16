@@ -8,6 +8,12 @@
 /* ── Types ───────────────────────────────────────────────────────────────── */
 export type DocType = "discharge" | "bail" | "written_submissions" | "notice_reply" | "writ" | "other";
 
+/** Simple bilingual content holder — English and Hindi strings */
+export interface BilingualContent {
+  en: string;
+  hi: string;
+}
+
 export interface BilingualTemplate {
   id: string;
   docType: DocType;

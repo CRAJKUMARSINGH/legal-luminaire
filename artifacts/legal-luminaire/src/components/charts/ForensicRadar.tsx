@@ -1,5 +1,5 @@
 import { 
-  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer 
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip 
 } from 'recharts';
 import { Bot } from 'lucide-react';
 
@@ -29,6 +29,16 @@ export const ForensicRadar = ({ data }: { data: RadarData[] }) => {
               tick={{ fill: '#64748b', fontSize: 9, fontWeight: 600 }} 
             />
             <PolarRadiusAxis angle={30} domain={[0, 5]} tick={false} axisLine={false} />
+            <Tooltip
+              contentStyle={{
+                borderRadius: '8px',
+                border: '1px solid #e2e8f0',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                fontSize: '11px',
+              }}
+              formatter={(val: any) => [`${val} / 5`, 'Risk Score']}
+            />
             <Radar
               name="Risk Profile"
               dataKey="A"

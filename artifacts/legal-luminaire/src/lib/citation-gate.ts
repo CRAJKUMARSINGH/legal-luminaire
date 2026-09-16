@@ -30,6 +30,8 @@ export type CitationMatch = {
   status: GateStatus;
   /** Human-readable reason shown in the UI */
   reason: string;
+  /** Optional status note for additional context in the UI */
+  statusNote?: string;
   /** Tier from registry, or null if unrecognised */
   tier: AccuracyTier | "UNRECOGNISED" | null;
   /** Whether this citation is hard-blocked from filing */
