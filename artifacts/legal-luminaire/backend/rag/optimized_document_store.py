@@ -34,7 +34,7 @@ SPLITTER = RecursiveCharacterTextSplitter(
         "\n\n",  # Paragraph breaks
         "\n",   # Line breaks
         "।",    # Hindi sentence terminator
-        "\. ",  # Sentence with space
+        r"\. ", # Sentence with space
         ". ",   # Sentence
         "; ",   # Semicolon
         ", ",   # Comma

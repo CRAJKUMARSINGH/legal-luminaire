@@ -323,5 +323,20 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Compile backend (syntax check)
-        run: python -m compileall artifacts/legal-luminaire/backend
+      - name: Compile backend (syntax check with diagnostics)
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import py_compile
+          failures = []
+          for path in Path("artifacts/legal-luminaire/backend").rglob("*.py"):
+              try:
+                  py_compile.compile(str(path), doraise=True)
+              except py_compile.PyCompileError as exc:
+                  failures.append((path, exc))
+          if failures:
+              for path, error in failures:
+                  print(f"\nFAILED: {path}\n{error}")
+              raise SystemExit(1)
+          print("Backend syntax check passed")
+          PY

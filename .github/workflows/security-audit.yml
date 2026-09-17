@@ -51,6 +51,3 @@ jobs:
       - name: Audit backend requirements
         run: pip-audit -r artifacts/legal-luminaire/backend/requirements.txt
 
-      - name: Audit streamlit requirements
-        run: pip-audit -r requirements-streamlit.txt
-

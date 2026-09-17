@@ -18,7 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { VariantChain } from '@/components/VariantChain'
 import { CitationAddToDraft } from '@/components/CitationAddToDraft'
 import { usePleadingVariants } from '@/hooks/usePleadingVariants'
-import { variantsApi, type Archetype } from '@/lib/variantsApi'
+import { variantsApi, type Archetype, type CitationHit } from '@/lib/variantsApi'
 
 const KIND_TAG: Record<string, string> = {
   defence: '🛡 Defence', subsequent: '🔗 Subsequent', interlocutory: '⚖ Interlocutory',
@@ -133,7 +133,7 @@ export default function DraftVariantsPage() {
         <div className="space-y-3">
           <h2 className="font-semibold text-sm">🔍 Citation Search → Add to Draft</h2>
           <CitationAddToDraft
-            onInsert={(hit) => {
+            onInsert={(hit: CitationHit) => {
               addCitationToDraft(activeNode, hit)
             }}
           />
