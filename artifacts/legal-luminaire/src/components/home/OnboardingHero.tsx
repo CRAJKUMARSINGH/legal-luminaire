@@ -14,18 +14,18 @@ import {
 } from "lucide-react";
 
 const FEATURES = [
-  { icon: Search,        label: "AI Legal Research",        labelHi: "AI विधिक शोध",        color: "text-blue-600",   bg: "bg-blue-50 border-blue-100" },
-  { icon: Edit3,         label: "AI Legal Drafting",         labelHi: "AI प्रारूपण",          color: "text-violet-600", bg: "bg-violet-50 border-violet-100" },
-  { icon: ShieldCheck,   label: "Citation Verification",     labelHi: "उद्धरण सत्यापन",       color: "text-green-600",  bg: "bg-green-50 border-green-100" },
-  { icon: Clock,         label: "Case Chronology",           labelHi: "केस कालक्रम",          color: "text-amber-600",  bg: "bg-amber-50 border-amber-100" },
-  { icon: Scale,         label: "Case Management",           labelHi: "केस प्रबंधन",          color: "text-primary",    bg: "bg-primary/5 border-primary/20" },
-  { icon: Gavel,         label: "Court & Case Tracking",     labelHi: "कोर्ट ट्रैकिंग",       color: "text-orange-600", bg: "bg-orange-50 border-orange-100" },
-  { icon: AlertTriangle, label: "Deadline Tracking",         labelHi: "समय-सीमा ट्रैकिंग",    color: "text-red-600",    bg: "bg-red-50 border-red-100" },
-  { icon: FileText,      label: "Document Management",       labelHi: "दस्तावेज़ प्रबंधन",     color: "text-blue-500",   bg: "bg-blue-50/70 border-blue-100" },
-  { icon: Users,         label: "Client & Matter Mgmt",      labelHi: "मुवक्किल/वाद",         color: "text-indigo-600", bg: "bg-indigo-50 border-indigo-100" },
-  { icon: Zap,           label: "Workflow Automation",       labelHi: "कार्यप्रवाह",          color: "text-yellow-600", bg: "bg-yellow-50 border-yellow-100" },
-  { icon: Bot,           label: "8 AI Agents",               labelHi: "8 AI एजेंट",           color: "text-primary",    bg: "bg-primary/5 border-primary/20" },
-  { icon: FlaskConical,  label: "Forensic Standards",        labelHi: "फॉरेन्सिक मानक",       color: "text-teal-600",   bg: "bg-teal-50 border-teal-100" },
+  { icon: Search,        label: "AI Legal Research",        labelHi: "AI विधिक शोध",        color: "text-blue-600",   bg: "bg-blue-50 border-blue-100", route: "/citation-search" },
+  { icon: Edit3,         label: "AI Legal Drafting",         labelHi: "AI प्रारूपण",          color: "text-violet-600", bg: "bg-violet-50 border-violet-100", route: "/copilot" },
+  { icon: ShieldCheck,   label: "Citation Verification",     labelHi: "उद्धरण सत्यापन",       color: "text-green-600",  bg: "bg-green-50 border-green-100", route: "/verification-report" },
+  { icon: Clock,         label: "Case Chronology",           labelHi: "केस कालक्रम",          color: "text-amber-600",  bg: "bg-amber-50 border-amber-100", route: "/case/case-01/chronology" },
+  { icon: Scale,         label: "Case Management",           labelHi: "केस प्रबंधन",          color: "text-primary",    bg: "bg-primary/5 border-primary/20", route: "/cases" },
+  { icon: Gavel,         label: "Court & Case Tracking",     labelHi: "कोर्ट ट्रैकिंग",       color: "text-orange-600", bg: "bg-orange-50 border-orange-100", route: "/court-tracker" },
+  { icon: AlertTriangle, label: "Deadline Tracking",         labelHi: "समय-सीमा ट्रैकिंग",    color: "text-red-600",    bg: "bg-red-50 border-red-100", route: "/case/case-01/deadlines" },
+  { icon: FileText,      label: "Document Management",       labelHi: "दस्तावेज़ प्रबंधन",     color: "text-blue-500",   bg: "bg-blue-50/70 border-blue-100", route: "/case/case-01/documents" },
+  { icon: Users,         label: "Client & Matter Mgmt",      labelHi: "मुवक्किल/वाद",         color: "text-indigo-600", bg: "bg-indigo-50 border-indigo-100", route: "/client-matter" },
+  { icon: Zap,           label: "Workflow Automation",       labelHi: "कार्यप्रवाह",          color: "text-yellow-600", bg: "bg-yellow-50 border-yellow-100", route: "/litigation-workflow" },
+  { icon: Bot,           label: "8 AI Agents",               labelHi: "8 AI एजेंट",           color: "text-primary",    bg: "bg-primary/5 border-primary/20", route: "/ai-agents" },
+  { icon: FlaskConical,  label: "Forensic Standards",        labelHi: "फॉरेन्सिक मानक",       color: "text-teal-600",   bg: "bg-teal-50 border-teal-100", route: "/standards-index" },
 ];
 
 const WORKFLOW_STEPS = [
@@ -147,13 +147,15 @@ export function OnboardingHero() {
               {FEATURES.map(f => {
                 const Icon = f.icon;
                 return (
-                  <div key={f.label} className={`flex items-center gap-2 p-2.5 rounded-lg border ${f.bg}`}>
-                    <Icon className={`h-4 w-4 shrink-0 ${f.color}`} />
-                    <div className="min-w-0">
-                      <p className="text-xs font-medium leading-tight truncate">{f.label}</p>
-                      <p className="text-[10px] text-muted-foreground truncate">{f.labelHi}</p>
+                  <Link key={f.label} href={f.route}>
+                    <div className={`flex items-center gap-2 p-2.5 rounded-lg border ${f.bg} cursor-pointer hover:shadow-sm hover:scale-[1.02] transition-all group`}>
+                      <Icon className={`h-4 w-4 shrink-0 ${f.color}`} />
+                      <div className="min-w-0">
+                        <p className="text-xs font-medium leading-tight truncate group-hover:text-primary transition-colors">{f.label}</p>
+                        <p className="text-[10px] text-muted-foreground truncate">{f.labelHi}</p>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>

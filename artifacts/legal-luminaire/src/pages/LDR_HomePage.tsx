@@ -101,9 +101,9 @@ export default function HomePage({ lang }: Props) {
       {/* Navigation cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {[
-          { path: "/ldr-packet", en: "Packet A — Cement Plaster", hi: "पैकेट A — सीमेंट प्लास्टर", result: "FSL: 1:18  |  Standard: 1:4–1:6", color: "border-blue-600 bg-blue-50" },
-          { path: "/ldr-packet", en: "Packet B — Masonry Mortar", hi: "पैकेट B — पत्थर चिनाई मसाला", result: "FSL: 1:17  |  Standard: M3/M4", color: "border-blue-600 bg-blue-50" },
-          { path: "/ldr-packet", en: "Packet C — Foundation Concrete", hi: "पैकेट C — नींव कंक्रीट", result: "FSL: 1:5.75:9.5  |  Wrong method", color: "border-blue-600 bg-blue-50" },
+          { path: "/ldr-packet?packet=A", en: "Packet A — Cement Plaster", hi: "पैकेट A — सीमेंट प्लास्टर", result: "FSL: 1:18  |  Standard: 1:4–1:6", color: "border-blue-600 bg-blue-50" },
+          { path: "/ldr-packet?packet=B", en: "Packet B — Masonry Mortar", hi: "पैकेट B — पत्थर चिनाई मसाला", result: "FSL: 1:17  |  Standard: M3/M4", color: "border-blue-600 bg-blue-50" },
+          { path: "/ldr-packet?packet=C", en: "Packet C — Foundation Concrete", hi: "पैकेट C — नींव कंक्रीट", result: "FSL: 1:5.75:9.5  |  Wrong method", color: "border-blue-600 bg-blue-50" },
           { path: "/ldr-comparison", en: "21% Silica Assumption & Prayer", hi: "21% सिलिका मान्यता एवं प्रार्थना पत्र", result: "Undermines ALL three results", color: "border-yellow-600 bg-yellow-50" },
           { path: "/ldr-precedents", en: "SC/HC Precedents (10 Verified)", hi: "सर्वोच्च/उच्च न्यायालय पूर्वनिर्णय", result: "Maneka Gandhi, Mohd. Khalid & more", color: "border-green-600 bg-green-50" },
           { path: "/ldr-standards", en: "23 Standards Cited", hi: "23 उद्धृत मानक", result: "IS, ASTM, BS EN, NABL, ISO", color: "border-purple-600 bg-purple-50" },
