@@ -1,7 +1,7 @@
-﻿/**
- * IntakeExamplesPage — Week 01 Kiro & Week 02 Devin Drafting Intake Examples (EX-001 to EX-021)
+/**
+ * IntakeExamplesPage — all 51 synthetic drafting-intake examples
  * Route: /intake-examples
- * Source: SUPPLEMENT/SUPPLEMENT REPLIT/WEEK_01_KIRO.md & WEEK_02_DEVIN.md
+ * Source: SUPPLEMENT/WEEK_01_KIRO.md through WEEK_05_INTEGRATION.md
  * ALL DATA SYNTHETIC / DEMO — not legal advice — not filing-ready without supervising-advocate approval.
  */
 import { useState, useMemo } from "react";
@@ -14,8 +14,8 @@ import {
   CheckCircle2, Clock, FileText, Shield, Info, BookOpen,
   User, Gavel, Home, Building2, Users, Car, Briefcase, TreePine,
 } from "lucide-react";
-import { WEEK01_EXAMPLES, type IntakeExample as Week01IntakeExample } from "@/data/demo-cases/week01-intake-examples";
-import { WEEK02_EXAMPLES, type IntakeExample as Week02IntakeExample } from "@/data/demo-cases/week02-intake-examples";
+import type { IntakeExample } from "@/data/demo-cases/intake-example-types";
+import { ALL_INTAKE_EXAMPLES } from "@/data/demo-cases/all-intake-examples";
 
 // ── Colour config ─────────────────────────────────────────────────────────
 const WORKFLOW_CONFIG: Record<string, { label: string; color: string }> = {
@@ -81,13 +81,8 @@ const DRAFT_TYPE_COLOR: Record<string, string> = {
 };
 
 // ── Combined examples ───────────────────────────────────────────────────────
-const ALL_EXAMPLES: (Week01IntakeExample | Week02IntakeExample)[] = [
-  ...WEEK01_EXAMPLES,
-  ...WEEK02_EXAMPLES,
-];
-
 // ── Single card ───────────────────────────────────────────────────────────
-function ExampleCard({ ex }: { ex: Week01IntakeExample | Week02IntakeExample }) {
+function ExampleCard({ ex }: { ex: IntakeExample }) {
   const [open, setOpen] = useState(false);
   const Icon = DOMAIN_ICON[ex.domain] ?? Scale;
   const wf = WORKFLOW_CONFIG[ex.workflowState] ?? WORKFLOW_CONFIG["intake-only"];
@@ -200,6 +195,18 @@ function ExampleCard({ ex }: { ex: Week01IntakeExample | Week02IntakeExample }) 
                 <p className="text-xs text-red-700">{ex.adverseFact}</p>
               </div>
             )}
+            <div className={`mt-2 rounded border p-3 ${
+              ex.terminalOutcome.kind === "hold" || ex.terminalOutcome.kind === "no-filing"
+                ? "bg-red-50 border-red-200"
+                : ex.terminalOutcome.kind === "review" || ex.terminalOutcome.kind === "refer"
+                  ? "bg-amber-50 border-amber-200"
+                  : "bg-green-50 border-green-200"
+            }`}>
+              <p className="text-xs font-semibold text-foreground">Logical conclusion</p>
+              <p className="text-xs font-semibold mt-0.5">{ex.terminalOutcome.label}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{ex.terminalOutcome.rationale}</p>
+              <p className="text-xs mt-1"><strong>Next safe action:</strong> {ex.terminalOutcome.nextAction}</p>
+            </div>
           </Section>
 
           {/* 4. Drafts */}
@@ -263,9 +270,9 @@ export default function IntakeExamplesPage() {
   const [filterDomain, setFilterDomain] = useState("all");
   const [filterComplexity, setFilterComplexity] = useState("all");
 
-  const domains = useMemo(() => Array.from(new Set(ALL_EXAMPLES.map(e => e.domain))), []);
+  const domains = useMemo(() => Array.from(new Set(ALL_INTAKE_EXAMPLES.map(e => e.domain))), []);
 
-  const filtered = useMemo(() => ALL_EXAMPLES.filter(e => {
+  const filtered = useMemo(() => ALL_INTAKE_EXAMPLES.filter(e => {
     const q = search.toLowerCase();
     const matchSearch = !q || e.title.toLowerCase().includes(q) || e.domain.toLowerCase().includes(q) || e.background.toLowerCase().includes(q);
     const matchDomain = filterDomain === "all" || e.domain === filterDomain;
@@ -282,17 +289,17 @@ export default function IntakeExamplesPage() {
             <Scale className="h-6 w-6 text-primary" />
           </div>
           <div className="flex-1">
-            <h1 className="text-xl font-bold">Drafting Intake Examples — Week 01 & Week 02</h1>
+            <h1 className="text-xl font-bold">Drafting Intake Examples — Weeks 01–05</h1>
             <p className="text-sm text-muted-foreground mt-1">
-              EX-001 to EX-021 · Civil, Family, Property, Consumer, Service, Public Law, Criminal, Constitutional<br />
-              <span className="text-[10px]">Source: DU Faculty of Law — Drafting, Pleadings &amp; Conveyancing (educational adaptation) · Week 01 Owner: Kiro · Week 02 Owner: Devin</span>
+              EX-001 to EX-051 · Civil, Family, Property, Consumer, Public Law, Criminal, Conveyancing, Technology and Regulatory<br />
+              <span className="text-[10px]">Source: DU Faculty of Law — Drafting, Pleadings &amp; Conveyancing (educational adaptation) · every path ends in a safe logical conclusion</span>
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
               <Badge className="bg-amber-500 text-white text-[9px] font-black">SYNTHETIC / DEMO</Badge>
               <Badge variant="outline" className="text-[9px]">Not Legal Advice</Badge>
               <Badge variant="outline" className="text-[9px]">Not Filing-Ready</Badge>
               <Badge variant="outline" className="text-[9px]">Supervising Advocate Approval Required</Badge>
-              <Badge variant="outline" className="text-[9px]">{ALL_EXAMPLES.length} examples</Badge>
+              <Badge variant="outline" className="text-[9px]">{ALL_INTAKE_EXAMPLES.length} examples</Badge>
             </div>
           </div>
         </div>
@@ -315,16 +322,16 @@ export default function IntakeExamplesPage() {
           <option value="Advanced">Advanced</option>
           <option value="Expert">Expert</option>
         </select>
-        <span className="text-xs text-muted-foreground">{filtered.length}/{ALL_EXAMPLES.length} shown</span>
+        <span className="text-xs text-muted-foreground">{filtered.length}/{ALL_INTAKE_EXAMPLES.length} shown</span>
       </div>
 
       {/* Stat row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "Total Examples", value: ALL_EXAMPLES.length, color: "text-primary" },
-          { label: "Blocked Drafts", value: ALL_EXAMPLES.flatMap(e=>e.drafts).filter(d=>d.status==="blocked").length, color: "text-red-600" },
-          { label: "Unresolved Facts", value: ALL_EXAMPLES.reduce((n,e)=>n+e.unresolvedFacts.length,0), color: "text-amber-600" },
-          { label: "Supervisor Approval Needed", value: ALL_EXAMPLES.flatMap(e=>e.drafts).filter(d=>d.approvalRequired).length, color: "text-orange-600" },
+          { label: "Total Examples", value: ALL_INTAKE_EXAMPLES.length, color: "text-primary" },
+          { label: "Blocked Drafts", value: ALL_INTAKE_EXAMPLES.flatMap(e=>e.drafts).filter(d=>d.status==="blocked").length, color: "text-red-600" },
+          { label: "Unresolved Facts", value: ALL_INTAKE_EXAMPLES.reduce((n,e)=>n+e.unresolvedFacts.length,0), color: "text-amber-600" },
+          { label: "Supervisor Approval Needed", value: ALL_INTAKE_EXAMPLES.flatMap(e=>e.drafts).filter(d=>d.approvalRequired).length, color: "text-orange-600" },
         ].map(s => (
           <div key={s.label} className="rounded-lg border bg-card p-3 text-center">
             <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>

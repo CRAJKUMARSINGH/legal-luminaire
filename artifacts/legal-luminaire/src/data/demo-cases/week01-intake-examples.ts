@@ -1,4 +1,4 @@
-﻿/**
+/**
  * WEEK 01 — KIRO — Drafting Intake Examples EX-001 to EX-011
  * Source: SUPPLEMENT/SUPPLEMENT REPLIT/WEEK_01_KIRO.md
  * Schema: 5-part intake workflow per Legal Luminaire accuracy-rules.md
@@ -11,79 +11,17 @@
  * Never invent a date, statute, citation, party, amount or document.
  */
 
-export type DraftState =
-  | "intake-only"
-  | "research-needed"
-  | "draft"
-  | "review-needed"
-  | "ready-for-supervising-advocate"
-  | "blocked";
+import type {
+  ApproachStatus,
+  DocumentCompleteness,
+  DraftState,
+  IntakeExample,
+} from "./intake-example-types";
+import { withTerminalOutcome } from "./intake-example-utils";
 
-export type ApproachStatus =
-  | "cold-walk-in"
-  | "referral"
-  | "returning-client"
-  | "online-intake"
-  | "legal-aid-camp"
-  | "urgent-referral";
+export type { ApproachStatus, DocumentCompleteness, DraftState, IntakeExample };
 
-export type DocumentCompleteness = "complete" | "partial" | "incomplete" | "unreadable";
-
-export type IntakeExample = {
-  /** EX-001 … EX-011 */
-  id: string;
-  title: string;
-  domain: string;
-  complexity: "Basic" | "Intermediate" | "Advanced";
-  approachStatus: ApproachStatus;
-  approachStatusNote: string;
-  urgency: "routine" | "moderate" | "urgent" | "critical";
-  documentCompleteness: DocumentCompleteness;
-  workflowState: DraftState;
-
-  /** Section 0 — Background */
-  background: string;
-  backgroundHi?: string;
-
-  /** Section 1 — Data and documents brought */
-  documents: string[];
-  missingDocuments: string[];
-  documentGaps: string[];
-
-  /** Section 2 — Client request */
-  clientRequest: string;
-  requestClarity: "clear" | "overbroad" | "unclear" | "conflicting";
-  requestNote?: string;
-
-  /** Section 3 — Action plan */
-  actionPlan: {
-    facts: string[];
-    research: string[];
-    drafting: string[];
-    review: string[];
-    filing: string[];
-  };
-  unresolvedFacts: string[];
-  adverseFact?: string;
-
-  /** Section 4 — Drafts */
-  drafts: Array<{
-    type: "notice" | "pleading" | "application" | "affidavit" | "deed" | "checklist" | "no-filing-note" | "memo" | "chronology" | "index";
-    title: string;
-    status: DraftState;
-    jurisdiction?: string;
-    limitationNote?: string;
-    approvalRequired: boolean;
-    blockedReason?: string;
-  }>;
-
-  /** Accuracy gate */
-  citationGate: "BLOCKED" | "PENDING" | "SECONDARY";
-  limitationGate: "KNOWN" | "UNKNOWN" | "URGENT" | "EXPIRED-RISK";
-  syntheticLabel: "SYNTHETIC / DEMO";
-};
-
-export const WEEK01_EXAMPLES: IntakeExample[] = [
+export const WEEK01_EXAMPLES = ([
   // ─────────────────────────────────────────────────────────────────────────
   // EX-001 — Unpaid MSME Invoice after Accepted Delivery
   // ─────────────────────────────────────────────────────────────────────────
@@ -1074,6 +1012,6 @@ export const WEEK01_EXAMPLES: IntakeExample[] = [
     limitationGate: "UNKNOWN",
     syntheticLabel: "SYNTHETIC / DEMO",
   },
-];
+] as Array<Omit<IntakeExample, "terminalOutcome">>).map(withTerminalOutcome);
 
 export type { IntakeExample as Week01IntakeExample };
