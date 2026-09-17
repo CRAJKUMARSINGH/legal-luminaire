@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { SaraswatiMascot } from "@/components/SaraswatiMascot";
 import {
   Scale, ShieldCheck, Search, Edit3, Clock, FlaskConical,
   BookOpen, ArrowRight, PlayCircle, HelpCircle, Bot, Users,
@@ -43,9 +44,7 @@ export function OnboardingHero() {
       {/* Hero */}
       <div className="rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 via-background to-blue-50/30 p-6 md:p-8">
         <div className="flex flex-col md:flex-row items-start gap-5">
-          <div className="h-14 w-14 rounded-2xl bg-primary/15 border border-primary/20 flex items-center justify-center shrink-0">
-            <Scale className="h-7 w-7 text-primary" />
-          </div>
+          <SaraswatiMascot size="lg" onClick={() => window.location.href = "/about"} />
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <h1 className="text-2xl md:text-3xl font-bold">Legal Luminaire</h1>
@@ -67,7 +66,7 @@ export function OnboardingHero() {
             </p>
             <div className="flex flex-wrap gap-2 mt-4">
               <Link href="/demo-browser">
-                <Button className="gap-1.5 bg-primary"><PlayCircle className="h-4 w-4" /> Try 26 Demo Cases</Button>
+                <Button className="gap-1.5 bg-primary"><PlayCircle className="h-4 w-4" /> Try All Demo Cases</Button>
               </Link>
               <Link href="/how-to-use">
                 <Button variant="outline" className="gap-1.5"><HelpCircle className="h-4 w-4" /> How To Use</Button>

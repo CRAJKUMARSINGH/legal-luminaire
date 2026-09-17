@@ -218,28 +218,31 @@ export async function buildCaseRecord(demoId: string): Promise<CaseRecord | null
         CASE04_PRECEDENTS_NORMALISED,
         CASE04_DEMANDS.map((d, i) => `${i + 1}. ${d}`),
       );
-    case "TC-27":
+    case "TC-101":
       return fromStub(card, TC27_META, TC27_GROUNDS, TC27_PRECEDENTS, TC27_PRAYER);
-    case "TC-28":
+    case "TC-102":
       return fromStub(card, TC28_META, TC28_GROUNDS, TC28_PRECEDENTS, TC28_PRAYER);
-    case "TC-29":
+    case "TC-103":
       return fromStub(card, TC29_META, TC29_GROUNDS, TC29_PRECEDENTS, TC29_PRAYER);
-    case "TC-30":
+    case "TC-104":
       return fromStub(card, TC30_META, TC30_GROUNDS, TC30_PRECEDENTS, TC30_PRAYER);
-    case "TC-31":
+    case "TC-105":
       return fromStub(card, TC31_META, TC31_GROUNDS, TC31_PRECEDENTS, TC31_PRAYER);
-    case "TC-32":
+    case "TC-106":
       return fromStub(card, TC32_META, TC32_GROUNDS, TC32_PRECEDENTS, TC32_PRAYER);
-    case "TC-33":
+    case "TC-107":
       return fromStub(card, TC33_META, TC33_GROUNDS, TC33_PRECEDENTS, TC33_PRAYER);
-    case "TC-34":
+    case "TC-108":
       return fromStub(card, TC34_META, TC34_GROUNDS, TC34_PRECEDENTS, TC34_PRAYER);
-    case "TC-35":
+    case "TC-109":
       return fromStub(card, TC35_META, TC35_GROUNDS, TC35_PRECEDENTS, TC35_PRAYER);
-    case "TC-36":
+    case "TC-110":
       return fromStub(card, TC36_META, TC36_GROUNDS, TC36_PRECEDENTS, TC36_PRAYER);
     default:
-      if (scenarioTypeFor(demoId) === "showcase") return loadInfraArb(demoId);
+      if (demoId.startsWith("TC-22") || demoId.startsWith("TC-23") || demoId.startsWith("TC-24") || demoId.startsWith("TC-25") || demoId.startsWith("TC-26")) {
+        const infra = await loadInfraArb(demoId);
+        if (infra) return infra;
+      }
       return fromCard(card);
   }
 }

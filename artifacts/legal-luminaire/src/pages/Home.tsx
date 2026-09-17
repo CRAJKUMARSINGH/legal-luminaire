@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { HarveyEvaluationPanel } from "@/components/HarveyEvaluationPanel";
 import { GuidedFlow } from "@/components/GuidedFlow";
+import { SaraswatiMascot, SaraswatiMascotCompact } from "@/components/SaraswatiMascot";
 import { featureFlags } from "@/config/featureFlags";
 import { integrationFlags } from "@/lib/featureFlags";
 import { useCaseContext } from "@/context/CaseContext";
@@ -143,6 +144,18 @@ export default function Home() {
 
   return (
     <div className="space-y-6 p-6 max-w-7xl mx-auto">
+
+      {/* Header with Saraswati Mascot */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <SaraswatiMascot size="lg" onClick={() => window.location.href = "/about"} />
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Legal Luminaire</h1>
+            <p className="text-gray-600">Accuracy-First Indian Legal AI & Forensic Defense Suite</p>
+          </div>
+        </div>
+        <SaraswatiMascotCompact onClick={() => window.location.href = "/about"} />
+      </div>
 
       {/* Onboarding hero: shown ONLY when no case is loaded yet */}
       {!selectedCase && <OnboardingHero />}

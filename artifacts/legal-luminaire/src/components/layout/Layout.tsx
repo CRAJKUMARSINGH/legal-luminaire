@@ -54,7 +54,7 @@ export function Layout({ children }: LayoutProps) {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            {isDemoMode && (
+            {(isDemoMode || selectedCase.isDemo) && (
               <span
                 data-testid="demo-badge"
                 className="inline-flex items-center gap-1 text-[9px] font-black tracking-widest bg-amber-500 text-white px-2.5 py-1 rounded-full shadow-lg"
@@ -71,7 +71,7 @@ export function Layout({ children }: LayoutProps) {
             </span>
           </div>
         </header>
-        {isDemoMode && <DemoBanner caseTitle={selectedCase.title} />}
+        {(isDemoMode || selectedCase.isDemo) && <DemoBanner caseTitle={selectedCase.title} />}
         <Breadcrumbs />
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>

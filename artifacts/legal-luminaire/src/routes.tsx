@@ -56,6 +56,17 @@ const UserManualPrintPage     = lazy(() => import("@/pages/UserManualPrintPage")
 // Week 01 Kiro — Drafting Intake Examples EX-001..EX-011
 const IntakeExamplesPage      = lazy(() => import("@/pages/IntakeExamplesPage"));
 
+// Week 04 Drafting Intake Examples EX-033..EX-041
+const Example33Page = lazy(() => import("@/pages/Example33Page"));
+const Example34Page = lazy(() => import("@/pages/Example34Page"));
+const Example35Page = lazy(() => import("@/pages/Example35Page"));
+const Example36Page = lazy(() => import("@/pages/Example36Page"));
+const Example37Page = lazy(() => import("@/pages/Example37Page"));
+const Example38Page = lazy(() => import("@/pages/Example38Page"));
+const Example39Page = lazy(() => import("@/pages/Example39Page"));
+const Example40Page = lazy(() => import("@/pages/Example40Page"));
+const Example41Page = lazy(() => import("@/pages/Example41Page"));
+
 // Phase 3-6 Intelligence Pages
 const CitationGraphPage = lazy(() => import("@/pages/CitationGraphPage"));
 const CaseSimilarityPage = lazy(() => import("@/pages/CaseSimilarityPage"));
@@ -257,12 +268,22 @@ export function Router() {
           {/* Bilingual Generator */}
           <Route path="/bilingual-generator"  component={() => Wrap(<BilingualGeneratorPage />,  "BilingualGeneratorPage")} />
           <Route path="/manual"               component={() => Wrap(<HowToUsePage />,            "HowToUsePage")} />
-          <Route path="/about"                component={() => Wrap(<AboutCreatorPage />,         "AboutCreatorPage")} />
           <Route path="/creator"              component={() => Wrap(<AboutCreatorPage />,         "AboutCreatorPage")} />
           <Route path="/user-manual-pdf"      component={() => Wrap(<UserManualPrintPage />,      "UserManualPrintPage")} />
           <Route path="/manual-pdf"           component={() => Wrap(<UserManualPrintPage />,      "UserManualPrintPage")} />
           {/* Week 01 Kiro — Drafting Intake Examples */}
           <Route path="/intake-examples"      component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
+          <Route path="/drafting-examples"    component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
+          {/* Week 04 Drafting Intake Examples */}
+          <Route path="/example-33" component={() => Wrap(<Example33Page />, "Example33Page")} />
+          <Route path="/example-34" component={() => Wrap(<Example34Page />, "Example34Page")} />
+          <Route path="/example-35" component={() => Wrap(<Example35Page />, "Example35Page")} />
+          <Route path="/example-36" component={() => Wrap(<Example36Page />, "Example36Page")} />
+          <Route path="/example-37" component={() => Wrap(<Example37Page />, "Example37Page")} />
+          <Route path="/example-38" component={() => Wrap(<Example38Page />, "Example38Page")} />
+          <Route path="/example-39" component={() => Wrap(<Example39Page />, "Example39Page")} />
+          <Route path="/example-40" component={() => Wrap(<Example40Page />, "Example40Page")} />
+          <Route path="/example-41" component={() => Wrap(<Example41Page />, "Example41Page")} />
           <Route path="/drafting-examples"    component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
           {featureFlags.hybridStandardsValidity && (
             <Route path="/case/:id/standards-validity"  component={() => Wrap(<StandardsValidity />, "StandardsValidity")} />

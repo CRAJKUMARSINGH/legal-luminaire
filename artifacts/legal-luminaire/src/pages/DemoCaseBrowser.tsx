@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import {
   Scale, Search, ArrowRight, Loader2,
   PlayCircle, Building2, FileText, Gavel, ShieldCheck,
-  Users, Briefcase, Landmark,
+  Users, Briefcase, Landmark, ShieldAlert,
 } from "lucide-react";
 import {
   ALL_DEMO_CASES, DEMO_CATEGORIES, filterDemoCases,
@@ -40,6 +40,7 @@ const CATEGORY_ICONS: Record<string, React.ComponentType<{ className?: string }>
   Consumer: Users,
   Commercial: Briefcase,
   Infrastructure: Building2,
+  "Financial Crime": ShieldAlert,
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -49,6 +50,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Consumer: "bg-orange-50 text-orange-700 border-orange-200",
   Commercial: "bg-slate-50 text-slate-700 border-slate-200",
   Infrastructure: "bg-amber-50 text-amber-700 border-amber-200",
+  "Financial Crime": "bg-emerald-50 text-emerald-700 border-emerald-200",
 };
 
 const SCORE_COLOR = (score: number) =>
