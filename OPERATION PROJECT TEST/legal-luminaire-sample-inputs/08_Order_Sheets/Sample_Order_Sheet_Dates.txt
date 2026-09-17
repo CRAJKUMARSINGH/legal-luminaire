@@ -1,0 +1,29 @@
+EXTRACT OF ORDER SHEETS / PROCEEDINGS
+(For Chronology Studio & Limitation Engine testing)
+
+Case: State vs Hemraj Singh
+FIR 214/2025 PS Civil Lines, Jaipur
+Court: JMFC, Jaipur City
+
+18.03.2025 – FIR registered. Investigation begins.
+20.03.2025 – Samples sent to FSL under seal.
+05.04.2025 – Statements of injured witnesses recorded.
+12.05.2025 – FSL report received (FSL/JP/CIVIL/2025/0876).
+05.06.2025 – Accused arrested. Produced before Magistrate. Remanded to judicial custody for 14 days.
+12.06.2025 – Bail application moved. Interim bail granted with conditions.
+19.06.2025 – Regular bail granted by JMFC on furnishing personal bond of Rs. 50,000 with one surety.
+28.06.2025 – Charge sheet filed under Section 193 BNSS.
+15.07.2025 – Cognizance taken. Accused summoned for 05.08.2025.
+05.08.2025 – Accused appears. Copy of charge sheet supplied. Case adjourned for arguments on charge / discharge to 26.08.2025.
+26.08.2025 – Arguments on discharge partly heard. Adjourned to 16.09.2025 for remaining arguments and orders.
+16.09.2025 – (Next date – within limitation window for further applications)
+
+Key limitation-related observations for testing:
+- Date of offence: 17.03.2025
+- Date of knowledge of FSL findings: 12.05.2025
+- Arrest: 05.06.2025
+- Charge sheet: 28.06.2025
+- Possible Section 5 Limitation Act or procedural limitation points for any revision / further remedy.
+
+---
+SYNTHETIC DOCUMENT – Ideal for testing automatic timeline extraction and deadline alerts.

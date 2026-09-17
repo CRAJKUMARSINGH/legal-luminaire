@@ -1,0 +1,22 @@
+IN THE COURT OF THE LEARNED DISTRICT JUDGE (COMMERCIAL COURT), SAKET, NEW DELHI
+COMMERCIAL SUIT (COMMERCIAL IP) NO. 884 OF 2025
+
+IN THE MATTER OF:
+Apex Telematics Private Limited
+Through Authorized Representative, Mohan Co-op Industrial Estate, Mathura Road, New Delhi ... PLAINTIFF
+VERSUS
+1. QuantEdge Analytics LLP, Okhla Phase-II, New Delhi
+2. Tanmay Ray (Ex-Lead Architect), Pocket A, Sarita Vihar, New Delhi ... DEFENDANTS
+
+PLAINT UNDER ORDER VII RULE 1 READ WITH ORDER XXXIX RULES 1 & 2 OF CPC, 1908 AND SECTION 13 OF COMMERCIAL COURTS ACT, 2015 FOR PERMANENT INJUNCTION RESTRAINING MISAPPROPRIATION OF TRADE SECRETS & DAMAGES OF RS. 2,50,00,000/-
+
+MOST RESPECTFULLY SHOWETH:
+1. Plaintiff is a market pioneer in edge telematics and algorithmic fleet routing engines. Defendant No. 2 was employed as Lead Architect until voluntary resignation on 12.08.2024, bound by strict non-disclosure, IP assignment, and 12-month post-employment restrictive covenants.
+2. Digital audit of workstation endpoint and GitLab logs reveals that between 01.08.2024 and 10.08.2024, Defendant No. 2 exfiltrated 4.2 Gigabytes of proprietary repository code (repo: apex-core-routing-engine-v4) to unauthorized encrypted external media.
+3. In January 2025, Defendant No. 1 (founded by Defendant No. 2) launched commercial product 'EdgeTrack-9', incorporating verbatim cryptographic payload structures, proprietary protocol schemas, and identical algorithmic parameters of Plaintiff.
+4. Plaintiff sent cease-and-desist letter on 20.01.2025; Defendants responded with frivolous denial on 04.02.2025.
+5. PRAYER:
+   (a) Decree of permanent injunction restraining Defendants from using, marketing, or licensing 'EdgeTrack-9';
+   (b) Mandatory injunction directing destruction and delivery up of all exfiltrated code, documentation, and derivatives;
+   (c) Decree for damages of INR 2,50,00,000/- and rendition of accounts;
+   (d) Ex-parte ad-interim injunction under Order XXXIX Rules 1 & 2 CPC.

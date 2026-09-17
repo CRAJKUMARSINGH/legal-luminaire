@@ -1,0 +1,23 @@
+CENTRAL FORENSIC SCIENCE LABORATORY (CFSL / FSL)
+DIRECTORATE OF FORENSIC SCIENCE SERVICES, NEW DELHI
+REPORT NO.: CFSL/DL/CYBER/2025/1108
+EXAMINATION OF ELECTRONIC EVIDENCE IN FIR NO. 0412/2025
+
+TARGET EXHIBITS:
+1. Exhibit E-1: Western Digital 2TB External Hard Disk (S/N: WX11A89201)
+2. Exhibit E-2: Apple iPhone 15 Pro (IMEI: 354892019921021)
+
+ANALYSIS, ANOMALIES & FORENSIC STANDARD DEVIATIONS:
+1. HASH INTEGRITY CORRUPTION (VIOLATION OF IS/ISO/IEC 27037:2012):
+   - Hash logged at scene of seizure (Panchnama dated 12.02.2025):
+     SHA-256: 4a8f9b7c210d48123a9b910283c0f491823746a1b2c3d4e5f6a7b8c9d0e1f2a3
+   - Hash computed at CFSL intake on 05.04.2025:
+     SHA-256: 9e3d1c8a7420bf014798124018274aefbc982103487192837461524310982341
+   - Finding: Hardware write-blocker was omitted during preliminary triage by the Investigating Officer, altering file system access times (MAC timestamps). Blatant departure from ISO/IEC 27037 Clause 6.4 (Collection of digital evidence).
+
+2. BREAK IN CHAIN OF CUSTODY (VIOLATION OF POLICE ACT & HIGH COURT RULES):
+   - Malkhana Register No. 19 lacks endorsement of deposit on 13.02.2025. Parcel seal was found smudged without signature of the Moharrir.
+
+3. CERTIFICATE UNDER SECTION 63 BHARATIYA SAKSHYA ADHINIYAM, 2023 (FORMERLY SECTION 65B INDIAN EVIDENCE ACT, 1872):
+   - Certificate issued on 10.04.2025 by IT Contractor Mr. Sunil Arora, who was not in lawful charge or responsible management of the corporate server during the relevant period of 01.01.2025 - 15.01.2025.
+   - Non-compliant with statutory test laid down in Arjun Panditrao Khotkar v. Kailash Kushanrao Gorantyal (2020) 7 SCC 1.

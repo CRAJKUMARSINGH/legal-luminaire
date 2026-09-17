@@ -1,0 +1,31 @@
+=== SYNTHETIC FIR EXCERPT — FOR TESTING ONLY ===
+Document ID: FIR-001 (TEST OBJECT)
+Source: Synthetic demo case "State v. Hemraj" (stadium collapse), 100% fictional.
+Test pack: legal-luminaire-test-pack | Use on route: /new-case-ingest
+
+FIRST INFORMATION REPORT
+FIR No. 042/2026
+Police Station: City Kotwali, District Rampur
+Date & Time of FIR: 15 March 2026, 6:45 PM
+Date & Time of Occurrence: 12 March 2026, approx. 4:10 PM
+
+Complainant: Shri Ramesh Chandra Verma, age 54, resident of H.No. 12, Gandhi Nagar,
+Rampur, mobile 98290XXXXX.
+
+Accused named in FIR: (1) Hemraj Suthar, age 47, contractor, M/s Suthar Constructions,
+Rampur; (2) Pitambara Builders Pvt. Ltd. through its director Roopam Agrawal, age 39.
+
+Allegation (excerpt): That on 12.03.2026 at about 4:10 PM, the temporary spectator gallery
+erected by the accused for the district athletics meet collapsed, causing injuries to 23
+spectators, of whom one, Smt. Kamla Devi (age 61), succumbed to injuries on 14.03.2026 at
+District Hospital, Rampur. The gallery was allegedly erected using substandard welding and
+without the mandatory structural stability certificate under the relevant municipal bylaws.
+
+Sections invoked: IPC 304A, 337, 338 read with Section 3(5) BNS (as applicable).
+Investigating Officer: SI Dinesh Kumar, City Kotwali.
+
+KEY TEST ANCHORS (verify the tool extracts these EXACTLY):
+- Occurrence date: 12 March 2026
+- Death date: 14 March 2026 (death occurred TWO DAYS after event — limitation/reckoning trap)
+- Named deceased: Kamla Devi
+- Accused: Hemraj Suthar AND Roopam Agrawal (two accused — check party extraction)

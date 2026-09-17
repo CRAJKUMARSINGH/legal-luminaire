@@ -1,0 +1,146 @@
+[
+  {
+    "file": "01_CRIMINAL_BAIL_FIR_BUNDLE/01_FIR.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "01_CRIMINAL_BAIL_FIR_BUNDLE/02_Witness_Statement_A.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "01_CRIMINAL_BAIL_FIR_BUNDLE/03_Medical_Record.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "01_CRIMINAL_BAIL_FIR_BUNDLE/04_Bail_Rejection_Order.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "01_CRIMINAL_BAIL_FIR_BUNDLE/05_Draft_Anticipatory_Bail_Petition.docx",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "02_CHEATING_VS_CONTRACT/01_Service_Agreement.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "02_CHEATING_VS_CONTRACT/02_Email_Chain.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "02_CHEATING_VS_CONTRACT/03_Criminal_Complaint_Draft.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "02_CHEATING_VS_CONTRACT/04_User_Draft_For_Enrichment.docx",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "03_ELECTRONIC_EVIDENCE/01_WhatsApp_Chat_Export.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "03_ELECTRONIC_EVIDENCE/02_Device_Seizure_Memo.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "03_ELECTRONIC_EVIDENCE/03_Electronic_Certificate.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "04_CIVIL_INJUNCTION/01_Sale_Agreement.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "04_CIVIL_INJUNCTION/02_Legal_Notice.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "04_CIVIL_INJUNCTION/03_Temporary_Injunction_Draft.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "05_LIMITATION_DEADLINES/01_Deadline_Test_Cases.csv",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "05_LIMITATION_DEADLINES/02_Date_Conflict_Matter.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "06_FORENSIC_CHALLENGE/01_Synthetic_FSL_Report.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "06_FORENSIC_CHALLENGE/02_Expert_Opinion_Draft.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "07_CITATION_HALLUCINATION_TRAPS/01_Fake_Citations.txt",
+    "purpose": "Citation/hallucination verification"
+  },
+  {
+    "file": "07_CITATION_HALLUCINATION_TRAPS/02_Proposition_Mismatch.txt",
+    "purpose": "Citation/hallucination verification"
+  },
+  {
+    "file": "08_PII_REDACTION/01_Dummy_PII_Record.txt",
+    "purpose": "PII redaction"
+  },
+  {
+    "file": "09_BILINGUAL_HINGLISH/01_Hinglish_User_Queries.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "09_BILINGUAL_HINGLISH/02_Hindi_Notice.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "10_ADVERSARIAL_PROMPT_INJECTION/01_Malicious_Annexure.txt",
+    "purpose": "Prompt injection resistance"
+  },
+  {
+    "file": "10_ADVERSARIAL_PROMPT_INJECTION/02_Hidden_Looking_Instruction.txt",
+    "purpose": "Prompt injection resistance"
+  },
+  {
+    "file": "11_DOCUMENT_QUALITY_VARIANTS/01_Clean_Text.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "11_DOCUMENT_QUALITY_VARIANTS/02_Garbled_OCR_Simulation.txt",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "11_DOCUMENT_QUALITY_VARIANTS/03_Structured_Sample.docx",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "11_DOCUMENT_QUALITY_VARIANTS/04_PDF_Sample.pdf",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "12_ROBOTIC_USER_TASKS/Advanced_User_Tasks.md",
+    "purpose": "Robotic user scenario script"
+  },
+  {
+    "file": "12_ROBOTIC_USER_TASKS/Adversarial_User_Tasks.md",
+    "purpose": "Robotic user scenario script"
+  },
+  {
+    "file": "12_ROBOTIC_USER_TASKS/Basic_User_Tasks.md",
+    "purpose": "Robotic user scenario script"
+  },
+  {
+    "file": "12_ROBOTIC_USER_TASKS/Intermediate_User_Tasks.md",
+    "purpose": "Robotic user scenario script"
+  },
+  {
+    "file": "INDEX.md",
+    "purpose": "Synthetic test fixture"
+  },
+  {
+    "file": "README.md",
+    "purpose": "Synthetic test fixture"
+  }
+]

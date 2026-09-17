@@ -1,0 +1,9 @@
+FICTIONAL DEVICE MEMO
+
+Device: Android phone
+IMEI: 000000000000000
+Date seized: 08 June 2026
+Hash value: NOT RECORDED
+
+Seeded issue:
+Integrity/chain-of-custody analysis should notice absent technical information.

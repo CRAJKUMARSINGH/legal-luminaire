@@ -1,0 +1,15 @@
+FICTIONAL TEST FIXTURE — SERVICE AGREEMENT
+
+Parties: NovaBuild Solutions Pvt. Ltd. and Meridian Retail LLP
+Date: 01 February 2025
+Project: Retail inventory software implementation
+Contract value: INR 18,00,000
+Advance paid: INR 6,00,000
+Milestone 1 due: 15 March 2025
+Milestone 2 due: 30 April 2025
+
+Clause 14:
+Disputes shall first be addressed through written notice and consultation.
+
+Seeded test issue:
+Contract does not itself prove dishonest intention at inception.

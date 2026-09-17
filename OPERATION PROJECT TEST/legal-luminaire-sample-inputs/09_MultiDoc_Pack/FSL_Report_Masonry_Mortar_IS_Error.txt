@@ -1,0 +1,48 @@
+STATE FORENSIC SCIENCE LABORATORY
+JAIPUR, RAJASTHAN
+
+FSL Report No.: FSL/JP/CIVIL/2025/0876
+Date of Report: 12 May 2025
+Reference: FIR No. 214/2025, PS Civil Lines, Jaipur
+Dated: 18.03.2025
+Samples received on: 20.03.2025 under proper seal
+
+To,
+The Investigating Officer
+PS Civil Lines, Jaipur
+
+Subject: Examination report of masonry mortar samples collected from the site of gallery collapse at Hemraj Memorial Stadium, Jaipur.
+
+1. DESCRIPTION OF SAMPLES
+   - Sample A: Collapsed masonry mortar from North Gallery parapet (sealed packet marked “A”)
+   - Sample B: Intact adjoining masonry mortar (sealed packet marked “B”)
+   - Sample C: Control sample of fresh mortar mix claimed to be used (if any) – not received
+
+2. TESTS CONDUCTED
+   The samples were examined for compressive strength, consistency, and composition in accordance with the relevant Indian Standards for concrete and mortar.
+
+3. OBSERVATIONS & RESULTS
+   - Visual: Sample A showed high porosity, poor bonding, and powdery residue on light abrasion.
+   - Compressive strength (28-day equivalent estimated): Sample A – 1.8 N/mm² (very low); Sample B – 4.2 N/mm².
+   - The mortar in Sample A does not meet the minimum requirements prescribed under **IS 1199:2018 (Methods of sampling and analysis of concrete)** for structural applications.
+   - Cement:sand ratio appeared leaner than 1:6.
+   - No evidence of deliberate adulteration with non-cementitious material was conclusively established, but workmanship and mix proportion appear deficient.
+
+4. OPINION
+   The masonry mortar used in the collapsed portion (Sample A) is of sub-standard quality and does not conform to the specifications under IS 1199:2018. This deficiency is a probable contributing factor to the structural failure of the gallery parapet under normal load conditions present during the event.
+
+5. This report is issued for the purpose of investigation only. The samples remain in the custody of FSL until further orders.
+
+Sd/-
+Dr. (Mrs.) Kavita Mehra
+Assistant Director (Civil Engineering Division)
+State FSL, Jaipur
+Date: 12.05.2025
+
+---
+CRITICAL TESTING NOTE (for Legal Luminaire testers):
+This report deliberately applies the WRONG Indian Standard.
+IS 1199:2018 is the standard for sampling and analysis of FRESH CONCRETE.
+The correct standard for masonry mortar is IS 2250:1981 (Code of Practice for Preparation and Use of Masonry Mortars).
+Legal Luminaire’s Forensic Standards Explorer and Fact-Fit / enrichment features are expected to flag this mismatch.
+SYNTHETIC DOCUMENT — FOR TESTING ONLY

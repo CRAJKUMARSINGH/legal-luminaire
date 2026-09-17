@@ -1,0 +1,51 @@
+=== SYNTHETIC USER DRAFT (THE "TRAP DOCUMENT") — FOR TESTING ONLY ===
+Document ID: TRAP-001 (TEST OBJECT)
+Scenario: Junior advocate's rough written statement in the recovery suit filed by Pitambara
+Builders against Hemraj Suthar. Contains THREE deliberate flaws for vetting/enrichment tests.
+Test pack: legal-luminaire-test-pack | Use on routes: vetting workflow (Intent #3), enrichment (Intent #4), /verification, /copilot
+
+IN THE COURT OF CIVIL JUDGE (SENIOR DIVISION) AT RAMPUR
+Civil Suit No. 77/2026
+M/s Pitambara Builders Pvt. Ltd.  ... Plaintiff  Versus  ... Hemraj Suthar  ... Defendant
+
+WRITTEN STATEMENT (DRAFT — FOR VETTING)
+
+Para 1: The defendant denies each and every allegation contained in paragraphs 1 to 4 of the
+plaint except to the extent specifically admitted herein.
+
+Para 2: It is denied that the sub-contract dated 20.01.2026 contained any indemnity clause as
+pleaded. In the alternative, it is submitted that the indemnity clause, if any, is hit by
+Section 23 of the Indian Contract Act, 1872, being opposed to public policy.
+
+Para 3: The defendant respectfully relies upon the decision of the Hon'ble Supreme Court in
+M/s Kailash Constructions v. Union of India, (1999) 6 SCC 100, holding that an indemnity
+clause in a construction sub-contract is unenforceable where the indemnified party's own
+negligence contributed to the loss.                    <<< FLAW 1: FABRICATED CITATION.
+                                                              "Kailash Constructions v. UOI"
+                                                              is invented and does not exist.
+                                                              GATE MUST CATCH THIS.
+
+Para 4: In any event, the plaintiff's claim is barred by limitation.                     <<< FLAW 2: WEAK/UNSUPPORTED
+                                                              No limitation provision cited,
+                                                              no Section 3 / Section 54 of the
+                                                              Limitation Act analysis supplied,
+                                                              and the cause-of-action date used
+                                                              (12.03.2026) is WRONG — the notice
+                                                              trigger is 01.04.2026.
+
+Para 5: The plaintiff has failed to plead or prove any loss actually suffered by it.
+
+Para 6: The defendant reserves the right to amend, add to, or alter this written statement.
+
+Prayer: It is therefore prayed that the suit be dismissed with costs.
+
+Verified at Rampur on this ___ day of ______ 2026.
+                                                       Advocate for the Defendant
+
+KEY TEST ANCHORS:
+- FLAW 1: fabricated citation in Para 3 — expect FATAL_ERROR / PENDING; export must be BLOCKED.
+- FLAW 2: Para 4 limitation argument is unsupported and uses wrong trigger date (12.03.2026
+  instead of 01.04.2026). Vetting should FLAG weak argument + missing authority.
+- FLAW 3 (MISSING): the draft contains NO limitation date computation at all — enrichment should
+  supply one and the Deadline Board should reflect it (3-year suit window from 01.04.2026 →
+  01.04.2029, subject to court-vacation display rules).

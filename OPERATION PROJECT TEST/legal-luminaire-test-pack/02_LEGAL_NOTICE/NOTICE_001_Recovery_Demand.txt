@@ -1,0 +1,41 @@
+=== SYNTHETIC LEGAL NOTICE — FOR TESTING ONLY ===
+Document ID: NOTICE-001 (TEST OBJECT)
+Test pack: legal-luminaire-test-pack | Use on routes: /new-case-ingest, draft-reply workflow (Intent #2)
+
+BEFORE ME, ADVOCATE SURESH MEENA, ADVOCATE & LEGAL CONSULTANT,
+Office No. 8, Chamber Block, District Courts, Rampur
+
+LEGAL NOTICE — UNDER INSTRUCTIONS FROM AND ON BEHALF OF MY CLIENT,
+M/S PITAMBARA BUILDERS PVT. LTD., RAMPUR
+
+To,
+Mr. Hemraj Suthar
+M/s Suthar Constructions
+Industrial Area Phase II, Rampur
+
+Under instructions from and on behalf of my above-named client, I serve upon you the
+following notice:
+
+1. That you were engaged as a sub-contractor for fabrication and erection of the temporary
+   spectator gallery for the district athletics meet held in March 2026.
+
+2. That on 12.03.2026 the said gallery collapsed, and my client has been made an accused in
+   FIR No. 042/2026 registered at Police Station City Kotwali, Rampur, apart from civil
+   claims totalling Rs. 85,00,000/- (Rupees Eighty-Five Lakh only) received from injured
+   spectators and the legal heirs of the deceased.
+
+3. That by an indemnity clause in the sub-contract dated 20.01.2026, you are bound to
+   indemnify my client against all such claims, losses and legal costs.
+
+4. You are hereby called upon to indemnify my client to the extent of Rs. 85,00,000/-
+   within fifteen (15) days of receipt of this notice, failing which my client shall be
+   constrained to initiate civil recovery proceedings and criminal complaint under
+   Section 356 BNSS, entirely at your risk as to costs and consequences.
+
+Served by: Registered Post A.D. and Email on 01.04.2026.
+(Dated: 01.04.2026)                                    Advocate Suresh Meena
+
+KEY TEST ANCHORS:
+- Trigger date for limitation analysis: 01.04.2026 (date of notice / cause of action)
+- 15-day demand window ends: 16.04.2026
+- Amount in dispute: Rs. 85,00,000

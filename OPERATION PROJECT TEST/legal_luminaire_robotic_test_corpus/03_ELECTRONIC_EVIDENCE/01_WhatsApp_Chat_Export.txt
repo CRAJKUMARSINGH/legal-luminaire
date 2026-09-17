@@ -1,0 +1,8 @@
+FICTIONAL WHATSAPP EXPORT
+
+[09:01, 04/06/2026] Karan: Send the file today.
+[09:03, 04/06/2026] Dev: I cannot send it without approval.
+[09:05, 04/06/2026] Karan: Do what you have to do.
+
+Seeded ambiguity:
+The conversation does not identify what "file" means.

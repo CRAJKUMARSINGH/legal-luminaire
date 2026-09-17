@@ -1,0 +1,9 @@
+Canonical (in law_db):                 AIR 1954 SC 123
+V1 trailing period:                   AIR 1954 SC 123.
+V2 uppercase-normalized:              AIR 1954 SC 123
+V3 full-stop abbreviations:           AIR 1954 S.C. 123
+V4 year transpose:                    1954 AIR SC 123
+V5 extra spaces + tabs:               AIR   1954   SC   123
+V6 lowercase:                         air 1954 sc 123
+V7 near-fake (NOT in db, plausible):  AIR 1954 SC 124   <- must be flagged
+V8 fabricated far-future:             AIR 2050 SC 9917  <- must be flagged

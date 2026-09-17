@@ -1,0 +1,10 @@
+FICTIONAL TEST FIXTURE
+
+Statement of Witness A
+I state that on 11 January 2026 I heard a heated argument near the office premises. I did not personally see any transfer of money.
+
+Seeded contradiction:
+The FIR alleges the occurrence was on 10 January 2026.
+
+Confidence:
+Witness did not claim to see the alleged demand directly.

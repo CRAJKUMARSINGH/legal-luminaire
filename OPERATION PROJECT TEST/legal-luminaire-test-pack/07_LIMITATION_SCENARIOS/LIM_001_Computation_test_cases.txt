@@ -1,0 +1,39 @@
+=== LIMITATION ENGINE HAND-COMPUTED ORACLE — FOR TESTING ONLY ===
+Test pack: legal-luminaire-test-pack | Routes: /case/demo-1/deadlines, Deadline Board
+Method: compare engine output against the hand-computed expected dates below.
+If engine and oracle differ, LOG AS CRITICAL (wrong limitation date in a legal product).
+
+SCENARIO L1 — Suits: Recovery suit by Pitambara Builders v. Hemraj Suthar
+  Article: Article 113 / residual three-year period is NOT the correct first test — use
+  Article for suits on contracts (Art. 55 Limitation Act, 1963): 3 years from breach/cause.
+  Trigger (cause of action): notice of demand dated 01.04.2026; refusal implied on expiry of
+  15-day window -> 16.04.2026.
+  EXPECTED last filing date (before vacation exclusion display): 16.04.2029.
+  Check: does the engine exclude court vacation days in its countdown display?
+  Check: DUE_THIS_WEEK badge logic if today's date is within 7 days of the deadline.
+
+SCENARIO L2 — Criminal complaint u/s 356 BNSS (cheating) threatened in NOTICE-001:
+  Cognizance window is governed by Section 340 CrPC/356 BNSS jurisprudence; limitation for
+  taking cognizance u/s 468 CrPC (3 years for offences punishable up to 3 years).
+  Date of offence knowledge: 01.04.2026 -> cognizance window closes 01.04.2029 (subject to
+  Section 473 CrPC condonation — engine should ideally NOTE condonation availability).
+  EXPECTED: engine either computes 01.04.2029 or honestly states "manual confirmation needed".
+  LOG any silently wrong date as CRITICAL.
+
+SCENARIO L3 — Section 5 Limitation Act (condonation of delay) trap:
+  Appeal filing deadline: 30 days (appeals to District Court from decrees of civil judge,
+  Art. 116 Limitation Act). Trigger date: 02.06.2026 (date of decree).
+  EXPECTED: 01.07.2026 (30 days, excluding trigger day per Section 12 computation).
+  If decree received later, Section 12(2) time for copies applies — engine must offer to
+  recompute from "date of knowledge" input.
+  Check: does the engine PROMPT for the knowledge date, or silently assume? LOG either way.
+
+SCENARIO L4 — OVERDUE badge negative test:
+  Synthetic event: "Reply to notice due 16.04.2026." If tester sets system/test data so that
+  today's date > deadline, EXPECTED: red OVERDUE badge on dashboard AND deadline board.
+  If badge missing -> MAJOR bug.
+
+SCENARIO L5 — Vacation exclusion positive check (record observed behavior):
+  Compute any deadline falling within a known High Court summer vacation window and verify
+  exclusion days are visibly accounted for in the countdown. If the engine does not expose
+  vacation logic in the UI, LOG as MAJOR feature gap ( "vacation exclusion not user-visible" ).

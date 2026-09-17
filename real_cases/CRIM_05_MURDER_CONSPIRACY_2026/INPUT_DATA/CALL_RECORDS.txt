@@ -1,0 +1,26 @@
+CALL DETAIL RECORDS
+
+Service Provider: [Telecom Company]
+Period: 15.07.2025 - 16.07.2025
+
+Analysis Summary:
+
+Vijay Singh (Mobile: XXXXXXXXXX)
+- Calls to Rahul Sharma: 5 calls on 15.07.2025
+- Calls to Suresh Kumar: 3 calls on 15.07.2025
+- Total duration: 45 minutes
+
+Rahul Sharma (Mobile: XXXXXXXXXX)
+- Calls to Vijay Singh: 5 calls on 15.07.2025
+- Calls to Suresh Kumar: 2 calls on 15.07.2025
+- Total duration: 38 minutes
+
+Suresh Kumar (Mobile: XXXXXXXXXX)
+- Calls to Vijay Singh: 3 calls on 15.07.2025
+- Calls to Rahul Sharma: 2 calls on 15.07.2025
+- Total duration: 25 minutes
+
+Note: Call records show communication between the accused but do not indicate content of conversations.
+
+_____________________
+TELECOM ANALYST

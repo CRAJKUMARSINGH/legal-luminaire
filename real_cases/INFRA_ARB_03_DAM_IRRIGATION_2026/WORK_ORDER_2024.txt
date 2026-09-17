@@ -1,0 +1,26 @@
+WORK ORDER NO: WRD/2024-25/Dam/478
+Date: 15.04.2024
+
+Name of Work: Construction of Medium Irrigation Dam across River Banas, District Rajsamand, Rajasthan
+Subject: Award of Contract
+
+To,
+M/s. Rajasthan Construction Consortium
+Jaipur
+
+Dear Sir(s),
+
+This is to notify you that your bid for the construction of the subject project is accepted for the Contract Price of ₹87,40,00,000/- (Rupees Eighty-Seven Crore Forty Lakh only).
+
+You are requested to commence the works within 15 days of this Letter of Acceptance. The time allowed for completion of the entire work is 30 months from the date of site handover.
+
+Conditions applicable: 
+- CPWD GCC 2020 
+- FIDIC Red Book (1999 Edition)
+- Rajasthan Public Works Department (RPWD) Specifications
+
+Please submit the Performance Security of ₹4.37 Crore within 14 days.
+
+Sincerely,
+Superintending Engineer
+Water Resources Department, Government of Rajasthan

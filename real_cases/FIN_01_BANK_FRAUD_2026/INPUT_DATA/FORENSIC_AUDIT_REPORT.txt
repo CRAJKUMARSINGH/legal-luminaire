@@ -1,0 +1,22 @@
+FORENSIC AUDIT REPORT
+
+Bank: State Bank of India, Jaipur
+Reference: Loan Account No. _______
+Date: 20.03.2025
+
+Subject: Forensic Audit of Loan Account of M/s. Sharma Enterprises
+
+Findings:
+1. Financial statements submitted for loan application were forged
+2. Collateral documents (property papers) were fake
+3. Signatures on documents do not match authorized signatories
+4. Funds were diverted to personal accounts of the accused
+5. Funds were transferred to shell companies with no legitimate business
+6. Actual business activity was minimal compared to representations
+7. Repayment made was only ₹50 lakhs against ₹3.5 crores disbursed
+
+Conclusion:
+The loan was obtained through fraudulent means with dishonest intention. Total loss to bank: ₹3 crores (principal + interest).
+
+_____________________
+FORENSIC AUDITOR

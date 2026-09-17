@@ -1,0 +1,11 @@
+{
+  "case_id": "demo-hemraj-2025-001",
+  "citations": [
+    "AIR 1954 SC 123",
+    "2019 (10) SCC 234",
+    "(2012) 9 SCC 729",
+    "2024 INSC 78",
+    "AIR 2050 SC 9917"
+  ],
+  "note": "4 citations sampled verbatim from repo rag/law_db.json (expect verified True); 1 fabricated -> False / 'Possible AI Hallucination'. POST /verify-citations."
+}

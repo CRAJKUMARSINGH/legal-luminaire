@@ -1,0 +1,228 @@
+{
+  "version": "1.0.0",
+  "description": "Draft Multiplication registry — derivative pleadings keyed to parent documents, with 50-subject applicability matrix.",
+  "derivative_types": [
+    {
+      "id": "rejoinder",
+      "label": "Rejoinder",
+      "hindi_label": "प्रत्युत्तर (रीजॉइंडर)",
+      "parent_of": "reply / written statement / counter-affidavit",
+      "parent_relation": "Responds to the opposite party's reply/counter, rebutting their preliminary objections and para-wise averments while reiterating the parent application's grounds.",
+      "when_filed": "After the respondent's reply/counter is placed on record and before final hearing.",
+      "prayer_focus": "Prays that the parent application be allowed as prayed, the reply be rejected as evasive, and preliminary objections be overruled.",
+      "jurisdiction_notes": "Filing of rejoinder is generally permitted subject to the court's discretion; some High Court Rules require leave. Condone delay if filed beyond the prescribed interval.",
+      "terminology": {
+        "response_para": "Para-wise reply to the reply",
+        "rebuttal": "Rejoinder to preliminary objections",
+        "closing": "It is therefore prayed that the aforesaid application be allowed"
+      }
+    },
+    {
+      "id": "replication",
+      "label": "Replication to Written Statement",
+      "hindi_label": "प्रतिप्रार्थना",
+      "parent_of": "plaint / written statement",
+      "parent_relation": "Civil-stage response: admits/denies WS paras under Order VIII Rule 5, raises deemed non-denial, and rejoins specific denials to the plaint averments.",
+      "when_filed": "Within the time fixed by the court after service of the written statement.",
+      "prayer_focus": "Prays that denials in the WS be treated as evasive, facts in the plaint be deemed admitted under Order VIII Rule 5 CPC, and suit proceed to trial on issues.",
+      "jurisdiction_notes": "CPC Order VIII Rule 9; replication filed with court leave in some jurisdictions.",
+      "terminology": {
+        "response_para": "Para-wise replication",
+        "deemed_admission": "Deemed admission under Order VIII Rule 5(1) CPC",
+        "closing": "It is prayed that the written statement be taken as evasive and the suit be decreed"
+      }
+    },
+    {
+      "id": "counter_affidavit",
+      "label": "Counter-Affidavit",
+      "hindi_label": "प्रति-शपथपत्र",
+      "parent_of": "writ petition / application sworn on affidavit",
+      "parent_relation": "Respondent-side document: denies the petitioner's affidavit paras, states official facts with record references, and exhibits annexures.",
+      "when_filed": "On the return date fixed by the court after notice issues.",
+      "prayer_focus": "Prays that the writ petition / application be dismissed with costs and interim relief be vacated.",
+      "jurisdiction_notes": "High Court Rules require para-wise denial; averments not specifically denied may be deemed admitted.",
+      "terminology": {
+        "response_para": "Para-wise reply on affidavit",
+        "closing": "It is prayed that the petition be dismissed with exemplary costs"
+      }
+    },
+    {
+      "id": "supplementary_application",
+      "label": "Supplementary Application",
+      "hindi_label": "अनुपूरक प्रार्थना-पत्र",
+      "parent_of": "main petition / application",
+      "parent_relation": "Supplements the parent application with facts, events and documents arising after its filing, without disturbing the original cause of action.",
+      "when_filed": "Any time after filing the parent application and before judgment, when subsequent facts materially affect adjudication.",
+      "prayer_focus": "Prays that the supplementary facts/documents be taken on record and read as part of the parent application.",
+      "jurisdiction_notes": "Courts permit supplementary pleadings to avoid multiplicity; documents must be relevant to the pre-existing cause of action.",
+      "terminology": {
+        "response_para": "Subsequent events",
+        "closing": "It is prayed that this supplementary application be taken on record along with the main application"
+      }
+    },
+    {
+      "id": "amendment_application",
+      "label": "Application for Amendment of Pleadings",
+      "hindi_label": "संशोधन प्रार्थना-पत्र",
+      "parent_of": "plaint / written statement / main application",
+      "parent_relation": "Seeks leave to amend the parent pleading — adding causes of action, correcting parties, or updating relief — under the applicable amendment test.",
+      "when_filed": "Before commencement of trial ideally; post-trial amendments need stricter justification.",
+      "prayer_focus": "Prays that the amendments per the annexed draft be allowed and the amended pleading be taken on record.",
+      "jurisdiction_notes": "CPC Order VI Rule 17 (proviso on duly-performed-inability after trial); limitation and prejudice to the opposite party are the governing tests.",
+      "terminology": {
+        "response_para": "Grounds for amendment",
+        "closing": "It is prayed that leave to amend be granted and the amended pleading be taken on record"
+      }
+    },
+    {
+      "id": "interim_stay",
+      "label": "Interim Stay / Interim Application",
+      "hindi_label": "अंतरिम स्थगन प्रार्थना-पत्र",
+      "parent_of": "main application / appeal / writ petition",
+      "parent_relation": "Seeks status-quo protection while the parent application remains pending — stay of operation, stay of proceedings, or interim direction.",
+      "when_filed": "With the parent application or as soon as coercive/irreversible action is apprehended.",
+      "prayer_focus": "Prays that operation or execution of the impugned order/ proceedings be stayed pending disposal of the parent application.",
+      "jurisdiction_notes": "Balance of convenience, prima facie case and irreparable injury are the triple test; of acquisition of lis pendens where property rights are involved.",
+      "terminology": {
+        "response_para": "Prima facie case and balance of convenience",
+        "closing": "It is prayed that the impugned proceedings be stayed during the pendency of the main application"
+      }
+    },
+    {
+      "id": "review",
+      "label": "Review Application",
+      "hindi_label": "पुनर्विचार प्रार्थना-पत्र",
+      "parent_of": "final judgment / order of the same court",
+      "parent_relation": "Invokes the court's review jurisdiction on discovery of new evidence, apparent error on the face of the record, or other sufficient ground.",
+      "when_filed": "Within the statutory limitation period from the date of the order reviewed (commonly 30/60 days).",
+      "prayer_focus": "Prays that the order be reviewed and the error rectified by recalling, modifying or setting aside the operative portion.",
+      "jurisdiction_notes": "Review is not an appeal in disguise — cannot urge new arguments available at hearing; jurisdiction per Order XLVII CPC / Art. 137 Constitution / s. 391 BNSS-equivalents as applicable.",
+      "terminology": {
+        "response_para": "Grounds of review",
+        "closing": "It is prayed that the judgment and order be reviewed and set aside / modified"
+      }
+    },
+    {
+      "id": "appeal",
+      "label": "Appeal / Memo of Appeal",
+      "hindi_label": "अपील प्रार्थना-पत्र",
+      "parent_of": "final or interim order of the lower court/tribunal",
+      "parent_relation": "Assails the parent order before the appellate forum, framing substantial questions / grounds of appeal and seeking reversal or remand.",
+      "when_filed": "Within limitation from certification of the order/ decree; condonation application accompanies delayed filings.",
+      "prayer_focus": "Prays that the impugned order be set aside and the parent claim be allowed / matter remanded for fresh adjudication.",
+      "jurisdiction_notes": "Verify appellate forum, limitation and mandatory pre-deposit/stamping per the specific statute governing the parent proceeding.",
+      "terminology": {
+        "response_para": "Grounds of appeal",
+        "closing": "It is prayed that the appeal be allowed and the impugned order be set aside"
+      }
+    },
+    {
+      "id": "caveat",
+      "label": "Caveat",
+      "hindi_label": "केवियट",
+      "parent_of": "anticipated application by the opposite party",
+      "parent_relation": "Pre-emptive filing: asks the court to issue notice before entertaining any application the caveator's opponent may file.",
+      "when_filed": "When there is apprehension that the opponent will move an ex-parte application.",
+      "prayer_focus": "Prays that no order be passed on any application by the opponent without notice and an opportunity of hearing to the caveator.",
+      "jurisdiction_notes": "Section 148-A BNSS-equivalent / s. 148-A CPC; caveat survives for the statutory period.",
+      "terminology": {
+        "response_para": "Nature of apprehended proceedings",
+        "closing": "It is prayed that notice be given to the caveator before passing any order on any such application"
+      }
+    },
+    {
+      "id": "execution",
+      "label": "Execution Application",
+      "hindi_label": "अमल में लाने का प्रार्थना-पत्र",
+      "parent_of": "decree / final order in favour of the applicant",
+      "parent_relation": "Enforces the parent decree: identification of decretal amounts/obligations, mode of execution, and attachments.",
+      "when_filed": "After the decree becomes executable (within limitation for execution).",
+      "prayer_focus": "Prays that the decree be executed by attachment/sale, arrest and detention, or other lawful mode against the judgment-debtor.",
+      "jurisdiction_notes": "CPC Order XXI; objections by judgment-debtor invite reply-stage drafting on the same family tree.",
+      "terminology": {
+        "response_para": "Particulars of the decree and mode of execution",
+        "closing": "It is prayed that the decree be executed against the judgment debtor in the mode aforesaid"
+      }
+    },
+    {
+      "id": "restoration",
+      "label": "Application for Restoration",
+      "hindi_label": "पुनर्स्थापना प्रार्थना-पत्र",
+      "parent_of": "dismissal in default / ex-parte dismissal",
+      "parent_relation": "Seeks recall of the dismissal order and restoration of the parent case to the file, showing sufficient cause for non-appearance.",
+      "when_filed": "Within 30 days of the dismissal (or with a condonation application thereafter).",
+      "prayer_focus": "Prays that the dismissal order be set aside and the case be restored to its original number.",
+      "jurisdiction_notes": "CPC Order IX Rule 4/7/9 as applicable; sufficient cause is construed liberally but honestly.",
+      "terminology": {
+        "response_para": "Sufficient cause for non-appearance",
+        "closing": "It is prayed that the case be restored to its original number and be decided on merits"
+      }
+    },
+    {
+      "id": "additional_evidence",
+      "label": "Application for Additional Evidence",
+      "hindi_label": "अतिरिक्त साक्ष्य प्रार्थना-पत्र",
+      "parent_of": "pending trial / appeal",
+      "parent_relation": "Seeks leave to place on record additional documents or witnesses that were not within knowledge or could not be produced despite diligence.",
+      "when_filed": "At trial or appellate stage, before arguments conclude.",
+      "prayer_focus": "Prays that the additional documents/witnesses listed in the schedule be summoned and taken on record.",
+      "jurisdiction_notes": "CPC Order XLI Rule 27 test at appellate stage; due diligence is the touchstone.",
+      "terminology": {
+        "response_para": "Due diligence and relevance of additional evidence",
+        "closing": "It is prayed that the additional evidence be permitted and taken on record"
+      }
+    }
+  ],
+  "subjects": [
+    {"id": "criminal_bail", "label": "Criminal — Bail & Anticipatory Bail", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "criminal_discharge", "label": "Criminal — Discharge / Quashing", "applicable_types": ["rejoinder", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
+    {"id": "criminal_trial", "label": "Criminal — Trial & Evidence", "applicable_types": ["rejoinder", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence", "restoration"]},
+    {"id": "criminal_appeals", "label": "Criminal — Appeals & Revisions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
+    {"id": "criminal_ni_act", "label": "Criminal — NI Act 138 (Cheque Dishonour)", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "restoration"]},
+    {"id": "criminal_domestic", "label": "Criminal — DV Act / Maintenance", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "civil_suit", "label": "Civil — Recovery & Money Suits", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration", "additional_evidence"]},
+    {"id": "civil_property", "label": "Civil — Property, Partition & Title", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration", "additional_evidence"]},
+    {"id": "civil_injunction", "label": "Civil — Injunction & Specific Relief", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "restoration", "additional_evidence"]},
+    {"id": "civil_contract", "label": "Civil — Contract & Commercial Disputes", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "civil_tort", "label": "Civil — Torts & Negligence", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "restoration", "additional_evidence"]},
+    {"id": "writ_service", "label": "Writ — Service & Employment", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence", "restoration"]},
+    {"id": "writ_land", "label": "Writ — Land Acquisition & Compensation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "writ_education", "label": "Writ — Education & Admissions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
+    {"id": "writ_elections", "label": "Writ — Election Petitions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
+    {"id": "service_termination", "label": "Service — Termination & Dismissal", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "service_pension", "label": "Service — Pension & Retiral Benefits", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "service_promotion", "label": "Service — Promotion & Seniority", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "labour_industrial", "label": "Labour — Industrial & Industrial Tribunal", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
+    {"id": "labour_wages", "label": "Labour — Wages, PF & ESI", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "consumer_deficiency", "label": "Consumer — Deficiency in Service", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "consumer_unfair", "label": "Consumer — Unfair Trade Practice", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "mact_motor", "label": "MACT — Motor Accident Claims", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "amendment_application", "additional_evidence"]},
+    {"id": "family_marriage", "label": "Family — Divorce & Matrimonial", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "restoration"]},
+    {"id": "family_custody", "label": "Family — Custody & Guardianship", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "family_succession", "label": "Family — Succession & Inheritance", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
+    {"id": "arbitration_tribunal", "label": "Arbitration — Tribunal Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "appeal", "review", "execution", "additional_evidence"]},
+    {"id": "arbitration_sec34", "label": "Arbitration — s.34 Objections / Enforcement", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "ibc_corporate", "label": "IBC — Corporate Insolvency", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
+    {"id": "companies_nclt", "label": "Company — NCLT Oppression & Mismanagement", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
+    {"id": "sebi_securities", "label": "Securities — SEBI & SAT", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
+    {"id": "competition_cci", "label": "Competition — CCI Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
+    {"id": "banking_recovery", "label": "Banking — Recovery of Dues", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "sarfaesi_drt", "label": "SARFAESI — DRT / DRAT Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "ni_negotiable", "label": "Commercial — Negotiable Instruments (Civil)", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "rent_eviction", "label": "Property — Rent Control & Eviction", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "land_revenue", "label": "Property — Land Revenue & Mutation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "restoration"]},
+    {"id": "tax_income", "label": "Tax — Income Tax Appeals", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
+    {"id": "tax_gst", "label": "Tax — GST & Indirect Taxes", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
+    {"id": "customs_excise", "label": "Tax — Customs & Excise", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
+    {"id": "ip_trademark", "label": "IP — Trademark & Passing Off", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "amendment_application"]},
+    {"id": "ip_copyright", "label": "IP — Copyright & Design", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "ip_patent", "label": "IP — Patent & Confidential Information", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "cyber_it_act", "label": "Cyber — IT Act & Data Protection", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
+    {"id": "environment_ngt", "label": "Environment — NGT Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
+    {"id": "electricity_erc", "label": "Energy — Electricity & Regulatory Commissions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "rera_realty", "label": "RERA — Real Estate Regulation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "coop_societies", "label": "Co-operative — Societies Disputes", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
+    {"id": "insurance_claims", "label": "Insurance — Policy Claims & Repudiation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
+    {"id": "medical_negligence", "label": "Healthcare — Medical Negligence", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]}
+  ]
+}

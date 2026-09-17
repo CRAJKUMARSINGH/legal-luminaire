@@ -1,0 +1,33 @@
+=== PII REDACTION TEST SUITE — FOR TESTING ONLY ===
+Test pack: legal-luminaire-test-pack | Route: /new-case-ingest (Redaction Studio)
+
+HOW TO USE: Upload the synthetic documents below one at a time. For EACH detected PII item,
+record whether it was highlighted for redaction, and whether it was REDACTED in the version
+sent onward (check the network tab per test plan section 4.2). Mark: CAUGHT / MISSED.
+
+PII CLASS CHECKLIST (expected catches):
+ [ ] Full person names (2+): Kamla Devi, Roopam Agrawal, Ramesh Chandra Verma
+ [ ] Mobile number: 98290XXXXX (also test a full-format number: 9829012345)
+ [ ] Aadhaar-format number: 1234 5678 9012
+ [ ] Full address: H.No. 12, Gandhi Nagar, Rampur, Rajasthan 322001
+ [ ] Email address: ramesh.verma21@examplemail.in
+ [ ] Bank account / IFSC: Account 50100442118890, IFSC HDFC0001234
+ [ ] Date of birth: 14.07.1971
+ [ ] Vehicle number: RJ-24-AB-7788
+ [ ] Name written in Hindi: कमला देवी (in document PII-002 below)
+ [ ] Name inside a footnote (document PII-003 below)
+
+--- DOCUMENT PII-002 (Hindi-embedded PII) ---
+आवेदक का विवरण: श्री रमेश चन्द्र वर्मा, आयु 54 वर्ष, निवासी गांधी नगर, रामपुर।
+मोबाइल: 9829012345। आधार संख्या: 1234 5678 9012।
+दुर्घटना में मृतक: श्रीमती कमला देवी (वय 61 वर्ष)। दिनांक 12.03.2026 को गैलरी गिर गई थी।
+
+--- DOCUMENT PII-003 (footnote PII trap) ---
+The gallery was inspected by the municipal engineer on 13.03.2026. All spectators were
+seated on the southern bleachers at the time of the collapse (1).
+(1) Attendance register signed by the duty supervisor, Mr. Dhanraj Meena, mobile 9829076543,
+    resident of Ward No. 9, Rampur — available with the malkhana, City Kotwali.
+
+KNOWN LIMITATION (DO NOT LOG AS BUG): a scanned image PDF with no text layer will NOT yield
+detectable PII today (OCR is a roadmap item). Test it, RECORD OBSERVED BEHAVIOR, and tag the
+finding "roadmap-gap / OCR".

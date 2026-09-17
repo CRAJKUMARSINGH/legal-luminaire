@@ -1,0 +1,1092 @@
+diff --git a/artifacts/legal-luminaire/backend/agents/derivative_drafter.py b/artifacts/legal-luminaire/backend/agents/derivative_drafter.py
+new file mode 100644
+index 0000000..a93f156
+--- /dev/null
++++ b/artifacts/legal-luminaire/backend/agents/derivative_drafter.py
+@@ -0,0 +1,124 @@
++"""Derivative Draft Generator — multiplies a parent draft into its document family.
++
++Given a case, a parent draft, a subject and a derivative type, produces the
++derived pleading using the registry's terminology + authority blocks piped
++in from Citation Search. Purely additive to routes_drafting.py.
++"""
++from __future__ import annotations
++
++import logging
++import os
++import re
++from typing import Any, Dict, List, Optional
++
++from registry import (
++    build_system_prompt,
++    authority_blocks_to_prompt,
++    get_derivative_type,
++)
++
++logger = logging.getLogger(__name__)
++
++CITATION_MARKER_RE = re.compile(
++    r"(\bAIR\s+\d{4}\s+[A-Z]+\s+\d+)|"
++    r"(\(\d{4}\)\s*\d+\s*[A-Z]+\s+\d+)|"
++    r"(\b\d{4}\s*\(\d+\)\s*[A-Z]+\s*\d+)|"
++    r"(\b[0-9]{1,3}\s*[A-Z]{2,}\s*\d{3,4}\b)"
++)
++
++
++def extract_citations(text: str) -> List[str]:
++    """Extract likely citations from a draft body for verification."""
++    matches = CITATION_MARKER_RE.findall(text)
++    flat = [m for tup in matches for m in tup if m]
++    return sorted(set(flat))
++
++
++def generate_derivative_draft(
++    case_data: Dict[str, Any],
++    subject_id: str,
++    derivative_type_id: str,
++    parent_draft: Optional[Dict[str, Any]] = None,
++    additional_notes: str = "",
++    authority_blocks: Optional[List[Dict[str, Any]]] = None,
++) -> Dict[str, Any]:
++    """Build the prompt context and generate a derivative draft via Gemini.
++
++    Returns a dict: {success, draft_content, lineage, error}.
++    The lineage record is persisted by the caller (routes_derivative).
++    """
++    dtype = get_derivative_type(derivative_type_id)
++    if not dtype:
++        return {"success": False, "draft_content": "", "lineage": None,
++                "error": f"Unknown derivative type '{derivative_type_id}'."}
++
++    gemini_key = os.environ.get("GOOGLE_API_KEY", "")
++    if not gemini_key:
++        return {"success": False, "draft_content": "", "lineage": None,
++                "error": "GOOGLE_API_KEY not set. Cannot generate AI draft."}
++
++    court = case_data.get("court", "")
++    case_title = case_data.get("title", "Untitled")
++    timeline = case_data.get("timeline", [])
++
++    context_str = f"Case: {case_title}\nCourt: {court}\n"
++    brief = case_data.get("brief", "")
++    if brief:
++        context_str += f"Brief: {brief}\n"
++    if timeline:
++        context_str += "\nTimeline/Facts:\n"
++        for e in timeline:
++            grounding_note = f" (Grounding: {e['grounding']})" if e.get("grounding") else ""
++            context_str += f"- {e.get('date', 'Unknown')}: {e.get('title', 'Unknown')}{grounding_note}\n"
++
++    if parent_draft:
++        context_str += (
++            "\nPARENT DRAFT (the document this derivative responds to / extends):\n"
++            f"- Title: {parent_draft.get('title', 'Untitled')}\n"
++            f"- Type: {parent_draft.get('draft_type', 'unknown')}\n"
++            f"- Generated: {parent_draft.get('generated_at', 'unknown')}\n"
++            f"- Body (verbatim, maintain consistency):\n{parent_draft.get('content', '')[:6000]}\n"
++        )
++
++    context_str += authority_blocks_to_prompt(authority_blocks or [])
++
++    system_prompt = build_system_prompt(dtype, subject_id, court=court)
++
++    try:
++        from langchain_google_genai import ChatGoogleGenerativeAI
++        from langchain_core.prompts import ChatPromptTemplate
++
++        llm = ChatGoogleGenerativeAI(
++            model="gemini-1.5-flash",
++            google_api_key=gemini_key,
++            temperature=0.3,
++        )
++        prompt = ChatPromptTemplate.from_messages([
++            ("system", system_prompt),
++            ("human", "Context:\n{context}\n\nAdditional Guidance: {notes}\n\nGenerate the derivative draft now."),
++        ])
++        chain = prompt | llm
++        result = chain.invoke({"context": context_str, "notes": additional_notes})
++
++        draft_text = result.content
++        citations_found = extract_citations(draft_text)
++
++        lineage = {
++            "derivative_type_id": derivative_type_id,
++            "derivative_type_label": dtype["label"],
++            "subject_id": subject_id,
++            "parent_draft_id": (parent_draft or {}).get("id"),
++            "authority_ids": [a.get("id") for a in (authority_blocks or [])],
++            "citations_extracted": citations_found,
++        }
++        logger.info(
++            "case_event",
++            extra={"event": "derivative_draft_complete",
++                   "case_id": case_data.get("id", "unknown"),
++                   "derivative_type": derivative_type_id,
++                   "draft_length": len(draft_text)},
++        )
++        return {"success": True, "draft_content": draft_text, "lineage": lineage, "error": None}
++    except Exception as e:  # noqa: BLE001
++        logger.error("case_event", extra={"event": "derivative_draft_failed", "error": str(e)})
++        return {"success": False, "draft_content": "", "lineage": None, "error": str(e)}
+diff --git a/artifacts/legal-luminaire/backend/api/routes_derivative.py b/artifacts/legal-luminaire/backend/api/routes_derivative.py
+new file mode 100644
+index 0000000..379a9ab
+--- /dev/null
++++ b/artifacts/legal-luminaire/backend/api/routes_derivative.py
+@@ -0,0 +1,160 @@
++"""Derivative Draft API — Draft Multiplication (Document Family) routes.
++
++Additive router: mounts under /api/v1 via main.py registration.
++Provides:
++  GET  /api/v1/derivative-types?subject_id=...   — registry listing
++  GET  /api/v1/subjects                          — 50-subject taxonomy
++  POST /api/v1/cases/{case_id}/derivative-drafts  — generate one derivative draft
++  GET  /api/v1/cases/{case_id}/draft-family      — full lineage tree for the case
++"""
++from __future__ import annotations
++
++import json
++import logging
++import os
++from datetime import datetime, timezone
++from typing import Any, Dict, List, Optional
++
++from fastapi import APIRouter, HTTPException
++from pydantic import BaseModel, Field
++
++from api.case_manager import case_manager
++from config import settings
++from registry import DERIVATIVE_TYPES, SUBJECTS, derivative_types_for_subject
++from agents.derivative_drafter import generate_derivative_draft
++
++router = APIRouter()
++logger = logging.getLogger(__name__)
++
++
++def _family_store_path(case_id: str):
++    """Persist draft-family lineage next to case_data.json (same JSON store)."""
++    # Same sanitization as JSONCaseRepository._get_case_file (path-traversal safe)
++    safe_id = "".join(c for c in case_id if c.isalnum() or c in ("-", "_")).strip()
++    if not safe_id:
++        safe_id = "unknown-case"
++    return settings.case_docs_path / safe_id / "draft_family.json"
++
++
++def _load_family(case_id: str) -> List[Dict[str, Any]]:
++    path = _family_store_path(case_id)
++    if not path.exists():
++        return []
++    try:
++        with path.open("r", encoding="utf-8") as f:
++            return json.load(f)
++    except Exception as e:  # noqa: BLE001
++        logger.error("draft_family_read_error: %s", e)
++        return []
++
++
++def _save_family(case_id: str, family: List[Dict[str, Any]]) -> bool:
++    path = _family_store_path(case_id)
++    try:
++        path.parent.mkdir(parents=True, exist_ok=True)
++        with path.open("w", encoding="utf-8") as f:
++            json.dump(family, f, ensure_ascii=False, indent=2)
++        return True
++    except Exception as e:  # noqa: BLE001
++        logger.error("draft_family_write_error: %s", e)
++        return False
++
++
++class AuthorityBlock(BaseModel):
++    """Mirrors the frontend Authority (src/data/citations.ts) shape."""
++    id: str
++    kind: Optional[str] = "case"
++    title: str = ""
++    citation: Optional[str] = ""
++    court: Optional[str] = ""
++    year: Optional[int] = None
++    holding: Optional[str] = ""
++    application: Optional[str] = ""
++
++
++class DerivativeDraftRequest(BaseModel):
++    subject_id: str = Field(..., description="One of the 50 subject ids from the registry")
++    derivative_type_id: str = Field(..., description="rejoinder | replication | counter_affidavit | ...")
++    parent_draft_id: Optional[str] = Field(default=None, description="Draft-family id of the parent document")
++    authority_blocks: List[AuthorityBlock] = Field(
++        default_factory=list,
++        description="Citation-search authority blocks piped in from the client-side Citation Search",
++    )
++    additional_notes: Optional[str] = ""
++
++
++class DerivativeDraftResponse(BaseModel):
++    success: bool
++    draft_id: Optional[str] = None
++    draft_content: str
++    lineage: Optional[Dict[str, Any]] = None
++    citations_extracted: List[str] = Field(default_factory=list)
++    error: Optional[str] = None
++
++
++@router.get("/derivative-types")
++async def list_derivative_types(subject_id: Optional[str] = None):
++    """List derivative document types, optionally filtered by subject applicability."""
++    if subject_id:
++        return {"success": True, "types": derivative_types_for_subject(subject_id)}
++    return {"success": True, "types": DERIVATIVE_TYPES}
++
++
++@router.get("/subjects")
++async def list_subjects():
++    """List all 50 litigation subjects with their applicable derivative types."""
++    return {"success": True, "subjects": SUBJECTS}
++
++
++@router.post("/cases/{case_id}/derivative-drafts", response_model=DerivativeDraftResponse)
++async def create_derivative_draft(case_id: str, req: DerivativeDraftRequest):
++    case_data = case_manager.get_case(case_id)
++    if not case_data:
++        raise HTTPException(status_code=404, detail="Case not found.")
++
++    family = _load_family(case_id)
++    parent_draft = next((d for d in family if d.get("id") == req.parent_draft_id), None)
++    if req.parent_draft_id and not parent_draft:
++        raise HTTPException(status_code=404, detail="Parent draft not found in case draft family.")
++
++    result = generate_derivative_draft(
++        case_data=case_data,
++        subject_id=req.subject_id,
++        derivative_type_id=req.derivative_type_id,
++        parent_draft=parent_draft,
++        additional_notes=req.additional_notes or "",
++        authority_blocks=[a.model_dump() for a in req.authority_blocks],
++    )
++
++    if not result["success"]:
++        return DerivativeDraftResponse(success=False, draft_content="", error=result["error"])
++
++    draft_id = f"{req.derivative_type_id}-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
++    record = {
++        "id": draft_id,
++        "title": f"{result['lineage']['derivative_type_label']} — {case_data.get('title', 'Untitled')}",
++        "draft_type": req.derivative_type_id,
++        "subject_id": req.subject_id,
++        "content": result["draft_content"],
++        "generated_at": datetime.now(timezone.utc).isoformat(),
++        "lineage": result["lineage"],
++        "review_status": "DRAFT",
++    }
++    family.append(record)
++    _save_family(case_id, family)
++
++    return DerivativeDraftResponse(
++        success=True,
++        draft_id=draft_id,
++        draft_content=result["draft_content"],
++        lineage=result["lineage"],
++        citations_extracted=result["lineage"]["citations_extracted"],
++    )
++
++
++@router.get("/cases/{case_id}/draft-family")
++async def get_draft_family(case_id: str):
++    case_data = case_manager.get_case(case_id)
++    if not case_data:
++        raise HTTPException(status_code=404, detail="Case not found.")
++    return {"success": True, "family": _load_family(case_id)}
+diff --git a/artifacts/legal-luminaire/backend/main.py b/artifacts/legal-luminaire/backend/main.py
+index 092858e..d6deef0 100644
+--- a/artifacts/legal-luminaire/backend/main.py
++++ b/artifacts/legal-luminaire/backend/main.py
+@@ -35,6 +35,8 @@ from api.routes_copilot import router as copilot_router
+ from api.routes_deadlines import router as deadlines_router
+ # Week 10: Chronology Studio — source-cited timeline generation, flag-gated
+ from api.routes_chronology import router as chronology_router
++# Draft Multiplication — derivative drafts (rejoinder, replication, etc.)
++from api.routes_derivative import router as derivative_router
+ 
+ _harvey_router_available = False
+ try:
+@@ -185,6 +187,7 @@ app.include_router(copilot_router, prefix="/api/v1")
+ app.include_router(deadlines_router, prefix="/api/v1")
+ # Week 10: Chronology Studio — POST /api/v1/case/{id}/chronology/propose + actions
+ app.include_router(chronology_router, prefix="/api/v1")
++app.include_router(derivative_router, prefix="/api/v1")
+ if _harvey_router_available:
+     app.include_router(harvey_router, prefix="/api/v1")
+ 
+diff --git a/artifacts/legal-luminaire/backend/registry/__init__.py b/artifacts/legal-luminaire/backend/registry/__init__.py
+new file mode 100644
+index 0000000..1916af1
+--- /dev/null
++++ b/artifacts/legal-luminaire/backend/registry/__init__.py
+@@ -0,0 +1,93 @@
++"""Draft Multiplication Registry — derivative pleadings keyed to parent documents.
++
++Loads the derivative-type taxonomy and the 50-subject applicability matrix
++from derivative_drafts.json. Purely additive: nothing in the existing
++drafting pipeline is modified by importing this package.
++"""
++from __future__ import annotations
++
++import json
++import os
++from typing import Any, Dict, List, Optional
++
++_REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "derivative_drafts.json")
++
++with open(_REGISTRY_PATH, "r", encoding="utf-8") as _f:
++    REGISTRY: Dict[str, Any] = json.load(_f)
++
++DERIVATIVE_TYPES: List[Dict[str, Any]] = REGISTRY["derivative_types"]
++SUBJECTS: List[Dict[str, Any]] = REGISTRY["subjects"]
++
++_BY_ID: Dict[str, Dict[str, Any]] = {d["id"]: d for d in DERIVATIVE_TYPES}
++
++
++def get_derivative_type(type_id: str) -> Optional[Dict[str, Any]]:
++    return _BY_ID.get(type_id)
++
++
++def derivative_types_for_subject(subject_id: str) -> List[Dict[str, Any]]:
++    """Return derivative types applicable to a given subject id."""
++    for s in SUBJECTS:
++        if s["id"] == subject_id:
++            return [_BY_ID[t] for t in s["applicable_types"] if t in _BY_ID]
++    return []
++
++
++def default_subjects_for_type(type_id: str) -> List[str]:
++    return [s["id"] for s in SUBJECTS if type_id in s["applicable_types"]]
++
++
++def build_system_prompt(
++    derivative_type: Dict[str, Any],
++    subject_id: str,
++    court: str = "",
++) -> str:
++    """Compose the drafting system prompt for a derivative document.
++
++    Terminology, prayer focus and jurisdiction notes come from the registry
++    (data), never from hardcoded per-case prompt branches.
++    """
++    subject = next((s for s in SUBJECTS if s["id"] == subject_id), None)
++    subject_label = subject["label"] if subject else subject_id
++    terminology = derivative_type.get("terminology", {})
++    term_line = ", ".join(f"{k}: {v}" for k, v in terminology.items())
++    return (
++        f"You are a senior advocate drafting a {derivative_type['label']} "
++        f"({derivative_type.get('hindi_label', '')}) — a derivative pleading that "
++        f"must respond to, build upon, or extend an existing parent draft in the same case file.\n\n"
++        f"PARENT RELATIONSHIP: {derivative_type['parent_relation']}\n"
++        f"WHEN FILED: {derivative_type['when_filed']}\n"
++        f"PRAYER FOCUS: {derivative_type['prayer_focus']}\n"
++        f"SUBJECT MATTER: {subject_label}\n"
++        f"COURT: {court or 'as per case file'}\n"
++        f"JURISDICTION NOTES: {derivative_type.get('jurisdiction_notes', 'Standard Indian practice.')}\n"
++        f"MANDATORY TERMINOLOGY: {term_line}\n\n"
++        "STRUCTURE (MANDATORY):\n"
++        "1. Court heading (as per case file court, correct cause-title)\n"
++        "2. Document title (exact statutory / Order-Rule basis from registry)\n"
++        "3. Recap of parent application + interlocutory history (one para, factual)\n"
++        "4. Reply/response paragraphs numbered para-wise against the parent draft\n"
++        "5. Grounds with VERIFIED citations only — every citation marked [VERIFIED] or [COURT_SAFE]\n"
++        "6. Prayer (aligned to prayer_focus above)\n"
++        "7. Verification + affidavit / declaration as applicable\n\n"
++        "QUALITY RULES:\n"
++        "1. Quote holdings VERBATIM from the supplied authority blocks only.\n"
++        "2. Never invent a citation, section number, or IS/ASTM clause.\n"
++        "3. Maintain consistency with the parent draft's facts, dates and party names.\n"
++        "4. Cross-reference the parent draft as 'the aforesaid application/application dated ___'.\n"
++    )
++
++
++def authority_blocks_to_prompt(authority_blocks: List[Dict[str, Any]]) -> str:
++    """Format citation-search authority blocks for injection into the draft prompt."""
++    if not authority_blocks:
++        return ""
++    lines = ["\nVERIFIED AUTHORITY BLOCKS (use ONLY these precedents):"]
++    for a in authority_blocks:
++        lines.append(
++            f"- [{a.get('id', 'unknown')}] {a.get('title', '')} "
++            f"| Citation: {a.get('citation', 'n/a')} "
++            f"| Holding: {a.get('holding', '')} "
++            f"| Application: {a.get('application', '')}"
++        )
++    return "\n".join(lines)
+diff --git a/artifacts/legal-luminaire/backend/registry/derivative_drafts.json b/artifacts/legal-luminaire/backend/registry/derivative_drafts.json
+new file mode 100644
+index 0000000..cee8b64
+--- /dev/null
++++ b/artifacts/legal-luminaire/backend/registry/derivative_drafts.json
+@@ -0,0 +1,228 @@
++{
++  "version": "1.0.0",
++  "description": "Draft Multiplication registry — derivative pleadings keyed to parent documents, with 50-subject applicability matrix.",
++  "derivative_types": [
++    {
++      "id": "rejoinder",
++      "label": "Rejoinder",
++      "hindi_label": "प्रत्युत्तर (रीजॉइंडर)",
++      "parent_of": "reply / written statement / counter-affidavit",
++      "parent_relation": "Responds to the opposite party's reply/counter, rebutting their preliminary objections and para-wise averments while reiterating the parent application's grounds.",
++      "when_filed": "After the respondent's reply/counter is placed on record and before final hearing.",
++      "prayer_focus": "Prays that the parent application be allowed as prayed, the reply be rejected as evasive, and preliminary objections be overruled.",
++      "jurisdiction_notes": "Filing of rejoinder is generally permitted subject to the court's discretion; some High Court Rules require leave. Condone delay if filed beyond the prescribed interval.",
++      "terminology": {
++        "response_para": "Para-wise reply to the reply",
++        "rebuttal": "Rejoinder to preliminary objections",
++        "closing": "It is therefore prayed that the aforesaid application be allowed"
++      }
++    },
++    {
++      "id": "replication",
++      "label": "Replication to Written Statement",
++      "hindi_label": "प्रतिप्रार्थना",
++      "parent_of": "plaint / written statement",
++      "parent_relation": "Civil-stage response: admits/denies WS paras under Order VIII Rule 5, raises deemed non-denial, and rejoins specific denials to the plaint averments.",
++      "when_filed": "Within the time fixed by the court after service of the written statement.",
++      "prayer_focus": "Prays that denials in the WS be treated as evasive, facts in the plaint be deemed admitted under Order VIII Rule 5 CPC, and suit proceed to trial on issues.",
++      "jurisdiction_notes": "CPC Order VIII Rule 9; replication filed with court leave in some jurisdictions.",
++      "terminology": {
++        "response_para": "Para-wise replication",
++        "deemed_admission": "Deemed admission under Order VIII Rule 5(1) CPC",
++        "closing": "It is prayed that the written statement be taken as evasive and the suit be decreed"
++      }
++    },
++    {
++      "id": "counter_affidavit",
++      "label": "Counter-Affidavit",
++      "hindi_label": "प्रति-शपथपत्र",
++      "parent_of": "writ petition / application sworn on affidavit",
++      "parent_relation": "Respondent-side document: denies the petitioner's affidavit paras, states official facts with record references, and exhibits annexures.",
++      "when_filed": "On the return date fixed by the court after notice issues.",
++      "prayer_focus": "Prays that the writ petition / application be dismissed with costs and interim relief be vacated.",
++      "jurisdiction_notes": "High Court Rules require para-wise denial; averments not specifically denied may be deemed admitted.",
++      "terminology": {
++        "response_para": "Para-wise reply on affidavit",
++        "closing": "It is prayed that the petition be dismissed with exemplary costs"
++      }
++    },
++    {
++      "id": "supplementary_application",
++      "label": "Supplementary Application",
++      "hindi_label": "अनुपूरक प्रार्थना-पत्र",
++      "parent_of": "main petition / application",
++      "parent_relation": "Supplements the parent application with facts, events and documents arising after its filing, without disturbing the original cause of action.",
++      "when_filed": "Any time after filing the parent application and before judgment, when subsequent facts materially affect adjudication.",
++      "prayer_focus": "Prays that the supplementary facts/documents be taken on record and read as part of the parent application.",
++      "jurisdiction_notes": "Courts permit supplementary pleadings to avoid multiplicity; documents must be relevant to the pre-existing cause of action.",
++      "terminology": {
++        "response_para": "Subsequent events",
++        "closing": "It is prayed that this supplementary application be taken on record along with the main application"
++      }
++    },
++    {
++      "id": "amendment_application",
++      "label": "Application for Amendment of Pleadings",
++      "hindi_label": "संशोधन प्रार्थना-पत्र",
++      "parent_of": "plaint / written statement / main application",
++      "parent_relation": "Seeks leave to amend the parent pleading — adding causes of action, correcting parties, or updating relief — under the applicable amendment test.",
++      "when_filed": "Before commencement of trial ideally; post-trial amendments need stricter justification.",
++      "prayer_focus": "Prays that the amendments per the annexed draft be allowed and the amended pleading be taken on record.",
++      "jurisdiction_notes": "CPC Order VI Rule 17 (proviso on duly-performed-inability after trial); limitation and prejudice to the opposite party are the governing tests.",
++      "terminology": {
++        "response_para": "Grounds for amendment",
++        "closing": "It is prayed that leave to amend be granted and the amended pleading be taken on record"
++      }
++    },
++    {
++      "id": "interim_stay",
++      "label": "Interim Stay / Interim Application",
++      "hindi_label": "अंतरिम स्थगन प्रार्थना-पत्र",
++      "parent_of": "main application / appeal / writ petition",
++      "parent_relation": "Seeks status-quo protection while the parent application remains pending — stay of operation, stay of proceedings, or interim direction.",
++      "when_filed": "With the parent application or as soon as coercive/irreversible action is apprehended.",
++      "prayer_focus": "Prays that operation or execution of the impugned order/ proceedings be stayed pending disposal of the parent application.",
++      "jurisdiction_notes": "Balance of convenience, prima facie case and irreparable injury are the triple test; of acquisition of lis pendens where property rights are involved.",
++      "terminology": {
++        "response_para": "Prima facie case and balance of convenience",
++        "closing": "It is prayed that the impugned proceedings be stayed during the pendency of the main application"
++      }
++    },
++    {
++      "id": "review",
++      "label": "Review Application",
++      "hindi_label": "पुनर्विचार प्रार्थना-पत्र",
++      "parent_of": "final judgment / order of the same court",
++      "parent_relation": "Invokes the court's review jurisdiction on discovery of new evidence, apparent error on the face of the record, or other sufficient ground.",
++      "when_filed": "Within the statutory limitation period from the date of the order reviewed (commonly 30/60 days).",
++      "prayer_focus": "Prays that the order be reviewed and the error rectified by recalling, modifying or setting aside the operative portion.",
++      "jurisdiction_notes": "Review is not an appeal in disguise — cannot urge new arguments available at hearing; jurisdiction per Order XLVII CPC / Art. 137 Constitution / s. 391 BNSS-equivalents as applicable.",
++      "terminology": {
++        "response_para": "Grounds of review",
++        "closing": "It is prayed that the judgment and order be reviewed and set aside / modified"
++      }
++    },
++    {
++      "id": "appeal",
++      "label": "Appeal / Memo of Appeal",
++      "hindi_label": "अपील प्रार्थना-पत्र",
++      "parent_of": "final or interim order of the lower court/tribunal",
++      "parent_relation": "Assails the parent order before the appellate forum, framing substantial questions / grounds of appeal and seeking reversal or remand.",
++      "when_filed": "Within limitation from certification of the order/ decree; condonation application accompanies delayed filings.",
++      "prayer_focus": "Prays that the impugned order be set aside and the parent claim be allowed / matter remanded for fresh adjudication.",
++      "jurisdiction_notes": "Verify appellate forum, limitation and mandatory pre-deposit/stamping per the specific statute governing the parent proceeding.",
++      "terminology": {
++        "response_para": "Grounds of appeal",
++        "closing": "It is prayed that the appeal be allowed and the impugned order be set aside"
++      }
++    },
++    {
++      "id": "caveat",
++      "label": "Caveat",
++      "hindi_label": "केवियट",
++      "parent_of": "anticipated application by the opposite party",
++      "parent_relation": "Pre-emptive filing: asks the court to issue notice before entertaining any application the caveator's opponent may file.",
++      "when_filed": "When there is apprehension that the opponent will move an ex-parte application.",
++      "prayer_focus": "Prays that no order be passed on any application by the opponent without notice and an opportunity of hearing to the caveator.",
++      "jurisdiction_notes": "Section 148-A BNSS-equivalent / s. 148-A CPC; caveat survives for the statutory period.",
++      "terminology": {
++        "response_para": "Nature of apprehended proceedings",
++        "closing": "It is prayed that notice be given to the caveator before passing any order on any such application"
++      }
++    },
++    {
++      "id": "execution",
++      "label": "Execution Application",
++      "hindi_label": "अमल में लाने का प्रार्थना-पत्र",
++      "parent_of": "decree / final order in favour of the applicant",
++      "parent_relation": "Enforces the parent decree: identification of decretal amounts/obligations, mode of execution, and attachments.",
++      "when_filed": "After the decree becomes executable (within limitation for execution).",
++      "prayer_focus": "Prays that the decree be executed by attachment/sale, arrest and detention, or other lawful mode against the judgment-debtor.",
++      "jurisdiction_notes": "CPC Order XXI; objections by judgment-debtor invite reply-stage drafting on the same family tree.",
++      "terminology": {
++        "response_para": "Particulars of the decree and mode of execution",
++        "closing": "It is prayed that the decree be executed against the judgment debtor in the mode aforesaid"
++      }
++    },
++    {
++      "id": "restoration",
++      "label": "Application for Restoration",
++      "hindi_label": "पुनर्स्थापना प्रार्थना-पत्र",
++      "parent_of": "dismissal in default / ex-parte dismissal",
++      "parent_relation": "Seeks recall of the dismissal order and restoration of the parent case to the file, showing sufficient cause for non-appearance.",
++      "when_filed": "Within 30 days of the dismissal (or with a condonation application thereafter).",
++      "prayer_focus": "Prays that the dismissal order be set aside and the case be restored to its original number.",
++      "jurisdiction_notes": "CPC Order IX Rule 4/7/9 as applicable; sufficient cause is construed liberally but honestly.",
++      "terminology": {
++        "response_para": "Sufficient cause for non-appearance",
++        "closing": "It is prayed that the case be restored to its original number and be decided on merits"
++      }
++    },
++    {
++      "id": "additional_evidence",
++      "label": "Application for Additional Evidence",
++      "hindi_label": "अतिरिक्त साक्ष्य प्रार्थना-पत्र",
++      "parent_of": "pending trial / appeal",
++      "parent_relation": "Seeks leave to place on record additional documents or witnesses that were not within knowledge or could not be produced despite diligence.",
++      "when_filed": "At trial or appellate stage, before arguments conclude.",
++      "prayer_focus": "Prays that the additional documents/witnesses listed in the schedule be summoned and taken on record.",
++      "jurisdiction_notes": "CPC Order XLI Rule 27 test at appellate stage; due diligence is the touchstone.",
++      "terminology": {
++        "response_para": "Due diligence and relevance of additional evidence",
++        "closing": "It is prayed that the additional evidence be permitted and taken on record"
++      }
++    }
++  ],
++  "subjects": [
++    {"id": "criminal_bail", "label": "Criminal — Bail & Anticipatory Bail", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "criminal_discharge", "label": "Criminal — Discharge / Quashing", "applicable_types": ["rejoinder", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
++    {"id": "criminal_trial", "label": "Criminal — Trial & Evidence", "applicable_types": ["rejoinder", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence", "restoration"]},
++    {"id": "criminal_appeals", "label": "Criminal — Appeals & Revisions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
++    {"id": "criminal_ni_act", "label": "Criminal — NI Act 138 (Cheque Dishonour)", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "restoration"]},
++    {"id": "criminal_domestic", "label": "Criminal — DV Act / Maintenance", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "civil_suit", "label": "Civil — Recovery & Money Suits", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration", "additional_evidence"]},
++    {"id": "civil_property", "label": "Civil — Property, Partition & Title", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration", "additional_evidence"]},
++    {"id": "civil_injunction", "label": "Civil — Injunction & Specific Relief", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "restoration", "additional_evidence"]},
++    {"id": "civil_contract", "label": "Civil — Contract & Commercial Disputes", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "civil_tort", "label": "Civil — Torts & Negligence", "applicable_types": ["replication", "rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "caveat", "appeal", "review", "restoration", "additional_evidence"]},
++    {"id": "writ_service", "label": "Writ — Service & Employment", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence", "restoration"]},
++    {"id": "writ_land", "label": "Writ — Land Acquisition & Compensation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "writ_education", "label": "Writ — Education & Admissions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
++    {"id": "writ_elections", "label": "Writ — Election Petitions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
++    {"id": "service_termination", "label": "Service — Termination & Dismissal", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "service_pension", "label": "Service — Pension & Retiral Benefits", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "service_promotion", "label": "Service — Promotion & Seniority", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "labour_industrial", "label": "Labour — Industrial & Industrial Tribunal", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
++    {"id": "labour_wages", "label": "Labour — Wages, PF & ESI", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "consumer_deficiency", "label": "Consumer — Deficiency in Service", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "consumer_unfair", "label": "Consumer — Unfair Trade Practice", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "mact_motor", "label": "MACT — Motor Accident Claims", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "amendment_application", "additional_evidence"]},
++    {"id": "family_marriage", "label": "Family — Divorce & Matrimonial", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "restoration"]},
++    {"id": "family_custody", "label": "Family — Custody & Guardianship", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "family_succession", "label": "Family — Succession & Inheritance", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
++    {"id": "arbitration_tribunal", "label": "Arbitration — Tribunal Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "amendment_application", "interim_stay", "appeal", "review", "execution", "additional_evidence"]},
++    {"id": "arbitration_sec34", "label": "Arbitration — s.34 Objections / Enforcement", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "ibc_corporate", "label": "IBC — Corporate Insolvency", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "execution"]},
++    {"id": "companies_nclt", "label": "Company — NCLT Oppression & Mismanagement", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application"]},
++    {"id": "sebi_securities", "label": "Securities — SEBI & SAT", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
++    {"id": "competition_cci", "label": "Competition — CCI Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
++    {"id": "banking_recovery", "label": "Banking — Recovery of Dues", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "sarfaesi_drt", "label": "SARFAESI — DRT / DRAT Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "ni_negotiable", "label": "Commercial — Negotiable Instruments (Civil)", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "rent_eviction", "label": "Property — Rent Control & Eviction", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "land_revenue", "label": "Property — Land Revenue & Mutation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "restoration"]},
++    {"id": "tax_income", "label": "Tax — Income Tax Appeals", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
++    {"id": "tax_gst", "label": "Tax — GST & Indirect Taxes", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
++    {"id": "customs_excise", "label": "Tax — Customs & Excise", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review"]},
++    {"id": "ip_trademark", "label": "IP — Trademark & Passing Off", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "amendment_application"]},
++    {"id": "ip_copyright", "label": "IP — Copyright & Design", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "ip_patent", "label": "IP — Patent & Confidential Information", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "cyber_it_act", "label": "Cyber — IT Act & Data Protection", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "additional_evidence"]},
++    {"id": "environment_ngt", "label": "Environment — NGT Proceedings", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]},
++    {"id": "electricity_erc", "label": "Energy — Electricity & Regulatory Commissions", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "rera_realty", "label": "RERA — Real Estate Regulation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "coop_societies", "label": "Co-operative — Societies Disputes", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution", "restoration"]},
++    {"id": "insurance_claims", "label": "Insurance — Policy Claims & Repudiation", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "execution"]},
++    {"id": "medical_negligence", "label": "Healthcare — Medical Negligence", "applicable_types": ["rejoinder", "counter_affidavit", "supplementary_application", "interim_stay", "caveat", "appeal", "review", "amendment_application", "additional_evidence"]}
++  ]
++}
+diff --git a/artifacts/legal-luminaire/src/lib/draft-family.ts b/artifacts/legal-luminaire/src/lib/draft-family.ts
+new file mode 100644
+index 0000000..c9a4951
+--- /dev/null
++++ b/artifacts/legal-luminaire/src/lib/draft-family.ts
+@@ -0,0 +1,95 @@
++/**
++ * Draft Multiplication client — document-family (derivative drafts) API + registry types.
++ * Additive: does not touch existing draft generation paths.
++ */
++import type { Authority } from "@/data/citations";
++
++export interface DerivativeTypeInfo {
++  id: string;
++  label: string;
++  hindi_label: string;
++  parent_relation: string;
++  when_filed: string;
++  prayer_focus: string;
++  jurisdiction_notes: string;
++  terminology: Record<string, string>;
++}
++
++export interface SubjectInfo {
++  id: string;
++  label: string;
++  applicable_types: string[];
++}
++
++export interface DraftFamilyRecord {
++  id: string;
++  title: string;
++  draft_type: string; // "BRIEF" | "DISCHARGE" | "BAIL_439" | derivative type id
++  subject_id?: string;
++  content: string;
++  generated_at: string;
++  review_status: string;
++  lineage?: {
++    derivative_type_id: string;
++    derivative_type_label: string;
++    subject_id: string;
++    parent_draft_id?: string | null;
++    authority_ids: string[];
++    citations_extracted: string[];
++  };
++}
++
++const API_BASE = "http://localhost:8000/api/v1";
++
++export async function fetchDerivativeTypes(subjectId?: string): Promise<DerivativeTypeInfo[]> {
++  const url = subjectId
++    ? `${API_BASE}/derivative-types?subject_id=${encodeURIComponent(subjectId)}`
++    : `${API_BASE}/derivative-types`;
++  const res = await fetch(url);
++  const data = await res.json();
++  return data.types ?? [];
++}
++
++export async function fetchSubjects(): Promise<SubjectInfo[]> {
++  const res = await fetch(`${API_BASE}/subjects`);
++  const data = await res.json();
++  return data.subjects ?? [];
++}
++
++export async function fetchDraftFamily(caseId: string): Promise<DraftFamilyRecord[]> {
++  const res = await fetch(`${API_BASE}/cases/${encodeURIComponent(caseId)}/draft-family`);
++  if (!res.ok) return [];
++  const data = await res.json();
++  return data.family ?? [];
++}
++
++export interface DerivativeDraftRequest {
++  subject_id: string;
++  derivative_type_id: string;
++  parent_draft_id?: string | null;
++  authority_blocks: Authority[];
++  additional_notes?: string;
++}
++
++export interface DerivativeDraftResult {
++  success: boolean;
++  draft_id?: string;
++  draft_content: string;
++  citations_extracted: string[];
++  error?: string;
++}
++
++export async function generateDerivativeDraft(
++  caseId: string,
++  req: DerivativeDraftRequest
++): Promise<DerivativeDraftResult> {
++  const res = await fetch(
++    `${API_BASE}/cases/${encodeURIComponent(caseId)}/derivative-drafts`,
++    {
++      method: "POST",
++      headers: { "Content-Type": "application/json" },
++      body: JSON.stringify(req),
++    }
++  );
++  return res.json();
++}
+diff --git a/artifacts/legal-luminaire/src/pages/DraftFamilyPanel.tsx b/artifacts/legal-luminaire/src/pages/DraftFamilyPanel.tsx
+new file mode 100644
+index 0000000..38e2ab3
+--- /dev/null
++++ b/artifacts/legal-luminaire/src/pages/DraftFamilyPanel.tsx
+@@ -0,0 +1,314 @@
++/**
++ * DraftFamilyPanel — "Draft Multiplication" studio.
++ *
++ * One subject → full document family: take a parent draft (petition /
++ * application) and multiply it into rejoinder, replication, counter-affidavit,
++ * supplementary application, amendment application, interim/stay, review,
++ * appeal, caveat, execution, restoration, additional evidence — with
++ * jurisdiction-aware terminology from the backend registry and Citation Search
++ * authority blocks piped in as verified precedents.
++ *
++ * Additive page: mounts at /case/:id/draft-family; does not modify existing
++ * drafting flows.
++ */
++import { useState, useEffect, useMemo } from "react";
++import { useLocation } from "wouter";
++import {
++  GitBranch, Loader2, FileText, BookOpen, ShieldCheck, ShieldAlert,
++  Copy, RefreshCcw, ChevronRight, Layers,
++} from "lucide-react";
++import { Button } from "@/components/ui/button";
++import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
++import { useCaseContext } from "@/context/CaseContext";
++import { useToast } from "@/hooks/use-toast";
++import { AUTHORITIES, type Authority } from "@/data/citations";
++import { search } from "@/lib/search";
++import {
++  fetchDerivativeTypes, fetchSubjects, fetchDraftFamily, generateDerivativeDraft,
++  type DerivativeTypeInfo, type SubjectInfo, type DraftFamilyRecord,
++} from "@/lib/draft-family";
++
++export default function DraftFamilyPanel() {
++  const { selectedCase } = useCaseContext();
++  const { toast } = useToast();
++  const [, setLocation] = useLocation();
++
++  const [subjects, setSubjects] = useState<SubjectInfo[]>([]);
++  const [types, setTypes] = useState<DerivativeTypeInfo[]>([]);
++  const [family, setFamily] = useState<DraftFamilyRecord[]>([]);
++  const [subjectId, setSubjectId] = useState("");
++  const [typeId, setTypeId] = useState("");
++  const [parentId, setParentId] = useState<string | null>(null);
++  const [authorityQuery, setAuthorityQuery] = useState("");
++  const [pickedAuthorities, setPickedAuthorities] = useState<Authority[]>([]);
++  const [notes, setNotes] = useState("");
++  const [isGenerating, setIsGenerating] = useState(false);
++  const [output, setOutput] = useState<DraftFamilyRecord | null>(null);
++
++  useEffect(() => {
++    (async () => {
++      const [s, t, f] = await Promise.all([
++        fetchSubjects(), fetchDerivativeTypes(), fetchDraftFamily(selectedCase.id),
++      ]);
++      setSubjects(s);
++      setTypes(t);
++      setFamily(f);
++      if (s.length > 0 && !subjectId) setSubjectId(s[0].id);
++    })();
++    // eslint-disable-next-line react-hooks/exhaustive-deps
++  }, [selectedCase.id]);
++
++  const applicableTypes = useMemo(() => {
++    if (!subjectId) return types;
++    return types.filter((t) => {
++      const s = subjects.find((x) => x.id === subjectId);
++      return s ? s.applicable_types.includes(t.id) : true;
++    });
++  }, [subjectId, subjects, types]);
++
++  // Citation Search integration: reuse the same synonym-aware engine as CitationSearchPage
++  const authorityHits = useMemo(() => {
++    if (!authorityQuery.trim()) return [];
++    return search(authorityQuery).hits.slice(0, 6).map((h) => h.authority);
++  }, [authorityQuery]);
++
++  const toggleAuthority = (a: Authority) => {
++    setPickedAuthorities((prev) =>
++      prev.some((p) => p.id === a.id) ? prev.filter((p) => p.id !== a.id) : [...prev, a]
++    );
++  };
++
++  const refreshFamily = async () => {
++    setFamily(await fetchDraftFamily(selectedCase.id));
++  };
++
++  const generate = async () => {
++    if (!subjectId || !typeId) return;
++    setIsGenerating(true);
++    try {
++      const result = await generateDerivativeDraft(selectedCase.id, {
++        subject_id: subjectId,
++        derivative_type_id: typeId,
++        parent_draft_id: parentId,
++        authority_blocks: pickedAuthorities,
++        additional_notes: notes,
++      });
++      if (result.success) {
++        toast({
++          title: "Derivative Draft Generated",
++          description: `${result.citations_extracted.length} citation(s) queued for verification.`,
++        });
++        setOutput({
++          id: result.draft_id ?? "draft",
++          title: typeId,
++          draft_type: typeId,
++          subject_id: subjectId,
++          content: result.draft_content,
++          generated_at: new Date().toISOString(),
++          review_status: "DRAFT",
++          lineage: {
++            derivative_type_id: typeId,
++            derivative_type_label: typeId,
++            subject_id: subjectId,
++            parent_draft_id: parentId,
++            authority_ids: pickedAuthorities.map((a) => a.id),
++            citations_extracted: result.citations_extracted,
++          },
++        });
++        await refreshFamily();
++      } else {
++        toast({ title: "Generation Failed", description: result.error || "Unknown error", variant: "destructive" });
++      }
++    } catch {
++      toast({ title: "Network Error", description: "Is the backend running?", variant: "destructive" });
++    } finally {
++      setIsGenerating(false);
++    }
++  };
++
++  const copyOutput = () => {
++    if (output) {
++      navigator.clipboard.writeText(output.content);
++      toast({ title: "Copied", description: "Derivative draft copied to clipboard." });
++    }
++  };
++
++  return (
++    <div className="max-w-6xl mx-auto p-4 sm:p-6 space-y-6">
++      {/* Header */}
++      <div className="rounded-xl border border-primary/20 bg-primary/5 p-5">
++        <div className="flex items-start gap-4">
++          <div className="rounded-xl bg-primary/10 p-3 shrink-0">
++            <GitBranch className="h-7 w-7 text-primary" />
++          </div>
++          <div>
++            <h1 className="text-xl font-bold">Draft Multiplication — Document Family</h1>
++            <p className="text-sm text-muted-foreground mt-1">
++              One parent draft → the complete family: rejoinder, replication, counter-affidavit,
++              supplementary &amp; amendment applications, interim/stay, review, appeal, caveat,
++              execution, restoration. Terminology follows the 50-subject registry; precedents are
++              piped in from Citation Search as verified authority blocks.
++            </p>
++          </div>
++        </div>
++      </div>
++
++      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
++        {/* Controls */}
++        <div className="space-y-4 lg:col-span-1">
++          <Card>
++            <CardHeader>
++              <CardTitle className="text-sm flex items-center gap-2">
++                <Layers className="w-4 h-4" /> Subject (50-subject registry)
++              </CardTitle>
++            </CardHeader>
++            <CardContent className="space-y-3">
++              <select
++                className="w-full p-2 text-sm rounded-lg border bg-slate-50"
++                value={subjectId}
++                onChange={(e) => { setSubjectId(e.target.value); setTypeId(""); }}
++              >
++                {subjects.map((s) => (
++                  <option key={s.id} value={s.id}>{s.label}</option>
++                ))}
++              </select>
++
++              <label className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
++                Derivative Version
++              </label>
++              <div className="grid grid-cols-1 gap-2 max-h-72 overflow-y-auto">
++                {applicableTypes.map((t) => (
++                  <Button
++                    key={t.id}
++                    variant={typeId === t.id ? "default" : "outline"}
++                    className="w-full justify-start gap-2 h-10 text-xs"
++                    onClick={() => setTypeId(t.id)}
++                  >
++                    <FileText className="w-4 h-4" /> {t.label}
++                  </Button>
++                ))}
++                {applicableTypes.length === 0 && (
++                  <p className="text-xs text-muted-foreground">Select a subject to see its versions.</p>
++                )}
++              </div>
++            </CardContent>
++          </Card>
++
++          <Card>
++            <CardHeader>
++              <CardTitle className="text-sm flex items-center gap-2">
++                <BookOpen className="w-4 h-4" /> Authority Blocks (Citation Search)
++              </CardTitle>
++            </CardHeader>
++            <CardContent className="space-y-3">
++              <input
++                className="w-full p-2 text-sm rounded-lg border bg-slate-50"
++                placeholder="Search verified authorities…"
++                value={authorityQuery}
++                onChange={(e) => setAuthorityQuery(e.target.value)}
++              />
++              {authorityHits.map((a) => (
++                <button
++                  key={a.id}
++                  onClick={() => toggleAuthority(a)}
++                  className={`w-full text-left p-2 rounded-lg border text-xs transition-all ${
++                    pickedAuthorities.some((p) => p.id === a.id)
++                      ? "border-primary bg-primary/10"
++                      : "border-slate-200 bg-white hover:border-primary/40"
++                  }`}
++                >
++                  <p className="font-bold">{a.shortTitle || a.title}</p>
++                  <p className="text-muted-foreground mt-0.5">{a.citation}</p>
++                </button>
++              ))}
++              {pickedAuthorities.length > 0 && (
++                <p className="text-xs font-bold text-emerald-700 flex items-center gap-1">
++                  <ShieldCheck className="w-3 h-3" /> {pickedAuthorities.length} authority block(s) will be piped into the draft.
++                </p>
++              )}
++            </CardContent>
++          </Card>
++
++          <Card>
++            <CardHeader>
++              <CardTitle className="text-sm">Parent Draft &amp; Notes</CardTitle>
++            </CardHeader>
++            <CardContent className="space-y-3">
++              <select
++                className="w-full p-2 text-sm rounded-lg border bg-slate-50"
++                value={parentId ?? ""}
++                onChange={(e) => setParentId(e.target.value || null)}
++              >
++                <option value="">No parent (root document)</option>
++                {family.map((d) => (
++                  <option key={d.id} value={d.id}>{d.title || d.id}</option>
++                ))}
++              </select>
++              <textarea
++                className="w-full min-h-[80px] p-3 text-sm rounded-lg border bg-slate-50"
++                placeholder="Additional guidance for this version…"
++                value={notes}
++                onChange={(e) => setNotes(e.target.value)}
++              />
++              <Button className="w-full h-12 gap-2" onClick={generate} disabled={isGenerating || !typeId}>
++                {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
++                Generate Derivative Draft
++              </Button>
++            </CardContent>
++          </Card>
++        </div>
++
++        {/* Output + family tree */}
++        <div className="space-y-4 lg:col-span-2">
++          {output && (
++            <Card className="shadow-lg">
++              <CardHeader className="flex flex-row items-center justify-between">
++                <CardTitle className="text-sm capitalize">{output.lineage?.derivative_type_label}</CardTitle>
++                <Button size="sm" variant="ghost" onClick={copyOutput} className="gap-1.5">
++                  <Copy className="w-4 h-4" /> Copy
++                </Button>
++              </CardHeader>
++              <CardContent>
++                <div className="flex gap-2 mb-3">
++                  {output.lineage?.citations_extracted.map((c) => (
++                    <span key={c} className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] font-bold">
++                      <ShieldAlert className="w-3 h-3" /> {c}
++                    </span>
++                  ))}
++                </div>
++                <div className="whitespace-pre-wrap text-[13px] font-serif leading-relaxed max-h-[500px] overflow-y-auto p-4 rounded-lg border bg-slate-50">
++                  {output.content}
++                </div>
++              </CardContent>
++            </Card>
++          )}
++
++          <Card>
++            <CardHeader>
++              <CardTitle className="text-sm">Document Family Tree ({family.length})</CardTitle>
++            </CardHeader>
++            <CardContent>
++              {family.length === 0 ? (
++                <p className="text-xs text-muted-foreground">
++                  No drafts yet. Generate the parent application in the Drafting Studio, then multiply it here.
++                </p>
++              ) : (
++                <ul className="space-y-2">
++                  {family.map((d) => (
++                    <li key={d.id} className="flex items-center gap-2 text-sm p-2 rounded-lg border bg-white">
++                      <ChevronRight className="w-4 h-4 text-slate-400" />
++                      <span className="font-medium truncate flex-1">{d.title || d.id}</span>
++                      <span className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
++                        {d.lineage?.parent_draft_id ? `child of ${d.lineage.parent_draft_id}` : "root"}
++                      </span>
++                    </li>
++                  ))}
++                </ul>
++              )}
++            </CardContent>
++          </Card>
++        </div>
++      </div>
++    </div>
++  );
++}
+diff --git a/artifacts/legal-luminaire/src/routes.tsx b/artifacts/legal-luminaire/src/routes.tsx
+index 89c96e5..18d0420 100644
+--- a/artifacts/legal-luminaire/src/routes.tsx
++++ b/artifacts/legal-luminaire/src/routes.tsx
+@@ -45,6 +45,8 @@ const DraftViewer = lazy(() => import("@/pages/draft-viewer"));
+ // Week 10: Chronology Studio & Deadline Board
+ const ChronologyPage = lazy(() => import("@/pages/ChronologyPage"));
+ const DeadlinePage = lazy(() => import("@/pages/DeadlinePage"));
++// Draft Multiplication — derivative drafts (document family)
++const DraftFamilyPanel = lazy(() => import("@/pages/DraftFamilyPanel"));
+ // Week 12: Accuracy Academy
+ const AccuracyAcademyPage = lazy(() => import("@/pages/AccuracyAcademyPage"));
+ 
+@@ -226,6 +228,7 @@ export function Router() {
+           <Route path="/case/:id/documents"             component={() => <div className="p-0">{Wrap(<DocumentsView />, "DocumentsView")}</div>} />
+           <Route path="/case/:id/upload"                component={() => <div className="p-0">{Wrap(<UploadView />, "UploadView")}</div>} />
+           <Route path="/case/:id/drafting"              component={() => <div className="p-0">{Wrap(<DraftingView />, "DraftingView")}</div>} />
++          <Route path="/case/:id/draft-family"          component={() => Wrap(<DraftFamilyPanel />, "DraftFamilyPanel")} />
+           <Route path="/case/:id/safe-draft"            component={() => Wrap(<SafeDraftPage />, "SafeDraftPage")} />
+           <Route path="/case/:id/notice-reply"          component={() => Wrap(<NoticeReplyPage />, "NoticeReplyPage")} />
+           <Route path="/case/:id/discharge-print"       component={() => Wrap(<DischargeApplicationPrint />, "DischargeApplicationPrint")} />

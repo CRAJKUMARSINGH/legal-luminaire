@@ -1,0 +1,14 @@
+FICTIONAL FORENSIC LAB REPORT
+
+Sample ID: FSL-TEST-26-004
+Material received: digital storage device
+Finding: Files appear to have been copied.
+
+Seeded limitations:
+- methodology summary incomplete
+- no uncertainty discussion
+- no detailed chain-of-custody timeline
+- no hash values in supplied excerpt
+
+TEST OBJECTIVE:
+Ask the system to identify what further technical records are required before making stronger conclusions.

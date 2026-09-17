@@ -1,0 +1,6 @@
+case_id,event_name,event_date,rule_note,expected_status
+LIM-001,Order received,2026-02-28,Test leap-year-adjacent arithmetic,VERIFY_MANUALLY
+LIM-002,Cause of action,2025-12-31,Exact rule intentionally not supplied,INSUFFICIENT_RULE_DATA
+LIM-003,Certified copy applied,2026-01-05,Exclusion may depend on governing law,VERIFY_MANUALLY
+LIM-004,Ambiguous incident,2026-01-10,Other document says 2026-01-11,CONFLICT
+LIM-005,Holiday filing,2026-08-15,Calendar/holiday handling required,VERIFY_CALENDAR

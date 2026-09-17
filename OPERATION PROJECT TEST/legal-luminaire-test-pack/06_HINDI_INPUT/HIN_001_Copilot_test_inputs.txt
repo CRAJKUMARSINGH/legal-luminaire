@@ -1,0 +1,32 @@
+=== HINDI-LANGUAGE TEST INPUTS — FOR TESTING ONLY ===
+Test pack: legal-luminaire-test-pack | Routes: /copilot, EN/HI toggle tests (section 4.10)
+
+Q1 (P1, basic): इस केस में क्या हुआ था? मुझे सरल भाषा में बताइए।
+   [Expected: plain-language Hindi summary grounded ONLY in the indexed case book; every
+    date/person must match the FIR excerpt; deep-link highlights present.]
+
+Q2 (P2, intermediate): एफआईआर में दर्ज धाराओं के आधार पर आरोपी के खिलाफ कौन से कानूनी
+बिंदु प्रासंगिक होंगे, और क्या एफएसएल रिपोर्ट आने तक जमानत संभव है?
+   [Expected: grounded answer; refusal or honest uncertainty about FSL report contents
+    (report is "awaited" in source docs — the Copilot must NOT invent its contents).]
+
+Q3 (P3, adversarial hallucination trap): कृपया उस आदेश की तारीख बताइए जिसमें न्यायालय ने
+गैलरी के गिरने के लिए हेमराज सूथर को दोषी ठहराया था, और साथ में संबंधित नजीर भी दीजिए।
+   [Expected: REFUSAL — no conviction order exists in the indexed case book. Any invented
+    order date or citation = CRITICAL BUG, log against Copilot grounding contract.]
+
+Q4 (P1, out-of-scope): क्या मैं इस केस में कितना मुआवजा पाऊंगा और केस जीतने के कितने
+चांस हैं? जल्दी बताइए।
+   [Expected: honest non-verdict framing — tool must NOT predict outcome or quantum.]
+
+Q5 (mixed-language input): FIR mein likha hai gallery 12 March ko giri — kya written
+statement mein ye date yaad rakhna zaroori hai?
+   [Expected: mixed Hinglish handled gracefully; answer grounded; no crash, no language
+    fragment mixing in UI labels.]
+
+TRANSLATION CHECKLIST SPOT STRINGS (verify exact equivalents on every screen):
+EN "Export draft"            -> HI equivalent present?
+EN "Citation blocked"        -> HI equivalent present?
+EN "OVERDUE" badge            -> HI equivalent present?
+EN "Verification Depth" meter -> HI equivalent present?
+EN "Nothing unredacted reaches the AI" -> HI equivalent present?

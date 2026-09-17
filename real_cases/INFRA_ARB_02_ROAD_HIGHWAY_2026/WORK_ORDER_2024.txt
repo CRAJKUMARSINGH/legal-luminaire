@@ -1,0 +1,24 @@
+LETTER OF ACCEPTANCE (LOA)
+NHAI/PIU-Udaipur/NH-758/2024-25/1123
+Date: 10.06.2024
+
+To,
+M/s. Rajputana Infra Projects Pvt. Ltd.
+Jaipur, Rajasthan
+
+Name of Work: Construction of 45 km 2-Lane with Paved Shoulder from Km 0+000 to Km 45+000 on NH-758
+Contract Amount: ₹1,12,65,00,000/- (Rupees One Hundred Twelve Crore Sixty-Five Lakh)
+Time Allowed: 24 Months
+Scheduled Completion: 09.06.2026
+
+Applicable Conditions: 
+- FIDIC Red Book 2017 
+- NHAI GCC 2022 
+- Arbitration under Section 11 of Arbitration & Conciliation Act 1996
+- Defect Liability Period: 48 months from Commercial Operation Date (COD)
+
+Please submit the Performance Bank Guarantee of ₹5.63 Crore within 15 days to sign the Contract Agreement.
+
+Signed,
+Chief General Manager,
+NHAI, PIU-Udaipur

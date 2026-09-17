@@ -1,0 +1,35 @@
+[Simulated transcription of client’s rough handwritten notes – for OCR / ingest / PII redaction testing]
+
+Meeting with client – 20 June 2025
+
+Hemraj Singh – C-45 Malviya Nagar
+Mobile: 98765 43210
+Aadhaar approx  XXXX-XXXX-1234 (he showed card)
+
+He says:
+- Work order was for repair only, not full reconstruction
+- Cement was purchased from local dealer – bills available
+- Sand was river sand, ratio he remembers 1:5 or 1:6
+- No lab test was asked by stadium people at that time
+- Collapse happened after heavy rain previous night + many people standing near parapet
+- He was not present on the day of incident
+- FSL people took samples after many days – possible contamination?
+- He has other ongoing contracts with PWD – worried about blacklisting
+- Family: wife + 2 children (school going)
+- Wants discharge or at least anticipatory / regular bail
+- Can we challenge the FSL standard they used? He heard something about wrong IS code
+
+Rough dates he mentioned:
+Work started Nov 2022
+Completed Feb 2023
+Payment received partly March 2023
+Collapse 17 March 2025
+FIR 18 March 2025
+Arrest 5 June 2025
+Charge sheet 28 June 2025
+
+Please prepare strong discharge application focusing on scientific evidence error.
+
+---
+SYNTHETIC – contains deliberate fake PII-like strings for redaction testing.
+Legal Luminaire should propose redaction of mobile / Aadhaar-like numbers before any model call.

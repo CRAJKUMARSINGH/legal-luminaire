@@ -1,0 +1,25 @@
+WORK ORDER NO: RMSCL/2024-25/Works/4782
+Date: 05.05.2024
+
+Name of Work: Construction of 300 Bedded Hospital at Udaipur (300 Beds, Multi-Specialty)
+Employer: Rajasthan Medical Services Corporation Ltd. (RMSCL), Jaipur
+Contractor: M/s. Rajputana Builders Pvt. Ltd., Udaipur
+Contract Amount: ₹48,75,00,000/- (Rupees Forty-Eight Crore Seventy-Five Lakh only)
+Time Allowed: 18 Months from the date of site handover
+Scheduled Completion: 04.11.2025
+
+Arbitration Clause: Clause 25 of CPWD GCC 2020 + Rajasthan Arbitration Rules
+
+Special Conditions:
+- CPWD General Conditions of Contract 2020 shall apply mutatis mutandis.
+- Liquidated Damages: 0.5% per week, maximum 10% of contract value
+- Site handover within 15 days of Work Order
+- Running bills to be paid within 45 days of submission
+
+Tender Notice No.: RMSCL/2023-24/NIT/289 dated 12.03.2024
+Security Deposit: 5% of contract value (₹2.43 Cr)
+Performance Guarantee: 5% of contract value (₹2.43 Cr)
+
+Signed:
+For RMSCL                           For M/s. Rajputana Builders Pvt. Ltd.
+Managing Director                   Director / Authorized Signatory

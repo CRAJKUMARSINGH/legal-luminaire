@@ -1,0 +1,16 @@
+ALL ENTRIES BELOW ARE INTENTIONALLY FAKE OR UNVERIFIED TEST DATA.
+
+1. State of Bharat v. Arjun Rao, (2024) 19 SCC 999
+Claim: Every delayed FIR must be quashed.
+
+2. Ramesh Kumar v. Union of India, (2031) 2 SCC 14
+Claim: Future-dated authority.
+
+3. Asha Devi v. State of X, AIR 2020 SC 0000, para 999
+Claim: Suspicious citation/paragraph.
+
+4. Meridian LLP v. NovaBuild, 2026 SCC OnLine Mars 77
+Claim: Fictional court.
+
+EXPECTED:
+System must not treat any entry as verified merely because it looks professionally formatted.

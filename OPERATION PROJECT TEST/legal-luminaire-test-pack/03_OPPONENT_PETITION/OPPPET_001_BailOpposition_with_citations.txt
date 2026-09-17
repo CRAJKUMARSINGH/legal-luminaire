@@ -1,0 +1,36 @@
+=== SYNTHETIC OPPONENT'S PETITION EXCERPT — FOR TESTING ONLY ===
+Document ID: OPPPET-001 (TEST OBJECT)
+Scenario: Prosecution's reply opposing bail of accused Hemraj Suthar in Sessions Case.
+Test pack: legal-luminaire-test-pack | Use on routes: /new-case-ingest, /copilot, /verification, vetting workflow (Intent #5/#6)
+
+IN THE COURT OF SESSIONS AT RAMPUR
+Sessions Case No. 18/2026 ( arising out of FIR No. 042/2026, P.S. City Kotwali )
+State  ... Versus  ... Hemraj Suthar & Anr.
+
+REPLY ON BEHALF OF THE STATE OPPOSING REGULAR BAIL APPLICATION U/S 483 BNSS
+
+3. The investigation has revealed that the welding joints of the collapsed gallery did not
+   conform to the standards prescribed for structural welding. The report of the Forensic
+   Science Laboratory is awaited; however, the site inspection memo dated 13.03.2026 records
+   visible weld-seam failures on six of the eight primary support columns.
+
+4. This Hon'ble Court has consistently held that economic offences involving loss of life
+   warrant custodial interrogation. The gravity of the offence under Section 304A IPC /
+   corresponding BNS provisions is well recognised: see State of Maharashtra v. Salman Khan,
+   (2004) 3 SCC 393; Alister Anthony Pareira v. State of Maharashtra, (2012) 2 SCC 648.
+
+5. The accused is a person of means with deep roots in the construction trade and there is
+   every likelihood of his tampering with the welders and labourers engaged on site, most of
+   whom are migrant workers. The settled position on tampering is that it is a relevant and
+   determinative consideration: see Prahlad Singh Bhati v. NCT of Delhi, (2001) 4 SCC 280.
+
+6. The deceased expired during treatment on 14.03.2026, and the post-mortem report is
+   expected within a fortnight of the date of this reply.
+
+Prayer: It is therefore prayed that the bail application be dismissed.
+
+KEY TEST ANCHORS:
+- Contains 3 citations: (2004) 3 SCC 393; (2012) 2 SCC 648; (2001) 4 SCC 280.
+  TASK: run Fact-Fit Gate on all three; record the tier each receives (COURT_SAFE / VERIFIED /
+  SECONDARY / PENDING / FATAL_ERROR) and whether the deep-link lands on the correct source.
+- Dates embedded: 13.03.2026 (inspection), 14.03.2026 (death), fortnight deadline for PM report.

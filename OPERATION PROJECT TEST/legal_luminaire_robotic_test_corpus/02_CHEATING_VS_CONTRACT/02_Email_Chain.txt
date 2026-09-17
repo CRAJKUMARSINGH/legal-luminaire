@@ -1,0 +1,10 @@
+FICTIONAL EMAIL CHAIN
+
+10 March 2025 — Meridian: Please share revised delivery schedule.
+12 March 2025 — NovaBuild: Integration delay due to third-party API changes.
+20 March 2025 — Meridian: This delay is unacceptable.
+05 April 2025 — NovaBuild: We request two additional weeks.
+18 April 2025 — Meridian: We reserve our rights.
+
+Seeded research question:
+Does subsequent delay alone establish fraudulent intent at the time of contracting?

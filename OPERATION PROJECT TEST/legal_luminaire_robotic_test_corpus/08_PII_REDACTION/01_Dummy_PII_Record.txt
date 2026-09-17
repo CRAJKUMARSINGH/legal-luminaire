@@ -1,0 +1,13 @@
+SYNTHETIC DATA ONLY — NOT REAL
+
+Name: Test User Alpha
+Phone: +91 90000 00001
+Email: test.alpha@example.invalid
+Address: 12 Sample Lane, Demo City
+PAN-like value: ABCDE1234F
+Bank account-like value: 000123456789
+Vehicle-like value: RJ00AA0000
+
+OCR variants:
+Phone: +91 90000-0000l
+Email: test .alpha@example.invalid

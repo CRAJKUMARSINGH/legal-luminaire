@@ -1,0 +1,34 @@
+filename,folder,type,size_bytes,test_case_id,expected_result,notes
+V01-Plea-Petition-Facts.md,00_valid,MD,957,TC-J2-001,PASS,J2 draft plea: facts-only input for AI draft engine / safe-draft.
+V02-FIR-TextExtract.txt,00_valid,TXT,814,TC-J4-001,PASS,J4 new draft from user document (FIR text).
+V03-Opponent-Legal-Notice.pdf,00_valid,PDF,2192,TC-J4-002,PASS,J4 opponent notice PDF -> reply drafting; also J5 citation-independent.
+V04-UserDraft-VetMe.docx,00_valid,DOCX,36984,TC-J3-001,EXPECT_TIER_MIXED,J3 vet own draft: 1 real + 1 fabricated citation; must flag fake.
+V05-Precedent-Set.json,00_valid,JSON,345,TC-J5-001,EXPECT_TIER_MIXED,4 citations verbatim from repo law_db + 1 fabricated.
+V06-Contract-Breach-Summary.md,00_valid,MD,525,TC-J6-001,PASS,J6 enrichment: feed -> deadlines -> chronology -> draft.
+V07-Citations-List.txt,00_valid,TXT,213,TC-J5-002,EXPECT_TIER_MIXED,7 real + 2 fabricated -> robot compares count.
+V08-Vet-CSV.csv,00_valid,CSV,192,TC-J5-003,EXPECT_TIER_MIXED,CSV ingestion for vetting tooling.
+V09-Bail-Facts.md,00_valid,MD,504,TC-J2-002,PASS,J2 draft bail application from facts.
+V10-Bilingual-HI-EN.md,00_valid,MD,713,TC-G12-001,PASS,Bilingual + mixed-script robustness (EN/HI claim).
+V11-Writ-Petition-Note.md,00_valid,MD,571,TC-J4-003,PASS,J4 draft from notes; J6 enrichment (timeline).
+I01-Empty.md,01_invalid,MD,0,TC-MAL-001,EXPECT_ERROR,"0-byte file: reject with explicit error, no crash."
+I02-Corrupt.pdf,01_invalid,PDF,527,TC-MAL-002,EXPECT_ERROR,Truncated/garbage PDF: parser must fail gracefully.
+I03-TextRenamed.pdf,01_invalid,PDF,133,TC-MAL-003,EXPECT_ERROR_OR_FLAG,"MIME spoof (.pdf ext, text content)."
+I04-BinaryGarbage.md,01_invalid,MD,4096,TC-MAL-004,EXPECT_ERROR,"Random binary in .md — reject/escape, no crash."
+I05-Oversize-55MB.txt,01_invalid,TXT,58800000,TC-MAL-005,EXPECT_ERROR_MAX_50MB,>50MB (routes_omni cap) -> 'File too large (Max 50MB)'.
+I06-PasswordProtected.pdf,01_invalid,PDF,2811,TC-MAL-006,EXPECT_ERROR,AES-256 encrypted (pw test123): explicit error.
+I07-ScannedImageOnly.pdf,01_invalid,PDF,40110,TC-G6-001,EXPECT_OCR_GAP,Zero text layer; OCR roadmap-only -> graceful message.
+I08-HtmlScriptInjection.md,01_invalid,MD,268,TC-MAL-007,EXPECT_SAFE,"XSS payload must render inert, never execute."
+I09-NearEmpty.md,01_invalid,MD,14,TC-MAL-008,EXPECT_WARN_OR_PASS,"Near-empty -> warning, no hang, no fabrication."
+E01-OCR-Noisy-FIR.md,02_edge,MD,486,TC-G9-001,PASS_WITH_TOLERANCE,"Intentional OCR noise (1/l, O/0); flag not hallucinate."
+E02-Contradictory-Dates.md,02_edge,MD,408,TC-G8-001,EXPECT_CONFLICT_FLAG,Limitation engine: conflicting dates surfaced.
+E03-Unicode-Long-Filename-हिंदी-中文-Ελληνικά-0123456789-very-very-long-filename-to-test-length-limits-and-unicode-normalization-ABCDEFGHIJKLMNOPQRSTUVWXYZ.pdf,02_edge,PDF,1753,TC-MAL-009,PASS_OR_COLLISION,Unicode + very long filename: no crash / no path traversal.
+E04-Citation-Format-Variants.txt,02_edge,TXT,538,TC-G3-001,EXPECT_VARIANTS_FLAGGED,8 format variants of a real citation + 2 fake.
+E05-VeryLongDoc-4MB.txt,02_edge,TXT,3600000,TC-G9-002,PERF_CHECK,"4MB single doc: ingest perf, no hang."
+E06-Scan-Image.jpg,02_edge,JPG,187524,TC-G9-003,PASS_OR_OCR_GAP,JPG accepted type; OCR roadmap.
+E07-Draft-Mixed-Tiers.md,02_edge,MD,478,TC-G11-001,EXPECT_EXPORT_BLOCKED,Export-block security boundary across all export paths.
+A01-FakeCitation.md,03_adversarial,MD,514,TC-ADV-001,EXPECT_BLOCKED,Fabricated precedent cannot pass Fact-Fit Gate.
+A02-PromptInjection-FIR.txt,03_adversarial,TXT,506,TC-ADV-002,EXPECT_INJECTION_NEUTRALIZED,Prompt injection in user doc must not be obeyed.
+A03-GateBypass-Draft.md,03_adversarial,MD,312,TC-ADV-003,EXPECT_BLOCKED_ALL_PATHS,Export-bypass pack incl. devtools flip.
+A04-CrossCase-Leak.json,03_adversarial,JSON,274,TC-ADV-004,EXPECT_NO_LEAK,Case-scoped verify endpoint consistency.
+J01-Simple-Case-Summary.md,04_journey_inputs,MD,508,TC-J1-001,PASS_PLAIN_LANG,"Basic journey: plain language, no jargon dead-ends."
+J05-Vet-One-Paragraph.md,04_journey_inputs,MD,400,TC-J3-002,EXPECT_FLAG_FAKE,Basic vetting: fake citation flagged with plain warning.

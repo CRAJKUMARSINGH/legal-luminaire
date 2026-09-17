@@ -1,0 +1,20 @@
+FICTIONAL TEST FIXTURE — NOT A REAL FIR
+
+FIR No.: 47/2026
+Police Station: Pratap Nagar (Synthetic)
+Complainant: Rohan Mehta
+Accused: Arjun Verma
+Alleged date of occurrence: 10 January 2026 at approximately 21:30
+Date of registration: 14 January 2026
+
+Allegation summary:
+The complainant alleges that Arjun Verma demanded money and threatened him during a business dispute.
+
+IMPORTANT FACT STATUS:
+These are allegations recorded in an FIR-style synthetic fixture. They are not established facts.
+
+Seeded issues:
+1. Delay of four days between alleged occurrence and registration.
+2. No independent witness named in this document.
+3. Amount allegedly demanded is described as INR 5,00,000 in one paragraph and INR 50,000 in another paragraph.
+4. The accused's middle name is omitted here but appears in another document.

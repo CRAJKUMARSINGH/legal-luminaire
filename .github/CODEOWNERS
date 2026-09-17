@@ -1,0 +1,14 @@
+# Recovery ownership for GitHub review (Day 18).
+# Solo operator: User / @CRAJKUMARSINGH is Recovery Lead, Architecture Owner,
+# and interim Release Owner (G-1..G-4). Replace GitHub handles when roles split.
+
+* @CRAJKUMARSINGH
+
+/artifacts/legal-luminaire/src/ @CRAJKUMARSINGH
+/artifacts/legal-luminaire/backend/ @CRAJKUMARSINGH
+/artifacts/legal-luminaire/backend/rag/ @CRAJKUMARSINGH
+/artifacts/legal-luminaire/backend/graph/ @CRAJKUMARSINGH
+/artifacts/legal-luminaire/backend/registry/ @CRAJKUMARSINGH
+/artifacts/legal-luminaire/backend/config.py @CRAJKUMARSINGH
+/.github/ @CRAJKUMARSINGH
+/docs/adr/ @CRAJKUMARSINGH

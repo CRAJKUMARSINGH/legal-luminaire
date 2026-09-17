@@ -1,0 +1,7 @@
+{
+  "case_id": "case-999-other-client",
+  "citations": [
+    "AIR 1954 SC 123"
+  ],
+  "note": "G2 cross-case probe: backend /cases/{case_id}/verify-citations receives case_id but (per code) lookup ignores it for scoping. Verify no cross-matter leakage / false confidence."
+}

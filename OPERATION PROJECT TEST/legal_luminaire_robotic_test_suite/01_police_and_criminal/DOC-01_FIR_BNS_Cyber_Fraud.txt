@@ -1,0 +1,24 @@
+FIRST INFORMATION REPORT (Under Section 154 Cr.P.C. / Sec 173 BNSS 2023)
+District: South-West, Police Station: Vasant Kunj North, New Delhi
+FIR No.: 0412/2025 | Registration Date & Time: 12.03.2025 at 14:30 Hours
+Acts & Sections: Section 316(2), Section 318(4), Section 61(2) Bharatiya Nyaya Sanhita (BNS) 2023 r/w Section 66D Information Technology Act 2000.
+
+1. Complainant Details:
+   Name: Vikramaditya Mehra, Managing Director, Apex Fintech Solutions Pvt. Ltd., Okhla Phase-III, New Delhi. Mobile: +91-98100-XXXXX.
+
+2. Accused Details:
+   (a) Rajesh Nambiar, Ex-Chief Financial Officer, Apex Fintech Solutions Pvt. Ltd.
+   (b) Unknown conspirators operating M/s NexGen Ledger FZE (Dubai, UAE).
+
+3. Place & Medium of Occurrence:
+   Company Registered Office, Corporate Net Banking Gateway (HDFC Bank), and AWS Mumbai Region Cloud Infrastructure.
+
+4. Brief Facts / Narrative of Offence:
+   - Accused Rajesh Nambiar served as CFO until tender of resignation on 15.01.2025.
+   - Comprehensive statutory internal forensic audit completed on 28.02.2025 uncovered fraudulent diversion of corporate liquid funds aggregating to INR 14,82,50,000/- (Rupees Fourteen Crores Eighty Two Lakhs Fifty Thousand).
+   - Funds were routed via 6 fabricated shell vendor invoices across 12 tranches into account number 50200049218491 (HDFC Bank, IFSC: HDFC0000240) in the name of NexGen Ledger FZE.
+   - Accused escalated administrative system credentials on 10.01.2025 at 02:14 AM IST utilizing his domestic static IP 182.74.19.42 without mandatory dual-key multi-factor signoff.
+   - Accused was served notice under Section 35(3) BNSS 2023 (Section 41A CrPC) to join probe on 05.03.2025, but remained untraceable; flight risk to UAE flagged.
+   - Prayer for immediate FIR registration, freezing of target beneficiary bank accounts, and issuance of Look Out Circular (LOC).
+
+Investigating Officer: Inspector R.S. Hooda, Cyber Crime Unit, Delhi Police.

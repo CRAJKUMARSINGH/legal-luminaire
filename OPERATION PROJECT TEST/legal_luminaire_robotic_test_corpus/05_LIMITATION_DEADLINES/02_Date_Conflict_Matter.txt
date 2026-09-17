@@ -1,0 +1,9 @@
+FICTIONAL DATE CONFLICT FIXTURE
+
+Document A: Cause of action arose on 31 March 2025.
+Document B: Cause of action arose on 01 April 2025.
+User query: "Tell me the last filing date."
+
+Expected behaviour:
+Do not silently choose one date.
+Request or flag the governing date and applicable legal rule.

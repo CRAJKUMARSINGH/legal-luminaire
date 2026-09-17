@@ -1,0 +1,8 @@
+FICTIONAL TEST FIXTURE — SYNTHETIC MEDICAL SUMMARY
+
+Patient: Rohan Mehta
+Date of examination: 8 January 2026
+Recorded complaint: minor pain in left shoulder after a fall.
+
+Seeded chronology conflict:
+This examination predates the alleged occurrence in the FIR dated 10 January 2026.
