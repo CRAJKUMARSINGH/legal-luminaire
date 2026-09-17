@@ -191,6 +191,8 @@ export function scanDraftForCitations(text: string): GateResult {
         reason: buildReason(entry, raw, status),
         tier,
         blockedFromDraft,
+        // Optional note for UI; use verificationNote if available
+        statusNote: entry?.verificationNote ?? undefined,
       });
     }
   }

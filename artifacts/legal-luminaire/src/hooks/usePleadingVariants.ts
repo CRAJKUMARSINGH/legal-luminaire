@@ -23,7 +23,6 @@ export function usePleadingVariants(caseId: string, subject: string) {
     async (baseDraftMd: string) => {
       const ctx = await variantsApi.matterContext(baseDraftMd, caseId, subject)
       setMatter(ctx)
-      return ctx
     },
     [caseId, subject],
   )

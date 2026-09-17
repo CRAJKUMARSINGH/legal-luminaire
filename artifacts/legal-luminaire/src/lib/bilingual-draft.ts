@@ -41,6 +41,7 @@ export interface DiscrepancyResult {
   kind: "terminology_mismatch" | "section_mismatch" | "party_name_mismatch" | "date_mismatch";
   severity: "high" | "medium" | "low";
   suggestion: string;
+  statusNote?: string; // Adding missing statusNote property
 }
 
 /* ── localStorage persistence ────────────────────────────────────────────── */

@@ -1,6 +1,9 @@
 /** Typed API client for the Pleading Chain Engine. */
 import { streamRequest } from "./api-client";
 
+// Re-export streamRequest for external use
+export { streamRequest };
+
 export interface Bilingual { en: string; hi: string }
 
 export interface Archetype {
