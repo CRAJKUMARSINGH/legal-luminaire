@@ -30,10 +30,10 @@ const FEATURES = [
 
 const WORKFLOW_STEPS = [
   { n: "1", label: "Intake",   hi: "इनटेक",   desc: "Upload FIR, charge-sheet, FSL report",          route: "/intake",           color: "bg-blue-500" },
-  { n: "2", label: "Research", hi: "शोध",      desc: "Fact-Fit Gate scores every precedent 0-100",    route: "/case-research",    color: "bg-violet-500" },
-  { n: "3", label: "Verify",   hi: "सत्यापन", desc: "5-tier check — PENDING citations hard-blocked", route: "/verification",     color: "bg-green-500" },
-  { n: "4", label: "Draft",    hi: "प्रारूप", desc: "Bilingual draft with verbatim citations",       route: "/safe-draft",       color: "bg-amber-500" },
-  { n: "5", label: "Review",   hi: "समीक्षा", desc: "Pre-filing checklist + Verification Report",    route: "/filing-checklist", color: "bg-primary" },
+  { n: "2", label: "Research", hi: "शोध",      desc: "Load case → Fact-Fit Gate scores precedents",    route: "/demo-browser",     color: "bg-violet-500" },
+  { n: "3", label: "Verify",   hi: "सत्यापन", desc: "Load case → 5-tier citation verification",     route: "/demo-browser",     color: "bg-green-500" },
+  { n: "4", label: "Draft",    hi: "प्रारूप", desc: "Load case → Bilingual draft with citations",       route: "/demo-browser",       color: "bg-amber-500" },
+  { n: "5", label: "Review",   hi: "समीक्षा", desc: "Load case → Pre-filing checklist + report",    route: "/demo-browser", color: "bg-primary" },
 ];
 
 export function OnboardingHero() {
@@ -178,8 +178,8 @@ export function OnboardingHero() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
           {[
             { n: "1", label: "Load Demo Case",      hi: "डेमो केस लोड",    route: "/demo-browser",    cls: "bg-amber-500 text-white hover:bg-amber-600" },
-            { n: "2", label: "Research Precedents",  hi: "मिसालें खोजें",   route: "/case-research",   cls: "bg-blue-500 text-white hover:bg-blue-600" },
-            { n: "3", label: "Draft a Document",     hi: "दस्तावेज़ लिखें", route: "/ai-draft-engine", cls: "bg-violet-500 text-white hover:bg-violet-600" },
+            { n: "2", label: "Research Precedents",  hi: "मिसालें खोजें",   route: "/demo-browser",   cls: "bg-blue-500 text-white hover:bg-blue-600" },
+            { n: "3", label: "Draft a Document",     hi: "दस्तावेज़ लिखें", route: "/demo-browser", cls: "bg-violet-500 text-white hover:bg-violet-600" },
             { n: "4", label: "Read User Manual",     hi: "मैनुअल पढ़ें",    route: "/how-to-use",      cls: "bg-primary text-primary-foreground hover:opacity-90" },
           ].map(q => (
             <Link key={q.n} href={q.route}>
