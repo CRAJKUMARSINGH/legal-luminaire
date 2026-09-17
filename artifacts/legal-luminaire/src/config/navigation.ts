@@ -154,15 +154,15 @@ export const NAV_GROUPS: NavGroup[] = [
     groupLabel: "सप्ताह 04 – एंटिग्रैविटी",
     groupLabelEn: "Week 04 – Antigravity",
     items: [
-      { path: "/example33", label: "उदाहरण 33 – Sale Deed", labelEn: "Example 33 – Sale Deed", icon: Scale, caseScoped: false },
-      { path: "/example34", label: "उदाहरण 34 – Commercial Lease", labelEn: "Example 34 – Commercial Lease", icon: HomeIcon, caseScoped: false },
-      { path: "/example35", label: "उदाहरण 35 – Mortgage", labelEn: "Example 35 – Mortgage", icon: Scale, caseScoped: false },
-      { path: "/example36", label: "उदाहरण 36 – Gift Deed", labelEn: "Example 36 – Gift Deed", icon: Scale, caseScoped: false },
-      { path: "/example37", label: "उदाहरण 37 – Will", labelEn: "Example 37 – Will", icon: Gavel, caseScoped: false },
-      { path: "/example38", label: "उदाहरण 38 – POA", labelEn: "Example 38 – POA", icon: Scale, caseScoped: false },
-      { path: "/example39", label: "उदाहरण 39 – Partnership", labelEn: "Example 39 – Partnership", icon: Users, caseScoped: false },
-      { path: "/example40", label: "उदाहरण 40 – Dissolution", labelEn: "Example 40 – Dissolution", icon: Gavel, caseScoped: false },
-      { path: "/example41", label: "उदाहरण 41 – NDA & IP", labelEn: "Example 41 – NDA & IP", icon: ShieldCheck, caseScoped: false }
+      { path: "/example-33", label: "उदाहरण 33 – Sale Deed", labelEn: "Example 33 – Sale Deed", icon: Scale, caseScoped: false },
+      { path: "/example-34", label: "उदाहरण 34 – Commercial Lease", labelEn: "Example 34 – Commercial Lease", icon: HomeIcon, caseScoped: false },
+      { path: "/example-35", label: "उदाहरण 35 – Mortgage", labelEn: "Example 35 – Mortgage", icon: Scale, caseScoped: false },
+      { path: "/example-36", label: "उदाहरण 36 – Gift Deed", labelEn: "Example 36 – Gift Deed", icon: Scale, caseScoped: false },
+      { path: "/example-37", label: "उदाहरण 37 – Will", labelEn: "Example 37 – Will", icon: Gavel, caseScoped: false },
+      { path: "/example-38", label: "उदाहरण 38 – POA", labelEn: "Example 38 – POA", icon: Scale, caseScoped: false },
+      { path: "/example-39", label: "उदाहरण 39 – Partnership", labelEn: "Example 39 – Partnership", icon: Users, caseScoped: false },
+      { path: "/example-40", label: "उदाहरण 40 – Dissolution", labelEn: "Example 40 – Dissolution", icon: Gavel, caseScoped: false },
+      { path: "/example-41", label: "उदाहरण 41 – NDA & IP", labelEn: "Example 41 – NDA & IP", icon: ShieldCheck, caseScoped: false }
     ],
     secondary: []
   },

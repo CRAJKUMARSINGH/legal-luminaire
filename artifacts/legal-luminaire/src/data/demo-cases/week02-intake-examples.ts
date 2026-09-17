@@ -11,67 +11,11 @@
  * Never invent a date, statute, citation, party, amount or document.
  */
 
-import type {
-  DraftState,
-  ApproachStatus,
-  DocumentCompleteness,
-} from "./week01-intake-examples";
+import type { IntakeExample } from "./intake-example-types";
+import { withTerminalOutcome } from "./intake-example-utils";
+export type { IntakeExample };
 
-export type IntakeExample = {
-  /** EX-012 … EX-021 */
-  id: string;
-  title: string;
-  domain: string;
-  complexity: "Basic" | "Intermediate" | "Advanced" | "Expert";
-  approachStatus: ApproachStatus;
-  approachStatusNote: string;
-  urgency: "routine" | "moderate" | "urgent" | "critical";
-  documentCompleteness: DocumentCompleteness;
-  workflowState: DraftState;
-
-  /** Section 0 — Background */
-  background: string;
-  backgroundHi?: string;
-
-  /** Section 1 — Data and documents brought */
-  documents: string[];
-  missingDocuments: string[];
-  documentGaps: string[];
-
-  /** Section 2 — Client request */
-  clientRequest: string;
-  requestClarity: "clear" | "overbroad" | "unclear" | "conflicting";
-  requestNote?: string;
-
-  /** Section 3 — Action plan */
-  actionPlan: {
-    facts: string[];
-    research: string[];
-    drafting: string[];
-    review: string[];
-    filing: string[];
-  };
-  unresolvedFacts: string[];
-  adverseFact?: string;
-
-  /** Section 4 — Drafts */
-  drafts: Array<{
-    type: "notice" | "pleading" | "application" | "affidavit" | "deed" | "checklist" | "no-filing-note" | "memo" | "chronology" | "index" | "undertaking" | "letter" | "table" | "instruction";
-    title: string;
-    status: DraftState;
-    jurisdiction?: string;
-    limitationNote?: string;
-    approvalRequired: boolean;
-    blockedReason?: string;
-  }>;
-
-  /** Accuracy gate */
-  citationGate: "BLOCKED" | "PENDING" | "SECONDARY";
-  limitationGate: "KNOWN" | "UNKNOWN" | "URGENT" | "EXPIRED-RISK";
-  syntheticLabel: "SYNTHETIC / DEMO";
-};
-
-export const WEEK02_EXAMPLES: IntakeExample[] = [
+export const WEEK02_EXAMPLES = ([
   // ─────────────────────────────────────────────────────────────────────────
   // EX-012 — Anticipatory bail in cyber-fraud FIR
   // ─────────────────────────────────────────────────────────────────────────
@@ -994,6 +938,6 @@ export const WEEK02_EXAMPLES: IntakeExample[] = [
     limitationGate: "UNKNOWN",
     syntheticLabel: "SYNTHETIC / DEMO",
   },
-];
+] as Array<Omit<IntakeExample, "terminalOutcome">>).map(withTerminalOutcome);
 
 export type { IntakeExample as Week02IntakeExample };
