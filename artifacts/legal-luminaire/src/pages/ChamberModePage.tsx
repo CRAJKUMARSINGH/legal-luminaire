@@ -25,7 +25,7 @@ import {
   CheckCircle2, XCircle, Crown, Briefcase, GraduationCap,
   Info, Lock, Unlock, Key,
 } from "lucide-react";
-import { useChamberAuth, type ChamberRole, ROLE_PERMISSIONS } from "@/lib/chamber-auth";
+import { useChamberAuth, type ChamberRole, type ChamberPermission, ROLE_PERMISSIONS } from "@/lib/chamber-auth";
 
 // ── Role config ───────────────────────────────────────────────────────────────
 const ROLE_CFG: Record<ChamberRole, {
@@ -55,7 +55,7 @@ const ROLE_CFG: Record<ChamberRole, {
   },
 };
 
-const ALL_PERMISSIONS = [
+const ALL_PERMISSIONS: ReadonlyArray<{ key: ChamberPermission; label: string; labelHi: string }> = [
   { key: "canFinalizeDraft",  label: "Finalize Drafts",    labelHi: "प्रारूप अन्तिम करें" },
   { key: "canDeleteCase",     label: "Delete Cases",       labelHi: "वाद हटाएँ" },
   { key: "canManageUsers",    label: "Manage Users",       labelHi: "उपयोगकर्ता प्रबंधन" },
@@ -204,7 +204,7 @@ export default function ChamberModePage() {
                     <p className="text-xs text-muted-foreground">{user.chamberName}</p>
                   )}
                   <p className="text-[10px] text-muted-foreground mt-1">
-                    Session started: {new Date(user.loginAt).toLocaleString("en-IN")}
+                    Session started: {user.loginAt ? new Date(user.loginAt).toLocaleString("en-IN") : "—"}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1 italic">{ROLE_CFG[user.role].description}</p>
                 </div>

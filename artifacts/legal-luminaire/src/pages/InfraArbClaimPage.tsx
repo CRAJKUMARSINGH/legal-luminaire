@@ -112,7 +112,7 @@ export default function InfraArbClaimPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
             {[
               { label: "Total Claim",  value: selected.totalClaim },
-              { label: "Verified Claims", value: `${selected.claims.filter(c => c.status === "VERIFIED").length} / ${selected.claims.length}` },
+              { label: "Verified Claims", value: `${(selected.claims ?? []).filter(c => c.status === "VERIFIED").length} / ${(selected.claims ?? []).length}` },
               { label: "Expected Award", value: selected.expectedAward },
               { label: "Status",       value: selected.status },
             ].map(({ label, value }) => (
@@ -248,7 +248,7 @@ export default function InfraArbClaimPage() {
                     <Badge variant="outline" className="shrink-0 font-mono text-xs">{std.code}</Badge>
                     <div className="min-w-0">
                       <div className="font-medium text-sm">{std.title}</div>
-                      <div className="text-xs text-muted-foreground mt-0.5">{std.clause}</div>
+                      <div className="text-xs text-muted-foreground mt-0.5">{std.clause ?? std.keyClause}</div>
                     </div>
                     <Badge
                       variant="outline"

@@ -16,6 +16,8 @@ export interface ChamberUser {
   email?: string;
   role: ChamberRole;
   chamberName?: string;
+  /** ISO timestamp of when the user authenticated (local login) */
+  loginAt?: string;
 }
 
 export const ROLE_PERMISSIONS: Record<
@@ -69,8 +71,8 @@ function createId() {
 export function useChamberAuth() {
   const [user, setUser] = useState<ChamberUser | null>(() => readUser());
 
-  const login = useCallback((input: Omit<ChamberUser, "id">) => {
-    const next = { ...input, id: createId() };
+  const login = useCallback((input: Omit<ChamberUser, "id" | "loginAt">) => {
+    const next: ChamberUser = { ...input, id: createId(), loginAt: new Date().toISOString() };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     setUser(next);
   }, []);

@@ -82,3 +82,9 @@ ETERNAL_RESEARCH_CHILD/dist/
 ETERNAL_RESEARCH_CHILD/node_modules/
 # research_findings.log is intentionally TRACKED (audit trail of proposals)
 # Do NOT add it to .gitignore
+
+# Runtime log files — never commit
+artifacts/legal-luminaire/stdout.log
+artifacts/legal-luminaire/stderr.log
+*.log
+!research_findings.log

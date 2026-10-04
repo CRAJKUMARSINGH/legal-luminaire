@@ -102,6 +102,22 @@ export const INFRA_ARB_CASES: CaseRecord[] = [
       { id: "col1", type: "contradiction", description: "RMSCL Standing Committee minutes acknowledge pending RA bills (admission of liability) while simultaneously recommending termination.", evidence_a: "Standing Committee Minutes 08.01.2026", evidence_b: "Termination Notice 15.01.2026", severity: "high" },
       { id: "col2", type: "contradiction", description: "RMSCL claims slow progress but fails to mention its own 45-day site handover delay in termination notice.", evidence_a: "Termination Notice 15.01.2026", evidence_b: "Possession Certificate 20.05.2024", severity: "high" },
     ],
+    contractor: "M/s. BuildWell Projects Pvt. Ltd.",
+    employer: "Rajasthan Medical Services Corporation Ltd. (RMSCL)",
+    contractValue: "₹48.75 Cr",
+    totalClaim: "₹19.84 Cr",
+    expectedAward: "₹17.86 Cr",
+    workOrderDate: "05 May 2024",
+    claims: [
+      { id: "c1", title: "Site Handover Delay (45 days)", amount: "₹4.82 Cr", evidence: "Possession Certificate 20.05.2024", facts: "Work Order scheduled handover 05.05.2024; actual possession provided only on 20.05.2024 — 45-day delay attributable to RMSCL. Idle resources charged at CPWD scheduled rates for plant/machinery + labour.", status: "VERIFIED", factFitScore: 92, clauses: ["CPWD GCC 2020 Cl. 5", "Delay Analysis S-Curve"] },
+      { id: "c2", title: "Variation Orders (3 nos.)", amount: "₹6.15 Cr", evidence: "VO1 OT Slab, VO2 ICU, VO3 Generator + Joint Measurement Books", facts: "3 Variation Orders issued in writing without prior pricing as mandated by Cl. 12. JMBs confirm 100% physical execution by contractor.", status: "VERIFIED", factFitScore: 94, clauses: ["CPWD GCC 2020 Cl. 12", "VO-01/2024", "VO-02/2024", "VO-03/2024"] },
+      { id: "c3", title: "RA Bills 3-5 Unpaid", amount: "₹8.45 Cr", evidence: "RA-3 dated 01 Oct, RA-4 01 Dec, RA-5 01 Feb 2025", facts: "Three running-account bills pending for 4–7 months despite engineer's interim certificates. Interest @ 12% per annum payable under GCC Cl. 7.", status: "VERIFIED", factFitScore: 95, clauses: ["CPWD GCC 2020 Cl. 7", "GCC Cl. 7.2 Interest"] },
+      { id: "c4", title: "Price Escalation (WPI)", amount: "₹2.42 Cr", evidence: "CPI/WPI monthly indices (DPIIT)", facts: "WPI steel + cement + labour indices rose during contract extension. RMSCL refused escalation citing 'fixed price' clause but GCC 10CC overrides.", status: "SECONDARY", factFitScore: 86, clauses: ["CPWD GCC 2020 Cl. 10CC"] },
+      { id: "c5", title: "Termination Damages (Illegal)", amount: "₹1.80 Cr", evidence: "EOT-1 dated 01 Mar, EOT-2 dated 01 May 2025", facts: "RMSCL issued Termination Notice 15 Jan 2026 while two valid EOTs were still in force — termination is illegal ab initio. Contractor entitled to loss of profit.", status: "SECONDARY", factFitScore: 83, clauses: ["CPWD GCC 2020 Cl. 57", "EOT-1/2025", "EOT-2/2025"] },
+      { id: "c6", title: "Overhead & Idle Machinery", amount: "₹1.20 Cr", evidence: "Machinery log + monthly progress reports", facts: "Overheads charged on prolongation at 5% of contract value / 18 months × 4.5 months of proven idle period.", status: "PENDING", factFitScore: 78, clauses: ["Hudson's Formula"] },
+    ],
+    claimStatementEn: "IN THE COURT OF THE DISTRICT JUDGE, UDAIPUR\nARBITRATION CLAIM UNDER SECTION 11(6) A&C ACT 1996\n\nThe claimant (BuildWell Projects Pvt. Ltd.) filed its statement of claim dated 10.02.2026 before the Hon'ble High Court of Rajasthan at Jodhpur seeking appointment of a Sole Arbitrator.\n\nHeads of claim are set out in the Claim Matrix (Fact-Fit Gate) alongside. Primary liability is admitted by Respondent's own Standing Committee minutes dated 08.01.2026 acknowledging the pending RA bills.\n\n[SYNTHETIC / DEMO — not for filing in any court]",
+    claimStatementHi: "हाईकोर्ट ऑफ राजस्थान (जोधपुर), सिविल एप्लीकेशन अधिकरण\nधारा 11(6) मध्यस्थता एवं समझौता अधिनियम 1996\n\nदावा पक्ष (M/s. बिल्डवेल प्रोजेक्ट्स) ने 10 फरवरी 2026 को अपना मूल दावा प्रस्तुत किया है जिसमें 45 दिन की साइट सौंपने में देरी, 3 बिना मूल्य निर्धारित वेरिएशन ऑर्डर, 4-7 माह के तीन आरए बिलों का भुगतान न होना, तथा अवैध समाप्ति नोटिस को शामिल किया गया है।\n\nजबकि उत्तरदाता की स्वयं की स्टैंडिंग कमेटी की मिनट 08.01.2026 में बकाया आरए बिलों को स्वीकार किया गया है।\n\n[कृत्रिम डेटा / डेमो — किसी भी न्यायालय में दाखिल करने हेतु नहीं]",
   },
 
   {
@@ -188,6 +204,22 @@ export const INFRA_ARB_CASES: CaseRecord[] = [
       { id: "col2", type: "contradiction", description: "NHAI Standing Committee minutes recommend blacklisting but do not mention NHAI's own 78-day possession delay.", evidence_a: "Standing Committee Minutes 12.02.2026", evidence_b: "Possession Certificate 12.09.2024", severity: "high" },
       { id: "col3", type: "contradiction", description: "NHAI claims contractor failed to give FIDIC 20.2 notice but 42 emails on record prove actual knowledge.", evidence_a: "NHAI's Defence", evidence_b: "42 emails 15.06.2024 to 10.09.2024", severity: "medium" },
     ],
+    contractor: "M/s. Patel Highway Contractors LLP",
+    employer: "National Highways Authority of India (NHAI), PIU-Jodhpur",
+    contractValue: "₹112.65 Cr",
+    totalClaim: "₹55.30 Cr",
+    expectedAward: "₹41.65 Cr",
+    workOrderDate: "25 June 2024",
+    claims: [
+      { id: "c1", title: "Site Possession Delay (78 days)", amount: "₹11.50 Cr", evidence: "LOA 25.06.2024 + Possession Certificate 12.09.2024", facts: "Access to 27 km of alignment under forest land denied for 78 days pending Stage-II clearance. Bitumen batch plant & earthwork machinery idle.", status: "VERIFIED", factFitScore: 96, clauses: ["FIDIC 2.1", "FIDIC 8.4 (a)"] },
+      { id: "c2", title: "Additional Earthwork (Cut/Fill Design Change)", amount: "₹18.75 Cr", evidence: "NHAI Instruction No. 48 dated 15.10.2024", facts: "NHAI issued mid-contract design change to grade-line increasing borrow-earth 8,42,000 cum — executed against oral instructions first, formal VO issued later.", status: "VERIFIED", factFitScore: 92, clauses: ["FIDIC 13", "VO-NH-048/2024"] },
+      { id: "c3", title: "Liquidated Damages (Reversal — 2 invoices)", amount: "₹9.20 Cr", evidence: "EOT-1 dated 10.11.2024 + EOT-2 dated 15.01.2025", facts: "Despite valid EOTs NHAI levied LD of ₹4.60 Cr × 2 months — both illegal and must be reversed.", status: "VERIFIED", factFitScore: 97, clauses: ["FIDIC 8.7"] },
+      { id: "c4", title: "Price Escalation (Bitumen/Steel/Cement)", amount: "₹8.40 Cr", evidence: "DPIIT WPI monthly — Steel +52%, Cement +38%, Bitumen +41%", facts: "Contract price fluctuation indexes published; NHAI refused payment on ground of 'no indexation clause' but GCC 10CC requires payment.", status: "SECONDARY", factFitScore: 85, clauses: ["NHAI GCC 2022 Cl. 10CC"] },
+      { id: "c5", title: "Loss of Profit (Illegal Blacklisting Threat)", amount: "₹3.85 Cr", evidence: "Show Cause Notice 12.02.2026", facts: "Illegal blacklisting without 3-stage hearing — loss of future contracts quantified at ₹3.85 Cr.", status: "SECONDARY", factFitScore: 81, clauses: ["Constitution of India Art. 14 & 19(1)(g)"] },
+      { id: "c6", title: "Prolongation Overhead", amount: "₹3.60 Cr", evidence: "Resource histogram × 4.5 month idle period", facts: "Hudson formula applied: 10% of contract value / 24 mo × 4.5 mo prolongation.", status: "PENDING", factFitScore: 79, clauses: ["Hudson's Formula"] },
+    ],
+    claimStatementEn: "ARBITRATION CLAIM UNDER SECTION 11(6) A&C ACT 1996\nCase No: ARB/2026/TC-23 — Filed before Hon'ble Rajasthan High Court at Jodhpur\n\nClaimant Patel Highway Contractors LLP has filed statement of claim dated 26.02.2026 against NHAI PIU-Jodhpur seeking Sole Arbitrator appointment. 27 km of highway alignment was under forest-land and access delayed by 78 days (Stage-II clearance pending after LOA). NHAI also illegally imposed Liquidated Damages on EOT-granted period. 3rd-party Engineer's valuation report prepared jointly by M/s. PwC dated 18.02.2026 supports the heads of claim. Principal award amount ₹41.65 Cr. [SYNTHETIC DEMO]",
+    claimStatementHi: "धारा 11(6) मध्यस्थता दावा (एंडी सी ऐक्ट 1996)\nक्रमांक ARB/2026/TC-23 — हाईकोर्ट ऑफ राजस्थान, जोधपुर\n\nदावा पक्ष M/s. पटेल हाईवे कॉन्ट्रैक्टर्स LLP द्वारा 26 फरवरी 2026 को NHAI (PIU-जोधपुर) के विरुद्ध मामला दायर किया गया। 27 किलोमीटर रास्ता वन भूमि के अधीन था और LOA के पश्चात 78 दिन तक पहुंच न मिलने के कारण कार्य रुका रहा। NHAI द्वारा EOT दिए जाने के बावजूद दो माह का विधर्मी जुर्माना (LD) गलत रूप से लगाया गया था जिसका उलट दावा किया जा रहा है। [डेमो/कृत्रिम]",
   },
 
   {
@@ -238,6 +270,21 @@ export const INFRA_ARB_CASES: CaseRecord[] = [
     collisions: [
       { id: "col1", type: "contradiction", description: "WRD Standing Committee minutes recommend termination for slow progress but do not mention geological surprise or design changes issued by WRD itself.", evidence_a: "Standing Committee Minutes 10.02.2026", evidence_b: "Design Change Instructions 15.11.2024 + 01.01.2025", severity: "high" },
     ],
+    contractor: "M/s. Jai Raj Hydro Projects Pvt. Ltd.",
+    employer: "Water Resources Department (WRD), Govt. of Rajasthan",
+    contractValue: "₹87.40 Cr",
+    totalClaim: "₹54.85 Cr",
+    expectedAward: "₹42.85 Cr",
+    workOrderDate: "12 February 2024",
+    claims: [
+      { id: "c1", title: "Unforeseeable Geology — Hard Rock Excavation", amount: "₹20.60 Cr", evidence: "Bore log tender vs. actual excavation + IIT Jodhpur Report 14.03.2025", facts: "Tendered bore logs showed soft alluvium — actual: granite hard rock at 4.2 m depth over 180 m stretch. IIT Jodhpur geotechnical report confirms conditions unforeseeable.", status: "VERIFIED", factFitScore: 96, clauses: ["FIDIC 4.12", "FIDIC 13 Variations"] },
+      { id: "c2", title: "Design Changes — Spillway Gates + Cut-off Trench", amount: "₹16.80 Cr", evidence: "Engineer Design Instruction No. 17 & 21", facts: "WRD issued design change adding 2 radial gates and extending cut-off trench 120 m downstream — 6 months added to critical path.", status: "VERIFIED", factFitScore: 93, clauses: ["IS 6512:1987", "FIDIC 13.1"] },
+      { id: "c3", title: "Extended Overhead (9 months prolongation)", amount: "₹9.45 Cr", evidence: "Monthly Progress Report (MPR) Jun–Feb 2025", facts: "Prolongation 9 months × Hudson formula: 8% of CV / 30 mo × 9 mo.", status: "SECONDARY", factFitScore: 87, clauses: ["Hudson's Formula"] },
+      { id: "c4", title: "Swelling Clay Stabilization", amount: "₹4.80 Cr", evidence: "Soil test reports (Bentonite-class) + Stabilization Invoices", facts: "Swelling clay (montmorillonite) at upstream face — chemical stabilization with bentonite cut-off wall executed.", status: "SECONDARY", factFitScore: 84, clauses: ["FIDIC 4.12 (c)"] },
+      { id: "c5", title: "Price Escalation (Cement + Steel + Aggregates)", amount: "₹3.20 Cr", evidence: "DPIIT indices", facts: "WPI Cement +36%, Steel +47%, Aggregate +50%.", status: "PENDING", factFitScore: 80, clauses: ["CPWD GCC 2020 Cl. 10CC"] },
+    ],
+    claimStatementEn: "BANAS DAM IRRIGATION PROJECT — CLAIM STATEMENT\nARB/2026/TC-24 — UDAIPUR BENCH, RAJASTHAN HIGH COURT\n\nClaimant Jai Raj Hydro Projects Pvt. Ltd. alleges that tender bore-log data was materially inaccurate. Hard rock (granite) encountered at 4.2 m depth where tender expected alluvium. IIT Jodhpur expert dated 14.03.2025 confirms 'conditions were not reasonably foreseeable by an experienced contractor'. Heads of claim include hard rock excavation (₹20.60 Cr), design changes to spillway & cut-off trench (₹16.80 Cr), 9-month prolongation overhead, swelling clay stabilization and price escalation. Total ₹54.85 Cr, expected award ₹42.85 Cr. [SYNTHETIC DEMO]",
+    claimStatementHi: "बनस बांध परियोजना — दावा कथन\nARB/2026/TC-24 — हाईकोर्ट राजस्थान, उदयपुर पीठ\n\nजय राज हाइड्रो प्रोजेक्ट्स प्राइवेट लिमिटेड द्वारा दावा है कि टेंडर में दी गई बोर लॉग डेटा गलत थी। 4.2 मीटर की गहराई पर ग्रेनाइट कठोर चट्टान मिली जबकि निविदा में जलोढ़ मिट्टी दर्ज थी। आईआईटी जोधपुर की रिपोर्ट 14.03.2025 के अनुसार ये शर्तें अनुभवी ठेकेदार द्वारा पूर्व-अनुमानित नहीं हो सकती थीं। कुल दावा ₹54.85 करोड़, अपेक्षित पुरस्कार ₹42.85 करोड़। [डेमो/कृत्रिम]",
   },
 
   {
@@ -287,6 +334,20 @@ export const INFRA_ARB_CASES: CaseRecord[] = [
     collisions: [
       { id: "col1", type: "contradiction", description: "RVPNL Standing Committee minutes recommend termination but do not mention RVPNL's own 5-month delay in GIS equipment supply.", evidence_a: "Standing Committee Minutes 28.02.2026", evidence_b: "GIS Delivery Challan 15.03.2025", severity: "high" },
     ],
+    contractor: "M/s. ElectroPower Turnkey Solutions Ltd.",
+    employer: "Rajasthan Rajya Vidyut Prasaran Nigam Ltd. (RVPNL)",
+    contractValue: "₹68.25 Cr",
+    totalClaim: "₹30.45 Cr",
+    expectedAward: "₹23.65 Cr",
+    workOrderDate: "04 April 2024",
+    claims: [
+      { id: "c1", title: "Employer-Supplied GIS Equipment (5-month delay)", amount: "₹13.20 Cr", evidence: "Letter of Credit 05.04.2024 + GIS Challan 15.03.2025", facts: "RVPNL was to supply 220 kV GIS module by 30.09.2024 — actually supplied 15.03.2025 with 5 months delay. Entire substation erection on critical path held up.", status: "VERIFIED", factFitScore: 97, clauses: ["FIDIC 2.1", "FIDIC 8.4 (a)", "Special Condition 12"] },
+      { id: "c2", title: "Right of Way (RoW) Clearance Delay (37 km)", amount: "₹7.80 Cr", evidence: "RVPNL RoW letters 12.09.2024", facts: "37 out of 45 km transmission line ROW not cleared for 5 months after WO — stringing operations delayed.", status: "VERIFIED", factFitScore: 95, clauses: ["FIDIC 2.1", "MoP Guidelines 2021"] },
+      { id: "c3", title: "Price Variation (Transformer + Conductor)", amount: "₹5.65 Cr", evidence: "IEEMA PVF monthly formula", facts: "Electrical equipment transformer index +32%; ACSR conductor +41%. IEEMA PVF formula invoked.", status: "SECONDARY", factFitScore: 88, clauses: ["IEEMA Price Variation Formula"] },
+      { id: "c4", title: "Idling Towers + Erection Crew", amount: "₹3.80 Cr", evidence: "Resource deployment log (daily) Sep'24–Feb'25", facts: "Stringing tower crew × 9 teams idled for 5 months awaiting RoW + GIS.", status: "PENDING", factFitScore: 81, clauses: ["Idle manpower recovery"] },
+    ],
+    claimStatementEn: "220 kV GIS SUBSTATION BHIWADI — CLAIM STATEMENT\nARB/2026/TC-25 — RAJASTHAN HIGH COURT, JODHPUR BENCH\n\nElectroPower Turnkey Solutions Ltd. claims ₹30.45 Cr. against RVPNL primarily on account of (a) 5-month delay by RVPNL in supply of Employer-Furnished GIS 220 kV modules, and (b) failure to obtain RoW for 37 km out of 45 km of transmission line. 3rd party IEEMA certified price variation indices support transformer + conductor escalation claim of ₹5.65 Cr. Expected award: ₹23.65 Cr. [SYNTHETIC DEMO]",
+    claimStatementHi: "220 kV GIS सबस्टेशन भिवाड़ी — दावा कथन\nARB/2026/TC-25 — हाईकोर्ट राजस्थान, जोधपुर\n\nइलेक्ट्रोपावर टर्नकी सॉल्यूशंस द्वारा RVPNL के विरुद्ध ₹30.45 करोड़ का दावा है क्योंकि नियोक्ता द्वारा 220 kV GIS मॉड्यूल की आपूर्ति 5 माह देरी से हुई तथा 45 किमी में से 37 किमी लाइन का राइट ऑफ वे नहीं दिया गया। IEEMA मूल्य परिवर्तन सूत्र के अनुसार ट्रांसफॉर्मर + कंडक्टर एस्कलेशन ₹5.65 करोड़। अपेक्षित पुरस्कार: ₹23.65 करोड़। [डेमो/कृत्रिम]",
   },
 
   {
@@ -339,6 +400,20 @@ export const INFRA_ARB_CASES: CaseRecord[] = [
       { id: "col1", type: "contradiction", description: "USCL blames contractor for poor plantation survival but USCL's own records show treated water supply was stopped from September 2024.", evidence_a: "USCL Termination Notice 12.02.2026", evidence_b: "USCL Water Supply Log (stopped Sep 2024)", severity: "high" },
       { id: "col2", type: "contradiction", description: "USCL claims contractor slow but issued 19 Variation Orders adding 42,000 extra plants and 6.5 km roads — scope creep caused delay.", evidence_a: "USCL Termination Notice 12.02.2026", evidence_b: "19 Variation Orders (written)", severity: "high" },
     ],
+    contractor: "M/s. GreenScape Infra Pvt. Ltd.",
+    employer: "Udaipur Smart City Ltd. (USCL), SPV-12",
+    contractValue: "₹34.80 Cr",
+    totalClaim: "₹20.75 Cr",
+    expectedAward: "₹15.80 Cr",
+    workOrderDate: "18 March 2024",
+    claims: [
+      { id: "c1", title: "19 Variation Orders — Scope Creep (Plants + Roads)", amount: "₹10.40 Cr", evidence: "19 VO's dated 12.04.2024 through 28.08.2024", facts: "USCL issued 19 VOs expanding scope: 42,000 additional trees + 6.5 km internal roads. No corresponding EOT issued despite 60% extra BOQ items.", status: "VERIFIED", factFitScore: 94, clauses: ["CPWD GCC 2020 Cl. 12", "SCM Guidelines 2023 §7"] },
+      { id: "c2", title: "Treated Water Supply Withdrawal (Survival Rate 43%)", amount: "₹6.85 Cr", evidence: "USCL Water Supply Log Sep 2024 – Jan 2025", facts: "Contract required 12-month maintenance period with treated water. USCL stopped supply in Sept 2024; survival rate fell from 92% to 43%. Replacement cost claimed.", status: "VERIFIED", factFitScore: 96, clauses: ["BOQ Special Condition 23", "CPWD GCC 2020 Cl. 27"] },
+      { id: "c3", title: "RA Bills 4-10 Unpaid (7 Nos.)", amount: "₹7.30 Cr", evidence: "RA-4 through RA-10 with Engineer's cert.", facts: "RA bills pending for 3–9 months. Interest at 12% p.a.", status: "SECONDARY", factFitScore: 89, clauses: ["CPWD GCC 2020 Cl. 7.2"] },
+      { id: "c4", title: "Prolongation (8 months) — Overhead", amount: "₹3.20 Cr", evidence: "MPRs × 8 months", facts: "Scope creep + water shutdown added 8 months. Hudson: 7%/24mo × 8mo.", status: "PENDING", factFitScore: 82, clauses: ["Hudson's Formula"] },
+    ],
+    claimStatementEn: "UDAIPUR SMART CITY INTEGRATED LANDSCAPE — CLAIM STATEMENT\nARB/2026/TC-26 — RAJASTHAN HIGH COURT, UDAIPUR BENCH\n\nGreenScape Infra Pvt. Ltd. claims ₹20.75 Cr. against USCL for (i) 19 Variation Orders causing 60% scope creep with no EOT; (ii) withdrawal of treated water in September 2024 which reduced plantation survival from 92% to 43%; (iii) 7 RA bills (4–10) pending for 3–9 months. Engineer's interim certificates for RA-4 through RA-10 produced. Expected award: ₹15.80 Cr. [SYNTHETIC DEMO]",
+    claimStatementHi: "उदयपुर स्मार्ट सिटी एकीकृत लैंडस्केप — दावा कथन\nARB/2026/TC-26 — हाईकोर्ट राजस्थान, उदयपुर\n\nग्रीनस्केप इंफ्रा द्वारा USCL के विरुद्ध ₹20.75 करोड़ का दावा है कि 19 वेरिएशन ऑर्डर से BOQ का 60% अतिरिक्त कार्य बिना समय विस्तार के दिया गया, सितंबर 2024 से उपचारित पानी की आपूर्ति रोक दी गयी जिससे पौधों की जीवित दर 92% से गिरकर 43% हो गई, तथा 7 आरए बिल (4-10) 3-9 माह से लंबित हैं। अपेक्षित पुरस्कार: ₹15.80 करोड़। [डेमो/कृत्रिम]",
   },
 ];
 

@@ -2,6 +2,26 @@ export type CaseFile = {
   name: string;
   size: number;
   type: string;
+  /** Annexure number for bundled case documents (Infra Arbitration filings) */
+  annexure?: string;
+  /** ISO timestamp of upload (multi-case-store schema extension), optional for back-compat. */
+  uploadedAt?: string;
+};
+
+/** Structured arbitration claim row (Fact-Fit Gate — Claim Matrix).
+ *  Used by CaseRecord.claims[] and rendered in InfraArbClaimPage.
+ *  All monetary amounts are display strings (e.g. "₹19.84 Cr"). */
+export type CaseClaimRecord = {
+  id: string;
+  title: string;
+  amount: string;
+  evidence: string;
+  facts: string;
+  /** VERIFIED = filed-ready, SECONDARY = supporting, PENDING = blockedFromDraft */
+  status: "VERIFIED" | "SECONDARY" | "PENDING";
+  factFitScore: number;
+  /** Contract / GCC / FIDIC clauses this claim relies on */
+  clauses?: string[];
 };
 
 /** Party to a case — from live app schema */
@@ -47,7 +67,7 @@ export type CaseRecord = {
   caseLaw?: Array<{ case: string; court: string; useForDefence: string; status: string; action: string; citation?: string; holding?: string; fitScore?: number }>;
   timeline?: Array<{ id: number; title: string; description: string; status: string; note?: string; date?: string; grounding?: string }>;
   strategy?: Array<{ id: string; title: string; description: string; status: string; priority: string }>;
-  standards?: Array<{ code: string; title: string; applicability: string; keyClause: string; violation: string; sourceUrl?: string; confidence: string }>;
+  standards?: Array<{ code: string; title: string; applicability: string; keyClause: string; violation: string; sourceUrl?: string; confidence: string; /** UI-friendly alias of keyClause for Standards panel rendering */ clause?: string; }>;
   review_status?: "DRAFT" | "SUBMITTED" | "APPROVED";
   assigned_to?: string;
   accused_names?: string[];
@@ -81,6 +101,26 @@ export type CaseRecord = {
     evidence: string;
     blockedFromDraft?: boolean;
   }>;
+
+  // ── Infrastructure Arbitration extension (TC-22 .. TC-26) ──────────────
+  /** Claimant / Contractor legal name (e.g. "M/s. BuildWell Projects Pvt. Ltd.") */
+  contractor?: string;
+  /** Respondent / Employer / Authority legal name (e.g. "Rajasthan Medical Services Corporation Ltd.") */
+  employer?: string;
+  /** Original contract value as display string (e.g. "₹48.75 Cr") */
+  contractValue?: string;
+  /** Total claim as display string (e.g. "₹19.84 Cr") */
+  totalClaim?: string;
+  /** Expected / awarded amount as display string (e.g. "₹17.86 Cr") */
+  expectedAward?: string;
+  /** Work Order date — ISO string or display format for Sec 11(6) header */
+  workOrderDate?: string;
+  /** Full English claim statement / affidavit text (Claim tab → "en") */
+  claimStatementEn?: string;
+  /** Full Hindi claim statement / दावा कथन (Claim tab → "hi") */
+  claimStatementHi?: string;
+  /** Claim Matrix rows — Fact-Fit Gate */
+  claims?: CaseClaimRecord[];
 };
 
 const CASES_KEY = "legal_luminaire_cases_v1";
