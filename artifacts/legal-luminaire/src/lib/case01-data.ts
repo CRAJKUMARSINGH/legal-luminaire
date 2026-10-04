@@ -44,6 +44,23 @@ export type Precedent = {
    * MUST be true for every PENDING entry — Accuracy Rule §7.
    */
   blockedFromDraft?: boolean;
+
+  // ── Structured citation fields (Citation Risk Reduction Plan v1 §Step A) ──
+  // Used by citation-formatter.ts to assemble a normalized citation string.
+  // Leave undefined if not yet verified — the drafter MUST NOT invent values.
+  /** Reporter name e.g. "SCC", "GLR", "SCC OnLine Bom", "INSC" */
+  reporter?: string;
+  /** Volume number as string e.g. "3", "4" */
+  volume?: string;
+  /** Page number as string e.g. "4", "317" */
+  page?: string;
+  /**
+   * Paragraph / page reference confirmed from certified copy.
+   * Leave undefined when unverified — drafter must NOT cite a para that is unconfirmed.
+   */
+  para?: string;
+  /** How the citation was verified */
+  verifiedBy?: "case-file" | "indiankanoon" | "scc-online" | "manual" | "unknown";
 };
 
 export type Standard = {
@@ -143,6 +160,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "Well-established SC precedent. Cite with Para 10.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=Union+of+India+vs+Prafulla+Kumar+Samal+1979+3+SCC+4",
     tags: ["discharge", "prima facie", "suspicion", "evidence", "section 250 BNSS", "section 227 CrPC"],
+    reporter: "SCC",
+    volume: "3",
+    page: "4",
+    para: "10",
+    verifiedBy: "indiankanoon",
   },
   {
     id: "p5",
@@ -159,6 +181,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "Well-established SC precedent. Cite with Para 5.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=State+of+Bihar+vs+Ramesh+Singh+1977+4+SCC+39",
     tags: ["discharge", "prima facie", "framing of charge", "evidence", "section 227"],
+    reporter: "SCC",
+    volume: "4",
+    page: "39",
+    para: "5",
+    verifiedBy: "indiankanoon",
   },
   {
     id: "p10",
@@ -175,6 +202,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "Well-established SC precedent. Use for negligence standard argument only. Cite Para 48.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=Jacob+Mathew+vs+State+of+Punjab+2005+6+SCC+1",
     tags: ["negligence", "rash", "304A", "force majeure", "criminal negligence", "duty of care"],
+    reporter: "SCC",
+    volume: "6",
+    page: "1",
+    para: "48",
+    verifiedBy: "indiankanoon",
   },
   {
     id: "p13",

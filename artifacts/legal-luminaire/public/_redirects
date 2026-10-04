@@ -1,1 +1,39 @@
+# ── Legacy case-scoped flat paths → Case selector (W14 hardening)
+#    Old deep-links without /case/:id prefix land on the case browser first
+#    so the user picks a case explicitly, avoiding the "redirect flash" that
+#    happened when the SPA shell mounted Layout only to immediately redirect.
+/dashboard              /cases  302
+/timeline               /cases  302
+/chronology             /cases  302
+/deadlines              /cases  302
+/upload                 /cases  302
+/documents              /cases  302
+/case-law               /cases  302
+/ai-research            /cases  302
+/standards              /cases  302
+/copilot                /cases  302
+/case-research          /cases  302
+/cross-reference        /cases  302
+/chat                   /cases  302
+/citation-graph         /cases  302
+/case-similarity        /cases  302
+/judge-analytics        /cases  302
+/matter-drafting-studio /cases  302
+/draft-template-library /cases  302
+/draft-variants         /cases  302
+/ai-draft-engine        /cases  302
+/safe-draft             /cases  302
+/discharge-application  /cases  302
+/oral-arguments         /cases  302
+/drafting               /cases  302
+/draft-family           /cases  302
+/defence-reply          /cases  302
+/notice-reply           /cases  302
+/discharge-print        /cases  302
+/verification           /cases  302
+/filing-checklist       /cases  302
+/standards-validity     /cases  302
+/session-workspace      /cases  302
+
+# ── SPA catch-all (must remain last, lowest precedence)
 /* /index.html 200

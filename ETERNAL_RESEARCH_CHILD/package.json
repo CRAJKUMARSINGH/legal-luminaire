@@ -1,12 +1,12 @@
 {
   "name": "eternal-research-child",
   "version": "1.0.0",
-  "description": "Legal Luminaire research daemon — watches Attached_Assets/ and proposes engine refinements every 15 minutes",
+  "description": "Legal Luminaire research daemon — watches real_cases/ and proposes engine refinements every 15 minutes",
   "private": true,
   "scripts": {
     "start": "tsx research_daemon.ts",
     "dev":   "tsx watch research_daemon.ts",
-    "sync":  "node ../node_modules/typescript/bin/tsc -p tsconfig.phase2.json && node dist/phase2_improvement_pipeline.js"
+    "sync":  "tsx phase2_improvement_pipeline.ts"
   },
   "dependencies": {},
   "devDependencies": {

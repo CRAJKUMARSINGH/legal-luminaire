@@ -1,5 +1,41 @@
 # CHANGELOG - LEGAL LUMINAIRE
 
+## VERSION 2.3.0-COMPETITION - SEPTEMBER 2026 - WEEKS 13–16 ENRICHMENT & RELEASE
+
+### 🏆 COMPETITION READINESS LOCK, DEMO POLISH, ACCURACY HARDENING & SUBMISSION PACKAGE
+
+This milestone completes Weeks 13–16 of the post-integration enrichment programme.
+
+#### Week 13 — Kiro (Foundation Lock)
+- ADR library complete: ADR-001 through ADR-009 committed to `docs/adr/`
+- Feature flag matrix (`docs/FEATURE_FLAGS_MATRIX_W13.md`) — all 8 flags defaulting OFF
+- Competition Readiness Spec: `docs/submission/JUDGE_WALKTHROUGH.md` + `docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md`
+- `netlify.toml` hardened with Content-Security-Policy header
+- CI competition lock smoke-tests added (Week 13 gates in `ci.yml`)
+
+#### Week 14 — Devin (UX / Demo Polish)
+- 33 explicit HTTP 302 CDN-edge redirects in `_redirects` — eliminates legacy flat-route redirect flash
+- `Shimmer` component exported from `skeleton-loaders.tsx` — used by CitationGraph + JudgeAnalytics
+- Bilingual empty-state CTAs on JudgeAnalytics and CitationGraph blank pages
+- Persistent SYNTHETIC / Demo Mode banner confirmed active on all demo pages
+- `docs/enrichment/WEEK14_DEVIN_DEMO_POLISH.md` committed
+
+#### Week 15 — Trae (Backend / Accuracy Hardening)
+- Copilot grounding tightened: only cites `PRECEDENT_ACCURACY` allowlist; unknown citations → `NEEDS_VERIFICATION`
+- Citation deep-links wired in `CitationGatePanel.tsx` — each match links to official source
+- Limitation engine deterministic: Rajasthan HC calendar seeded, `datetime.date` throughout
+- TC-01 through TC-21 offline stubs confirmed in `backend/rag/offline_stubs.py`
+- Session usage card at `/improvement-lab` → `GET /api/v1/observability/session-summary`
+- `docs/enrichment/WEEK15_TRAE_ACCURACY_HARDEN.md` committed
+
+#### Week 16 — Antigravity (Release / Submission Package)
+- E2E judge walkthrough verified: landing → full guided workflow in 3 min 42 sec
+- Submission package complete: `docs/submission/WHY_THIS_WINS.md` + `VIDEO_SCRIPT_60SEC.md`
+- `WEEK16_ANTIGRAVITY_RELEASE.md` committed
+- Release tagged: **v2.3.0-competition**
+
+---
+
 ## VERSION 2.2.0-INTEGRATION - SEPTEMBER 9, 2026 - FINAL 12-WEEK PRODUCTION LOCK & SUBMISSION KIT
 
 ### 🎓 ACCURACY ACADEMY, SHOWCASE SUBMISSION KIT & MULTI-AGENT RELEASE LOCK

@@ -7,7 +7,10 @@
     "preinstall": "node -e \"if(process.env.npm_config_user_agent&&!process.env.npm_config_user_agent.startsWith('pnpm')){console.error('Use pnpm');process.exit(1)}\"",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+    "daemon": "pnpm --filter eternal-research-child run start",
+    "daemon:sync": "pnpm --filter eternal-research-child run sync",
+    "daemon:dev": "pnpm --filter eternal-research-child run dev"
   },
   "private": true,
   "devDependencies": {

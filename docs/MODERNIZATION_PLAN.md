@@ -1,5 +1,9 @@
 # LEGAL LUMINAIRE — MODERNIZATION PLAN
-## Version 1.0 | April 3, 2026
+## Version 1.0 | April 3, 2026 | **Status Updated: September 2026**
+
+> **STATUS: All Priority P0–P2 items COMPLETE ✅ (5-Week Enrichment Programme)**  
+> One item remains open: Extract shared form components (P3).  
+> New items added from Attached_Assets roadmap: Month 6 (Hearing Tracker + Probability Assessment Card).
 
 ---
 
@@ -28,50 +32,53 @@
 ### Modernization Targets
 
 #### UX / Navigation
-- [ ] Collapse nav into grouped sections (Case Setup / Research / Drafting / Review)
-- [ ] Add breadcrumb trail for case-scoped pages
-- [ ] Add "Recent Cases" widget on Home
-- [ ] Add empty-state illustrations with clear CTAs
-- [ ] Add skeleton loaders for AI-heavy pages
+- [x] Collapse nav into grouped sections (Case Setup / Research / Drafting / Review) — **DONE Week 2**
+- [x] Add breadcrumb trail for case-scoped pages — **DONE Week 2**
+- [x] Add "Recent Cases" widget on Home — **DONE Week 2**
+- [x] Add empty-state illustrations with clear CTAs — **DONE Week 1**
+- [x] Add skeleton loaders for AI-heavy pages — **DONE Week 1**
 
 #### Workflow
-- [ ] Guided intake → research → draft → review flow
-- [ ] Task-oriented dashboard cards (not just links)
-- [ ] Document type selector before drafting
-- [ ] One-click demo mode (loads CASE_01 with all data pre-filled)
+- [x] Guided intake → research → draft → review flow — **DONE Week 4**
+- [x] Task-oriented dashboard cards (not just links) — **DONE Week 4**
+- [x] Document type selector before drafting — **DONE Week 4**
+- [x] One-click demo mode (loads CASE_01 with all data pre-filled) — **DONE Week 2**
 
 #### Reliability
-- [ ] Input validation on all forms (Zod schemas already present — wire to UI)
-- [ ] Error boundaries on all page components
-- [ ] Retry logic on API calls (React Query already configured)
-- [ ] File upload size/type validation
+- [x] Input validation on all forms (Zod schemas already present — wire to UI) — **DONE Week 2**
+- [x] Error boundaries on all page components — **DONE Week 4**
+- [x] Retry logic on API calls (React Query already configured) — **DONE Week 4**
+- [x] File upload size/type validation — **DONE Week 3 (Trae) + Week 4**
 
 #### Visual Polish
-- [ ] Consistent card elevation and spacing
-- [ ] Status badges (VERIFIED / SECONDARY / PENDING) with colour coding
-- [ ] Progress indicators on multi-step flows
-- [ ] Print-ready CSS for draft output pages
+- [x] Consistent card elevation and spacing — **DONE Week 4**
+- [x] Status badges (VERIFIED / SECONDARY / PENDING) with colour coding — **DONE Week 4**
+- [x] Progress indicators on multi-step flows — **DONE Week 4**
+- [x] Print-ready CSS for draft output pages — **DONE Week 4**
 
 #### Maintainability
-- [ ] Remove legacy flat routes (keep for backward compat via redirect)
-- [ ] Extract shared form components
-- [ ] Add JSDoc to all lib functions
-- [ ] Consolidate case data loading into single hook
+- [x] Remove legacy flat routes (keep for backward compat via redirect) — **DONE Week 1–2**
+- [ ] Extract shared form components — *Still open*
+- [x] Add JSDoc to all lib functions — **DONE (citation-gate.ts, verification-engine.ts)**
+- [x] Consolidate case data loading into single hook — **DONE (useCaseContext)**
 
 ---
 
 ## IMPLEMENTATION PRIORITY
 
-| Priority | Item | Effort | Impact |
-|----------|------|--------|--------|
-| P0 | Empty states + CTAs | Low | High |
-| P0 | Skeleton loaders | Low | High |
-| P1 | Nav grouping | Medium | High |
-| P1 | Demo mode | Medium | Very High |
-| P1 | Test data browser | Medium | High |
-| P2 | Guided flow | High | Very High |
-| P2 | Print CSS | Low | Medium |
-| P3 | Legacy route cleanup | Low | Medium |
+| Priority | Item | Effort | Impact | Status |
+|----------|------|--------|--------|--------|
+| P0 | Empty states + CTAs | Low | High | ✅ Done — Week 1 |
+| P0 | Skeleton loaders | Low | High | ✅ Done — Week 1 |
+| P1 | Nav grouping | Medium | High | ✅ Done — Week 2 |
+| P1 | Demo mode | Medium | Very High | ✅ Done — Week 2 |
+| P1 | Test data browser | Medium | High | ✅ Done — Week 2 |
+| P2 | Guided flow | High | Very High | ✅ Done — Week 4 |
+| P2 | Print CSS | Low | Medium | ✅ Done — Week 4 |
+| P3 | Legacy route cleanup | Low | Medium | ✅ Done — Week 1–2 |
+| P3 | Extract shared form components | Low | Low | 🔄 Still open |
+| NEW | Hearing Tracker + Countdown | Medium | High | 🔄 Month 6 roadmap |
+| NEW | Probability Assessment Card | Medium | Very High | 🔄 Month 6 roadmap |
 
 ---
 

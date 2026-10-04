@@ -4,7 +4,7 @@ import {
   Home as HomeIcon, FilePlus, FileText,
   LayoutDashboard, MessageSquare, Clock, FlaskConical, Upload, Files, ShieldCheck, Globe, AlertCircle,
   FileSearch, Table2, Brain, Sparkles, Network, BarChart3, GitCompare, Mic, Edit3, GraduationCap,
-  Gavel, Users, Zap, Bot, HelpCircle, Bot as Robot, Languages,
+  Gavel, Users, Zap, Bot, HelpCircle, Bot as Robot, Languages, Printer,
 } from "lucide-react";
 import { featureFlags } from "@/config/featureFlags";
 
@@ -82,6 +82,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { path: "/ldr-standards", label: "LDR Standards", labelEn: "LDR Standards", icon: FlaskConical, caseScoped: false, badge: "LDR" },
       { path: "/ldr-timeline", label: "LDR Timeline", labelEn: "LDR Timeline", icon: Clock, caseScoped: false, badge: "LDR" },
       { path: "/ldr-verification", label: "LDR Verification", labelEn: "LDR Verification", icon: ShieldCheck, caseScoped: false, badge: "LDR" },
+      { path: "/ldr-print", label: "LDR Print", labelEn: "LDR Print", icon: Printer, caseScoped: false, badge: "LDR" },
+      { path: "/ldr-common", label: "LDR Common", labelEn: "LDR Common Section", icon: FileText, caseScoped: false, badge: "LDR" },
+      { path: "/lps-print", label: "LPS Print", labelEn: "LPS Print Letter", icon: Printer, caseScoped: false, badge: "LPS" },
+      { path: "/lps-standards", label: "LPS Standards", labelEn: "LPS Standards", icon: FlaskConical, caseScoped: false, badge: "LPS" },
       { path: "/forensic-faq", label: "फॉरेन्सिक FAQ", labelEn: "Forensic FAQ", icon: FlaskConical, caseScoped: false },
       { path: "/standards-index", label: "Standards Index", labelEn: "Standards Index", icon: BookOpen, caseScoped: false, badge: "LDM" },
       { path: "/improvement-lab", label: "Research Lab", labelEn: "Improvement Lab", icon: FileSearch, caseScoped: false, badge: "P2" },
@@ -120,6 +124,8 @@ export const NAV_GROUPS: NavGroup[] = [
       { path: "/defense-brief", label: "Defense Brief", labelEn: "Defense Brief", icon: ShieldCheck, caseScoped: false, badge: "LDM" },
       { path: "/infra-arb", label: "इन्फ्रा आर्बिट्रेशन", labelEn: "Infra Arbitration", icon: Scale, caseScoped: false, badge: "NEW" },
       { path: "/infra-arb-claims", label: "Infra Arb Claims", labelEn: "Infra Arb Claims (TC-22-26)", icon: Scale, caseScoped: false, badge: "ARB" },
+      { path: "/bilingual-draft", label: "द्विभाषी ड्राफ्ट", labelEn: "Bilingual Draft Studio", icon: Languages, caseScoped: false, badge: "NEW" },
+      { path: "/court-formatter", label: "कोर्ट फॉर्मैटर", labelEn: "Court Formatter", icon: Gavel, caseScoped: false, badge: "NEW" },
     ],
   },
   {
@@ -141,6 +147,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { path: "/ldr-comparison", label: "Doc Compare", labelEn: "Doc Compare", icon: GitCompare, caseScoped: false, badge: "LDR" },
       { path: "/intake-examples", label: "इनटेक उदाहरण W01", labelEn: "Drafting Intake Examples", icon: BookOpen, caseScoped: false, badge: "W01" },
       { path: "/about",         label: "निर्माता के बारे में", labelEn: "About the Creator", icon: Users,      caseScoped: false, badge: "NEW" },
+      { path: "/user-manual-pdf", label: "उपयोगकर्ता मैनुअल PDF", labelEn: "User Manual PDF", icon: Printer, caseScoped: false },
       ...(featureFlags.hybridStandardsValidity ? [
         { path: "/standards-validity", label: "मानक वैधता", labelEn: "Standards Validity", icon: AlertCircle, caseScoped: true, badge: "NEW" as const },
       ] : []),

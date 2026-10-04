@@ -7,7 +7,7 @@
 import { cn } from "@/lib/utils";
 
 // ── Base shimmer block ────────────────────────────────────────────────────
-function Shimmer({ className }: { className?: string }) {
+export function Shimmer({ className }: { className?: string }) {
   return (
     <div
       className={cn(

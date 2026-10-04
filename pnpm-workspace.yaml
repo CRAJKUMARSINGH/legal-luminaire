@@ -42,6 +42,7 @@ packages:
   - lib/*
   - lib/integrations/*
   - scripts
+  - ETERNAL_RESEARCH_CHILD
 
 catalog:
   '@replit/vite-plugin-cartographer': ^0.5.1

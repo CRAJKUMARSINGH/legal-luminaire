@@ -11,7 +11,7 @@ import { ALL_DEMO_CASES, type DemoCaseCard } from "@/data/all-demo-cases";
 import { buildHemrajCaseRecord, HEMRAJ_DEMO_ID } from "./hemraj-case-01";
 import { CASE02_META, CASE02_GROUNDS, CASE02_PRECEDENTS } from "@/data/stub-cases/case02-ndps";
 import { CASE03_META, CASE03_GROUNDS, CASE03_PRECEDENTS } from "@/data/stub-cases/case03-ni-act";
-import { CASE04_META, CASE04_GROUNDS, CASE04_PRECEDENTS, CASE04_DEMANDS } from "@/data/stub-cases/case04-peetambara";
+import { CASE04_META, CASE04_GROUNDS, CASE04_PRECEDENTS, CASE04_DEMANDS, CASE04_ENCLOSURES } from "@/data/stub-cases/case04-peetambara";
 import {
   TC27_META, TC27_GROUNDS, TC27_PRECEDENTS, TC27_PRAYER,
   TC28_META, TC28_GROUNDS, TC28_PRECEDENTS, TC28_PRAYER,
@@ -210,14 +210,36 @@ export async function buildCaseRecord(demoId: string): Promise<CaseRecord | null
         "1. The accused be discharged of the offence under §138 NI Act.",
         "2. [DEMO PLACEHOLDER — verify relief wording before filing]",
       ]);
-    case "TC-04":
-      return fromStub(
+    case "TC-04": {
+      const base = fromStub(
         card,
         { court: CASE04_META.court, client: CASE04_META.client, opponent: CASE04_META.opponent },
         CASE04_GROUNDS_NORMALISED,
         CASE04_PRECEDENTS_NORMALISED,
         CASE04_DEMANDS.map((d, i) => `${i + 1}. ${d}`),
       );
+      const enclosureNames = [
+        "Impugned_Legal_Notice_Copy.pdf",
+        "Drawing_Supply_Proof_22Feb2025_Correspondence.pdf",
+        "Earlier_Correspondence_Requesting_Drawings.pdf",
+        "Workman_Insurance_Policy.pdf",
+        "Running_Bill_24Lakh_Work_Executed.pdf",
+        "Architectural_Consultancy_Bill_7.5Lakh_GST.pdf",
+        "Relevant_Earlier_Correspondence_Bundle.pdf",
+      ];
+      const sizesKB = ["120 KB", "85 KB", "340 KB", "560 KB", "280 KB", "140 KB", "920 KB"];
+      base.files = CASE04_ENCLOSURES.map((e, i) => ({
+        name: enclosureNames[i] ?? `Enclosure_${i + 1}.pdf`,
+        size: (parseFloat(sizesKB[i] ?? "100 KB") || 100) * 1024,
+        type: "application/pdf",
+      }));
+      base.files.push({
+        name: "NOTICE_REPLY_PITAMBARA_PRINT.html",
+        size: 380 * 1024,
+        type: "text/html",
+      });
+      return base;
+    }
     case "TC-101":
       return fromStub(card, TC27_META, TC27_GROUNDS, TC27_PRECEDENTS, TC27_PRAYER);
     case "TC-102":

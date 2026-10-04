@@ -7,6 +7,7 @@ import { Layout } from "@/components/layout/Layout";
 import type { LpsRoute, FlatRoute } from "@/types";
 import { isLpsRoute, LPS_ROUTE_MAP } from "@/types";
 import { AppErrorBoundary } from "@/components/AppErrorBoundary";
+import { CardSkeleton, Shimmer } from "@/components/ui/skeleton-loaders";
 
 // Lazy load components for code splitting
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -52,6 +53,14 @@ const HowToUsePage            = lazy(() => import("@/pages/HowToUsePage"));
 const AboutCreatorPage        = lazy(() => import("@/pages/AboutCreatorPage"));
 // Bilingual Generator
 const BilingualGeneratorPage  = lazy(() => import("@/pages/BilingualGeneratorPage"));
+// Bilingual Draft Studio — side-by-side Hindi+English with discrepancy checking + citation gate
+const BilingualDraftPage      = lazy(() => import("@/pages/BilingualDraftPage"));
+// Chamber Mode — multi-lawyer role-based access (Phase 4)
+const ChamberModePage         = lazy(() => import("@/pages/ChamberModePage"));
+// Court Formatter — court-specific caption + cause title generator (Phase 5)
+const CourtFormatterPage      = lazy(() => import("@/pages/CourtFormatterPage"));
+// LDR Common — shared LDR section component used as standalone route
+const LDR_CommonPage          = lazy(() => import("@/pages/LDR_CommonPage"));
 const UserManualPrintPage     = lazy(() => import("@/pages/UserManualPrintPage"));
 // Week 01 Kiro — Drafting Intake Examples EX-001..EX-011
 const IntakeExamplesPage      = lazy(() => import("@/pages/IntakeExamplesPage"));
@@ -121,10 +130,57 @@ const DraftTemplateLibraryPage = lazy(() => import("@/pages/DraftTemplateLibrary
 const ReviewQueueView = lazy(() => import("@/components/views/ReviewQueueView").then(module => ({ default: module.ReviewQueueView })));
 const ResearchImprovementView = lazy(() => import("@/components/views/ResearchImprovementView").then(module => ({ default: module.ResearchImprovementView })));
 
-// Loading fallback component
+// Loading fallback component — content-aware bilingual skeleton layout
+// (W14 §6b hardening: replaces bare spinner with multi-row shimmer cards)
 const LoadingFallback = (): React.JSX.Element => (
-  <div className="flex items-center justify-center h-64">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  <div
+    className="p-6 space-y-6"
+    role="status"
+    aria-label="पेज लोड हो रहा है… / Loading page content…"
+  >
+    {/* Header row: title + action chips */}
+    <div className="flex flex-wrap items-center gap-3 justify-between">
+      <div className="space-y-2">
+        <Shimmer className="h-7 w-72 sm:w-96" />
+        <Shimmer className="h-4 w-56 sm:w-80" />
+      </div>
+      <div className="flex gap-2">
+        <Shimmer className="h-9 w-24 rounded-md" />
+        <Shimmer className="h-9 w-20 rounded-md" />
+      </div>
+    </div>
+
+    {/* Stat / metric cards row */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="border rounded-xl p-4 text-center space-y-2">
+          <Shimmer className="h-8 w-10 mx-auto" />
+          <Shimmer className="h-3 w-16 mx-auto" />
+        </div>
+      ))}
+    </div>
+
+    {/* Tab / filter bar */}
+    <div className="flex gap-2 flex-wrap border-b border-border pb-2 overflow-x-auto">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Shimmer key={i} className="h-8 w-28 rounded-full" />
+      ))}
+    </div>
+
+    {/* Main content: two-column card skeleton layout */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="lg:col-span-2 space-y-4">
+        <CardSkeleton rows={5} />
+        <CardSkeleton rows={4} />
+      </div>
+      <div className="space-y-4">
+        <CardSkeleton rows={6} />
+        <CardSkeleton rows={3} />
+      </div>
+    </div>
+
+    {/* Bottom hint for screen readers */}
+    <span className="sr-only">Loading — please wait… / लोड हो रहा है — कृपया प्रतीक्षा करें…</span>
   </div>
 );
 
@@ -267,6 +323,16 @@ export function Router() {
           <Route path="/about"                component={() => Wrap(<AboutCreatorPage />,        "AboutCreatorPage")} />
           {/* Bilingual Generator */}
           <Route path="/bilingual-generator"  component={() => Wrap(<BilingualGeneratorPage />,  "BilingualGeneratorPage")} />
+          {/* Bilingual Draft Studio — side-by-side editing with discrepancy check + citation gate */}
+          <Route path="/bilingual-draft"      component={() => Wrap(<BilingualDraftPage />,       "BilingualDraftPage")} />
+          <Route path="/case/:id/bilingual-draft" component={() => Wrap(<BilingualDraftPage />,   "BilingualDraftPage")} />
+          {/* Chamber Mode — multi-lawyer role-based access */}
+          <Route path="/chamber"              component={() => Wrap(<ChamberModePage />,          "ChamberModePage")} />
+          {/* Court Formatter — court-specific caption + cause title */}
+          <Route path="/court-formatter"      component={() => Wrap(<CourtFormatterPage />,       "CourtFormatterPage")} />
+          <Route path="/case/:id/court-formatter" component={() => Wrap(<CourtFormatterPage />,   "CourtFormatterPage")} />
+          {/* LDR Common — shared LDR section (legacy alias) */}
+          <Route path="/ldr-common"           component={() => Wrap(<LDR_CommonPage lang="both" />, "LDR_CommonPage")} />
           <Route path="/manual"               component={() => Wrap(<HowToUsePage />,            "HowToUsePage")} />
           <Route path="/creator"              component={() => Wrap(<AboutCreatorPage />,         "AboutCreatorPage")} />
           <Route path="/user-manual-pdf"      component={() => Wrap(<UserManualPrintPage />,      "UserManualPrintPage")} />
@@ -284,7 +350,6 @@ export function Router() {
           <Route path="/example-39" component={() => Wrap(<Example39Page />, "Example39Page")} />
           <Route path="/example-40" component={() => Wrap(<Example40Page />, "Example40Page")} />
           <Route path="/example-41" component={() => Wrap(<Example41Page />, "Example41Page")} />
-          <Route path="/drafting-examples"    component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
           {featureFlags.hybridStandardsValidity && (
             <Route path="/case/:id/standards-validity"  component={() => Wrap(<StandardsValidity />, "StandardsValidity")} />
           )}

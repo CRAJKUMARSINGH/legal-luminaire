@@ -76,3 +76,9 @@ artifacts/legal-luminaire/backend/api/routes_harvey.py
 test-assets/harvey-samples/
 
 # SUPPLEMENT/
+
+# ETERNAL_RESEARCH_CHILD — runtime outputs (never commit)
+ETERNAL_RESEARCH_CHILD/dist/
+ETERNAL_RESEARCH_CHILD/node_modules/
+# research_findings.log is intentionally TRACKED (audit trail of proposals)
+# Do NOT add it to .gitignore

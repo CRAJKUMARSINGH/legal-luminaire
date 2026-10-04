@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -74,6 +74,7 @@ const overallStrength = Math.round(
 
 export default function Home() {
   const { cases, selectedCase, selectedCaseId, setSelectedCaseId, isDemoMode } = useCaseContext();
+  const [, setLocation] = useLocation();
   const { metrics, accuracyLevel } = useAccuracyContext();
   const caseId = selectedCase?.id ?? selectedCaseId;
   const isHemraj = caseId === DEFAULT_CASE_ID;
@@ -139,7 +140,7 @@ export default function Home() {
 
   const handleStartNewCase = () => {
     setShowGuidedFlow(false);
-    window.location.href = "/intake";
+    setLocation("/intake");
   };
 
   return (

@@ -1,6 +1,19 @@
 """
+[NON-CANONICAL — CONVENIENCE COPY ONLY]
 Generate court-ready PDF for Hemraj Vardar Discharge Application
 Uses reportlab with Unicode/Hindi support via a system font
+
+⚠️  CANONICAL SOURCE OF TRUTH = scripts/ folder at repo root:
+    • scripts/generate_discharge_pdf.py     — Hemraj v5 PDF generator (bold fonts + page breaks)
+    • scripts/gen_discharge_v5.py           — v5 full pipeline (case01-data.ts compatible)
+    • scripts/generate_discharge_english.py — English side-by-side variant
+    • scripts/gen_discharge_v4.py           — v4 intermediate revision
+
+This file in output_100426/ is a ONE-OFF STANDALONE copy that was used to
+produce DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.pdf on 10 April 2026.
+It reads a TXT input from THIS FOLDER (DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.txt)
+and writes a PDF to THIS FOLDER. It works, but it doesn't share code with
+the production pipeline above. Use scripts/ for all future changes.
 """
 import os, sys
 

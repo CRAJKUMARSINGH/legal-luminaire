@@ -4,36 +4,92 @@
 
 ---
 
-## Contents
+> **⚠️ CANONICAL SOURCE OF TRUTH**
+> This folder is a **PRINT-READY EXPORT SNAPSHOT**. The main software lifeline (source of truth) lives at:
+> - **Case raw documents (source bundles):** `real_cases/CASE01_HEMRAJ_*`, `real_cases/CASE02_PITAMBARA_*`, `real_cases/INFRA_ARB_01..05_*`
+> - **Frontend demo fixtures (app data):** `artifacts/legal-luminaire/src/data/demo-cases/` (infra-arb-cases.ts, all-demo-cases.ts)
+> - **Frontend print pages (browser PDF):** `artifacts/legal-luminaire/src/pages/DischargeApplicationPrint.tsx`, `NoticeReplyPage.tsx`
+> - **PDF generator scripts (Python, canonical):** `scripts/generate_discharge_pdf.py`, `scripts/gen_discharge_v5.py`, `scripts/generate_discharge_english.py`
+> - **Python script in this folder (`generate_pdf.py`)**: Non-canonical convenience copy only — see header inside file.
 
+---
+
+## Contents (ACTUAL FILES IN THIS FOLDER — 29 files)
+
+### CRIMINAL / DISCHARGE (TC-01 — Hemraj Vardar)
 | File | Description |
 |------|-------------|
-| `DISCHARGE_APPLICATION_HEMRAJ_v6.txt` | Full Hindi Discharge Application — Hemraj Vardar — धारा 250 BNSS 2023 |
-| `CRIMINAL_APPEAL_HC_2026.txt` | Criminal Appeal — Rajasthan HC — IS 1199 vs IS 2250 grounds |
-| `CROSS_REFERENCE_MATRIX_TC01.txt` | Cross-Reference Matrix — TC-01 Hemraj — Factual Violation → IS Clause → Judgment |
-| `INFRA_ARB_TC22_HOSPITAL_CLAIM.txt` | TC-22 Hospital Building — Full Claim Statement |
-| `INFRA_ARB_TC23_HIGHWAY_CLAIM.txt` | TC-23 NH-758 Highway — Full Claim Statement (Highest Priority) |
-| `INFRA_ARB_TC24_DAM_CLAIM.txt` | TC-24 Banas Dam — Full Claim Statement |
-| `INFRA_ARB_TC25_SUBSTATION_CLAIM.txt` | TC-25 220 kV Substation — Full Claim Statement |
-| `INFRA_ARB_TC26_LANDSCAPE_CLAIM.txt` | TC-26 Smart City Landscape — Full Claim Statement |
-| `ALL_CROSS_REFERENCE_MATRICES.txt` | All 5 Infra Arb Cross-Reference Matrices + Oral Arguments + Pre-Filing Checklists |
-| `SECTION_37_APPEAL_TC23.txt` | Section 37 Appeal — TC-23 Highway — Hudson Formula Challenge |
-| `ANNEXURE_PDF_NAMES.txt` | Complete list of all annexure PDF/image file names for court filing |
+| `DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.txt` | Full Hindi Discharge Application — धारा 250 BNSS 2023 — Court Filing Draft |
+| `DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.pdf` | Auto-generated PDF of above (via reportlab) |
+| `DISCHARGE_APPLICATION_HEMRAJ_v4.txt` | Discharge Application Hindi — v4 (intermediate revision) |
+| `DISCHARGE_APPLICATION_HEMRAJ_v4.pdf` | PDF of v4 revision |
+| `DISCHARGE_APPLICATION_HEMRAJ_v5.pdf` | PDF of v5 revision (Hindi only) |
+| `DISCHARGE_APPLICATION_HEMRAJ_v5_ENGLISH.pdf` | PDF of v5 revision (English side-by-side) |
+| `DISCHARGE_APPLICATION_HEMRAJ_v5_PRINT.html` | Standalone browser-printable HTML (Noto Serif Devanagari, A4) |
+| `CRIMINAL_APPEAL_HC_2026.txt` | Criminal Appeal — Rajasthan HC — IS 1199 vs IS 2250 + chain of custody grounds |
+| `ANNEXURE_PDF_NAMES_MASTER.txt` | Master list of 24 Hemraj annexures + 12 TC-22 + 17 TC-23 (with VERIFIED/SECONDARY status per item) |
+
+### NOTICE REPLY (TC-04 — Pitambara Roopam)
+| File | Description |
+|------|-------------|
+| `NOTICE_REPLY_PITAMBARA_PRINT.html` | Standalone browser-printable HTML Notice Reply (para-wise response, Datia MP Peeth trust dispute) |
+
+### INFRASTRUCTURE ARBITRATION (TC-22 to TC-26)
+| File | Description |
+|------|-------------|
+| `CLAIM_TC22_HOSPITAL_FULL.txt` | TC-22 RMSCL 300-bed Hospital — Full Claim Statement (₹19.84 Cr, 4 claims, VERIFIED) |
+| `CLAIM_TC22_HOSPITAL_HINDI.txt` | TC-22 Hospital — Claim Statement (Hindi version) |
+| `AWARD_TC22_HOSPITAL.txt` | TC-22 Hospital — Arbitral Award (₹17.86 Cr, 5 findings + termination set aside) |
+| `CROSS_REF_MATRIX_TC22_HOSPITAL.txt` | TC-22 Hospital — Cross-Reference Matrix: Factual Violation → Clause → Precedent |
+| `CLAIM_TC23_HIGHWAY_FULL.txt` | TC-23 NHAI NH-758 Highway — Full Claim Statement (₹55.30 Cr, HIGHEST PRIORITY) |
+| `CLAIM_TC23_HIGHWAY_HINDI.txt` | TC-23 Highway — Claim Statement (Hindi version) |
+| `AWARD_TC23_HIGHWAY.txt` | TC-23 Highway — Arbitral Award (₹41.65 Cr + blacklisting set aside) |
+| `CROSS_REF_MATRIX_TC23_HIGHWAY.txt` | TC-23 Highway — Cross-Reference Matrix |
+| `SECTION_37_APPEAL_TC23_HIGHWAY.txt` | TC-23 Highway — Section 37 A&C Act Appeal (Hudson Formula challenge) |
+| `CLAIM_TC24_DAM_FULL.txt` | TC-24 Banas Dam — Full Claim Statement (₹54.85 Cr, FIDIC 4.12 geological surprise) |
+| `CROSS_REF_MATRIX_TC24_DAM.txt` | TC-24 Dam — Cross-Reference Matrix |
+| `CLAIM_TC25_SUBSTATION_FULL.txt` | TC-25 220 kV Substation — Full Claim Statement (₹30.45 Cr, GIS equipment delay) |
+| `CROSS_REF_MATRIX_TC25_SUBSTATION.txt` | TC-25 Substation — Cross-Reference Matrix |
+| `CLAIM_TC26_LANDSCAPE_FULL.txt` | TC-26 Smart City Landscape — Full Claim Statement (₹20.75 Cr, 19 VOs scope creep) |
+| `CROSS_REF_MATRIX_TC26_LANDSCAPE.txt` | TC-26 Landscape — Cross-Reference Matrix |
 
 ---
 
 ## How to Print as PDF
 
-1. Open any `.txt` file in this folder
-2. Open in Notepad / Word
+### Option A — App (RECOMMENDED, integration-tested)
+1. Run: `pnpm --filter @workspace/legal-luminaire run dev`
+2. Hemraj Discharge: navigate → `/case/TC-01/discharge-print` → Print / Save PDF (A4, Devanagari, 15mm margins, inline citations with annexure PDF names)
+3. Pitambara Notice Reply: navigate → `/case/TC-04/notice-reply` → Print / Save PDF
+4. Infra Arb Claims: navigate → `/infra-arb-claims` → Select TC-22..TC-26 → Print / Save PDF (with Claim Matrix, Standards tabs)
+
+### Option B — Standalone HTML (fast, no build needed)
+1. Open any `*_PRINT.html` file in this folder
+2. Chrome/Edge: Ctrl+P → Save as PDF → Paper size A4, Margins: Default, Scale: Default
+3. Devanagari fonts loaded via Google Fonts (Noto Serif Devanagari) — needs internet once, then cached
+
+### Option C — TXT → Microsoft Print to PDF
+1. Open any `.txt` file in Notepad / Word
+2. Font: Mangal / Arial Unicode MS (for Hindi)
 3. File → Print → Microsoft Print to PDF
 4. Save as PDF
 
-Or run the app: `pnpm --filter @workspace/legal-luminaire run dev` → navigate to `/case/case-01/discharge-print` → Print / Save PDF
+### Option D — Python reportlab (no browser, server-side)
+Run the canonical scripts folder version (NOT the convenience copy here):
+```
+cd E:\Rajkumar\legal-luminaire
+python scripts\generate_discharge_pdf.py
+python scripts\gen_discharge_v5.py
+python scripts\generate_discharge_english.py
+```
 
 ---
 
 ## Accuracy Status
-- VERIFIED citations: Safe to file
-- SECONDARY citations: File with qualification note
-- PENDING citations: BLOCKED — do not file without certified copy
+- **[VERIFIED]** citations: Safe to file immediately
+- **[SECONDARY]** citations: File with qualification note — obtain certified SCC copy before filing
+- **[PENDING]** citations: **BLOCKED** — DO NOT FILE without certified copy + chain-of-custody verification
+
+Total Hemraj Annexures (from ANNEXURE_PDF_NAMES_MASTER.txt):
+- 24 Annexures A–X
+- 18 VERIFIED · 4 SECONDARY · 0 PENDING · 0 FATAL_ERROR
