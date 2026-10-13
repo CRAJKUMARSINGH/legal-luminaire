@@ -1,0 +1,25 @@
+# Requirements for Python 3.13 venv (.venv313)
+# CrewAI requires Python >=3.10,<3.14 — cannot run on Python 3.14
+#
+# Setup:
+#   py -3.13 -m venv .venv313
+#   .venv313\Scripts\pip install -r requirements313.txt
+#
+# Installed versions (October 2026):
+#   crewai==1.15.27
+#   crewai-tools==1.15.27
+
+# CrewAI multi-agent framework
+crewai>=1.0.0
+crewai-tools>=1.0.0
+
+# Core dependencies also needed in this venv
+fastapi>=0.111.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.7.0
+python-dotenv>=1.1.0
+langchain>=0.3.21
+langchain-community>=0.3.21
+langchain-core>=0.3.0
+openai>=1.50.0
+requests>=2.32.4

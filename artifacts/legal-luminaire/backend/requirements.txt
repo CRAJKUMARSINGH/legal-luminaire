@@ -12,10 +12,13 @@ langchain-core>=0.3.0
 langchain-text-splitters>=0.3.0
 
 # CrewAI multi-agent
-crewai>=0.80.0
-crewai-tools>=0.14.0
+# NOTE: crewai requires Python >=3.10,<3.14 — use .venv313 (Python 3.13)
+# Run: py -3.13 -m venv .venv313 && .venv313\Scripts\pip install crewai crewai-tools
+# Installed: crewai==1.15.27, crewai-tools==1.15.27 in .venv313
+crewai>=1.0.0  # Python 3.13 venv only (.venv313)
+crewai-tools>=1.0.0  # Python 3.13 venv only (.venv313)
 
-# Vector DB
+# Vector DB — installed in .venv (Python 3.14): chromadb==1.5.9
 chromadb>=0.6.3
 
 # Document loaders

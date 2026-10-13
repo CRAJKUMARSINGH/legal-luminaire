@@ -88,3 +88,6 @@ artifacts/legal-luminaire/stdout.log
 artifacts/legal-luminaire/stderr.log
 *.log
 !research_findings.log
+
+# Python 3.13 venv for crewai (Python 3.14 incompatible)
+**/backend/.venv313/
