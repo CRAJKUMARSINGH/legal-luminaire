@@ -5,9 +5,9 @@ pydantic>=2.7.0
 pydantic-settings>=2.3.0
 
 # LangChain core — let crewai resolve compatible versions
-langchain>=0.3.0
+langchain>=0.3.21
 langchain-openai>=0.2.0
-langchain-community>=0.3.0
+langchain-community>=0.3.21
 langchain-core>=0.3.0
 langchain-text-splitters>=0.3.0
 
@@ -16,12 +16,12 @@ crewai>=0.80.0
 crewai-tools>=0.14.0
 
 # Vector DB
-chromadb>=0.5.0
+chromadb>=0.6.3
 
 # Document loaders
-pypdf>=4.0.0
+pypdf>=5.4.0
 python-docx>=1.0.0
-pillow>=10.0.0
+pillow>=11.0.0
 pytesseract>=0.3.10
 
 # Google Gemini (Omni-Modal extraction)
@@ -30,23 +30,23 @@ google-generativeai>=0.8.0
 
 # Web search / verification
 tavily-python>=0.3.0
-requests>=2.31.0
+requests>=2.32.4
 beautifulsoup4>=4.12.0
 
 # Embeddings (OpenAI + SBERT local)
 openai>=1.50.0
 tiktoken>=0.7.0
-sentence-transformers>=3.0.0
+sentence-transformers>=3.4.1
 langchain-huggingface>=0.1.0
 
 # Hybrid BM25 retrieval
 rank-bm25>=0.2.2
 
 # Utilities
-python-dotenv>=1.0.0
+python-dotenv>=1.1.0
 aiofiles>=23.0.0
 httpx>=0.27.0
-scikit-learn>=1.4.0
+scikit-learn>=1.5.0
 numpy>=1.26.0
 fpdf2>=2.8.0
 

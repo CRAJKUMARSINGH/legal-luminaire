@@ -66,7 +66,7 @@ catalog:
   tailwind-merge: ^3.3.1
   tailwindcss: ^4.1.14
   tsx: ^4.21.0
-  vite: ^7.3.0
+  vite: ^7.3.2
   zod: ^3.25.76
 
 autoInstallPeers: false
@@ -86,3 +86,7 @@ overrides:
   # drizzle-kit uses an older vulnerable esbuild — override it
   "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0"
   esbuild: "0.27.3"
+  # SECURITY: proxy-addr <2.0.8 — IP spoofing via IPv4-mapped IPv6 (GHSA-jqcg-44mw-7w3h)
+  proxy-addr: ">=2.0.8"
+  # SECURITY: basic-ftp multiple CVEs (GHSA-rpmf-866q-6p89 etc.) via puppeteer
+  basic-ftp: ">=5.3.1"

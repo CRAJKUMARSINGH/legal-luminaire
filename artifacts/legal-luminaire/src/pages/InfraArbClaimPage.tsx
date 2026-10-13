@@ -147,7 +147,7 @@ export default function InfraArbClaimPage() {
                 </tr>
               </thead>
               <tbody>
-                {selected.claims.map((claim) => (
+                {(selected.claims ?? []).map((claim) => (
                   <>
                     <tr
                       key={claim.id}
