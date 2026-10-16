@@ -1,9 +1,9 @@
-import * as fs from "fs";
+﻿import * as fs from "fs";
 import * as path from "path";
 import readline from "readline";
 
 /**
- * ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon
+ * ETERNAL_RESEARCH_CHILD â€” Legal Luminaire Research Daemon
  *
  * Synchronized for: artifacts/legal-luminaire
  *
@@ -11,18 +11,18 @@ import readline from "readline";
  * (citation plans, roadmaps, arbitration drafts, action plans, logbooks),
  * and proposes targeted refinements to the Legal Luminaire engine.
  *
- * TARGET FILES (never auto-patched — always requires human approval):
+ * TARGET FILES (never auto-patched â€” always requires human approval):
  *   PROTECTED (propose only):
- *     src/lib/case01-data.ts          — precedents + standards data
- *     src/lib/citation-gate.ts        — citation scanner patterns
- *     src/lib/verification-engine.ts  — COURT_SAFE/VERIFIED/SECONDARY/PENDING tiers
- *     src/context/CaseContext.tsx     — case state management
- *     src/App.tsx                     — router + sidebar
+ *     src/lib/case01-data.ts          â€” precedents + standards data
+ *     src/lib/citation-gate.ts        â€” citation scanner patterns
+ *     src/lib/verification-engine.ts  â€” COURT_SAFE/VERIFIED/SECONDARY/PENDING tiers
+ *     src/context/CaseContext.tsx     â€” case state management
+ *     src/App.tsx                     â€” router + sidebar
  *
  *   PATCHABLE (propose + apply with y/N approval):
- *     src/data/all-demo-cases.ts      — 26-case demo browser
- *     src/data/demo-cases/infra-arb-cases.ts — TC-22..TC-26 data
- *     src/lib/case-templates.ts       — case creation templates
+ *     src/data/all-demo-cases.ts      â€” 26-case demo browser
+ *     src/data/demo-cases/infra-arb-cases.ts â€” TC-22..TC-26 data
+ *     src/lib/case-templates.ts       â€” case creation templates
  *     backend/agents/fact_fit_engine.py
  *     backend/agents/standards_verifier.py
  *     ROADMAP.md
@@ -34,10 +34,10 @@ import readline from "readline";
  *   - Never auto-apply changes to protected files
  *   - All proposed precedents must carry status/statusNote/sourceUrl
  *   - PENDING citations must have blockedFromDraft: true
- *   - No paraphrased holdings — verbatim only
+ *   - No paraphrased holdings â€” verbatim only
  */
 
-// ── Configuration ─────────────────────────────────────────────────────────────
+// â”€â”€ Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const WORKSPACE_ROOT = path.resolve(process.cwd());
 const ASSETS_DIR     = path.join(WORKSPACE_ROOT, "Attached_Assets");
@@ -48,7 +48,7 @@ const LOG_FILE       = path.join(WORKSPACE_ROOT, "ETERNAL_RESEARCH_CHILD/researc
 
 const CHECK_INTERVAL_MS = 15 * 60 * 1000; // 15 minutes
 
-// ── Protected files — propose only, never auto-patch ─────────────────────────
+// â”€â”€ Protected files â€” propose only, never auto-patch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const PROTECTED: Record<string, string> = {
   "case01-data.ts":        path.join(APP_SRC, "lib/case01-data.ts"),
   "citation-gate.ts":      path.join(APP_SRC, "lib/citation-gate.ts"),
@@ -57,7 +57,7 @@ const PROTECTED: Record<string, string> = {
   "App.tsx":                path.join(APP_SRC, "App.tsx"),
 };
 
-//  Patchable files — apply with y/N approval 
+//  Patchable files â€” apply with y/N approval 
 const PATCHABLE: Record<string, string> = {
   "all-demo-cases.ts":      path.join(APP_SRC, "data/all-demo-cases.ts"),
   "infra-arb-cases.ts":     path.join(APP_SRC, "data/demo-cases/infra-arb-cases.ts"),
@@ -154,10 +154,10 @@ function buildProposal(fileName: string): Proposal {
         `The Citation Risk Reduction Plan identifies 5 weak points.\n` +
         `Key action: Extend citation-gate.ts to block any citation NOT present\n` +
         `in the case-law matrix allowlist. Any unknown citation  auto-PENDING.\n` +
-        `Also: add para-number guard — if 'para' field is empty, block specific\n` +
+        `Also: add para-number guard â€” if 'para' field is empty, block specific\n` +
         `paragraph references in draft output.`,
       codeHint:
-        `// In citation-gate.ts — add allowlist check:\n` +
+        `// In citation-gate.ts â€” add allowlist check:\n` +
         `// if (!CASE_LAW_ALLOWLIST.has(normalisedCaseName)) {\n` +
         `//   return { status: "BLOCKED", reason: "Not in verified allowlist" };\n` +
         `// }\n` +
@@ -183,10 +183,10 @@ function buildProposal(fileName: string): Proposal {
         `  Month 4: Multi-lawyer chamber mode (role-based auth)\n` +
         `  Month 5: Court-specific formatting engine (Rajasthan HC / SC / NCLT)\n` +
         `  Month 6: Outcome prediction + hearing countdown tracker\n\n` +
-        `Check ROADMAP.md — add any missing items under the correct P0/P1/P2 section.`,
+        `Check ROADMAP.md â€” add any missing items under the correct P0/P1/P2 section.`,
       codeHint:
         `// Add to ROADMAP.md under P1:\n` +
-        `// - [ ] Month 2: Indian Kanoon API — auto-verify citations on entry\n` +
+        `// - [ ] Month 2: Indian Kanoon API â€” auto-verify citations on entry\n` +
         `//       GET https://api.indiankanoon.org/search/?formInput=CASE_NAME\n` +
         `//       Mark VERIFIED only after API confirms existence`,
     };
@@ -214,7 +214,7 @@ function buildProposal(fileName: string): Proposal {
         `Per accuracy-rules.md Rule 3: every IS/ASTM/CPWD/FIDIC standard must have\n` +
         `code + title + scope + clause number + sourceUrl.`,
       codeHint:
-        `// In infra-arb-cases.ts — verify/add to matching case:\n` +
+        `// In infra-arb-cases.ts â€” verify/add to matching case:\n` +
         `// caseLaw: [{ case: "...", court: "...", status: "SECONDARY",\n` +
         `//   action: "Verify on SCC Online before filing.", fitScore: 85 }]\n` +
         `// standards: [{ code: "FIDIC Sub-Cl. 2.1", title: "Right of Access",\n` +
@@ -244,7 +244,7 @@ function buildProposal(fileName: string): Proposal {
         `  IS 2250:1981  correct standard for masonry mortar\n` +
         `  ASTM C1324   correct standard for hardened masonry mortar forensics`,
       codeHint:
-        `// In case01-data.ts — update matching standard:\n` +
+        `// In case01-data.ts â€” update matching standard:\n` +
         `// keyClause: "<verbatim clause text from official source>",\n` +
         `// confidence: "VERIFIED",\n` +
         `// sourceUrl: "https://archive.org/... or https://bis.gov.in/...",`,
@@ -272,10 +272,10 @@ function buildProposal(fileName: string): Proposal {
         `Per accuracy-rules.md Rule 1: holdings MUST be verbatim. Paraphrasing FORBIDDEN.\n` +
         `PENDING citations MUST have blockedFromDraft: true (enforced by citation-gate.ts).`,
       codeHint:
-        `// In case01-data.ts — update matching precedent:\n` +
+        `// In case01-data.ts â€” update matching precedent:\n` +
         `// holding: \`"<exact verbatim quote from judgment>"\`,\n` +
-        `// status: "SECONDARY",  // upgraded from PENDING — source confirmed\n` +
-        `// statusNote: "Confirmed from ${fileName} — ${new Date().toISOString().slice(0,10)}. Obtain certified copy before filing.",`,
+        `// status: "SECONDARY",  // upgraded from PENDING â€” source confirmed\n` +
+        `// statusNote: "Confirmed from ${fileName} â€” ${new Date().toISOString().slice(0,10)}. Obtain certified copy before filing.",`,
     };
   }
 
@@ -336,15 +336,15 @@ function buildProposal(fileName: string): Proposal {
         `Source: ${fileName}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Per accuracy-rules.md Rule 2, Fact-Fit Gate thresholds are:\n` +
-        `   70  "exact"     — primary authority\n` +
-        `  50-69  "analogous" — use with qualification\n` +
-        `  30-49  "weak"      — supporting only, never primary\n` +
-        `  < 30   "rejected"  — DO NOT USE. FATAL ERROR if cited as primary.\n\n` +
+        `   70  "exact"     â€” primary authority\n` +
+        `  50-69  "analogous" â€” use with qualification\n` +
+        `  30-49  "weak"      â€” supporting only, never primary\n` +
+        `  < 30   "rejected"  â€” DO NOT USE. FATAL ERROR if cited as primary.\n\n` +
         `Check fact_fit_engine.py: are these thresholds correctly implemented?\n` +
         `Are the 3 scoring axes (incident type 0-40, evidence type 0-35,\n` +
         `procedural defect 0-25) correctly weighted?`,
       codeHint:
-        `# In fact_fit_engine.py — verify threshold constants:\n` +
+        `# In fact_fit_engine.py â€” verify threshold constants:\n` +
         `# EXACT_THRESHOLD     = 70\n` +
         `# ANALOGOUS_THRESHOLD = 50\n` +
         `# WEAK_THRESHOLD      = 30\n` +
@@ -380,14 +380,14 @@ function logFinding(p: Proposal, approved: boolean): void {
   const entry =
     `\n[${ new Date().toISOString() }] ${approved ? "APPROVED" : "SKIPPED"}\n` +
     `  Category : ${p.category}\n` +
-    `  Source   : Attached_Assets/${p.sourceFile}\n` +
+    `  Source   : ${p.sourceFile}\n` +
     `  Target   : ${p.targetKey}\n` +
     `  Protected: ${p.isProtected}\n` +
     `  Summary  : ${p.summary}\n` +
-    `${"".repeat(64)}\n`;
+    `${"â”€".repeat(64)}\n`;
   try {
     fs.appendFileSync(LOG_FILE, entry, "utf8");
-    console.log(`\n   Logged  ETERNAL_RESEARCH_CHILD/research_findings.log`);
+    console.log(`\n   Logged â†’ ETERNAL_RESEARCH_CHILD/research_findings.log`);
   } catch { /* non-fatal */ }
 }
 
@@ -399,22 +399,37 @@ let timer: NodeJS.Timeout;
 
 async function analyzeAndPropose(): Promise<void> {
   const ts = new Date().toLocaleTimeString();
-  console.log(`\n${"".repeat(66)}`);
-  console.log(`  ETERNAL_RESEARCH_CHILD    Legal Luminaire Research Daemon`);
-  console.log(`  ${ts}  —  15-minute research cycle`);
-  console.log(`${"".repeat(66)}\n`);
+  console.log(`\n${"â”€".repeat(66)}`);
+  console.log(`  ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon`);
+  console.log(`  ${ts}  â€”  15-minute research cycle`);
+  console.log(`${"─".repeat(66)}\n`);
 
   // 1. App health
   console.log(" App Health ");
   console.log(appHealthCheck());
 
-  // 2. Scan Attached_Assets
+  // 2. Scan real_cases/ (primary source) + Attached_Assets (legacy, may be empty)
   const assets = listLegalFiles(ASSETS_DIR);
-  console.log(`\n Attached_Assets/  (${assets.length} legal files) `);
-  assets.forEach(f => console.log(`    ${f}`));
+  const realCaseFiles: string[] = [];
+  if (fs.existsSync(REAL_CASES_DIR)) {
+    const folders = fs.readdirSync(REAL_CASES_DIR).filter(f =>
+      fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory()
+    );
+    for (const folder of folders) {
+      const files = listLegalFiles(path.join(REAL_CASES_DIR, folder));
+      for (const file of files) {
+        realCaseFiles.push(path.join(folder, file));
+      }
+    }
+  }
 
-  if (assets.length === 0) {
-    console.log("   Nothing to study. Add .md/.lex/.txt files to Attached_Assets/.");
+  const combinedSources = [...assets.map(f => ({ file: f, dir: ASSETS_DIR })),
+    ...realCaseFiles.map(f => ({ file: f, dir: REAL_CASES_DIR }))];
+
+  console.log(`\n Attached_Assets/  (${assets.length} files) | real_cases/ (${realCaseFiles.length} files)`);
+
+  if (combinedSources.length === 0) {
+    console.log("   Nothing to study. Add .md/.lex/.txt files to real_cases/ or Attached_Assets/.");
     scheduleNext(); return;
   }
 
@@ -422,8 +437,8 @@ async function analyzeAndPropose(): Promise<void> {
   console.log(`\n real_cases/ `);
   console.log(listRealCases());
 
-  // 4. Pick random asset
-  const pick = assets[Math.floor(Math.random() * assets.length)];
+  // 4. Pick random source (weighted toward real_cases when Attached_Assets is empty)
+  const pick = combinedSources[Math.floor(Math.random() * combinedSources.length)].file;
   console.log(`\n Studying: ${pick}`);
   console.log("   Analysing citation patterns, IS standards, argument structures,");
   console.log("   verification tiers, claim matrices, and roadmap items...");
@@ -433,14 +448,14 @@ async function analyzeAndPropose(): Promise<void> {
   const p = buildProposal(pick);
   const targetPath = PROTECTED[p.targetKey] ?? PATCHABLE[p.targetKey] ?? p.targetKey;
 
-  console.log(`\n${"".repeat(66)}`);
+  console.log(`\n${"â”€".repeat(66)}`);
   console.log(`    PROPOSED LEGAL ENGINE REFINEMENT`);
-  console.log(`${"".repeat(66)}`);
+  console.log(`${"─".repeat(66)}`);
   console.log(`  Category   : ${p.category}`);
-  console.log(`  Source     : Attached_Assets/${p.sourceFile}`);
+  console.log(`  Source     : ${p.sourceFile}`);
   console.log(`  Target     : ${p.targetKey}`);
   console.log(`  Path       : ${targetPath}`);
-  console.log(`  Protected  : ${p.isProtected ? "YES — manual edit required" : "NO — can patch with approval"}`);
+  console.log(`  Protected  : ${p.isProtected ? "YES â€” manual edit required" : "NO â€” can patch with approval"}`);
   console.log(`\n  Summary    : ${p.summary}`);
   console.log(`\n  Detail:`);
   p.detail.split("\n").forEach(l => console.log(`    ${l}`));
@@ -448,10 +463,10 @@ async function analyzeAndPropose(): Promise<void> {
     console.log(`\n  Code hint:`);
     p.codeHint.split("\n").forEach(l => console.log(`    ${l}`));
   }
-  console.log(`${"".repeat(66)}`);
+  console.log(`${"─".repeat(66)}`);
 
   if (p.isProtected) {
-    console.log(`\n    PROTECTED FILE — daemon will NOT auto-modify.`);
+    console.log(`\n    PROTECTED FILE â€” daemon will NOT auto-modify.`);
     console.log(`     Apply the change manually, then run:`);
     console.log(`     pnpm --filter @workspace/legal-luminaire test`);
     console.log(`     pnpm --filter @workspace/legal-luminaire run typecheck\n`);
@@ -504,10 +519,10 @@ const bootCases  = fs.existsSync(REAL_CASES_DIR)
   ? fs.readdirSync(REAL_CASES_DIR).filter(f => fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory()).length
   : 0;
 
-console.log(`${"".repeat(66)}`);
-console.log(`  ETERNAL_RESEARCH_CHILD    Legal Luminaire Research Daemon`);
+console.log(`${"─".repeat(66)}`);
+console.log(`  ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon`);
 console.log(`  Synchronized for: artifacts/legal-luminaire`);
-console.log(`${"".repeat(66)}`);
+console.log(`${"─".repeat(66)}`);
 console.log(`  Attached_Assets/  : ${bootAssets.length} legal files tracked`);
 console.log(`  real_cases/       : ${bootCases} case folders tracked`);
 console.log(`  Protected targets : ${Object.keys(PROTECTED).join(", ")}`);
@@ -515,6 +530,7 @@ console.log(`  Patchable targets : ${Object.keys(PATCHABLE).join(", ")}`);
 console.log(`  Cycle interval    : 15 minutes`);
 console.log(`  Log file          : ETERNAL_RESEARCH_CHILD/research_findings.log`);
 console.log(`\n  Run: npx ts-node ETERNAL_RESEARCH_CHILD/research_daemon.ts`);
-console.log(`${"".repeat(66)}\n`);
+console.log(`${"─".repeat(66)}\n`);
 
 analyzeAndPropose();
+
