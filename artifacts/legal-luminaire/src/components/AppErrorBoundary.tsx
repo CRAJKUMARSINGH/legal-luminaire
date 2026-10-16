@@ -29,7 +29,7 @@ export class AppErrorBoundary extends React.Component<
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo): void {
     this.setState({ errorInfo });
     console.error(
       `[AppErrorBoundary]${this.props.componentName ? ` [${this.props.componentName}]` : ""} Uncaught error:`,
@@ -51,7 +51,7 @@ export class AppErrorBoundary extends React.Component<
     }
   };
 
-  render(): React.ReactNode {
+  override render(): React.ReactNode {
     if (this.state.hasError) {
       const title = this.props.fallbackTitle || "Something went wrong";
       const description =
