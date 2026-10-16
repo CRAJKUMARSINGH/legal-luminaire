@@ -102,6 +102,9 @@ export type CaseRecord = {
     blockedFromDraft?: boolean;
   }>;
 
+  /** Next listed hearing date (ISO `YYYY-MM-DD`). Empty/omitted = none scheduled. */
+  nextHearing?: string;
+
   // ── Infrastructure Arbitration extension (TC-22 .. TC-26) ──────────────
   /** Claimant / Contractor legal name (e.g. "M/s. BuildWell Projects Pvt. Ltd.") */
   contractor?: string;
@@ -144,6 +147,7 @@ export const defaultCase: CaseRecord = {
     { name: "State of Rajasthan", role: "complainant" },
   ],
   citations: [],
+  nextHearing: "2026-11-12",
 };
 
 /** Normalise charges to always return a string array */
