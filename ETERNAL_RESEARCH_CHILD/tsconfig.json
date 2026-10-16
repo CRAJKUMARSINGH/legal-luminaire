@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target":          "ES2022",
     "module":          "CommonJS",
-    "moduleResolution":"node",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict":          true,
@@ -10,6 +10,9 @@
     "outDir":          "./dist",
     "rootDir":         "."
   },
-  "include": ["research_daemon.ts"],
+  "include": [
+    "research_daemon.ts",
+    "phase2_improvement_pipeline.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

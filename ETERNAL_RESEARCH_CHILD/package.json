@@ -1,16 +1,17 @@
 {
   "name": "eternal-research-child",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Legal Luminaire research daemon — watches real_cases/ and proposes engine refinements every 15 minutes",
   "private": true,
   "scripts": {
-    "start": "tsx research_daemon.ts",
-    "dev":   "tsx watch research_daemon.ts",
-    "sync":  "tsx phase2_improvement_pipeline.ts"
+    "start":     "tsx research_daemon.ts",
+    "dev":       "tsx watch research_daemon.ts",
+    "sync":      "tsx phase2_improvement_pipeline.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.phase2.json --noEmit"
   },
   "dependencies": {},
   "devDependencies": {
-    "tsx":        "^4.19.2",
+    "tsx":        "^4.21.0",
     "typescript": "~5.9.2",
     "@types/node": "^22.0.0"
   }

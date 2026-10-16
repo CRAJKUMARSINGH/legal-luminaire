@@ -3,88 +3,102 @@ import * as path from "path";
 import readline from "readline";
 
 /**
- * ETERNAL_RESEARCH_CHILD â€” Legal Luminaire Research Daemon
+ * ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon
  *
  * Synchronized for: artifacts/legal-luminaire
  *
- * Watches Attached_Assets/ every 15 minutes, studies legal case files
- * (citation plans, roadmaps, arbitration drafts, action plans, logbooks),
- * and proposes targeted refinements to the Legal Luminaire engine.
+ * Scans real_cases/ (primary) and Attached_Assets/ (legacy) every 15 minutes,
+ * studies legal case files (citation plans, roadmaps, arbitration drafts,
+ * action plans, logbooks), and proposes targeted refinements to the engine.
  *
- * TARGET FILES (never auto-patched â€” always requires human approval):
+ * TARGET FILES (never auto-patched — always requires human approval):
  *   PROTECTED (propose only):
- *     src/lib/case01-data.ts          â€” precedents + standards data
- *     src/lib/citation-gate.ts        â€” citation scanner patterns
- *     src/lib/verification-engine.ts  â€” COURT_SAFE/VERIFIED/SECONDARY/PENDING tiers
- *     src/context/CaseContext.tsx     â€” case state management
- *     src/App.tsx                     â€” router + sidebar
+ *     src/lib/case01-data.ts          — precedents + standards data
+ *     src/lib/citation-gate.ts        — citation scanner patterns
+ *     src/lib/verification-engine.ts  — COURT_SAFE/VERIFIED/SECONDARY/PENDING tiers
+ *     src/context/CaseContext.tsx     — case state management
+ *     src/App.tsx                     — router + sidebar
  *
  *   PATCHABLE (propose + apply with y/N approval):
- *     src/data/all-demo-cases.ts      â€” 26-case demo browser
- *     src/data/demo-cases/infra-arb-cases.ts â€” TC-22..TC-26 data
- *     src/lib/case-templates.ts       â€” case creation templates
+ *     src/data/all-demo-cases.ts      — 26-case demo browser
+ *     src/data/demo-cases/infra-arb-cases.ts — TC-22..TC-26 data
+ *     src/lib/case-templates.ts       — case creation templates
  *     backend/agents/fact_fit_engine.py
  *     backend/agents/standards_verifier.py
  *     ROADMAP.md
  *
- * HOW TO RUN:
- *   npx ts-node ETERNAL_RESEARCH_CHILD/research_daemon.ts
+ * HOW TO RUN (from workspace root):
+ *   pnpm daemon          — start 15-min research cycle
+ *   pnpm daemon:dev      — watch mode (restarts on file change)
+ *   pnpm daemon:sync     — one-shot: regenerate /improvement-lab UI feed
+ *   pnpm --filter eternal-research-child typecheck  — TS type check
  *
  * ACCURACY RULES (per .kiro/steering/accuracy-rules.md):
  *   - Never auto-apply changes to protected files
  *   - All proposed precedents must carry status/statusNote/sourceUrl
  *   - PENDING citations must have blockedFromDraft: true
- *   - No paraphrased holdings â€” verbatim only
+ *   - No paraphrased holdings — verbatim only
  */
 
-// â”€â”€ Configuration â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Configuration ─────────────────────────────────────────────────────────────
 
-const WORKSPACE_ROOT = path.resolve(process.cwd());
+/**
+ * Resolve workspace root regardless of whether the daemon is started from
+ * the repo root (`pnpm daemon`) or from inside this folder directly.
+ */
+function resolveWorkspaceRoot(): string {
+  const cwd = path.resolve(process.cwd());
+  if (path.basename(cwd) === "ETERNAL_RESEARCH_CHILD") return path.dirname(cwd);
+  if (fs.existsSync(path.join(cwd, "ETERNAL_RESEARCH_CHILD"))) return cwd;
+  return cwd;
+}
+
+const WORKSPACE_ROOT = resolveWorkspaceRoot();
 const ASSETS_DIR     = path.join(WORKSPACE_ROOT, "Attached_Assets");
 const REAL_CASES_DIR = path.join(WORKSPACE_ROOT, "real_cases");
 const APP_SRC        = path.join(WORKSPACE_ROOT, "artifacts/legal-luminaire/src");
 const APP_BACKEND    = path.join(WORKSPACE_ROOT, "artifacts/legal-luminaire/backend");
-const LOG_FILE       = path.join(WORKSPACE_ROOT, "ETERNAL_RESEARCH_CHILD/research_findings.log");
+const LOG_FILE       = path.join(WORKSPACE_ROOT, "ETERNAL_RESEARCH_CHILD", "research_findings.log");
 
 const CHECK_INTERVAL_MS = 15 * 60 * 1000; // 15 minutes
 
-// â”€â”€ Protected files â€” propose only, never auto-patch â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Protected files — propose only, never auto-patch ─────────────────────────
 const PROTECTED: Record<string, string> = {
-  "case01-data.ts":        path.join(APP_SRC, "lib/case01-data.ts"),
-  "citation-gate.ts":      path.join(APP_SRC, "lib/citation-gate.ts"),
-  "verification-engine.ts":path.join(APP_SRC, "lib/verification-engine.ts"),
-  "CaseContext.tsx":        path.join(APP_SRC, "context/CaseContext.tsx"),
-  "App.tsx":                path.join(APP_SRC, "App.tsx"),
+  "case01-data.ts":         path.join(APP_SRC, "lib/case01-data.ts"),
+  "citation-gate.ts":       path.join(APP_SRC, "lib/citation-gate.ts"),
+  "verification-engine.ts": path.join(APP_SRC, "lib/verification-engine.ts"),
+  "CaseContext.tsx":         path.join(APP_SRC, "context/CaseContext.tsx"),
+  "App.tsx":                 path.join(APP_SRC, "App.tsx"),
 };
 
-//  Patchable files â€” apply with y/N approval 
+// ── Patchable files — apply with y/N approval ─────────────────────────────────
 const PATCHABLE: Record<string, string> = {
-  "all-demo-cases.ts":      path.join(APP_SRC, "data/all-demo-cases.ts"),
-  "infra-arb-cases.ts":     path.join(APP_SRC, "data/demo-cases/infra-arb-cases.ts"),
-  "case-templates.ts":      path.join(APP_SRC, "lib/case-templates.ts"),
-  "fact_fit_engine.py":     path.join(APP_BACKEND, "agents/fact_fit_engine.py"),
-  "standards_verifier.py":  path.join(APP_BACKEND, "agents/standards_verifier.py"),
-  "ROADMAP.md":             path.join(WORKSPACE_ROOT, "ROADMAP.md"),
+  "all-demo-cases.ts":     path.join(APP_SRC, "data/all-demo-cases.ts"),
+  "infra-arb-cases.ts":    path.join(APP_SRC, "data/demo-cases/infra-arb-cases.ts"),
+  "case-templates.ts":     path.join(APP_SRC, "lib/case-templates.ts"),
+  "fact_fit_engine.py":    path.join(APP_BACKEND, "agents/fact_fit_engine.py"),
+  "standards_verifier.py": path.join(APP_BACKEND, "agents/standards_verifier.py"),
+  "ROADMAP.md":            path.join(WORKSPACE_ROOT, "ROADMAP.md"),
 };
 
-//  Legal file extensions the daemon studies 
+// ── Legal file extensions the daemon studies ──────────────────────────────────
 const LEGAL_EXTS = [".md", ".lex", ".txt", ".pdf", ".docx", ".doc"];
 
-//  Proposal types 
+// ── Proposal types ────────────────────────────────────────────────────────────
 type Category =
-  | "PRECEDENT_UPGRADE"      // New/updated case law  case01-data.ts
-  | "STANDARD_CORRECTION"    // IS/ASTM/CPWD/FIDIC clause fix  case01-data.ts
-  | "CITATION_GATE_RULE"     // New blocked pattern  citation-gate.ts
-  | "VERIFICATION_RECLASSIFY"// PENDINGSECONDARY or SECONDARYVERIFIED
-  | "DEMO_CASE_ENRICHMENT"   // New facts/claims  infra-arb-cases.ts or all-demo-cases.ts
-  | "FACT_FIT_THRESHOLD"     // Score threshold or scoring logic  fact_fit_engine.py
-  | "ROADMAP_ITEM"           // Pending action  ROADMAP.md
-  | "ACCURACY_RULE"          // New rule  accuracy-rules.md
-  | "DRAFTING_GROUND";       // New defence ground / argument paragraph
+  | "PRECEDENT_UPGRADE"       // New/updated case law → case01-data.ts
+  | "STANDARD_CORRECTION"     // IS/ASTM/CPWD/FIDIC clause fix → case01-data.ts
+  | "CITATION_GATE_RULE"      // New blocked pattern → citation-gate.ts
+  | "VERIFICATION_RECLASSIFY" // PENDING→SECONDARY or SECONDARY→VERIFIED
+  | "DEMO_CASE_ENRICHMENT"    // New facts/claims → infra-arb-cases.ts / all-demo-cases.ts
+  | "FACT_FIT_THRESHOLD"      // Score threshold / scoring logic → fact_fit_engine.py
+  | "ROADMAP_ITEM"            // Pending action → ROADMAP.md
+  | "ACCURACY_RULE"           // New rule → accuracy-rules.md
+  | "DRAFTING_GROUND";        // New defence ground / argument paragraph
 
 interface Proposal {
   category:    Category;
-  sourceFile:  string;
+  sourceFile:  string;   // relative display path (e.g. "real_cases/CASE01/…")
   targetKey:   string;   // key in PROTECTED or PATCHABLE
   isProtected: boolean;
   summary:     string;
@@ -92,7 +106,13 @@ interface Proposal {
   codeHint?:   string;
 }
 
-//  File helpers 
+// ── Source file record ────────────────────────────────────────────────────────
+interface SourceEntry {
+  absPath:     string;  // full absolute path for reading
+  displayPath: string;  // relative path shown in logs
+}
+
+// ── File helpers ──────────────────────────────────────────────────────────────
 
 function listLegalFiles(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
@@ -100,64 +120,85 @@ function listLegalFiles(dir: string): string[] {
     .filter(f => LEGAL_EXTS.some(ext => f.toLowerCase().endsWith(ext)));
 }
 
-function readSnippet(filePath: string, chars = 600): string {
+/** Collect all text-readable legal files from real_cases/ subdirectories. */
+function listRealCaseEntries(): SourceEntry[] {
+  if (!fs.existsSync(REAL_CASES_DIR)) return [];
+  const entries: SourceEntry[] = [];
+  const folders = fs.readdirSync(REAL_CASES_DIR).filter(f =>
+    fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory()
+  );
+  for (const folder of folders) {
+    const files = listLegalFiles(path.join(REAL_CASES_DIR, folder));
+    for (const file of files) {
+      entries.push({
+        absPath:     path.join(REAL_CASES_DIR, folder, file),
+        displayPath: `real_cases/${folder}/${file}`,
+      });
+    }
+  }
+  return entries;
+}
+
+function readSnippet(absPath: string, chars = 600): string {
   try {
-    return fs.readFileSync(filePath, "utf8").slice(0, chars).replace(/\r?\n/g, " ");
+    return fs.readFileSync(absPath, "utf8").slice(0, chars).replace(/\r?\n/g, " ");
   } catch {
     return "(unreadable)";
   }
 }
 
-function listRealCases(): string {
+function listRealCasesSummary(): string {
   if (!fs.existsSync(REAL_CASES_DIR)) return "  real_cases/ not found.";
   const folders = fs.readdirSync(REAL_CASES_DIR)
     .filter(f => fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory());
+  if (folders.length === 0) return "  (empty)";
   return folders.map(f => {
     const files = listLegalFiles(path.join(REAL_CASES_DIR, f));
     return `   ${f}/  (${files.length} legal files)`;
-  }).join("\n") || "  (empty)";
+  }).join("\n");
 }
 
 function appHealthCheck(): string {
   const lines: string[] = [];
   for (const [name, p] of Object.entries(PROTECTED))
-    lines.push(`  ${fs.existsSync(p) ? "" : " MISSING"} PROTECTED  ${name}`);
+    lines.push(`  ${fs.existsSync(p) ? "✓" : "✗ MISSING"} PROTECTED  ${name}`);
   for (const [name, p] of Object.entries(PATCHABLE))
-    lines.push(`  ${fs.existsSync(p) ? "" : "  missing"} patchable  ${name}`);
+    lines.push(`  ${fs.existsSync(p) ? "✓" : "  missing"} patchable  ${name}`);
   return lines.join("\n");
 }
 
-//  Heuristic proposal engine 
-// In full LLM mode: send file text to OpenAI with the prompt:
+// ── Heuristic proposal engine ─────────────────────────────────────────────────
+// In full LLM mode: send file text to the AI with:
 //   "You are a Legal Luminaire engine maintainer. Based on this legal asset,
-//    propose ONE specific, actionable refinement to the codebase. Follow
-//    accuracy-rules.md strictly. Never paraphrase holdings."
+//    propose ONE specific, actionable refinement. Follow accuracy-rules.md
+//    strictly. Never paraphrase holdings."
 //
-// For now: pattern-match on filename + snippet keywords.
+// Pattern-match on filename + content snippet for now.
 
-function buildProposal(fileName: string): Proposal {
-  const lower   = fileName.toLowerCase();
-  const snippet = readSnippet(path.join(ASSETS_DIR, fileName));
+function buildProposal(entry: SourceEntry): Proposal {
+  const lower   = entry.displayPath.toLowerCase();
+  const snippet = readSnippet(entry.absPath);
   const snip200 = snippet.slice(0, 200);
+  const today   = new Date().toISOString().slice(0, 10);
 
-  //  Citation risk / accuracy / verification 
+  // ── Citation risk / accuracy / verification ───────────────────────────────
   if (lower.includes("citation_risk") || lower.includes("citation_accuracy")) {
     return {
       category:    "CITATION_GATE_RULE",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "citation-gate.ts",
       isProtected: true,
       summary:     "Add citation allowlist enforcement from Citation Risk Reduction Plan",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `The Citation Risk Reduction Plan identifies 5 weak points.\n` +
         `Key action: Extend citation-gate.ts to block any citation NOT present\n` +
-        `in the case-law matrix allowlist. Any unknown citation  auto-PENDING.\n` +
-        `Also: add para-number guard â€” if 'para' field is empty, block specific\n` +
+        `in the case-law matrix allowlist. Any unknown citation → auto-PENDING.\n` +
+        `Also: add para-number guard — if 'para' field is empty, block specific\n` +
         `paragraph references in draft output.`,
       codeHint:
-        `// In citation-gate.ts â€” add allowlist check:\n` +
+        `// In citation-gate.ts — add allowlist check:\n` +
         `// if (!CASE_LAW_ALLOWLIST.has(normalisedCaseName)) {\n` +
         `//   return { status: "BLOCKED", reason: "Not in verified allowlist" };\n` +
         `// }\n` +
@@ -165,56 +206,56 @@ function buildProposal(fileName: string): Proposal {
     };
   }
 
-  //  6-month roadmap / persistent storage / Indian Kanoon API 
+  // ── 6-month roadmap / persistent storage / Indian Kanoon API ─────────────
   if (lower.includes("6month") || lower.includes("roadmap") || lower.includes("6_month")) {
     return {
       category:    "ROADMAP_ITEM",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "ROADMAP.md",
       isProtected: false,
       summary:     "Sync 6-month roadmap items into ROADMAP.md",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `The 6-Month Roadmap defines 6 milestones not yet fully reflected:\n` +
-        `  Month 1: PostgreSQL persistent storage (localStorage  Drizzle ORM)\n` +
+        `  Month 1: PostgreSQL persistent storage (localStorage → Drizzle ORM)\n` +
         `  Month 2: Indian Kanoon API live citation verification\n` +
         `  Month 3: PDF text extraction wired to AI Drafter\n` +
         `  Month 4: Multi-lawyer chamber mode (role-based auth)\n` +
         `  Month 5: Court-specific formatting engine (Rajasthan HC / SC / NCLT)\n` +
         `  Month 6: Outcome prediction + hearing countdown tracker\n\n` +
-        `Check ROADMAP.md â€” add any missing items under the correct P0/P1/P2 section.`,
+        `Check ROADMAP.md — add any missing items under the correct P0/P1/P2 section.`,
       codeHint:
         `// Add to ROADMAP.md under P1:\n` +
-        `// - [ ] Month 2: Indian Kanoon API â€” auto-verify citations on entry\n` +
+        `// - [ ] Month 2: Indian Kanoon API — auto-verify citations on entry\n` +
         `//       GET https://api.indiankanoon.org/search/?formInput=CASE_NAME\n` +
         `//       Mark VERIFIED only after API confirms existence`,
     };
   }
 
-  //  Arbitration / infra cases / FIDIC / CPWD / NHAI 
+  // ── Arbitration / infra cases / FIDIC / CPWD / NHAI ──────────────────────
   if (lower.includes("arbitrat") || lower.includes("infra") || lower.includes("fidic")
       || lower.includes("nhai") || lower.includes("cpwd") || lower.includes("tc-2")) {
     return {
       category:    "DEMO_CASE_ENRICHMENT",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "infra-arb-cases.ts",
       isProtected: false,
       summary:     "Enrich TC-22..TC-26 infra arbitration data from source document",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
-        `This file contains detailed arbitration case content (claims, timelines,\n` +
+        `This file contains detailed arbitration content (claims, timelines,\n` +
         `standards, precedents). Cross-check INFRA_ARB_CASES[] in infra-arb-cases.ts:\n` +
-        `  1. Are all claim amounts matching the source?\n` +
+        `  1. Do claim amounts match the source lex files?\n` +
         `  2. Are timeline events complete (all dates present)?\n` +
-        `  3. Are contradiction entries (collisions[]) capturing all employer inconsistencies?\n` +
+        `  3. Do contradiction entries (collisions[]) capture all employer inconsistencies?\n` +
         `  4. Do caseLaw[] entries have fitScore + action fields?\n` +
-        `  5. Are standards[] entries citing exact clause numbers?\n\n` +
+        `  5. Do standards[] entries cite exact clause numbers?\n\n` +
         `Per accuracy-rules.md Rule 3: every IS/ASTM/CPWD/FIDIC standard must have\n` +
         `code + title + scope + clause number + sourceUrl.`,
       codeHint:
-        `// In infra-arb-cases.ts â€” verify/add to matching case:\n` +
+        `// In infra-arb-cases.ts — verify/add to matching case:\n` +
         `// caseLaw: [{ case: "...", court: "...", status: "SECONDARY",\n` +
         `//   action: "Verify on SCC Online before filing.", fitScore: 85 }]\n` +
         `// standards: [{ code: "FIDIC Sub-Cl. 2.1", title: "Right of Access",\n` +
@@ -223,45 +264,45 @@ function buildProposal(fileName: string): Proposal {
     };
   }
 
-  //  IS / ASTM / BIS standards 
+  // ── IS / ASTM / BIS standards ─────────────────────────────────────────────
   if (lower.includes("is_") || lower.includes("astm") || lower.includes("standard")
       || lower.includes("bis") || lower.includes("is 1199") || lower.includes("is 2250")) {
     return {
       category:    "STANDARD_CORRECTION",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "case01-data.ts",
       isProtected: true,
       summary:     "Verify IS/ASTM standard clause text against official source",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Check CASE01_STANDARDS[] in case01-data.ts:\n` +
         `  - Is keyClause text verbatim from the official BIS/ASTM document?\n` +
-        `  - Is confidence tier correct? (SECONDARY  VERIFIED if source confirmed)\n` +
+        `  - Is confidence tier correct? (SECONDARY → VERIFIED if source confirmed)\n` +
         `  - Is sourceUrl pointing to the official BIS portal or archive.org?\n\n` +
         `Per accuracy-rules.md Rule 3:\n` +
-        `  IS 1199:2018  fresh concrete ONLY (never hardened masonry mortar)\n` +
-        `  IS 2250:1981  correct standard for masonry mortar\n` +
-        `  ASTM C1324   correct standard for hardened masonry mortar forensics`,
+        `  IS 1199:2018 → fresh concrete ONLY (never hardened masonry mortar)\n` +
+        `  IS 2250:1981 → correct standard for masonry mortar\n` +
+        `  ASTM C1324  → correct standard for hardened masonry mortar forensics`,
       codeHint:
-        `// In case01-data.ts â€” update matching standard:\n` +
+        `// In case01-data.ts — update matching standard:\n` +
         `// keyClause: "<verbatim clause text from official source>",\n` +
         `// confidence: "VERIFIED",\n` +
         `// sourceUrl: "https://archive.org/... or https://bis.gov.in/...",`,
     };
   }
 
-  //  Kattavellai / case law / citation / precedent 
+  // ── Kattavellai / case law / citation / precedent ─────────────────────────
   if (lower.includes("kattavellai") || lower.includes("case_law")
       || lower.includes("citation") || lower.includes("precedent")) {
     return {
       category:    "PRECEDENT_UPGRADE",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "case01-data.ts",
       isProtected: true,
       summary:     "Verify precedent holding text and upgrade verification tier",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Check CASE01_PRECEDENTS[] in case01-data.ts:\n` +
         `  1. Is the 'holding' field verbatim from the judgment? (no paraphrasing)\n` +
@@ -272,24 +313,24 @@ function buildProposal(fileName: string): Proposal {
         `Per accuracy-rules.md Rule 1: holdings MUST be verbatim. Paraphrasing FORBIDDEN.\n` +
         `PENDING citations MUST have blockedFromDraft: true (enforced by citation-gate.ts).`,
       codeHint:
-        `// In case01-data.ts â€” update matching precedent:\n` +
+        `// In case01-data.ts — update matching precedent:\n` +
         `// holding: \`"<exact verbatim quote from judgment>"\`,\n` +
-        `// status: "SECONDARY",  // upgraded from PENDING â€” source confirmed\n` +
-        `// statusNote: "Confirmed from ${fileName} â€” ${new Date().toISOString().slice(0,10)}. Obtain certified copy before filing.",`,
+        `// status: "SECONDARY",  // upgraded from PENDING — source confirmed\n` +
+        `// statusNote: "Confirmed from ${entry.displayPath} — ${today}. Obtain certified copy before filing.",`,
     };
   }
 
-  //  Action plan / logbook / omni-modal / phase 
+  // ── Action plan / logbook / omni-modal / phase ────────────────────────────
   if (lower.includes("action_plan") || lower.includes("logbook")
       || lower.includes("omni") || lower.includes("antigravity")) {
     return {
       category:    "ROADMAP_ITEM",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "ROADMAP.md",
       isProtected: false,
       summary:     "Extract unchecked action items from logbook / action plan",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Scan this file for:\n` +
         `  - Unchecked items: [ ] or TODO or "Next Milestones"\n` +
@@ -302,16 +343,16 @@ function buildProposal(fileName: string): Proposal {
     };
   }
 
-  //  Prompt / engineer / master prompt 
+  // ── Prompt / engineer / master prompt ─────────────────────────────────────
   if (lower.includes("prompt") || lower.includes("engineer") || lower.includes("master")) {
     return {
       category:    "ACCURACY_RULE",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "ROADMAP.md",
       isProtected: false,
       summary:     "Extract accuracy / drafting rules from prompt document",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Scan this prompt for accuracy or drafting rules not yet in\n` +
         `.kiro/steering/accuracy-rules.md. Common additions from prompts:\n` +
@@ -324,27 +365,27 @@ function buildProposal(fileName: string): Proposal {
     };
   }
 
-  //  Fact-fit / scoring / verification tier 
+  // ── Fact-fit / scoring / verification tier ────────────────────────────────
   if (lower.includes("fact_fit") || lower.includes("verif") || lower.includes("scoring")) {
     return {
       category:    "FACT_FIT_THRESHOLD",
-      sourceFile:  fileName,
+      sourceFile:  entry.displayPath,
       targetKey:   "fact_fit_engine.py",
       isProtected: false,
       summary:     "Review Fact-Fit Gate scoring thresholds against source document",
       detail:
-        `Source: ${fileName}\n` +
+        `Source: ${entry.displayPath}\n` +
         `Snippet: "${snip200}"\n\n` +
         `Per accuracy-rules.md Rule 2, Fact-Fit Gate thresholds are:\n` +
-        `   70  "exact"     â€” primary authority\n` +
-        `  50-69  "analogous" â€” use with qualification\n` +
-        `  30-49  "weak"      â€” supporting only, never primary\n` +
-        `  < 30   "rejected"  â€” DO NOT USE. FATAL ERROR if cited as primary.\n\n` +
+        `  ≥ 70   "exact"     — primary authority\n` +
+        `  50-69  "analogous" — use with qualification\n` +
+        `  30-49  "weak"      — supporting only, never primary\n` +
+        `  < 30   "rejected"  — DO NOT USE. FATAL ERROR if cited as primary.\n\n` +
         `Check fact_fit_engine.py: are these thresholds correctly implemented?\n` +
         `Are the 3 scoring axes (incident type 0-40, evidence type 0-35,\n` +
         `procedural defect 0-25) correctly weighted?`,
       codeHint:
-        `# In fact_fit_engine.py â€” verify threshold constants:\n` +
+        `# In fact_fit_engine.py — verify threshold constants:\n` +
         `# EXACT_THRESHOLD     = 70\n` +
         `# ANALOGOUS_THRESHOLD = 50\n` +
         `# WEAK_THRESHOLD      = 30\n` +
@@ -354,15 +395,15 @@ function buildProposal(fileName: string): Proposal {
     };
   }
 
-  //  Default: generic legal document 
+  // ── Default: generic legal document ──────────────────────────────────────
   return {
     category:    "DRAFTING_GROUND",
-    sourceFile:  fileName,
+    sourceFile:  entry.displayPath,
     targetKey:   "case01-data.ts",
     isProtected: true,
     summary:     "Study legal document for new defence grounds or argument paragraphs",
     detail:
-      `Source: ${fileName}\n` +
+      `Source: ${entry.displayPath}\n` +
       `Snippet: "${snip200}"\n\n` +
       `Review this document for:\n` +
       `  1. New defence grounds not yet in CASE01_META.primaryGrounds[]\n` +
@@ -374,88 +415,81 @@ function buildProposal(fileName: string): Proposal {
   };
 }
 
-//  Finding logger 
+// ── Finding logger ────────────────────────────────────────────────────────────
 
 function logFinding(p: Proposal, approved: boolean): void {
   const entry =
-    `\n[${ new Date().toISOString() }] ${approved ? "APPROVED" : "SKIPPED"}\n` +
+    `\n[${new Date().toISOString()}] ${approved ? "APPROVED" : "SKIPPED"}\n` +
     `  Category : ${p.category}\n` +
     `  Source   : ${p.sourceFile}\n` +
     `  Target   : ${p.targetKey}\n` +
     `  Protected: ${p.isProtected}\n` +
     `  Summary  : ${p.summary}\n` +
-    `${"â”€".repeat(64)}\n`;
+    `${"─".repeat(64)}\n`;
   try {
     fs.appendFileSync(LOG_FILE, entry, "utf8");
-    console.log(`\n   Logged â†’ ETERNAL_RESEARCH_CHILD/research_findings.log`);
+    console.log(`\n   Logged → ETERNAL_RESEARCH_CHILD/research_findings.log`);
   } catch { /* non-fatal */ }
 }
 
-//  Main cycle 
+// ── Main cycle ────────────────────────────────────────────────────────────────
 
 const isAutopilot = process.argv.includes("--autopilot") || process.argv.includes("-y");
-const rl = isAutopilot ? null : readline.createInterface({ input: process.stdin, output: process.stdout });
+const rl = isAutopilot
+  ? null
+  : readline.createInterface({ input: process.stdin, output: process.stdout });
 let timer: NodeJS.Timeout;
 
 async function analyzeAndPropose(): Promise<void> {
   const ts = new Date().toLocaleTimeString();
-  console.log(`\n${"â”€".repeat(66)}`);
+  console.log(`\n${"─".repeat(66)}`);
   console.log(`  ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon`);
-  console.log(`  ${ts}  â€”  15-minute research cycle`);
+  console.log(`  ${ts}  —  15-minute research cycle`);
   console.log(`${"─".repeat(66)}\n`);
 
-  // 1. App health
-  console.log(" App Health ");
+  // 1. App health check
+  console.log("── App Health ──────────────────────────────────────────────────");
   console.log(appHealthCheck());
 
-  // 2. Scan real_cases/ (primary source) + Attached_Assets (legacy, may be empty)
-  const assets = listLegalFiles(ASSETS_DIR);
-  const realCaseFiles: string[] = [];
-  if (fs.existsSync(REAL_CASES_DIR)) {
-    const folders = fs.readdirSync(REAL_CASES_DIR).filter(f =>
-      fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory()
-    );
-    for (const folder of folders) {
-      const files = listLegalFiles(path.join(REAL_CASES_DIR, folder));
-      for (const file of files) {
-        realCaseFiles.push(path.join(folder, file));
-      }
-    }
+  // 2. Collect sources: real_cases/ (primary) + Attached_Assets/ (legacy)
+  const legacyFiles: SourceEntry[] = listLegalFiles(ASSETS_DIR).map(f => ({
+    absPath:     path.join(ASSETS_DIR, f),
+    displayPath: `Attached_Assets/${f}`,
+  }));
+  const realCaseEntries = listRealCaseEntries();
+  const allSources: SourceEntry[] = [...legacyFiles, ...realCaseEntries];
+
+  console.log(`\n── Sources ─────────────────────────────────────────────────────`);
+  console.log(`  Attached_Assets/  : ${legacyFiles.length} legacy files`);
+  console.log(`  real_cases/       : ${realCaseEntries.length} files across all case folders`);
+  console.log(listRealCasesSummary());
+
+  if (allSources.length === 0) {
+    console.log("\n  Nothing to study. Add .md/.lex/.txt files to real_cases/ or Attached_Assets/.");
+    scheduleNext();
+    return;
   }
 
-  const combinedSources = [...assets.map(f => ({ file: f, dir: ASSETS_DIR })),
-    ...realCaseFiles.map(f => ({ file: f, dir: REAL_CASES_DIR }))];
-
-  console.log(`\n Attached_Assets/  (${assets.length} files) | real_cases/ (${realCaseFiles.length} files)`);
-
-  if (combinedSources.length === 0) {
-    console.log("   Nothing to study. Add .md/.lex/.txt files to real_cases/ or Attached_Assets/.");
-    scheduleNext(); return;
-  }
-
-  // 3. real_cases summary
-  console.log(`\n real_cases/ `);
-  console.log(listRealCases());
-
-  // 4. Pick random source (weighted toward real_cases when Attached_Assets is empty)
-  const pick = combinedSources[Math.floor(Math.random() * combinedSources.length)].file;
-  console.log(`\n Studying: ${pick}`);
-  console.log("   Analysing citation patterns, IS standards, argument structures,");
-  console.log("   verification tiers, claim matrices, and roadmap items...");
+  // 3. Pick one at random (real_cases will dominate when Attached_Assets is empty)
+  const entry = allSources[Math.floor(Math.random() * allSources.length)];
+  console.log(`\n── Studying ────────────────────────────────────────────────────`);
+  console.log(`  ${entry.displayPath}`);
+  console.log("  Analysing: citation patterns, IS standards, argument structures,");
+  console.log("  verification tiers, claim matrices, roadmap items...");
   await new Promise(r => setTimeout(r, 1200));
 
-  // 5. Generate proposal
-  const p = buildProposal(pick);
+  // 4. Generate proposal
+  const p = buildProposal(entry);
   const targetPath = PROTECTED[p.targetKey] ?? PATCHABLE[p.targetKey] ?? p.targetKey;
 
-  console.log(`\n${"â”€".repeat(66)}`);
-  console.log(`    PROPOSED LEGAL ENGINE REFINEMENT`);
+  console.log(`\n${"─".repeat(66)}`);
+  console.log(`  PROPOSED LEGAL ENGINE REFINEMENT`);
   console.log(`${"─".repeat(66)}`);
   console.log(`  Category   : ${p.category}`);
   console.log(`  Source     : ${p.sourceFile}`);
   console.log(`  Target     : ${p.targetKey}`);
   console.log(`  Path       : ${targetPath}`);
-  console.log(`  Protected  : ${p.isProtected ? "YES â€” manual edit required" : "NO â€” can patch with approval"}`);
+  console.log(`  Protected  : ${p.isProtected ? "YES — manual edit required" : "NO — can patch with approval"}`);
   console.log(`\n  Summary    : ${p.summary}`);
   console.log(`\n  Detail:`);
   p.detail.split("\n").forEach(l => console.log(`    ${l}`));
@@ -466,18 +500,18 @@ async function analyzeAndPropose(): Promise<void> {
   console.log(`${"─".repeat(66)}`);
 
   if (p.isProtected) {
-    console.log(`\n    PROTECTED FILE â€” daemon will NOT auto-modify.`);
+    console.log(`\n  ⚠  PROTECTED FILE — daemon will NOT auto-modify.`);
     console.log(`     Apply the change manually, then run:`);
-    console.log(`     pnpm --filter @workspace/legal-luminaire test`);
-    console.log(`     pnpm --filter @workspace/legal-luminaire run typecheck\n`);
+    console.log(`     pnpm --filter @workspace/legal-luminaire typecheck`);
+    console.log(`     pnpm --filter @workspace/legal-luminaire test\n`);
     if (isAutopilot) {
-      console.log("\n   Autopilot: Auto-acknowledging finding.");
+      console.log("  Autopilot: Auto-acknowledging finding.");
       logFinding(p, true);
       scheduleNext();
     } else if (rl) {
       rl.question("  Acknowledge this finding? (y/N): ", ans => {
         const ok = ans.trim().toLowerCase() === "y";
-        console.log(ok ? "\n   Acknowledged. Apply manually when ready." : "\n    Skipped.");
+        console.log(ok ? "\n  ✓ Acknowledged. Apply manually when ready." : "\n  Skipped.");
         logFinding(p, ok);
         scheduleNext();
       });
@@ -485,19 +519,19 @@ async function analyzeAndPropose(): Promise<void> {
   } else {
     console.log(`\n  This is a PATCHABLE file. Approve to apply the suggested change.\n`);
     if (isAutopilot) {
-      console.log("\n   Autopilot: Auto-approving refinement.");
+      console.log("  Autopilot: Auto-approving refinement.");
       logFinding(p, true);
       scheduleNext();
     } else if (rl) {
       rl.question("  Apply this refinement to the Legal Luminaire engine? (y/N): ", ans => {
         const ok = ans.trim().toLowerCase() === "y";
         if (ok) {
-          console.log(`\n   Approved.`);
-          console.log(`     In full LLM mode the daemon would now patch ${p.targetKey}.`);
-          console.log(`     For now: apply the code hint manually, then run tests:`);
-          console.log(`     pnpm --filter @workspace/legal-luminaire test\n`);
+          console.log(`\n  ✓ Approved.`);
+          console.log(`    In full LLM mode the daemon would now patch ${p.targetKey}.`);
+          console.log(`    Apply the code hint manually, then run tests:`);
+          console.log(`    pnpm --filter @workspace/legal-luminaire typecheck\n`);
         } else {
-          console.log("\n   Rejected. Will not re-propose this pattern this session.");
+          console.log("\n  Rejected. Will not re-propose this pattern this session.");
         }
         logFinding(p, ok);
         scheduleNext();
@@ -508,29 +542,26 @@ async function analyzeAndPropose(): Promise<void> {
 
 function scheduleNext(): void {
   const next = new Date(Date.now() + CHECK_INTERVAL_MS);
-  console.log(`\n   Sleeping until ${next.toLocaleTimeString()} (15 min)...`);
+  console.log(`\n   Next cycle: ${next.toLocaleTimeString()} (15 min from now)`);
   timer = setTimeout(analyzeAndPropose, CHECK_INTERVAL_MS);
 }
 
-//  Boot 
+// ── Boot ──────────────────────────────────────────────────────────────────────
 
-const bootAssets = listLegalFiles(ASSETS_DIR);
-const bootCases  = fs.existsSync(REAL_CASES_DIR)
-  ? fs.readdirSync(REAL_CASES_DIR).filter(f => fs.statSync(path.join(REAL_CASES_DIR, f)).isDirectory()).length
-  : 0;
+const bootLegacy = listLegalFiles(ASSETS_DIR).length;
+const bootCases  = listRealCaseEntries().length;
 
 console.log(`${"─".repeat(66)}`);
 console.log(`  ETERNAL_RESEARCH_CHILD — Legal Luminaire Research Daemon`);
 console.log(`  Synchronized for: artifacts/legal-luminaire`);
+console.log(`  Workspace root  : ${WORKSPACE_ROOT}`);
 console.log(`${"─".repeat(66)}`);
-console.log(`  Attached_Assets/  : ${bootAssets.length} legal files tracked`);
-console.log(`  real_cases/       : ${bootCases} case folders tracked`);
+console.log(`  Attached_Assets/ (legacy) : ${bootLegacy} files`);
+console.log(`  real_cases/ (primary)     : ${bootCases} files across all case folders`);
 console.log(`  Protected targets : ${Object.keys(PROTECTED).join(", ")}`);
 console.log(`  Patchable targets : ${Object.keys(PATCHABLE).join(", ")}`);
 console.log(`  Cycle interval    : 15 minutes`);
 console.log(`  Log file          : ETERNAL_RESEARCH_CHILD/research_findings.log`);
-console.log(`\n  Run: npx ts-node ETERNAL_RESEARCH_CHILD/research_daemon.ts`);
 console.log(`${"─".repeat(66)}\n`);
 
 analyzeAndPropose();
-

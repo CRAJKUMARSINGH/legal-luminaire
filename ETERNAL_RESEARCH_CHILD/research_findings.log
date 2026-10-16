@@ -219,3 +219,12 @@
   Protected: false
   Summary  : Enrich TC-22..TC-26 infra arbitration data from source document
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# MIGRATION NOTE — 2026-10-16
+# Attached_Assets/ has been fully actioned and cleared (all content incorporated
+# into real_cases/, src/data/, or ROADMAP.md). All entries above referencing
+# Attached_Assets/ are historical audit records — the source files no longer exist.
+# The daemon now draws exclusively from real_cases/ as its primary source.
+# See ETERNAL_RESEARCH_CHILD/README.md for updated integration map.
+# ─────────────────────────────────────────────────────────────────────────────
