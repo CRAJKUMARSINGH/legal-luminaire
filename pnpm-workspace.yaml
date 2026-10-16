@@ -85,8 +85,46 @@ onlyBuiltDependencies:
 overrides:
   # drizzle-kit uses an older vulnerable esbuild — override it
   "@esbuild-kit/esm-loader": "npm:tsx@^4.21.0"
-  esbuild: "0.27.3"
+  # SECURITY: esbuild >=0.27.3 <0.28.1 vulnerable (GHSA-g7r4-m6w7-qqqr)
+  esbuild: "0.28.1"
   # SECURITY: proxy-addr <2.0.8 — IP spoofing via IPv4-mapped IPv6 (GHSA-jqcg-44mw-7w3h)
   proxy-addr: ">=2.0.8"
   # SECURITY: basic-ftp multiple CVEs (GHSA-rpmf-866q-6p89 etc.) via puppeteer
   basic-ftp: ">=5.3.1"
+  # SECURITY: postcss path-traversal + arbitrary file read via sourceMappingURL
+  #   (GHSA-*, multiple CVEs — affects vite>postcss chain)
+  postcss: ">=8.5.30"
+  # SECURITY: ip-address decimal/octal mismatch enabling SSRF/trust-boundary bypass
+  ip-address: ">=10.7.4"
+  # SECURITY: ws memory-exhaustion DoS via tiny fragments
+  ws: ">=8.22.0"
+  # SECURITY: qs prototype pollution / ReDoS
+  qs: ">=6.16.1"
+  # SECURITY: brace-expansion DoS (multiple CVEs: OOM + stack exhaustion + regex)
+  brace-expansion: ">=5.0.12"
+  # SECURITY: js-yaml quadratic CPU on !!omap / merge-key chains
+  js-yaml: ">=4.3.2"
+  # SECURITY: braces stack-exhaustion — advisory GHSA-*. Latest release (3.0.3) is
+  # the highest available. Override pins to 3.0.3; monitor for patched release >= 3.0.4.
+  braces: "3.0.3"
+  # SECURITY: nanoid integer overflow / infinite loop on zero/negative size
+  nanoid: ">=3.3.20"
+  # SECURITY: browserslist unbounded memory growth + prototype write via stats JSON
+  browserslist: ">=4.29.3"
+  # SECURITY: baseline-browser-mapping (transitive via browserslist)
+  baseline-browser-mapping: ">=2.11.29"
+  # SECURITY: source-map-js event-loop DoS via indexed source-map section offsets
+  source-map-js: ">=1.2.2"
+  # SECURITY: fast-uri authority injection + SSRF + path traversal (multiple CVEs)
+  fast-uri: ">=3.1.8"
+  # SECURITY: fast-copy (transitive — ensure latest)
+  fast-copy: ">=4.2.0"
+  # SECURITY: body-parser (prototype pollution / DoS)
+  body-parser: ">=2.3.0"
+  # SECURITY: extract-zip arbitrary file write via symlink entries — advisory GHSA-*.
+  # Latest release (2.0.1) is the highest available; monitor for patched release >= 2.0.2.
+  extract-zip: "2.0.1"
+  # SECURITY: postcss-selector-parser (transitive via postcss)
+  postcss-selector-parser: ">=7.1.0"
+  # SECURITY: @babel/core <= 7.29.0 — CVE GHSA-4x5r-pxfx-6jf8 (via @vitejs/plugin-react)
+  "@babel/core": ">=7.29.6"
