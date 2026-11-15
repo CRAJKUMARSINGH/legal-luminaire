@@ -13,6 +13,17 @@ class Settings(BaseSettings):
     tavily_api_key: str = ""
     serper_api_key: str = ""
 
+    # ── Authentication ──────────────────────────────────────────────────────────
+    # API key for backend authentication. When empty, auth is DISABLED (dev mode).
+    # Set LL_API_KEY in production to require X-API-Key header on all non-health
+    # endpoints. Multiple keys can be comma-separated.
+    ll_api_key: str = ""
+    # Comma-separated list of case IDs the API key may access. Empty = all cases
+    # (backward compatible). Set in production to restrict per-key access.
+    ll_allowed_cases: str = ""
+    # Session token expiry in seconds (default 24h). Used by token-based sessions.
+    ll_session_ttl: int = 86400
+
     # Harvey.ai configuration
     harvey_api_key: str = ""
     harvey_region: str = "us"
@@ -83,15 +94,31 @@ class Settings(BaseSettings):
             )
         return v
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+    }
 
     # ── Properties ────────────────────────────────────────────────────────────
 
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]
+
+    @property
+    def ll_api_key_list(self) -> list[str]:
+        """List of accepted API keys (comma-separated)."""
+        return [k.strip() for k in self.ll_api_key.split(",") if k.strip()]
+
+    @property
+    def ll_allowed_cases_list(self) -> list[str]:
+        """List of case IDs the API key may access (empty = all)."""
+        return [c.strip() for c in self.ll_allowed_cases.split(",") if c.strip()]
+
+    @property
+    def auth_enabled(self) -> bool:
+        """True when backend authentication is active (LL_API_KEY is non-empty)."""
+        return len(self.ll_api_key_list) > 0
 
     @property
     def chroma_path(self) -> Path:

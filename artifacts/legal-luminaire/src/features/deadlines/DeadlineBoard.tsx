@@ -191,6 +191,21 @@ export function DeadlineBoard() {
 
   return (
     <div className="p-6 space-y-4">
+      {/* Working-day approximation warning (P4 — legal accuracy) */}
+      <div
+        role="alert"
+        aria-label="Deadline calculation disclaimer"
+        className="flex items-start gap-3 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900"
+      >
+        <AlertTriangle className="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-600" aria-hidden="true" />
+        <div>
+          <span className="font-semibold">Approximation notice / अनुमान सूचना — </span>
+          Working-day deadlines use a 1.4× calendar-day factor. No court holiday calendar is embedded.
+          Always verify computed deadlines against the official court calendar before relying on them.
+          {" "}All dates shown are <span className="font-semibold">synthetic/demo data only</span>.
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

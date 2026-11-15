@@ -141,6 +141,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ── Authentication middleware (P2: backend security) ──────────────────────────
+# When LL_API_KEY is set, all non-health endpoints require X-API-Key header.
+# When LL_API_KEY is empty (development), auth is disabled — backward compatible.
+from api.auth import auth_middleware  # noqa: E402
+
+
+@app.middleware("http")
+async def _auth_middleware_wrapper(request: Request, call_next):
+    return await auth_middleware(request, call_next)
+
 
 @app.middleware("http")
 async def rate_limit_middleware(request: Request, call_next):

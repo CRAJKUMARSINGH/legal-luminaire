@@ -131,7 +131,7 @@ def _log_copilot_event(
         "latency_ms": latency_ms,
         "tokens_estimated": tokens_estimated,
         "cost_usd_estimated": round(cost_usd_estimated, 8),
-        "timestamp": datetime.datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
     }
     logger.info("COPILOT_EVENT %s", json.dumps(record, ensure_ascii=False))
 
