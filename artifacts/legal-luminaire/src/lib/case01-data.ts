@@ -219,10 +219,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     fitScore: 80,
     fitLevel: "exact",
     fitReason: "same court + structural collapse + Rajasthan + weather causation — judicial notice directly applicable",
-    status: "VERIFIED",
-    statusNote: "Verified from continuing proceedings. Obtain certified copies of 29 July 2025 and 23 August 2025 orders before filing.",
+    status: "SECONDARY",
+    statusNote: "⚠️ DOWNGRADED to SECONDARY (audit 2026-11-15): PIL docket number is blank (___/2025). Holding is paraphrased from proceedings reports, not extracted from a certified order. Source URL is a LiveLaw HC homepage, not the specific order. Obtain certified copies of 29 July 2025 and 23 August 2025 orders and confirm docket number before filing.",
     sourceUrl: "https://www.livelaw.in/high-court/rajasthan-high-court",
     tags: ["Rajasthan HC", "structural collapse", "weather", "force majeure", "suo motu", "PIL", "dilapidated buildings"],
+    blockedFromDraft: false,
   },
   {
     id: "p2",
@@ -275,6 +276,7 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "⚠️ Citation authenticity check required. DO NOT USE as primary authority. Obtain certified copy first.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=State+of+Gujarat+vs+Mohanbhai+2003+4+GLR+3121",
     tags: ["panchnama", "chain of custody", "forensic", "sampling", "sealing"],
+    blockedFromDraft: true,
   },
   {
     id: "p7",
@@ -291,6 +293,7 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "⚠️ DO NOT USE as primary authority. Citation authenticity unconfirmed per VERIFIED_DEEP_RESEARCH_DEFENCE_PACK.md.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=R.B.+Constructions+vs+State+of+Maharashtra+2014",
     tags: ["natural justice", "representative", "contractor", "sampling", "ex-parte"],
+    blockedFromDraft: true,
   },
   {
     id: "p8",
@@ -307,6 +310,7 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "⚠️ DO NOT USE as primary authority. Citation authenticity unconfirmed per VERIFIED_DEEP_RESEARCH_DEFENCE_PACK.md.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=C.B.I.+vs+K.S.+Kalra+2011+SCC",
     tags: ["CPWD", "BIS", "joint sampling", "PC Act", "corruption", "contractor"],
+    blockedFromDraft: true,
   },
   {
     id: "p9",
@@ -323,6 +327,7 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     statusNote: "⚠️ DO NOT USE as primary authority. Citation authenticity unconfirmed per VERIFIED_DEEP_RESEARCH_DEFENCE_PACK.md.",
     sourceUrl: "https://indiankanoon.org/search/?formInput=Builders+Association+vs+State+of+UP+2018",
     tags: ["rain", "contamination", "mortar", "contractor", "building collapse", "environmental"],
+    blockedFromDraft: true,
   },
   // NEW p14: Surendra Koli v. State of UP (2025) — SC — chain of custody gaps acquittal
   {
@@ -336,10 +341,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     fitScore: 88,
     fitLevel: "exact",
     fitReason: "chain of custody gaps + evidence inadmissibility + acquittal — SC 2025, direct match",
-    status: "VERIFIED",
-    statusNote: "Verified from Indian Express, NDTV, Tribune India (November 2025). Obtain certified copy of curative petition order before filing.",
+    status: "SECONDARY",
+    statusNote: "⚠️ DOWNGRADED to SECONDARY (audit 2026-11-15): Holding sourced from Indian Express/NDTV/Tribune India news reports only. Para number and verbatim judgment text are unconfirmed from the certified curative petition order. News media paraphrasing is not acceptable as a court holding. Obtain certified copy from SC Registry before citing in any pleading.",
     sourceUrl: "https://indianexpress.com/article/legal-news/nithari-killings-supreme-court-acquits-surendra-koli-in-last-pending-case-orders-his-release-10358544/",
     tags: ["chain of custody", "forensic", "evidence", "recovery", "admissibility", "acquittal", "SC 2025"],
+    blockedFromDraft: false,
   },
   // NEW p15: Tomaso Bruno v. State of UP (2015) 7 SCC 178 — expert evidence weak + defective foundation
   {
@@ -370,10 +376,11 @@ export const CASE01_PRECEDENTS: Precedent[] = [
     fitScore: 85,
     fitLevel: "exact",
     fitReason: "Rajasthan HC + force majeure + contractor defence — same court, same jurisdiction, direct match",
-    status: "VERIFIED",
-    statusNote: "Verified from PinkCityPost report (30 March 2026). Obtain certified copy of judgment before filing.",
+    status: "SECONDARY",
+    statusNote: "⚠️ DOWNGRADED to SECONDARY (audit 2026-11-15): Holding sourced from PinkCityPost newspaper report only. Full judgment text, bench composition, and para numbers are unconfirmed. A newspaper article is not a certified order. Obtain certified Rajasthan HC order before citing in any pleading.",
     sourceUrl: "https://www.pinkcitypost.com/rsmml-cannot-penalise-contractor-for-delays-its-own-note-sheets-acknowledged-as-force-majeure-rajasthan-hc/",
     tags: ["Rajasthan HC", "force majeure", "contractor", "weather", "liability", "defence", "2026"],
+    blockedFromDraft: false,
   },
   // NEW p17: Rajasthan HC — Unsafe School Buildings Roadmap (2025-2026)
   {

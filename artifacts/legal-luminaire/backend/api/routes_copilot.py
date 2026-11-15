@@ -32,14 +32,14 @@ from typing import List
 
 from fastapi import APIRouter, HTTPException
 
-from .models import (
+from api.models import (
     CopilotAskRequest,
     CopilotAskResponse,
     CopilotCitation,
     CopilotRefusal,
 )
-from ..rag.hybrid_search import hybrid_search as _hybrid_search
-from ..rag.query_classifier import classify_query
+from rag.hybrid_search import hybrid_search as _hybrid_search
+from rag.query_classifier import classify_query
 
 logger = logging.getLogger(__name__)
 

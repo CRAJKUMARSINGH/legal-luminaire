@@ -339,6 +339,94 @@ export const PRECEDENT_ACCURACY: PrecedentAccuracy[] = [
     ],
     blockedFromDraft: true,
   },
+  // ── SECONDARY — downgraded from VERIFIED (audit 2026-11-15) ──────────────
+  {
+    id: "p_rajasthan_hc_pil",
+    name: "Rajasthan HC Suo Motu PIL — School Ceiling Collapse, Piplodi, Banswara",
+    citation: "Suo Motu PIL ___/2025 | Orders: 29 July 2025 + 23 August 2025",
+    court: "Rajasthan High Court",
+    date: "29 July 2025 / 23 August 2025",
+    tier: "SECONDARY",
+    verifiedHolding: null,
+    paraRef: null,
+    draftHolding:
+      "Building safe schools should be priority for architects, engineers, policy makers, administrators and emergency response planners.",
+    holdingAccurate: false,
+    sources: [
+      {
+        label: "LiveLaw Rajasthan HC",
+        url: "https://www.livelaw.in/high-court/rajasthan-high-court",
+        type: "news_report",
+        accessed: "2026-11-15",
+      },
+    ],
+    verificationNote:
+      "⚠️ DOWNGRADED from VERIFIED (audit 2026-11-15). PIL docket number is blank (___/2025). Holding is paraphrased from proceedings reports, not extracted from a certified order. Obtain certified copies of 29 July 2025 and 23 August 2025 orders and confirm docket number before filing.",
+    requiredActions: [
+      "Obtain certified copies of 29 July 2025 and 23 August 2025 HC orders",
+      "Confirm PIL docket number",
+      "Extract verbatim holding text from certified order",
+    ],
+    blockedFromDraft: false,
+  },
+  {
+    id: "p_surendra_koli",
+    name: "Surendra Koli v. State of Uttar Pradesh",
+    citation: "Curative Petition (Crl.) | Supreme Court | 11 November 2025",
+    court: "Supreme Court of India",
+    date: "11 November 2025",
+    tier: "SECONDARY",
+    verifiedHolding: null,
+    paraRef: null,
+    draftHolding:
+      "There was no credible chain of custody or expert testimony establishing the link between the accused and the physical evidence.",
+    holdingAccurate: false,
+    sources: [
+      {
+        label: "Indian Express",
+        url: "https://indianexpress.com/article/legal-news/nithari-killings-supreme-court-acquits-surendra-koli-in-last-pending-case-orders-his-release-10358544/",
+        type: "news_report",
+        accessed: "2026-11-15",
+      },
+    ],
+    verificationNote:
+      "⚠️ DOWNGRADED from VERIFIED (audit 2026-11-15). Holding sourced from Indian Express/NDTV/Tribune India news reports only. Para number and verbatim judgment text unconfirmed. Obtain certified copy of curative petition order from SC Registry before filing.",
+    requiredActions: [
+      "Obtain certified copy of curative petition order from SC Registry",
+      "Confirm exact para number and verbatim holding",
+      "Verify bench composition",
+    ],
+    blockedFromDraft: false,
+  },
+  {
+    id: "p_rsmml",
+    name: "RSMML v. Contractor — Force Majeure Cannot Be Invoked Selectively",
+    citation: "Rajasthan High Court — Division Bench | 30 March 2026",
+    court: "Rajasthan High Court — Division Bench",
+    date: "30 March 2026",
+    tier: "SECONDARY",
+    verifiedHolding: null,
+    paraRef: null,
+    draftHolding:
+      "The contradictory approach of the State — acknowledging force majeure in its internal records while simultaneously terminating the contract on the same grounds — cannot be upheld.",
+    holdingAccurate: false,
+    sources: [
+      {
+        label: "PinkCityPost",
+        url: "https://www.pinkcitypost.com/rsmml-cannot-penalise-contractor-for-delays-its-own-note-sheets-acknowledged-as-force-majeure-rajasthan-hc/",
+        type: "news_report",
+        accessed: "2026-11-15",
+      },
+    ],
+    verificationNote:
+      "⚠️ DOWNGRADED from VERIFIED (audit 2026-11-15). Holding sourced from PinkCityPost newspaper report only. Full judgment text, bench composition and para numbers unconfirmed. Obtain certified HC order before filing.",
+    requiredActions: [
+      "Obtain certified copy of Rajasthan HC order dated 30 March 2026",
+      "Confirm bench: Justice Sunil Beniwal + Justice Arun Monga",
+      "Extract verbatim holding and para number",
+    ],
+    blockedFromDraft: false,
+  },
 ];
 
 // ─── STANDARDS ACCURACY REGISTRY ─────────────────────────────────────────────
@@ -513,23 +601,38 @@ export function getUnverifiedStandards(): StandardAccuracy[] {
   return STANDARDS_ACCURACY.filter((s) => s.exactClauseText === null);
 }
 
-/** Accuracy score for the entire citation set (0-100) */
+/**
+ * Citation tier distribution across the registry.
+ *
+ * NOTE: Combined single-percentage accuracy scores have been REMOVED per the
+ * Master Engineering Directive. A single number combining COURT_SAFE, VERIFIED,
+ * SECONDARY and PENDING would mix incompatible accuracy dimensions (source identity
+ * verification, quotation match, proposition support, human review) and produce a
+ * misleading metric. Display individual tier counts in the UI instead.
+ *
+ * `score` is returned as -1 (sentinel) so any caller relying on the old value
+ * will produce a clearly wrong result rather than a silently wrong one.
+ */
 export function overallAccuracyScore(): {
   score: number;
+  accuracyNote: string;
   courtSafe: number;
   verified: number;
   secondary: number;
   pending: number;
   blocked: number;
 } {
-  const total = PRECEDENT_ACCURACY.length;
   const courtSafe = PRECEDENT_ACCURACY.filter((p) => p.tier === "COURT_SAFE").length;
   const verified  = PRECEDENT_ACCURACY.filter((p) => p.tier === "VERIFIED").length;
   const secondary = PRECEDENT_ACCURACY.filter((p) => p.tier === "SECONDARY").length;
   const pending   = PRECEDENT_ACCURACY.filter((p) => p.tier === "PENDING").length;
   const blocked   = PRECEDENT_ACCURACY.filter((p) => p.blockedFromDraft).length;
-  const score = Math.round(((courtSafe * 100 + verified * 70 + secondary * 40) / (total * 100)) * 100);
-  return { score, courtSafe, verified, secondary, pending, blocked };
+  // Combined percentage removed — do not compute a single score from incompatible dimensions.
+  const score = -1;
+  const accuracyNote =
+    "Combined percentage removed per accuracy directive. Use individual tier counts: " +
+    `COURT_SAFE=${courtSafe}, VERIFIED=${verified}, SECONDARY=${secondary}, PENDING=${pending}, BLOCKED=${blocked}.`;
+  return { score, accuracyNote, courtSafe, verified, secondary, pending, blocked };
 }
 
 /** Generate a pre-filing accuracy report */
@@ -544,7 +647,9 @@ export function generateAccuracyReport(): string {
     `  Generated: ${new Date().toISOString()}`,
     "═══════════════════════════════════════════════════════════════",
     "",
-    `  Overall Accuracy Score : ${stats.score}/100`,
+    "  NOTE: Combined percentage score removed per accuracy directive.",
+    "  Use individual tier counts below.",
+    "",
     `  Court-Safe             : ${stats.courtSafe} precedents`,
     `  Verified               : ${stats.verified} precedents`,
     `  Secondary              : ${stats.secondary} precedents`,
