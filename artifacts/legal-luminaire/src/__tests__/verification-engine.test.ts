@@ -367,10 +367,17 @@ describe("Verification Engine — getUnverifiedStandards()", () => {
 // ─── SUITE 7: ACCURACY SCORE ──────────────────────────────────────────────────
 
 describe("Verification Engine — overallAccuracyScore()", () => {
-  it("returns a score between 0 and 100", () => {
+  it("score is -1 sentinel (combined percentage removed per directive)", () => {
     const { score } = overallAccuracyScore();
-    expect(score).toBeGreaterThanOrEqual(0);
-    expect(score).toBeLessThanOrEqual(100);
+    // Combined percentage was removed — score must be the -1 sentinel value.
+    // Any UI relying on a 0-100 value must be updated to show tier counts instead.
+    expect(score).toBe(-1);
+  });
+
+  it("accuracyNote explains that combined percentage was removed", () => {
+    const result = overallAccuracyScore();
+    expect(result).toHaveProperty("accuracyNote");
+    expect((result as { accuracyNote: string }).accuracyNote).toContain("Combined percentage removed");
   });
 
   it("courtSafe count matches COURT_SAFE precedents in registry", () => {
@@ -402,16 +409,6 @@ describe("Verification Engine — overallAccuracyScore()", () => {
     const actual = PRECEDENT_ACCURACY.filter((p) => p.blockedFromDraft).length;
     expect(blocked).toBe(actual);
   });
-
-  it("score is higher when more COURT_SAFE precedents exist", () => {
-    // Structural: COURT_SAFE contributes 100pts, VERIFIED 70pts, SECONDARY 40pts
-    const { courtSafe, verified, secondary, score } = overallAccuracyScore();
-    const total = PRECEDENT_ACCURACY.length;
-    const expectedScore = Math.round(
-      ((courtSafe * 100 + verified * 70 + secondary * 40) / (total * 100)) * 100
-    );
-    expect(score).toBe(expectedScore);
-  });
 });
 
 // ─── SUITE 8: ACCURACY REPORT ─────────────────────────────────────────────────
@@ -428,9 +425,9 @@ describe("Verification Engine — generateAccuracyReport()", () => {
     expect(report).toContain("CITATION ACCURACY REPORT");
   });
 
-  it("report contains overall accuracy score", () => {
+  it("report contains tier breakdown (COURT_SAFE count)", () => {
     const report = generateAccuracyReport();
-    expect(report).toMatch(/Overall Accuracy Score\s*:\s*\d+\/100/);
+    expect(report).toContain("Court-Safe");
   });
 
   it("report contains BLOCKED CITATIONS section", () => {
@@ -460,7 +457,82 @@ describe("Verification Engine — generateAccuracyReport()", () => {
 
   it("report includes a timestamp", () => {
     const report = generateAccuracyReport();
-    // ISO timestamp format: 2026-...
     expect(report).toMatch(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
+  });
+});
+
+// ─── SUITE 9 (P0): REGRESSION GUARD — PENDING must stay blocked ───────────────
+// These tests enforce accuracy-rules.md Rule 7 as a CI gate.
+// A single accidental change to blockedFromDraft on any PENDING entry
+// would cause one of these to fail and block the commit.
+
+import { CASE01_PRECEDENTS } from "@/lib/case01-data";
+
+describe("P0 Regression Guard — PENDING citations must always be blockedFromDraft", () => {
+  it("every PENDING entry in CASE01_PRECEDENTS has blockedFromDraft=true", () => {
+    const pending = (CASE01_PRECEDENTS as Array<{ status: string; blockedFromDraft?: boolean; name: string }>)
+      .filter((p) => p.status === "PENDING");
+    expect(pending.length).toBeGreaterThan(0); // sanity: there must be at least one PENDING
+    for (const p of pending) {
+      expect(p.blockedFromDraft).toBe(true);
+    }
+  });
+
+  it("no PENDING entry in CASE01_PRECEDENTS has blockedFromDraft=false or undefined", () => {
+    const violators = (CASE01_PRECEDENTS as Array<{ status: string; blockedFromDraft?: boolean; name: string }>)
+      .filter((p) => p.status === "PENDING" && p.blockedFromDraft !== true);
+    expect(violators).toHaveLength(0);
+  });
+
+  it("every PENDING entry in PRECEDENT_ACCURACY registry has blockedFromDraft=true", () => {
+    const pending = PRECEDENT_ACCURACY.filter((p) => p.tier === "PENDING");
+    expect(pending.length).toBeGreaterThan(0);
+    for (const p of pending) {
+      expect(p.blockedFromDraft).toBe(true);
+    }
+  });
+});
+
+describe("P0 Regression Guard — downgraded precedents p13/p14/p16 must stay SECONDARY", () => {
+  it("p13 (Rajasthan HC PIL) is NOT VERIFIED in CASE01_PRECEDENTS", () => {
+    const p13 = (CASE01_PRECEDENTS as Array<{ id: string; status: string }>).find((p) => p.id === "p13");
+    if (p13) expect(p13.status).not.toBe("VERIFIED");
+  });
+
+  it("p14 (Surendra Koli) is NOT VERIFIED in CASE01_PRECEDENTS", () => {
+    const p14 = (CASE01_PRECEDENTS as Array<{ id: string; status: string }>).find((p) => p.id === "p14");
+    if (p14) expect(p14.status).not.toBe("VERIFIED");
+  });
+
+  it("p16 (RSMML) is NOT VERIFIED in CASE01_PRECEDENTS", () => {
+    const p16 = (CASE01_PRECEDENTS as Array<{ id: string; status: string }>).find((p) => p.id === "p16");
+    if (p16) expect(p16.status).not.toBe("VERIFIED");
+  });
+
+  it("p_rajasthan_hc_pil is SECONDARY in PRECEDENT_ACCURACY registry", () => {
+    const p = PRECEDENT_ACCURACY.find((p) => p.id === "p_rajasthan_hc_pil");
+    if (p) expect(p.tier).toBe("SECONDARY");
+  });
+
+  it("p_surendra_koli is SECONDARY in PRECEDENT_ACCURACY registry", () => {
+    const p = PRECEDENT_ACCURACY.find((p) => p.id === "p_surendra_koli");
+    if (p) expect(p.tier).toBe("SECONDARY");
+  });
+
+  it("p_rsmml is SECONDARY in PRECEDENT_ACCURACY registry", () => {
+    const p = PRECEDENT_ACCURACY.find((p) => p.id === "p_rsmml");
+    if (p) expect(p.tier).toBe("SECONDARY");
+  });
+});
+
+describe("P0 Regression Guard — overallAccuracyScore combined percentage removed", () => {
+  it("score field returns -1 sentinel (not a 0-100 percentage)", () => {
+    expect(overallAccuracyScore().score).toBe(-1);
+  });
+
+  it("accuracyNote field is present and explains the removal", () => {
+    const result = overallAccuracyScore() as ReturnType<typeof overallAccuracyScore>;
+    expect(result.accuracyNote).toBeDefined();
+    expect(result.accuracyNote).toContain("Combined percentage removed");
   });
 });

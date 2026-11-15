@@ -19,6 +19,7 @@ import { CopilotPanel, SuggestedQuestions } from "@/features/copilot";
 import { DemoModeCard } from "@/components/home/DemoModeCard";
 import { RecentCasesWidget } from "@/components/home/RecentCasesWidget";
 import { OnboardingHero } from "@/components/home/OnboardingHero";
+import { PremiumHeroBanner } from "@/components/home/PremiumHeroBanner";
 import { DEFAULT_CASE_ID, getChargesArray } from "@/lib/case-store";
 import { apiRequest } from "@/lib/api-client";
 import { AccuracyBadge } from "@/components/ui/accuracy-badge";
@@ -145,6 +146,9 @@ export default function Home() {
 
   return (
     <div className="space-y-6 p-6 max-w-7xl mx-auto">
+
+      {/* Premium hero banner — visual identity, capabilities, workflow */}
+      <PremiumHeroBanner />
 
       {/* Header with Saraswati Mascot */}
       <div className="flex items-center justify-between">

@@ -31,13 +31,14 @@
     X-Frame-Options        = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=(), payment=()"
 
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Week 13 — Kiro Foundation Lock — Content-Security-Policy (additive)
+# Content-Security-Policy — applied separately to allow precise control.
 # unsafe-inline required for Vite injected HMR scripts + Tailwind runtime styles.
 # frame-ancestors 'none' reinforces X-Frame-Options: DENY above.
 # connect-src allows FastAPI backend proxy and local HMR websocket.
@@ -45,3 +46,4 @@
   for = "/*"
   [headers.values]
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' http://127.0.0.1:8000 ws://localhost:*; frame-ancestors 'none';"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
