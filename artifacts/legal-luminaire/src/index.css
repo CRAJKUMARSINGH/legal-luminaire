@@ -3,6 +3,48 @@
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
+/* ── Legal Luminaire Design Tokens (Guide 2 §3) ─────────────────────────── */
+/* These CSS custom properties are the authoritative design system tokens.    */
+/* The PremiumHeroBanner component uses inline styles as fallback but these     */
+/* variables allow global consistency and theme-level overrides.              */
+:root {
+  --ll-navy: #0b1426;
+  --ll-navy-elevated: #172840;
+  --ll-blue: #2563eb;
+  --ll-blue-hover: #1d4ed8;
+  --ll-gold: #d8b36a;
+  --ll-ivory: #f7f5f0;
+  --ll-white: #ffffff;
+  --ll-text: #14233b;
+  --ll-muted: #475569;
+  --ll-border: #dce3ec;
+  --ll-success: #15803d;
+  --ll-warning: #b45309;
+  --ll-danger: #b91c1c;
+  --ll-radius: 1rem;
+  --ll-shadow: 0 16px 48px rgb(11 20 38 / 12%);
+}
+
+/* ── Focus-visible: gold accent ring for keyboard navigation ───────────────── */
+.ll-btn-primary:focus-visible,
+.ll-hero a:focus-visible,
+.ll-nav a:focus-visible {
+  outline: 3px solid var(--ll-gold);
+  outline-offset: 3px;
+  border-radius: 0.5rem;
+}
+
+/* ── Reduced motion: honour user preference ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
