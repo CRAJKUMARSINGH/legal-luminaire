@@ -89,7 +89,7 @@ High Severity Violations: {verification_result["high_violations"]}
 - **Severity**: {violation["severity"]}
 """
         if "suggestion" in violation:
-            assessment += f"- **Suggestion**: {violation["suggestion"]}\n"
+            assessment += f"- **Suggestion**: {violation['suggestion']}\n"
     
     assessment += "\n## Compliances Found\n\n"
     

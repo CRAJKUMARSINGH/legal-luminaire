@@ -100,6 +100,25 @@ test output. No CVE.
 
 ---
 
+## Exception SE-08 — `chromadb` 1.5.9 Known Vulnerabilities (no patch available)
+
+**Severity:** MEDIUM — depends on deployment exposure; no fixed release exists  
+**Description:** `pip-audit` reports 5 advisories against `chromadb==1.5.9`
+(PYSEC-2026-311 ×2, PYSEC-2026-3813, PYSEC-2026-3814, PYSEC-2026-3815).
+`1.5.9` is the latest published release; `requirements.txt` already uses
+`chromadb>=0.6.3` so a patched version will be picked up automatically when
+published. ChromaDB runs as an in-process/embedded vector store — it does not
+expose a network listener in the current deployment.  
+**Accepted for:** Current release (demo/staging and single-operator production)  
+**Not accepted for:** Internet-facing multi-tenant deployment without re-review  
+**Required remediation:** Re-run `pip-audit` on each release; upgrade
+`chromadb` immediately when a fixed version ships; consider isolating the
+vector store behind the backend API boundary (already the case — no direct
+client access).  
+**Owner:** Backend developer  
+
+---
+
 ## Summary
 
 | ID | Description | Severity | Accepted For |
@@ -111,3 +130,4 @@ test output. No CVE.
 | SE-05 | Partial prompt injection | MEDIUM | Synthetic docs only |
 | SE-06 | No CSRF | LOW | No cookies |
 | SE-07 | langchain-community | LOW | Functional |
+| SE-08 | chromadb 1.5.9 PYSEC ×5 | MEDIUM | No patch available; embedded use only |
