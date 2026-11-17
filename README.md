@@ -7,7 +7,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-D8B36A.svg)](LICENSE)
 [![Build](https://img.shields.io/github/actions/workflow/status/CRAJKUMARSINGH/legal-luminaire/ci.yml?branch=main&label=CI)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
-[![Tests](https://img.shields.io/badge/tests-364%20passing-15803D)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
+[![Tests](https://img.shields.io/badge/tests-558%20passing-15803D)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
 
 ---
 
@@ -30,7 +30,7 @@ Every precedent is independently tier-graded — `COURT_SAFE`, `VERIFIED`, `SECO
 - **Document Intelligence** — PDF/DOCX/MD upload, OCR, ChromaDB vector store, BM25 + semantic hybrid search
 - **PII Redaction** — Aadhaar, PAN, phone, email, passport, voter ID masked before any AI processing
 - **Accuracy Academy** — training module for legal citation standards
-- **Fully typed** — strict TypeScript + Python type hints throughout; 364 frontend + 54 backend tests
+- **Fully typed** — strict TypeScript + Python type hints throughout; 388 frontend + 170 backend tests
 
 ---
 
@@ -118,7 +118,7 @@ pnpm --filter @workspace/legal-luminaire run dev
 | UI | Radix UI primitives, Lucide icons, Recharts, Framer Motion |
 | Backend | FastAPI, Python 3.14, Pydantic v2, ChromaDB, LangChain 0.3 |
 | AI | OpenAI GPT-4o, CrewAI, SBERT embeddings, BM25 + semantic hybrid |
-| Testing | Vitest 4 (364 tests), pytest 9 (54 tests) |
+| Testing | Vitest 4 (388 tests), pytest 9 (170 tests) |
 | Deployment | Netlify (frontend), Docker (full stack), pnpm monorepo |
 
 ---
