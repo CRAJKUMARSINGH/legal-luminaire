@@ -103,18 +103,25 @@ test output. No CVE.
 ## Exception SE-08 — `chromadb` 1.5.9 Known Vulnerabilities (no patch available)
 
 **Severity:** MEDIUM — depends on deployment exposure; no fixed release exists  
-**Description:** `pip-audit` reports 5 advisories against `chromadb==1.5.9`
-(PYSEC-2026-311 ×2, PYSEC-2026-3813, PYSEC-2026-3814, PYSEC-2026-3815).
-`1.5.9` is the latest published release; `requirements.txt` already uses
-`chromadb>=0.6.3` so a patched version will be picked up automatically when
-published. ChromaDB runs as an in-process/embedded vector store — it does not
-expose a network listener in the current deployment.  
-**Accepted for:** Current release (demo/staging and single-operator production)  
-**Not accepted for:** Internet-facing multi-tenant deployment without re-review  
-**Required remediation:** Re-run `pip-audit` on each release; upgrade
-`chromadb` immediately when a fixed version ships; consider isolating the
-vector store behind the backend API boundary (already the case — no direct
-client access).  
+**Description:** `pip-audit` reports 5 advisory rows / 4 distinct CVEs against
+`chromadb==1.5.9` (PYSEC-2026-311 = CVE-2026-45829 dup, PYSEC-2026-3813 =
+CVE-2026-45830, PYSEC-2026-3814 = CVE-2026-45833, PYSEC-2026-3815 =
+CVE-2026-45831). All four CVEs live in the **ChromaDB server surface**:
+the `/api/v2/tenants/...` REST endpoints, `SimpleRBACAuthorizationProvider`
+tenant scoping, and `trust_remote_code` model-repository loading.
+
+**Verified non-applicability:** the backend uses chromadb only through
+`langchain_community.vectorstores.Chroma` with `persist_directory` — an
+embedded `PersistentClient`. There is **no ChromaDB server, no HTTP API,
+no RBAC provider, no multi-tenancy, and no remote model repositories** in
+this deployment (`grep` confirms zero `HttpClient`/`SimpleRBAC`/
+`trust_remote_code` usage). The vulnerable code paths are unreachable.  
+**Accepted for:** All current deployment tiers while usage remains embedded-only  
+**Not accepted for:** Any future deployment that runs `chromadb serve` /
+`ChromaServer` or enables `trust_remote_code` — re-review required first  
+**Required remediation:** Re-run `pip-audit` each release; upgrade
+`chromadb` when patched; if a server mode is ever introduced, these CVEs
+become CRITICAL and must be fixed before exposure.  
 **Owner:** Backend developer  
 
 ---
@@ -130,4 +137,4 @@ client access).
 | SE-05 | Partial prompt injection | MEDIUM | Synthetic docs only |
 | SE-06 | No CSRF | LOW | No cookies |
 | SE-07 | langchain-community | LOW | Functional |
-| SE-08 | chromadb 1.5.9 PYSEC ×5 | MEDIUM | No patch available; embedded use only |
+| SE-08 | chromadb 1.5.9 (4 CVEs, server surface only) | LOW — unreachable code paths | Embedded client only; re-review if server mode ever enabled |
