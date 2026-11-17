@@ -358,3 +358,70 @@ class TestAuthConfigIntegration:
         from config import Settings
         s = Settings(ll_allowed_cases="")
         assert s.ll_allowed_cases_list == []
+
+
+class TestPerKeyCaseScopes:
+    """LL_API_KEY_SCOPES: each key restricted to its own case list (fail-closed)."""
+
+    @patch("api.auth.settings")
+    def test_scoped_key_allowed_case(self, mock_settings):
+        mock_settings.auth_enabled = True
+        mock_settings.ll_api_key_list = ["key-a", "key-b"]
+        mock_settings.ll_allowed_cases_list = []
+        mock_settings.api_key_case_scopes = {"key-a": {"TC-01"}, "key-b": {"TC-22"}}
+        client = TestClient(_build_test_app())
+
+        resp = client.get("/api/v1/cases/TC-01/status",
+                          headers={"X-API-Key": "key-a"})
+        assert resp.status_code == 200
+
+    @patch("api.auth.settings")
+    def test_scoped_key_denied_other_case(self, mock_settings):
+        mock_settings.auth_enabled = True
+        mock_settings.ll_api_key_list = ["key-a", "key-b"]
+        mock_settings.ll_allowed_cases_list = []
+        mock_settings.api_key_case_scopes = {"key-a": {"TC-01"}, "key-b": {"TC-22"}}
+        client = TestClient(_build_test_app())
+
+        resp = client.get("/api/v1/cases/TC-22/status",
+                          headers={"X-API-Key": "key-a"})
+        assert resp.status_code == 403
+        assert resp.json()["error"] == "case_not_authorized"
+
+    @patch("api.auth.settings")
+    def test_unscoped_key_denied_all_cases(self, mock_settings):
+        mock_settings.auth_enabled = True
+        mock_settings.ll_api_key_list = ["key-a", "key-c"]
+        mock_settings.ll_allowed_cases_list = []
+        mock_settings.api_key_case_scopes = {"key-a": {"TC-01"}}
+        client = TestClient(_build_test_app())
+
+        resp = client.get("/api/v1/cases/TC-01/status",
+                          headers={"X-API-Key": "key-c"})
+        assert resp.status_code == 403
+
+    @patch("api.auth.settings")
+    def test_scopes_take_precedence_over_global_list(self, mock_settings):
+        mock_settings.auth_enabled = True
+        mock_settings.ll_api_key_list = ["key-a"]
+        mock_settings.ll_allowed_cases_list = ["TC-01", "TC-22", "TC-99"]
+        mock_settings.api_key_case_scopes = {"key-a": {"TC-01"}}
+        client = TestClient(_build_test_app())
+
+        resp = client.get("/api/v1/cases/TC-22/status",
+                          headers={"X-API-Key": "key-a"})
+        assert resp.status_code == 403
+
+    def test_scopes_parsing(self):
+        from config import Settings
+        s = Settings(ll_api_key_scopes="k1:TC-01,TC-02; k2 : TC-22 ;bad;k3:")
+        scopes = s.api_key_case_scopes
+        assert scopes["k1"] == {"TC-01", "TC-02"}
+        assert scopes["k2"] == {"TC-22"}
+        assert scopes["k3"] == set()
+        assert "bad" not in scopes
+
+    def test_empty_scopes(self):
+        from config import Settings
+        s = Settings()
+        assert s.api_key_case_scopes == {}

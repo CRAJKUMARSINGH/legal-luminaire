@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     # Comma-separated list of case IDs the API key may access. Empty = all cases
     # (backward compatible). Set in production to restrict per-key access.
     ll_allowed_cases: str = ""
+    # Per-key case scoping: "keyA:case1,case2;keyB:case3". When set, each API key
+    # may only access its listed cases (fail-closed for unlisted keys). Takes
+    # precedence over ll_allowed_cases. "case01" demo bypass still applies.
+    ll_api_key_scopes: str = ""
     # Session token expiry in seconds (default 24h). Used by token-based sessions.
     ll_session_ttl: int = 86400
 
@@ -114,6 +118,23 @@ class Settings(BaseSettings):
     def ll_allowed_cases_list(self) -> list[str]:
         """List of case IDs the API key may access (empty = all)."""
         return [c.strip() for c in self.ll_allowed_cases.split(",") if c.strip()]
+
+    @property
+    def api_key_case_scopes(self) -> dict[str, set[str]]:
+        """Per-key case allowlists parsed from LL_API_KEY_SCOPES.
+
+        Format: ``key1:caseA,caseB;key2:caseC``. Keys absent from the map have
+        no case access when scopes are configured (fail-closed)."""
+        scopes: dict[str, set[str]] = {}
+        for entry in self.ll_api_key_scopes.split(";"):
+            entry = entry.strip()
+            if not entry or ":" not in entry:
+                continue
+            key, _, cases = entry.partition(":")
+            key = key.strip()
+            if key:
+                scopes[key] = {c.strip() for c in cases.split(",") if c.strip()}
+        return scopes
 
     @property
     def auth_enabled(self) -> bool:

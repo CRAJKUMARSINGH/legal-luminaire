@@ -115,9 +115,30 @@ async def auth_middleware(request: Request, call_next):
             },
         )
 
-    # Case-level authorization: check if the requested case is allowed
+    # Case-level authorization: check if the requested case is allowed.
+    # Per-key scopes (LL_API_KEY_SCOPES) take precedence over the global
+    # LL_ALLOWED_CASES list when configured; unlisted keys are denied.
     case_id = _extract_case_id(path)
-    if case_id and settings.ll_allowed_cases_list:
+    scopes = getattr(settings, "api_key_case_scopes", None)
+    if case_id and isinstance(scopes, dict) and scopes:
+        allowed_cases = scopes.get(api_key)
+        permitted = (
+            allowed_cases is not None
+            and (case_id in allowed_cases or case_id == "case01")
+        )
+        if not permitted:
+            logger.warning(
+                "AUTH: API key not authorized for case '%s' on %s %s (scoped key)",
+                case_id, request.method, path,
+            )
+            return JSONResponse(
+                status_code=403,
+                content={
+                    "detail": f"Not authorized to access case '{case_id}'.",
+                    "error": "case_not_authorized",
+                },
+            )
+    elif case_id and settings.ll_allowed_cases_list:
         # Special case: "case01" is always allowed (demo case)
         if case_id not in settings.ll_allowed_cases_list and case_id != "case01":
             logger.warning(
