@@ -49,5 +49,15 @@ jobs:
         run: python -m pip install --upgrade pip pip-audit
 
       - name: Audit backend requirements
-        run: pip-audit -r artifacts/legal-luminaire/backend/requirements.txt
+        # chromadb 1.5.9 advisories are ignored per documented exception SE-08
+        # (final-deliverables/SECURITY_EXCEPTIONS.md): 1.5.9 is the latest
+        # published release — no patched version exists. chromadb runs as an
+        # embedded store behind the backend API, not network-facing.
+        # Remove these flags as soon as a fixed chromadb ships.
+        run: >
+          pip-audit -r artifacts/legal-luminaire/backend/requirements.txt
+          --ignore-vuln PYSEC-2026-311
+          --ignore-vuln PYSEC-2026-3813
+          --ignore-vuln PYSEC-2026-3814
+          --ignore-vuln PYSEC-2026-3815
 
