@@ -67,7 +67,7 @@ catalog:
   tailwindcss: ^4.1.14
   tsx: ^4.21.0
   vite: ^7.3.2
-  zod: ^3.25.76
+  zod: ^4.6.6
 
 autoInstallPeers: false
 
@@ -90,7 +90,8 @@ overrides:
   # SECURITY: proxy-addr <2.0.8 — IP spoofing via IPv4-mapped IPv6 (GHSA-jqcg-44mw-7w3h)
   proxy-addr: ">=2.0.8"
   # SECURITY: basic-ftp multiple CVEs (GHSA-rpmf-866q-6p89 etc.) via puppeteer
-  basic-ftp: ">=5.3.1"
+  #   + DoS via malformed EPSV (GHSA-*, <=6.2.3) — bounded to v6 line
+  basic-ftp: ">=6.2.4 <7.0.0"
   # SECURITY: postcss path-traversal + arbitrary file read via sourceMappingURL
   #   (GHSA-*, multiple CVEs — affects vite>postcss chain)
   postcss: ">=8.5.30"
@@ -116,11 +117,12 @@ overrides:
   # SECURITY: source-map-js event-loop DoS via indexed source-map section offsets
   source-map-js: ">=1.2.2"
   # SECURITY: fast-uri authority injection + SSRF + path traversal (multiple CVEs)
-  fast-uri: ">=3.1.8"
+  #   + host confusion / backslash normalization (<4.2.3) — bounded to v4 line
+  fast-uri: ">=4.2.3 <5.0.0"
   # SECURITY: fast-copy (transitive — ensure latest)
   fast-copy: ">=4.2.0"
-  # SECURITY: body-parser (prototype pollution / DoS)
-  body-parser: ">=2.3.0"
+  # SECURITY: body-parser (prototype pollution / DoS + trailing-bytes DoS <2.4.0)
+  body-parser: ">=2.4.0 <3.0.0"
   # SECURITY: extract-zip arbitrary file write via symlink entries — advisory GHSA-*.
   # Latest release (2.0.1) is the highest available; monitor for patched release >= 2.0.2.
   extract-zip: "2.0.1"
@@ -128,3 +130,11 @@ overrides:
   postcss-selector-parser: ">=7.1.0"
   # SECURITY: @babel/core <= 7.29.0 — CVE GHSA-4x5r-pxfx-6jf8 (via @vitejs/plugin-react)
   "@babel/core": ">=7.29.6"
+  # SECURITY: vite <=7.3.6 — multiple advisories incl. server.fs bypass (GHSA-*)
+  vite: ">=7.3.7 <8.0.0"
+  # SECURITY: @vitest/mocker <4.1.12 — advisory GHSA-* (via vitest)
+  "@vitest/mocker": ">=4.1.12 <5.0.0"
+  # SECURITY: markdown-it <14.3.3 — ReDoS / link injection advisories
+  markdown-it: ">=14.3.3 <15.0.0"
+  # SECURITY: minimatch >=7.0.0 <11.0.1 — ReDoS advisory
+  minimatch: ">=11.0.1 <12.0.0"

@@ -26,7 +26,7 @@ export const caseIntakeSchema = z.object({
     .trim()
     .min(1, msg("न्यायालय का नाम आवश्यक है", "Court name is required")),
   caseType: z.enum(CASE_TYPES, {
-    errorMap: () => ({ message: msg("मामले का प्रकार चुनें", "Select a case type") }),
+    error: msg("मामले का प्रकार चुनें", "Select a case type"),
   }),
   accusedName: z.string().trim().max(160, msg("नाम बहुत लंबा है", "Name is too long")),
   incidentDate: optionalDate,

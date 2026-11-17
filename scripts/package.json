@@ -11,7 +11,5 @@
     "@types/node": "catalog:",
     "tsx": "catalog:"
   },
-  "dependencies": {
-    "puppeteer": "^24.40.0"
-  }
+  "dependencies": {}
 }
