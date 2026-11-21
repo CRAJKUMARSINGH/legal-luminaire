@@ -1,8 +1,11 @@
 # Legal Luminaire - 1-hour validation autopilot
 # Repeats validation until DurationSeconds elapses (default 3600 = 1 hour).
 #
-# Default "green" suite (expected to pass): shared libs tsc, legal-luminaire, scripts, mockup-sandbox, then Vite build.
-# With -AllChecks also runs full recursive typecheck and api-server build (may log FAIL until those packages are fixed).
+# Default "green" suite (expected to pass): shared libs tsc, legal-luminaire, scripts, then Vite build.
+# With -AllChecks also runs the full recursive workspace typecheck.
+#
+# NOTE: artifacts/mockup-sandbox and artifacts/api-server were retired per ADR-009
+# and archived under archive/retired-packages/, so they are no longer built here.
 #
 # Usage:
 #   pwsh -File scripts/autopilot-one-hour.ps1
@@ -73,16 +76,10 @@ while ((Get-Date) -lt $deadline) {
     Invoke-PnpmStep "pnpm run typecheck:libs" { pnpm run typecheck:libs }
     Invoke-PnpmStep 'pnpm --filter "@workspace/legal-luminaire" run typecheck' { pnpm --filter "@workspace/legal-luminaire" run typecheck }
     Invoke-PnpmStep 'pnpm --filter "@workspace/scripts" run typecheck' { pnpm --filter "@workspace/scripts" run typecheck }
-    if (Test-Path (Join-Path $root "artifacts\mockup-sandbox\package.json")) {
-        Invoke-PnpmStep 'pnpm --filter "@workspace/mockup-sandbox" run typecheck' { pnpm --filter "@workspace/mockup-sandbox" run typecheck }
-    }
     Invoke-PnpmStep 'pnpm --filter "@workspace/legal-luminaire" run build' { pnpm --filter "@workspace/legal-luminaire" run build }
 
     if ($AllChecks) {
         Invoke-PnpmStep "pnpm run typecheck (full workspace)" { pnpm run typecheck }
-        if (Test-Path (Join-Path $root "artifacts\api-server\package.json")) {
-            Invoke-PnpmStep 'pnpm --filter "@workspace/api-server" run build' { pnpm --filter "@workspace/api-server" run build }
-        }
     }
 
     $remaining = ($deadline - (Get-Date)).TotalSeconds

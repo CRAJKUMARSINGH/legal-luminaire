@@ -1,10 +1,8 @@
 modules = ["nodejs-24", "postgresql-16"]
 
-[[artifacts]]
-id = "artifacts/api-server"
-
-[[artifacts]]
-id = "artifacts/mockup-sandbox"
+# NOTE: artifacts/api-server and artifacts/mockup-sandbox were retired per
+# ADR-009 (canonical runtime). They are archived under archive/retired-packages/
+# and are no longer Replit artifacts or pnpm workspace members.
 
 [deployment]
 router = "application"
