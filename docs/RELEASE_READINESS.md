@@ -1,7 +1,7 @@
 # Legal Luminaire — Release Readiness
 **Last updated:** 2026-11-21  
-**HEAD:** `0abe110`  
-**Branch:** `main` (in sync with `origin/main`)
+**HEAD:** `47273bd`  
+**Branch:** `main` (in sync with `origin/main` — PR #6 merged as `47273bd`)
 
 ---
 
@@ -24,9 +24,11 @@
 
 | Release | Blocked by | May proceed? |
 |---|---|---|
-| **Synthetic-data demo / staging** | — | ✅ Yes |
+| **Synthetic-data demo / staging** | — (P2-02 degrades the `/draft-variants` feature only) | ✅ Yes |
 | **Confidential production** | SE-01 | ❌ No |
 | **Court-use exports** | SE-01 + Legal sources (all 11 items) | ❌ No |
+
+Full blocker set (**5**): `P2-01`, `P2-02`, `SE-01`, `SE-08`, `LEGAL-11` — details below.
 
 ---
 
@@ -87,10 +89,31 @@ package, or (B) rebuild from requirements with full test coverage.
 
 ---
 
+### P2-02 — Pleading variants: missing data + unwired routes
+**Priority:** P2  
+**Detail:** `docs/blockers/P2-02-PLEADING-VARIANTS.md`
+
+Two gaps: (A) `backend/data/subject_variants.json` was never committed, so every
+registry-backed call in `services/variant_engine.py` fails; and (B)
+`api/routes_pleading_variants.py` is **not registered** in `main.py` (17 routers are),
+so the whole `/api/v1/variants/*` surface 404s. A browser-side **unhandled rejection**
+on `/case/:id/draft-variants` (missing `.catch()` in `DraftVariantsPage.tsx`) is a live
+defect — not a passing browser test.
+
+**Acceptance:** A recorded decision to **register or retire** the feature; if
+registered, a schema-valid `subject_variants.json` (no fabricated authorities) and an
+intentionally registered router preserving the Fact-Fit Gate (428) and auth/case
+scoping; the 2 registry-gated test skips resolved; and the browser unhandled rejection
+fixed.
+
+---
+
 ## Recommended execution order
 
-1. **P2-01 first** — establish whether the missing source is needed or superseded.
-   Low risk; makes the CI skip stub green or removes it entirely.
+1. **P2-01 + P2-02 first** — both are drafting-surface decisions and can be resolved
+   together: P2-01 (recover/rebuild/retire the missing package) and P2-02
+   (register/retire the variants feature + missing data). Fix the P2-02 browser defect
+   immediately — it is independent of the decision.
 2. **SE-01 second** — dedicated security-controlled implementation.
    Unlocks confidential production.
 3. **SE-08 third** — reassess when a patched `chromadb` release ships.
