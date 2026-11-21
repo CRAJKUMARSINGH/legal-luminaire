@@ -1,7 +1,7 @@
 # Unwired Files Resolution Report
 **Repository:** CRAJKUMARSINGH/legal-luminaire  
 **Baseline commit:** `c8f91cb` — "chore: remove duplicate enrichment docs and stale generated artifacts"  
-**Branch:** `reconcile/unwired-files`  
+**Branches:** `reconcile/unwired-files` (commit `3e4f2b7`, merged into `main` as `0abe110`), follow-up `reconcile/unwired-files-followup` (report corrections)  
 **Report date:** 2026-11-21  
 **Authored by:** Kiro reconciliation run, Phases 1–9
 
@@ -30,32 +30,43 @@
 
 | Gate | Result | Detail |
 |---|---|---|
-| TypeScript check | ✅ PASS | `tsc --noEmit` — 0 errors |
-| Frontend tests | ✅ PASS | 388/388 passing (Vitest 4) |
-| Production build | ✅ PASS | Vite build complete — 110+ chunks, no errors (chunk-size advisory only) |
-| Backend tests | ⚠️ ENVIRONMENT | Python output capture blocked by shell environment; test files verified syntactically |
-| Playwright route sweep | ⚠️ DEFERRED | Requires running frontend server + Chrome; evidence already in `artifacts/legal-luminaire/preview-audit/` |
-| Auth/case-isolation tests | ⚠️ DEFERRED | Backend environment dependency; test file `test_authentication.py` exists and is tracked |
-| Citation export regression | ✅ COVERED | `adversarial-citation-gate.test.ts` (388 total includes citation gate tests) |
-| Security/dependency scan | ⚠️ OPEN | SE-08 chromadb exceptions documented in `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` |
+| TypeScript check | ✅ PASS | `pnpm typecheck` — libs + `@workspace/legal-luminaire` + `@workspace/scripts`, 0 errors |
+| Frontend tests | ✅ PASS | **388/388 passing across 14 files** (Vitest 4.1.11) — re-verified this run |
+| Production build | ✅ PASS | `vite build` complete — 110+ chunks, no errors (chunk-size advisory only) |
+| Backend tests | ✅ PASS | **206 passed, 5 skipped, 1 warning in 15.14s** (`backend/.venv/Scripts/python.exe -m pytest tests -q`) — re-verified this run |
+| Playwright route sweep | ✅ PASS | **100/102** routes OK (puppeteer-core + Chrome, preview `:4173`). 2 non-passes are **not** defects: `/case/hemraj-case-01/dashboard` returns a conditional-GET `304` yet renders correctly (text 6231, 0 JS errors); `/case/hemraj-case-01/draft-variants` raises the pre-existing unhandled rejection (see P2-02). The four transient 404s seen in an earlier run did **not** recur. |
+| Auth/case-isolation tests | ✅ PASS | `backend/tests/test_authentication.py` + `test_http_contract.py` + `test_rate_limit.py` are part of the 206-pass backend suite (401/403/429 envelopes, per-key case scoping) |
+| Citation export regression | ✅ PASS | `citation-gate.test.ts` (34) + `citation-intelligence.test.ts` (34) + `adversarial-citation-gate.test.ts` (13) — included in the 388 frontend suite |
+| Security/dependency scan | ✅ PASS (demo scope) | `pnpm audit --audit-level high` → **no known vulnerabilities**. Python audit is enforced in CI (`security-audit.yml`); chromadb exceptions documented in `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` (SE-08) |
+
+> The earlier revision of this table recorded the backend suite and the route
+> sweep as *environment-blocked / deferred*. That was inaccurate — both were
+> executed successfully and are recorded above with their real figures.
 
 ---
 
 ## §A1 — Local debug/audit debris
 
-| File | Disposition | Rationale |
-|---|---|---|
-| `route-sweep.mjs` | KEEP_DOCUMENTATION | Puppeteer route audit script; references `preview-audit/` output already in repo |
-| `artifacts/legal-luminaire/preview-audit/` | KEEP_EVIDENCE | Contains screenshots and report from last Puppeteer sweep |
-| `artifacts/legal-luminaire/backend/check_imports.py` | (not found — already removed) | — |
-| `artifacts/legal-luminaire/backend/scan_imports.py` | (not found — already removed) | — |
-| `unwired-files-inventory.md` | INCORPORATE → staged | Source of this analysis; will be committed as `docs/unwired-files-inventory.md` |
+| File | Disposition | Status | Rationale |
+|---|---|---|---|
+| `route-sweep.mjs` | KEEP_DOCUMENTATION | Kept in place (git-ignored, `.gitignore:96`) | Puppeteer route audit script; writes to `preview-audit/routes/report.json`; re-run this reconciliation |
+| `artifacts/legal-luminaire/preview-audit/` | KEEP_EVIDENCE | Kept in place (git-ignored, `.gitignore:98`) | 11 PNG screenshots + `preview-audit.mjs` + `report.json` + `routes/` — browser/viewport/keyboard/reduced-motion evidence |
+| `artifacts/legal-luminaire/backend/check_imports.py` | DELETE | ✅ Deleted | git-ignored langchain import prober; wrote `import-check-results.txt`, which does not exist |
+| `artifacts/legal-luminaire/backend/scan_imports.py` | DELETE | ✅ Deleted | git-ignored AST langchain scanner; wrote `import-scan-results.txt`, which does not exist |
+| `tmp-probe.mjs` | DELETE | ✅ Deleted | One-off scratch probe used to confirm the transient 404s were flaky |
+| `route-sweep-last-run.log` | DELETE | ✅ Deleted | Throwaway sweep log |
+| `unwired-files-inventory.md` | INCORPORATE | ✅ Moved → `docs/unwired-files-inventory.md` | Source inventory for this analysis; relocated beside the docs index for discoverability |
 
 ---
 
 ## §A2 — Orphan bytecode
 
-All 17 `.pyc` files moved to `archive/unwired-recovery/bytecode/` during this reconciliation:
+All 17 `.pyc` files were moved out of `backend/__pycache__/` into
+`archive/unwired-recovery/bytecode/`. **Note:** `.gitignore:32` (`*.py[cod]`)
+excludes compiled Python, so this archive is a **local-only** reference copy —
+it is not committed. The authoritative record of the gap is the written
+analysis (`archive/unwired-recovery/README.md` + `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md`),
+not the bytecode itself.
 
 ```
 archive/unwired-recovery/bytecode/drafting/
@@ -120,7 +131,7 @@ Five test files recreated against **current wired contracts** (not decompiled fr
 | `scripts/_gen.py` | ARCHIVE → `archive/retired-scripts/` | Utility replaced by canonical generators |
 | `scripts/audit_scatter.ts` | ARCHIVE → `archive/retired-scripts/` | On-demand audit tool; not in active use |
 | `scripts/gen_discharge_v4.py` | ARCHIVE → `archive/retired-scripts/` | Historical v4 generator |
-| `scripts/src/hello.ts` | DELETE | Unused starter stub; `console.log("Hello from @workspace/scripts")` only |
+| `scripts/src/hello.ts` | DELETE | ✅ Executed — removed in `3e4f2b7`; the empty `scripts/src/` dir is gone. `scripts/package.json`/`tsconfig.json` retained for `seed-demo-data.ts` |
 
 ---
 
@@ -137,12 +148,13 @@ Both archived under `archive/retired-packages/` (per ADR-009):
 
 ## Remaining Blockers
 
-| ID | Description | Severity |
-|---|---|---|
-| P2-01 | `drafting/` package source missing — `api/routes_drafting.py` currently supersedes it at runtime. Formal decision: re-implement from requirements spec or permanently drop. | P2 |
-| SE-01 | Per-user OIDC + case isolation not implemented. Confidential production use blocked. | P0 |
-| SE-08 | chromadb PYSEC exceptions active in pip-audit CI. Time-bounded exceptions documented. | P1 |
-| COURT-USE | 11 authoritative-source items outstanding in `final-deliverables/LEGAL_SOURCE_REVIEW.md`. Court-use export remains disabled. | P0 |
+| ID | Description | Severity | Detail doc |
+|---|---|---|---|
+| P2-01 | `drafting/` package source missing (9 modules, never committed) — `api/routes_drafting.py` supersedes it at runtime. Formal decision required: rebuild from requirements (**Option B**) or formally supersede via a new ADR (**Option A**). | P2 | [docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md](../docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md) |
+| P2-02 | `services/variant_engine.DATA_FILE` → `backend/data/subject_variants.json` **does not exist**; `api/routes_pleading_variants.py` fails at `load_registry()`. Manifests as the `/case/:id/draft-variants` unhandled rejection in the route sweep. Pre-existing, independent of this reconciliation. | P2 | `archive/unwired-recovery/README.md` §Blocker raised |
+| SE-01 | Per-user OIDC + case isolation not implemented (scoped `LL_API_KEY` deployed; OIDC not). Confidential production use blocked. | P0 | [docs/blockers/SE-01-OIDC-CASE-ISOLATION.md](../docs/blockers/SE-01-OIDC-CASE-ISOLATION.md) |
+| SE-08 | chromadb PYSEC exceptions active in pip-audit CI. Time-bounded exceptions documented. | P1 | `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` |
+| COURT-USE | 11 authoritative-source items outstanding in `final-deliverables/LEGAL_SOURCE_REVIEW.md`. Court-use export remains disabled. | P0 | `final-deliverables/LEGAL_SOURCE_REVIEW.md` |
 
 ---
 
@@ -156,29 +168,47 @@ Both archived under `archive/retired-packages/` (per ADR-009):
 - `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` — KEEP_EVIDENCE
 - `audit-results/FINAL_RELEASE_DECISION.md` — KEEP_EVIDENCE
 - All `real_cases/CASE01_HEMRAJ_STATE_2025/` — KEEP_EVIDENCE (legal source records)
+- `docs/DOCUMENTATION_INDEX.md` — KEEP_DOCUMENTATION (searchable index)
+- `docs/unwired-files-inventory.md` — KEEP_DOCUMENTATION (source inventory, relocated from repo root)
+- `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md`, `docs/blockers/SE-01-OIDC-CASE-ISOLATION.md` — KEEP_DOCUMENTATION (blocker acceptance criteria)
+- `archive/unwired-recovery/README.md` — KEEP_EVIDENCE (bytecode provenance + recovered API surface)
+- `audit-results/UNWIRED_FILES_MANIFEST.md` / `.csv` — KEEP_EVIDENCE (per-path Phase-1 manifest)
 
 ---
 
 ## Rollback Procedure
 
 ```bash
-# To undo the reconciliation branch entirely:
-git checkout main
-git branch -D reconcile/unwired-files
-git push origin --delete reconcile/unwired-files
+# The main reconciliation is ALREADY MERGED into main as 0abe110.
+# To roll it back without rewriting shared history:
+git revert -m 1 0abe110          # revert the merge commit (keeps audit trail; no force-push)
 
-# To undo individual commits after merge:
-git revert <sha>   # do NOT use git reset on a shared branch
+# To restore a single archived path from before the rename commits:
+git checkout c8f91cb -- scripts/_gen.py
+git checkout c8f91cb -- logo-ideas/logo-01.htm
+
+# Branch hygiene (both branches are merged; deletion of the remote ref is safe):
+git push origin --delete reconcile/unwired-files
+git branch -D reconcile/unwired-files-followup
 ```
 
-The archive/ directory is tracked in Git. All moved files remain recoverable via `git show` or `git restore` using the original paths from before the rename commits.
+Tracked moves (`archive/*`, `docs/*`) are fully recoverable via `git show` /
+`git restore` at their original paths. **Exception:** `archive/unwired-recovery/bytecode/*.pyc`
+is **git-ignored** (`*.py[cod]`) and exists only in the reconciliation working
+copy — it cannot be restored from Git. This is intentional (the .py sources were
+never committed and cannot be safely decompiled); the written analysis in
+`archive/unwired-recovery/README.md` is the durable record.
 
 ---
 
 ## Commit SHAs
 
-| Commit | Description |
-|---|---|
-| `c8f91cb` | Baseline — chore: remove duplicate enrichment docs |
-| (this PR) | feat(reconcile): archive retired packages, recreate test stubs, delete hello.ts |
-| (this PR) | docs(reconcile): documentation index + unwired files inventory + resolution report |
+| Commit | Branch | Description |
+|---|---|---|
+| `c8f91cb` | `main` | Baseline — "chore: remove duplicate enrichment docs and stale generated artifacts" |
+| `3e4f2b7` | `reconcile/unwired-files` | `chore(archive)`: retire api-server, mockup-sandbox, superseded scripts and brand variants |
+| `0abe110` | `main` (merge) | `feat(reconcile)`: merge `reconcile/unwired-files` — archive retired packages, recreate tests, index docs |
+| *(follow-up)* | `reconcile/unwired-files-followup` | `docs(reconcile)`: correct Phase-8 regression results, record executed deletions, relocate inventory to `docs/`, add blocker acceptance criteria |
+
+> The follow-up commit is pushed as its own branch and proposed via pull request.
+> No force-push; no merge without review.

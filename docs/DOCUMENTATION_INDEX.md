@@ -96,7 +96,8 @@ redaction, copilot read-only, no-live-court-APIs).
 | [DEPLOYMENT_SMOKE_AND_ROLLBACK.md](../audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md) · [DEPLOYMENT_VERIFICATION.md](../audit-results/DEPLOYMENT_VERIFICATION.md) | Deploy + rollback |
 | [REMAINING_RISKS.md](../audit-results/REMAINING_RISKS.md) | Open risks |
 | [PLAYWRIGHT_ROUTE_INVENTORY.md](../audit-results/PLAYWRIGHT_ROUTE_INVENTORY.md) · [PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md](../audit-results/PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md) · [ROUTE_*.md](../audit-results/) | Playwright route sweep |
-| [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md) · [UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md) | **This reconciliation** |
+| [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md) · [UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md) · [unwired-files-inventory.md](unwired-files-inventory.md) | **This reconciliation** (manifest, resolution report, source inventory) |
+| [blockers/P2-01-DRAFTING-PACKAGE-GAP.md](blockers/P2-01-DRAFTING-PACKAGE-GAP.md) · [blockers/SE-01-OIDC-CASE-ISOLATION.md](blockers/SE-01-OIDC-CASE-ISOLATION.md) | Open blockers — acceptance criteria & release gates |
 
 ### 4.2 `final-deliverables/` (release-candidate pack)
 
