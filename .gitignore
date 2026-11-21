@@ -91,3 +91,9 @@ artifacts/legal-luminaire/stderr.log
 
 # Python 3.13 venv for crewai (Python 3.14 incompatible)
 **/backend/.venv313/
+
+# Throwaway debug/audit artifacts — local only, never commit
+route-sweep.mjs
+artifacts/legal-luminaire/backend/check_imports.py
+artifacts/legal-luminaire/backend/scan_imports.py
+artifacts/legal-luminaire/preview-audit/
