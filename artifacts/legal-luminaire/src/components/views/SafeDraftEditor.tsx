@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useMemo, useState } from "react";
 import type { ChangeEvent } from "react";
 import {
   Save, Send, CheckCircle2, Printer, ArrowLeft,
@@ -86,8 +86,7 @@ function newBill(): BillLine {
 
 // ─── Gate status icon ─────────────────────────────────────────────────────────
 
-function GateStatusIcon({ result }: { result: GateResult | null }) {
-  if (!result) return null;
+function GateStatusIcon({ result }: { result: GateResult }) {
   if (result.hardBlock)
     return <ShieldX className="w-4 h-4 text-red-500" />;
   if (result.overallStatus === "WARN")
@@ -128,26 +127,14 @@ export function SafeDraftEditor({
   const [status, setStatus]       = useState<DraftStatus>(initialState?.status ?? "draft");
   const [bills, setBills]         = useState<BillLine[]>(initialState?.bills ?? []);
   const [showBills, setShowBills] = useState(false);
-  const [gateResult, setGateResult] = useState<GateResult | null>(null);
   const [showGate, setShowGate]   = useState(true);
   const [isSaving, setIsSaving]   = useState(false);
 
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // ── Debounced gate scan on every content change ──
-  const runGate = useCallback((text: string) => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      setGateResult(scanDraftForCitations(text));
-    }, 600);
-  }, []);
-
-  useEffect(() => {
-    runGate(content);
-    return () => {
-      if (debounceRef.current) clearTimeout(debounceRef.current);
-    };
-  }, [content, runGate]);
+  const gateResult = useMemo(() => {
+    const draftText = [title, subject, toParty, fromParty, content, legalBasis, enclosures,
+      ...bills.map((bill) => bill.description)].join("\n");
+    return scanDraftForCitations(draftText);
+  }, [title, subject, toParty, fromParty, content, legalBasis, enclosures, bills]);
 
   const billsTotal = bills.reduce(
     (sum: number, b: BillLine) => sum + calcTotal(b), 0
@@ -170,7 +157,7 @@ export function SafeDraftEditor({
     }
 
     // HARD BLOCK — PENDING / FATAL_ERROR citations
-    if (newStatus !== "draft" && gateResult?.hardBlock) {
+    if (newStatus !== "draft" && gateResult.hardBlock) {
       const blocked = gateResult.matches
         .filter((m) => m.status === "BLOCKED")
         .length;
@@ -183,7 +170,7 @@ export function SafeDraftEditor({
     }
 
     // SOFT WARN — SECONDARY citations
-    if (newStatus !== "draft" && gateResult?.overallStatus === "WARN") {
+    if (newStatus !== "draft" && gateResult.overallStatus === "WARN") {
       const warnCount = gateResult.matches
         .filter((m) => m.status === "WARN")
         .length;
@@ -205,7 +192,7 @@ export function SafeDraftEditor({
           newStatus === "finalized"  ? "Draft finalized"  : "Marked as sent",
         description:
           newStatus === "finalized"
-            ? "Citation gate passed. Ready for filing."
+            ? "Citation gate passed. Advocate review is required before filing."
             : undefined,
       });
     } catch {
@@ -247,12 +234,12 @@ export function SafeDraftEditor({
   };
 
   const gateColor =
-    gateResult?.hardBlock        ? "text-red-600"    :
-    gateResult?.overallStatus === "WARN" ? "text-amber-600" : "text-emerald-600";
+    gateResult.hardBlock        ? "text-red-600"    :
+    gateResult.overallStatus === "WARN" ? "text-amber-600" : "text-emerald-600";
 
   const gateBorder =
-    gateResult?.hardBlock        ? "border-red-400"    :
-    gateResult?.overallStatus === "WARN" ? "border-amber-400" : "border-emerald-300";
+    gateResult.hardBlock        ? "border-red-400"    :
+    gateResult.overallStatus === "WARN" ? "border-amber-400" : "border-emerald-300";
 
   return (
     <div className="flex flex-col h-full">
@@ -289,8 +276,8 @@ export function SafeDraftEditor({
             className={`gap-1.5 text-xs ${gateColor}`}
           >
             <GateStatusIcon result={gateResult} />
-            {gateResult?.hardBlock ? "BLOCKED" :
-             gateResult?.overallStatus === "WARN" ? "WARN" : "Gate OK"}
+            {gateResult.hardBlock ? "BLOCKED" :
+             gateResult.overallStatus === "WARN" ? "WARN" : "Gate OK"}
           </Button>
 
           <Button
@@ -308,9 +295,9 @@ export function SafeDraftEditor({
               isSaving ||
               status === "sent" ||
               status === "finalized" ||
-              !!gateResult?.hardBlock
+              gateResult.hardBlock
             }
-            title={gateResult?.hardBlock ? "Remove PENDING citations first" : ""}
+            title={gateResult.hardBlock ? "Resolve blocked citations first" : ""}
           >
             <CheckCircle2 className="h-4 w-4 mr-1.5" /> Mark Final
           </Button>
@@ -323,32 +310,53 @@ export function SafeDraftEditor({
               isSaving ||
               status === "sent" ||
               status === "draft" ||
-              !!gateResult?.hardBlock
+              gateResult.hardBlock
             }
           >
             <Send className="h-4 w-4 mr-1.5" /> Mark Sent
           </Button>
 
-          <Button variant="outline" size="sm" onClick={() => window.print()}>
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={gateResult.hardBlock}
+            onClick={() => { if (!gateResult.hardBlock) window.print(); }}
+          >
             <Printer className="h-4 w-4 mr-1.5" /> Print A4
           </Button>
         </div>
       </div>
 
       {/* ── Hard-block banner ── */}
-      {gateResult?.hardBlock && (
+      {gateResult.hardBlock && (
         <div className="mx-4 mt-3 flex items-start gap-2 rounded-lg bg-red-600 text-white px-4 py-2.5 text-sm font-semibold no-print">
           <ShieldX className="w-4 h-4 mt-0.5 shrink-0" />
           <span>
             ⛔ Citation Gate BLOCKED —{" "}
             {gateResult.matches.filter((m) => m.status === "BLOCKED").length}{" "}
-            PENDING/FATAL citation(s) detected. Finalization is prevented.
+            PENDING/FATAL citation(s) detected. Resolve them to finalize or print.
           </span>
         </div>
       )}
 
       {/* ── Main layout ── */}
-      <div className="flex flex-1 overflow-hidden">
+      {gateResult.hardBlock ? (
+        <p className="hidden print:block">Printing blocked by the Citation Gate.</p>
+      ) : (
+        <article className="hidden print:block">
+          <h1>{title}</h1>
+          <p>Fact-Fit Gate status · {gateResult.overallStatus}</p>
+          <p>Advocate review required before filing · दाखिल करने से पहले अधिवक्ता की समीक्षा आवश्यक है।</p>
+          {toParty && <p className="whitespace-pre-wrap">To · {toParty}</p>}
+          <p className="whitespace-pre-wrap"><strong>Subject · </strong>{subject}</p>
+          <p>Sir/Madam,</p>
+          <div className="whitespace-pre-wrap break-words">{content}</div>
+          <p>Yours faithfully,</p>
+          {fromParty && <p className="whitespace-pre-wrap">{fromParty}</p>}
+          {enclosures && <p className="whitespace-pre-wrap"><strong>Enclosures · </strong>{enclosures}</p>}
+        </article>
+      )}
+      <div className="no-print flex flex-1 overflow-hidden">
 
         {/* ── Letter editor ── */}
         <div className="flex-1 overflow-y-auto p-4 md:p-6">
@@ -508,13 +516,7 @@ export function SafeDraftEditor({
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-4 pb-4">
-                {gateResult ? (
-                  <CitationGatePanel result={gateResult} />
-                ) : (
-                  <p className="text-xs text-muted-foreground">
-                    Start typing to scan citations...
-                  </p>
-                )}
+                <CitationGatePanel result={gateResult} />
               </CardContent>
             </Card>
           )}

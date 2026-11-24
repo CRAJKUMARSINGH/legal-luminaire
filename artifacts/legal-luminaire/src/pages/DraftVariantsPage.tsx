@@ -18,7 +18,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { VariantChain } from '@/components/VariantChain'
 import { CitationAddToDraft } from '@/components/CitationAddToDraft'
 import { usePleadingVariants } from '@/hooks/usePleadingVariants'
-import { variantsApi, type Archetype, type CitationHit } from '@/lib/variantsApi'
+import { variantsApi, type Archetype, type Bilingual, type CitationHit } from '@/lib/variantsApi'
 
 const KIND_TAG: Record<string, string> = {
   defence: '🛡 Defence', subsequent: '🔗 Subsequent', interlocutory: '⚖ Interlocutory',
@@ -27,7 +27,8 @@ const KIND_TAG: Record<string, string> = {
 
 export default function DraftVariantsPage() {
   const { id: caseId } = useParams<{ id: string }>()
-  const [subjects, setSubjects] = useState<{ id: string; label: { en: string; hi: string } }[]>([])
+  const [subjects, setSubjects] = useState<{ id: string; label: Bilingual }[] | null>(null)
+  const [subjectsFailed, setSubjectsFailed] = useState(false)
   const [subject, setSubject] = useState('')
   const [baseDraft, setBaseDraft] = useState('')
   const [activeNode, setActiveNode] = useState(0)
@@ -35,7 +36,13 @@ export default function DraftVariantsPage() {
     usePleadingVariants(caseId ?? 'demo-1', subject)
 
   useEffect(() => {
-    variantsApi.subjects().then((s: { id: string; label: { en: string; hi: string } }[]) => setSubjects(s))
+    const controller = new AbortController()
+    variantsApi.subjects(controller.signal).then((availableSubjects) => {
+      if (!controller.signal.aborted) setSubjects(availableSubjects)
+    }).catch(() => {
+      if (!controller.signal.aborted) setSubjectsFailed(true)
+    })
+    return () => controller.abort()
   }, [])
   useEffect(() => {
     if (subject) void loadFamily()
@@ -43,13 +50,29 @@ export default function DraftVariantsPage() {
 
   const archetypes = useMemo(() => family?.variants ?? [], [family])
 
+  if (subjectsFailed || !subjects?.length) {
+    return (
+      <div className="container mx-auto max-w-6xl space-y-6 px-4 py-8">
+        <h1 className="text-2xl font-bold">Pleading Chain — Connected Drafts</h1>
+        {subjectsFailed || subjects !== null ? (
+          <Alert>
+            <AlertTitle>Pleading variants are unavailable · अभिवचन के वैकल्पिक मसौदे उपलब्ध नहीं हैं</AlertTitle>
+            <AlertDescription>Return to Drafting Studio to continue working on your base draft.</AlertDescription>
+          </Alert>
+        ) : (
+          <p role="status" className="text-sm text-muted-foreground">Loading pleading subjects…</p>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="container mx-auto max-w-6xl space-y-6 py-8 px-4">
       <header className="space-y-1">
         <h1 className="text-2xl font-bold">⚡ Pleading Chain — Connected Drafts</h1>
         <p className="text-sm text-muted-foreground">
           One petition/application → rejoinder, supplementary affidavit, IA, contempt, execution and more —
-          all threaded to the same matter, all 50 subjects.
+          all threaded to the same matter.
         </p>
       </header>
 
@@ -67,7 +90,7 @@ export default function DraftVariantsPage() {
           <div className="flex gap-2 items-center">
             <Select value={subject} onValueChange={setSubject}>
               <SelectTrigger className="w-[320px]">
-                <SelectValue placeholder="Select subject (1 of 50)" />
+                <SelectValue placeholder="Select subject" />
               </SelectTrigger>
               <SelectContent>
                 {subjects.map((s) => (

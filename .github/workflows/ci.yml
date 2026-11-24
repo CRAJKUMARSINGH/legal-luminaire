@@ -28,8 +28,8 @@ jobs:
       - name: Install dependencies (frozen - reproducible)
         run: pnpm install --frozen-lockfile
 
-      - name: Typecheck (libs + frontend)
-        run: pnpm run typecheck:libs && pnpm --filter @workspace/legal-luminaire run typecheck
+      - name: Typecheck workspace
+        run: pnpm run typecheck
 
       - name: Run Vitest suite
         run: pnpm --filter @workspace/legal-luminaire run test
@@ -39,6 +39,17 @@ jobs:
 
       - name: Verify publish directory exists
         run: test -d artifacts/legal-luminaire/dist/public
+
+      - name: Setup Python for browser smoke tests
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run offline browser smoke tests
+        run: |
+          python -m pip install playwright
+          python -m playwright install --with-deps chromium
+          python scripts/test_launch_browser.py
 
       # -----------------------------------------------------------------------
       # Week 2 - Route surface checks
@@ -312,7 +323,7 @@ jobs:
         run: pnpm --filter @workspace/legal-luminaire run typecheck
 
   backend:
-    name: Backend syntax check (Python)
+    name: Backend syntax and pytest (Python)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -340,3 +351,18 @@ jobs:
               raise SystemExit(1)
           print("Backend syntax check passed")
           PY
+
+      - name: Install backend test dependencies
+        run: python -m pip install -r artifacts/legal-luminaire/backend/requirements.txt ruff
+
+      - name: Lint Python launch paths
+        run: |
+          python -m ruff check --select E9,F63,F7,F82 artifacts/legal-luminaire/backend scripts
+          python -m ruff check --select E4,E7,E9,F,B023 scripts/test_launch_browser.py
+
+      - name: Run backend pytest suite
+        working-directory: artifacts/legal-luminaire/backend
+        env:
+          HF_HUB_OFFLINE: "1"
+          TRANSFORMERS_OFFLINE: "1"
+        run: python -m pytest -q tests

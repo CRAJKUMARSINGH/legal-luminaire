@@ -8,6 +8,8 @@
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
+    "lint:launch": "python -m ruff check --select E9,F63,F7,F82 artifacts/legal-luminaire/backend scripts && python -m ruff check --select E4,E7,E9,F,B023 scripts/test_launch_browser.py",
+    "launch:gate": "pnpm run lint:launch && pnpm run typecheck && pnpm --filter @workspace/legal-luminaire run test && pnpm --filter @workspace/legal-luminaire run build && cd artifacts/legal-luminaire/backend && python -m pytest -q tests",
     "daemon": "pnpm --filter eternal-research-child run start",
     "daemon:sync": "pnpm --filter eternal-research-child run sync",
     "daemon:dev": "pnpm --filter eternal-research-child run dev"

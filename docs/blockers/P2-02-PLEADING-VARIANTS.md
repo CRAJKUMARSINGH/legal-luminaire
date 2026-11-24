@@ -1,8 +1,8 @@
 # P2-02 — Pleading Variants: missing registry data and unwired routes
 **Priority:** P2
-**Status:** OPEN — requires an explicit *register-or-retire* decision; one live browser defect outstanding
+**Status:** OPEN — requires an explicit *register-or-retire* decision; targeted browser regression passed and the full route sweep is pending
 **Opened:** 2026-11-21
-**Owner:** Backend engineering (feature decision) + Frontend engineering (browser defect)
+**Owner:** Backend engineering (feature decision) + Frontend engineering (route sweep)
 **Linked commits:** `0abe110` (reconciliation — tests recreated, gap first recorded),
 `4d12b78` / `47273bd` (blocker tracking, PR #6)
 
@@ -101,14 +101,13 @@ reconciliation.
 
 ## Live browser defect
 
-`artifacts/legal-luminaire/src/pages/DraftVariantsPage.tsx` calls
-`variantsApi.subjects().then(...)` **without a `.catch()`**. Because the endpoint 404s
-(Gap B) / the data is absent (Gap A), the request rejects and produces an **unhandled
-promise rejection** in the browser.
+The previous `DraftVariantsPage.tsx` request for subjects rejected without a handler
+when the endpoint returned 404. The page now handles the rejection and shows an
+unavailable state. A targeted browser check of the built app passed for a mocked
+404, an empty subject list, and a populated subject list, with no uncaught errors.
 
-- The Playwright route sweep records `/case/:id/draft-variants` as a non-pass.
-- **This is a defect requiring investigation and a code fix — it is not a passing
-  browser test and must not be recorded as one.**
+The previous Playwright route sweep records `/case/:id/draft-variants` as a non-pass.
+Re-run the full sweep to refresh that release evidence.
 
 ---
 
@@ -155,7 +154,7 @@ This blocker is resolved only when **all** of the following hold:
 
 | Release | Impact |
 |---|---|
-| **Synthetic-data demo / staging** | ⚠️ Feature-level only — the `/draft-variants` page surfaces an unhandled rejection; the app shell and the other 100/102 routes are unaffected, so the demo as a whole is **not** blocked, but the variants feature is **not releasable**. |
+| **Synthetic-data demo / staging** | The Draft Variants page shows an unavailable state when the registry cannot load. The demo can proceed while the variants registration decision remains open. |
 | **Confidential production** | Not a security blocker on its own (the surface is unreachable), but SE-01 remains the gating blocker. |
 | **Court-use exports** | Remains blocked by SE-01 + the 11 legal-source items; P2-02 adds no export path (router is unwired), so it does not alter that decision. |
 
@@ -169,9 +168,7 @@ Nothing in this blocker lifts either restriction.
 
 1. **Decide register vs. retire** in the next planning session (pair with the P2-01
    drafting-package decision — both concern the drafting surface).
-2. **Fix the browser defect** regardless of the decision: add a `.catch()`/error state to
-   `DraftVariantsPage.tsx` so the rejection never reaches the console. This is a small,
-   low-risk frontend change and is **independent** of the register/retire call.
+2. **Re-run the full browser route sweep** to update the historical route result.
 3. **Do not** wire the router or author `subject_variants.json` until the decision is
    made and real (non-fabricated) citation authorities are available.
 

@@ -56,8 +56,8 @@ async function parseJson<T>(res: Response): Promise<T> {
 }
 
 export const variantsApi = {
-  subjects: () =>
-    streamRequest("/variants/subjects").then((res: Response) => parseJson<{ id: string; label: Bilingual }[]>(res)),
+  subjects: (signal?: AbortSignal) =>
+    streamRequest("/variants/subjects", { signal }).then((res) => parseJson<{ id: string; label: Bilingual }[]>(res)),
 
   family: (subject: string) =>
     streamRequest(`/variants/families?subject=${encodeURIComponent(subject)}`).then((res: Response) => parseJson<VariantFamily>(res)),

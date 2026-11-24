@@ -19,7 +19,6 @@ export default function SafeDraftPage() {
     // Replace with API call when backend is wired
     const key = `safe-draft-${selectedCase.id}-${Date.now()}`;
     localStorage.setItem(key, JSON.stringify(state));
-    console.info("[SafeDraftPage] saved draft", key, state);
   };
 
   return (

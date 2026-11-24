@@ -44,7 +44,7 @@ Every precedent is independently tier-graded — `COURT_SAFE`, `VERIFIED`, `SECO
 
 ## ⚡ Quick Start
 
-**Prerequisites:** Node 22+, pnpm 10+, Python 3.14 (for backend)
+**Prerequisites:** Node 22+, pnpm 10+, Python 3.11–3.13 (for backend)
 
 ```bash
 # 1. Clone
@@ -60,6 +60,16 @@ pnpm --filter @workspace/legal-luminaire run dev
 ```
 
 The frontend runs fully without a backend. All 26 demo cases, the Citation Gate, Verification Engine, and Deadline Board are available immediately.
+
+### Production status and launch checks
+
+The frontend is available for synthetic-data demonstrations. Confidential production requires the identity and case-isolation work tracked in [SE-01](docs/blockers/SE-01-OIDC-CASE-ISOLATION.md). Court-use exports also require closure of the [11 outstanding source-verification items](docs/blockers/LEGAL-SOURCE-CLOSURE.md). An advocate must review any AI-assisted draft before filing.
+
+Keep confidential material out of hosted demos and shared fixtures. The demo uses browser-local storage. Backend-enabled workflows can send content to configured providers, so confirm their data-handling terms before using client material.
+
+Install the backend test dependencies and Ruff in your active Python environment with `python -m pip install -r artifacts/legal-luminaire/backend/requirements.txt ruff`. From the repository root, `pnpm launch:gate` runs Python lint checks, workspace typechecking, the frontend suite including the Fact-Fit Gate regressions, the production frontend build, and backend pytest. See the [launch hardening report](LAUNCH_HARDENING_REPORT.md) for current validation and release blockers.
+
+After building, run the browser smoke tests with `python -m pip install playwright`, `python -m playwright install chromium`, and `python scripts/test_launch_browser.py`. The tests open the static production build and use only synthetic case data.
 
 ---
 
