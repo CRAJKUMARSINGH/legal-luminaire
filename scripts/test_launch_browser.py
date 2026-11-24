@@ -77,6 +77,24 @@ def main() -> None:
         print_button.click()
         assert page.evaluate("window.printCalls") == 1
 
+        page.goto(f"{CASE_URL}/bilingual-draft", wait_until="commit")
+        english_draft = page.get_by_role("textbox", name="English Draft text area", exact=False)
+        hindi_draft = page.get_by_role("textbox", name="हिंदी प्रारूप text area", exact=False)
+        export_button = page.get_by_role("button", name="Export .txt")
+        for draft, text in ((english_draft, "Synthetic English draft."), (hindi_draft, "सिंथेटिक हिंदी मसौदा।")):
+            draft.fill(PENDING_CITATION)
+            expect(export_button).to_be_disabled(timeout=500)
+            draft.fill(text)
+            expect(export_button).to_be_enabled(timeout=500)
+
+        with page.expect_download() as download:
+            export_button.click()
+        exported_text = download.value.path().read_text(encoding="utf-8")
+        assert "Synthetic English draft." in exported_text
+        assert "सिंथेटिक हिंदी मसौदा।" in exported_text
+        assert "Fact-Fit Gate — English: SAFE | Hindi: SAFE" in exported_text
+        assert PENDING_CITATION not in exported_text
+
         for status, body, expected in (
             (404, "Unavailable", "Pleading variants are unavailable"),
             (200, "[]", "Pleading variants are unavailable"),
@@ -92,7 +110,7 @@ def main() -> None:
 
         assert not errors, errors
         browser.close()
-    print("Offline TC-01, Safe Draft print controls, and Draft Variants smoke tests passed.")
+    print("Offline TC-01, Safe Draft printing, bilingual export, and Draft Variants smoke tests passed.")
 
 
 if __name__ == "__main__":

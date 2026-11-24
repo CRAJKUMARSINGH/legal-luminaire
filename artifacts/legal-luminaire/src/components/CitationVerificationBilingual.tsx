@@ -1,18 +1,15 @@
 /**
  * CitationVerificationBilingual
  *
- * Runs the citation gate on BOTH English and Hindi panels simultaneously.
- * Reuses the existing citation-gate.ts — purely additive, no changes to protected files.
+ * Displays the citation gate results for the English and Hindi drafts.
  *
  * Shows:
  *  - Per-panel status badge (SAFE / WARN / BLOCKED)
  *  - Combined list of all flagged citations from both panels
  *  - Hard block notice if either panel is BLOCKED
  */
-import { useMemo } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { scanDraftForCitations } from "@/lib/citation-gate";
 import type { GateResult } from "@/lib/citation-gate";
 import { ShieldCheck, ShieldAlert, ShieldX, Info } from "lucide-react";
 
@@ -82,17 +79,13 @@ function PanelGateResult({
 
 /* ── Main Component ─────────────────────────────────────────────────────── */
 export default function CitationVerificationBilingual({
-  en,
-  hi,
+  enResult,
+  hiResult,
 }: {
-  en: string;
-  hi: string;
+  enResult: GateResult;
+  hiResult: GateResult;
 }) {
-  const enResult = useMemo(() => scanDraftForCitations(en), [en]);
-  const hiResult = useMemo(() => scanDraftForCitations(hi), [hi]);
-
-  const isBlocked =
-    enResult.overallStatus === "BLOCKED" || hiResult.overallStatus === "BLOCKED";
+  const isBlocked = enResult.hardBlock || hiResult.hardBlock;
   const isWarn =
     enResult.overallStatus === "WARN" || hiResult.overallStatus === "WARN";
 

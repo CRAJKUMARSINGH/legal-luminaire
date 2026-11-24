@@ -19,7 +19,6 @@ import DiscrepancyChecker from "@/components/DiscrepancyChecker";
 import ComparisonReport from "@/components/ComparisonReport";
 import CitationVerificationBilingual from "@/components/CitationVerificationBilingual";
 import {
-  BILINGUAL_TEMPLATES,
   getTemplate,
   saveBilingualDraft,
   loadBilingualDraft,
@@ -27,12 +26,12 @@ import {
   type DocType,
   type BilingualContent,
 } from "@/lib/bilingual-draft";
+import { scanDraftForCitations } from "@/lib/citation-gate";
 import { useCaseContext } from "@/context/CaseContext";
 import {
   Save,
   Trash2,
   FileDown,
-  RotateCcw,
   BookOpen,
   ShieldCheck,
 } from "lucide-react";
@@ -66,6 +65,9 @@ export default function BilingualDraftPage() {
   const template = useMemo(() => getTemplate(docType), [docType]);
   const docLabel = DOC_TYPES.find((d) => d.value === docType);
   const discrepancyCount = useMemo(() => checkDiscrepancies(content.en, content.hi).length, [content]);
+  const englishGate = useMemo(() => scanDraftForCitations(content.en), [content.en]);
+  const hindiGate = useMemo(() => scanDraftForCitations(content.hi), [content.hi]);
+  const exportBlocked = englishGate.hardBlock || hindiGate.hardBlock;
 
   /* ── Load saved draft when doc type or case changes ─────────────────── */
   useEffect(() => {
@@ -127,10 +129,14 @@ export default function BilingualDraftPage() {
   };
 
   const handleExport = () => {
+    if (exportBlocked) return;
+
     const blob = new Blob(
       [
         `BILINGUAL DRAFT — ${docLabel?.labelEn ?? docType}\n`,
         `Case: ${resolvedCaseId} | Saved: ${savedAt || "not saved"}\n`,
+        `Fact-Fit Gate — English: ${englishGate.overallStatus} | Hindi: ${hindiGate.overallStatus}\n`,
+        "Advocate review required before filing · दाखिल करने से पहले अधिवक्ता की समीक्षा आवश्यक है।\n",
         "=".repeat(80) + "\n\n",
         "ENGLISH\n" + "-".repeat(40) + "\n",
         content.en,
@@ -206,7 +212,7 @@ export default function BilingualDraftPage() {
           <Button size="sm" variant="outline" onClick={handleClear} className="gap-1.5 text-destructive">
             <Trash2 className="h-3.5 w-3.5" /> Clear
           </Button>
-          <Button size="sm" variant="outline" onClick={handleExport} className="gap-1.5">
+          <Button size="sm" variant="outline" onClick={handleExport} disabled={exportBlocked} className="gap-1.5">
             <FileDown className="h-3.5 w-3.5" /> Export .txt
           </Button>
           <Button size="sm" onClick={() => handleSave()} disabled={!dirty} className="gap-1.5">
@@ -214,6 +220,15 @@ export default function BilingualDraftPage() {
           </Button>
         </div>
       </div>
+
+      {exportBlocked && (
+        <Alert variant="destructive">
+          <AlertDescription>
+            Resolve blocked citations in the English and Hindi drafts before exporting.
+            निर्यात से पहले अंग्रेज़ी और हिंदी मसौदों में अवरुद्ध उद्धरणों का समाधान करें।
+          </AlertDescription>
+        </Alert>
+      )}
 
       {readOnlyMode && (
         <Alert className="border-blue-300 bg-blue-50">
@@ -265,7 +280,7 @@ export default function BilingualDraftPage() {
               titleEn={docLabel?.labelEn ?? docType}
               caseId={resolvedCaseId}
             />
-            <CitationVerificationBilingual en={content.en} hi={content.hi} />
+            <CitationVerificationBilingual enResult={englishGate} hiResult={hindiGate} />
           </div>
         </TabsContent>
       </Tabs>
