@@ -47,8 +47,8 @@ export default function DraftFamilyPanel() {
           <CardHeader><CardTitle className="text-base">{selected}</CardTitle></CardHeader>
           <CardContent className="flex flex-wrap items-center gap-3">
             <p className="text-sm text-muted-foreground">{note}</p>
-            <Button onClick={() => setLocation(`/case/${selectedCase.id}/draft-variants`)}>
-              Open connected drafting
+            <Button onClick={() => setLocation(`/case/${selectedCase.id}/safe-draft`)}>
+              Open Safe Draft
             </Button>
           </CardContent>
         </Card>

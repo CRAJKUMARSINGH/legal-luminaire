@@ -9,6 +9,7 @@ import os
 import logging
 from api.case_manager import case_manager
 from api.court_styles import get_style_for_court
+from api.redaction_utils import redact_indian_pii
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -110,7 +111,10 @@ async def _generate_draft_impl(case_id: str, draft_type: str, additional_notes: 
         ])
 
         chain = prompt | llm
-        result = chain.invoke({"context": context_str, "notes": additional_notes})
+        result = chain.invoke({
+            "context": redact_indian_pii(context_str),
+            "notes": redact_indian_pii(additional_notes or ""),
+        })
 
         logger.info(
             "case_event",

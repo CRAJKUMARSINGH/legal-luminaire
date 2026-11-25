@@ -54,7 +54,10 @@ def main() -> None:
         page.goto(f"{CASE_URL}/deadlines", wait_until="commit")
         expect(page.get_by_role("heading", name="Deadline Board")).to_be_visible()
 
-        page.goto(f"{CASE_URL}/safe-draft", wait_until="commit")
+        page.goto(f"{CASE_URL}/draft-family", wait_until="commit")
+        page.get_by_role("button", name="Reply / rejoinder", exact=False).click()
+        page.get_by_role("button", name="Open Safe Draft").click()
+        expect(page).to_have_url(f"{CASE_URL}/safe-draft")
         draft_body = page.get_by_placeholder("Draft the letter body here.", exact=False)
         print_button = page.get_by_role("button", name="Print A4")
         mark_final = page.get_by_role("button", name="Mark Final")

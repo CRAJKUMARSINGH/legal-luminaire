@@ -2,6 +2,8 @@
 **Legal Luminaire — Feature Status**  
 **Audit Date:** 2026-11-15 | HEAD `bda89ce6227e7f70b9f45af3f4e5f818b0571f92`
 
+This matrix records the November 15 audit. See the [current release decision](../../docs/RELEASE_READINESS.md) and [architecture and triage report](../../LAUNCH_HARDENING_REPORT.md) for the verified offline flows, provider boundaries, and Pleading Chain status.
+
 Status definitions:
 - **VERIFIED WORKING** — executed in this audit, output confirmed
 - **IMPLEMENTED BUT UNVERIFIED** — code exists and compiles; runtime not confirmed in this audit (requires API keys or live browser)

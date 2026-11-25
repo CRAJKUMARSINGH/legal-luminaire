@@ -8,6 +8,7 @@ from typing import List, Optional, Dict, Any
 import os
 import logging
 from api.case_manager import case_manager
+from api.redaction_utils import redact_indian_pii
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -90,7 +91,7 @@ async def _detect_collisions_impl(case_id: str):
             ("human", "Context:\n{context}\n\nDetect all possible collisions.")
         ])
 
-        response = llm.invoke(prompt.format(context=context_str))
+        response = llm.invoke(prompt.format(context=redact_indian_pii(context_str)))
         content = response.content
 
         result = CollisionResponse(

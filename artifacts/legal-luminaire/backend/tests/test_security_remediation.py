@@ -131,3 +131,44 @@ class TestPIIRedaction:
             assert f"[{label}-REDACTED]" in indexed_text
         assert chunks[0].metadata["source_file"] == source.name
         assert summary["indexed"] == [{"file": source.name, "chunks": len(chunks)}]
+
+    @pytest.mark.asyncio
+    async def test_lab_report_redacts_before_provider_and_removes_raw_copy(self, monkeypatch):
+        import sys
+        from io import BytesIO
+        from pathlib import Path
+        from types import ModuleType
+        from unittest.mock import MagicMock, Mock
+
+        from fastapi import UploadFile
+        from langchain_community import document_loaders
+        from langchain_core.documents import Document
+        from langchain_core.prompts import ChatPromptTemplate
+        from api.routes_lab import extract_lab_report
+
+        original = b"synthetic PDF"
+        raw_paths = []
+
+        def load_report(filename):
+            path = Path(filename)
+            assert path.name == "report.pdf"
+            assert path.read_bytes() == original
+            raw_paths.append(path)
+            return Mock(load=Mock(return_value=[
+                Document(page_content="Synthetic lab report for test@example.com"),
+            ]))
+
+        chain = Mock()
+        prompt = MagicMock()
+        prompt.__or__.return_value = chain
+        monkeypatch.setattr(ChatPromptTemplate, "from_messages", Mock(return_value=prompt))
+        monkeypatch.setattr(document_loaders, "PyPDFLoader", load_report)
+        provider = ModuleType("langchain_google_genai")
+        provider.ChatGoogleGenerativeAI = Mock()
+        monkeypatch.setitem(sys.modules, provider.__name__, provider)
+        monkeypatch.setenv("GOOGLE_API_KEY", "synthetic-key")
+
+        await extract_lab_report(UploadFile(file=BytesIO(original), filename="../synthetic.pdf"))
+
+        chain.invoke.assert_called_once_with({"text": "Synthetic lab report for [EMAIL-REDACTED]"})
+        assert raw_paths and not raw_paths[0].parent.exists()

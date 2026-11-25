@@ -26,6 +26,7 @@ from rag.document_store import (
     get_case_doc_count,
 )
 from agents.crew import run_legal_crew
+from api.redaction_utils import redact_indian_pii
 from api.models import (
     ResearchRequest,
     ResearchResponse,
@@ -710,6 +711,7 @@ class ChatResponse(BaseModel):
 
 async def _chat_impl(case_id: str, message: str, history: list[dict]):
     """Internal shared chat implementation used by both route variants."""
+    redacted_message = redact_indian_pii(message)
     logger.info(
         "case_event",
         extra={
@@ -731,17 +733,17 @@ async def _chat_impl(case_id: str, message: str, history: list[dict]):
     if case_has_documents(case_id):
         try:
             retriever = get_retriever(case_id, k=5)
-            docs = retriever.invoke(message)
+            docs = retriever.invoke(redacted_message)
             # P4.2 — Prompt injection defence: document content is explicitly
             # delimited so the model treats it as DATA, not instructions.
             # The XML-style tags signal to the LLM that anything inside is
             # untrusted external content, not operator instructions.
             context_parts = []
             for d in docs:
-                src = d.metadata.get("source_file", "doc")
+                src = redact_indian_pii(d.metadata.get("source_file", "doc"))
                 # Strip any tag-like sequences from document content to prevent
                 # a malicious document from closing the delimiter prematurely.
-                safe_content = d.page_content[:400].replace("</DOCUMENT>", "[/DOCUMENT]")
+                safe_content = redact_indian_pii(d.page_content)[:400].replace("</DOCUMENT>", "[/DOCUMENT]")
                 context_parts.append(
                     f"<DOCUMENT source=\"{src}\">\n{safe_content}\n</DOCUMENT>"
                 )
@@ -777,11 +779,14 @@ async def _chat_impl(case_id: str, message: str, history: list[dict]):
 
     messages = [SystemMessage(content=system)]
     for h in history[-6:]:
+        content = h.get("content")
+        if not isinstance(content, str):
+            continue
         if h.get("role") == "user":
-            messages.append(HumanMessage(content=h["content"]))
+            messages.append(HumanMessage(content=redact_indian_pii(content)))
         elif h.get("role") == "assistant":
-            messages.append(AIMessage(content=h["content"]))
-    messages.append(HumanMessage(content=message))
+            messages.append(AIMessage(content=redact_indian_pii(content)))
+    messages.append(HumanMessage(content=redacted_message))
 
     try:
         response = llm.invoke(messages)

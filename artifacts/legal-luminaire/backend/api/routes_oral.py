@@ -8,6 +8,7 @@ from typing import Optional, List
 import os
 import logging
 from api.case_manager import case_manager
+from api.redaction_utils import redact_indian_pii
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -48,7 +49,7 @@ async def generate_cross_exam(req: CrossExamRequest):
     # ── Select Prompt ──────────────────────────────────────────────────────────
     system_prompt = (
         "You are a top criminal defense lawyer in India specializing in forensic evidence. "
-        f"Generate 10 critical cross-examination questions for a {req.witness_type}. "
+        f"Generate 10 critical cross-examination questions for a {redact_indian_pii(req.witness_type)}. "
         "The questions must be 'leading questions' designed to expose procedural lapses in sampling, "
         "seizure, or lab testing based on the Indian Standards (BIS/IS) provided in the context. "
         "Output each question starting with 'Q: '. "
@@ -71,7 +72,10 @@ async def generate_cross_exam(req: CrossExamRequest):
         ])
         
         chain = prompt | llm
-        result = chain.invoke({"context": context_str, "notes": req.additional_context})
+        result = chain.invoke({
+            "context": redact_indian_pii(context_str),
+            "notes": redact_indian_pii(req.additional_context or ""),
+        })
         
         lines = result.content.split("\n")
         questions = [l.replace("Q: ", "").strip() for l in lines if l.startswith("Q: ")]

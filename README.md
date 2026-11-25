@@ -63,7 +63,7 @@ The frontend runs fully without a backend. All 26 demo cases, the Citation Gate,
 
 ### Production status and launch checks
 
-The frontend is available for synthetic-data demonstrations. Confidential production requires the identity and case-isolation work tracked in [SE-01](docs/blockers/SE-01-OIDC-CASE-ISOLATION.md). Court-use exports also require closure of the [11 outstanding source-verification items](docs/blockers/LEGAL-SOURCE-CLOSURE.md). An advocate must review any AI-assisted draft before filing.
+The frontend is available for synthetic-data demonstrations. Open TC-01 from the Demo Case Browser, review sources in the Verification Panel, and use Safe Draft to see how the Fact-Fit Gate controls output. Confidential production requires the identity and case-isolation work tracked in [SE-01](docs/blockers/SE-01-OIDC-CASE-ISOLATION.md). Court-use exports also require closure of the [11 outstanding source-verification items](docs/blockers/LEGAL-SOURCE-CLOSURE.md). Treat outputs as research and drafting aids. A qualified Indian advocate must review any AI-assisted draft before filing.
 
 Keep confidential material out of hosted demos and shared fixtures. The demo uses browser-local storage. Backend-enabled workflows can send content to configured providers, so confirm their data-handling terms before using client material.
 

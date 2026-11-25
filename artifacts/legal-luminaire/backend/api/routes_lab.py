@@ -7,6 +7,11 @@ from pydantic import BaseModel, Field
 from typing import List, Optional
 import os
 import logging
+import shutil
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+from api.redaction_utils import redact_indian_pii
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -33,32 +38,31 @@ async def extract_lab_report(file: UploadFile = File(...)):
     if not gemini_key:
         raise HTTPException(status_code=500, detail="Gemini key not configured.")
 
-    # 1. Save and Extract Text (Reuse logic from omni-ingest or simplified here)
-    # For Week 8, we assume the file is small and we can extract text via OCR/PDF
-    import shutil
-    from pathlib import Path
-    temp_path = Path(f"C:/Temp/lab_{file.filename}") if os.name == 'nt' else Path(f"/tmp/lab_{file.filename}")
-    temp_path.parent.mkdir(parents=True, exist_ok=True)
-    
-    with temp_path.open("wb") as f:
-        shutil.copyfileobj(file.file, f)
+    ext = Path(file.filename or "").suffix.lower()
+    if ext not in {".pdf", ".png", ".jpg", ".jpeg"}:
+        raise HTTPException(status_code=415, detail="Upload a PDF, PNG, or JPEG lab report.")
 
-    extracted_text = ""
-    ext = Path(file.filename).suffix.lower()
-    
     try:
-        if ext == ".pdf":
-            from langchain_community.document_loaders import PyPDFLoader
-            loader = PyPDFLoader(str(temp_path))
-            docs = loader.load()
-            extracted_text = "\n".join(d.page_content for d in docs)
-        elif ext in [".png", ".jpg", ".jpeg"]:
-            import pytesseract
-            from PIL import Image
-            extracted_text = pytesseract.image_to_string(Image.open(temp_path))
-    except Exception as e:
-        logger.error(f"Text extraction failed: {e}")
-        raise HTTPException(status_code=500, detail="Failed to read file.")
+        with TemporaryDirectory(prefix="ll-lab-") as temp_dir:
+            temp_path = Path(temp_dir) / f"report{ext}"
+            with temp_path.open("wb") as destination:
+                shutil.copyfileobj(file.file, destination)
+
+            if ext == ".pdf":
+                from langchain_community.document_loaders import PyPDFLoader
+
+                extracted_text = "\n".join(
+                    doc.page_content for doc in PyPDFLoader(str(temp_path)).load()
+                )
+            else:
+                import pytesseract
+                from PIL import Image
+
+                with Image.open(temp_path) as image:
+                    extracted_text = pytesseract.image_to_string(image)
+    except Exception as error:
+        logger.error("Lab report text extraction failed (%s)", type(error).__name__)
+        raise HTTPException(status_code=500, detail="Failed to read file.") from error
 
     # 2. Gemini Structured Extraction
     try:
@@ -80,8 +84,8 @@ async def extract_lab_report(file: UploadFile = File(...)):
         ])
         
         chain = prompt | structured_llm
-        result = chain.invoke({"text": extracted_text[:12000]})
+        result = chain.invoke({"text": redact_indian_pii(extracted_text)[:12000]})
         return result
-    except Exception as e:
-        logger.error(f"Lab extraction failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception as error:
+        logger.error("Lab report AI extraction failed (%s)", type(error).__name__)
+        raise HTTPException(status_code=502, detail="Lab report extraction failed.") from error

@@ -1,20 +1,23 @@
 # LEGAL LUMINAIRE — MASTER ROADMAP
-**Last Updated**: September 2026  
+**Last Updated**: 25 November 2026
+
 **Maintained by**: ETERNAL_RESEARCH_CHILD daemon + manual updates  
-**Status**: v2.1.0-enrichment released · Month 6 in progress
+**Status**: Synthetic demo verification complete on the hardening branch. Confidential production and court use have open release gates. See [Release Readiness](docs/RELEASE_READINESS.md).
 
 ---
 
 ## P0 — Critical / Blocking
 
 - [x] Persistent case storage (localStorage + optional PostgreSQL via Drizzle ORM)
-- [x] PENDING / FATAL_ERROR citations hard-blocked from all draft output
+- [x] Hard-block explicitly flagged citations in Safe Draft printing and Bilingual Draft Studio downloads
 - [x] Fact-Fit Gate enforced (score ≥ 70 = exact, 50–69 = analogous, < 30 = rejected)
-- [x] Citation allowlist gate — citation-gate.ts scans every draft
+- [x] Deterministic citation scanning in the verified Safe Draft and bilingual draft workflows
 - [x] Structured citation fields (`reporter`, `volume`, `page`, `para`, `verifiedBy`) on Precedent type
 - [x] Para-number guard — drafter blocked from citing unconfirmed paragraph numbers
 - [x] Backend boot stability — no import-time crashes
-- [x] CI green on main — typecheck + build + Vitest + Python syntax
+- [x] Launch CI on the hardening branch covers lint, typecheck, build, Vitest, pytest, and offline browser checks
+- [ ] Verify production identity and per-user case isolation
+- [ ] Complete qualified review of the 11 outstanding legal sources before court use
 - [ ] Indian Kanoon API — live citation existence check on entry (Month 2 residual — API key required)
 - [ ] Para-number auto-fill — when `verifiedBy: "indiankanoon"`, fetch para from API and populate `para` field
 
@@ -31,7 +34,7 @@
 - [x] Verification Report + Pre-Filing Checklist — one click from every draft
 - [x] Bilingual (Hindi + English) throughout
 - [x] Court-specific formatting — Rajasthan HC / SC / Sessions / NCLT / NGT / CAT
-- [x] Multi-lawyer Chamber Mode — Admin / Advocate / Associate RBAC
+- [ ] Verify deployed multi-user access with separate case memberships and roles
 - [x] Infrastructure Arbitration suite — TC-22 to TC-26 (full lifecycle)
 - [x] Eternal Research Improvement Lab — `/improvement-lab` route live
 - [ ] Hearing Tracker — next hearing date field + countdown widget on Home (Month 6)
@@ -46,7 +49,7 @@
 - [x] Error boundaries on all 55+ SPA routes
 - [x] Print-ready CSS — court-ready typography, page breaks, bilingual header/footer
 - [x] Status badges — COURT_SAFE / VERIFIED / SECONDARY / PENDING / FATAL_ERROR colour-coded
-- [x] Skeleton loaders + empty-state CTAs everywhere
+- [ ] Complete the launch-wide empty and loading-state review
 - [x] Rate limiting on expensive endpoints (research / draft / RAG)
 - [x] Observability — per-session token count + approximate cost reporting
 - [ ] Stress testing — 100 MB+ multi-file upload stability
