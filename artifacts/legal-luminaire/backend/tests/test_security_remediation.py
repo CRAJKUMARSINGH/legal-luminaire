@@ -99,3 +99,35 @@ class TestPIIRedaction:
         counts = audit_redaction_risk("1234 5678 9012 ABCDE1234F test@x.com")
         for key in ("aadhaar", "pan", "phone", "email", "passport", "voter_id"):
             assert key in counts
+
+    def test_ingestion_redacts_text_before_embedding(self, tmp_path, monkeypatch):
+        from unittest.mock import Mock
+        from rag import document_store
+
+        identifiers = {
+            "AADHAAR": "1234 5678 9012",
+            "PAN": "ABCDE1234F",
+            "PHONE": "+91 9876543210",
+            "EMAIL": "test@example.com",
+            "PASSPORT": "A1234567",
+            "VOTERID": "ABC1234567",
+        }
+        source = tmp_path / "synthetic-exhibit.txt"
+        source.write_text(
+            "Synthetic exhibit.\n" + "\n".join(identifiers.values()),
+            encoding="utf-8",
+        )
+        store = Mock()
+        monkeypatch.setattr(document_store, "get_or_create_vectorstore", lambda _: store)
+
+        summary = document_store.ingest_files("demo-case", [source])
+
+        store.add_documents.assert_called_once()
+        chunks = store.add_documents.call_args.args[0]
+        indexed_text = "\n".join(chunk.page_content for chunk in chunks)
+        assert "Synthetic exhibit." in indexed_text
+        for label, identifier in identifiers.items():
+            assert identifier not in indexed_text
+            assert f"[{label}-REDACTED]" in indexed_text
+        assert chunks[0].metadata["source_file"] == source.name
+        assert summary["indexed"] == [{"file": source.name, "chunks": len(chunks)}]

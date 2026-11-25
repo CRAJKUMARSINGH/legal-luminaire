@@ -16,6 +16,7 @@ from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 
+from api.redaction_utils import redact_indian_pii
 from config import settings
 from rag.advanced_processor import AdvancedDocumentProcessor, ProcessedDocument
 
@@ -163,11 +164,15 @@ class CaseIsolatedDocumentStore:
         """Ingest documents into case-isolated store with enhanced processing"""
         
         vectorstore = self.get_case_vectorstore(case_id)
+        redacted_documents = [
+            doc.model_copy(update={"page_content": redact_indian_pii(doc.page_content)})
+            for doc in documents
+        ]
         
         # Process documents with advanced processor
         if process_with_advanced:
             processed_docs = []
-            for doc in documents:
+            for doc in redacted_documents:
                 try:
                     processed = self.processor.process_document(doc, metadata)
                     processed_docs.append(processed)
@@ -199,7 +204,7 @@ class CaseIsolatedDocumentStore:
                     document_type="other",
                     quality_score=0.5
                 )
-                for doc in documents
+                for doc in redacted_documents
             ]
         
         # Chunk processed documents

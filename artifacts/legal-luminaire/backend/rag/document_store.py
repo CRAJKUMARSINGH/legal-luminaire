@@ -18,6 +18,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 
+from api.redaction_utils import redact_indian_pii
 from config import settings
 
 logger = logging.getLogger(__name__)
@@ -99,12 +100,14 @@ def ingest_files(case_id: str, file_paths: list[Path]) -> dict:
             summary["skipped"].append(path.name)
             continue
 
-        # Tag each chunk with source metadata
+        # Redact before splitting so an identifier cannot be divided across chunks.
+        file_hash = _file_hash(path)
         for doc in docs:
+            doc.page_content = redact_indian_pii(doc.page_content)
             doc.metadata.update({
                 "case_id": case_id,
                 "source_file": path.name,
-                "file_hash": _file_hash(path),
+                "file_hash": file_hash,
             })
 
         chunks = SPLITTER.split_documents(docs)

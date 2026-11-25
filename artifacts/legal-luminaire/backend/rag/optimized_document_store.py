@@ -21,6 +21,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 
+from api.redaction_utils import redact_indian_pii
 from config import settings
 from cache import cache, cached_async
 
@@ -171,6 +172,7 @@ async def ingest_files_parallel(case_id: str, file_paths: List[Path]) -> Dict[st
         
         # Tag each chunk with enhanced metadata
         for doc in docs:
+            doc.page_content = redact_indian_pii(doc.page_content)
             doc.metadata.update({
                 "case_id": case_id,
                 "source_file": path.name,
