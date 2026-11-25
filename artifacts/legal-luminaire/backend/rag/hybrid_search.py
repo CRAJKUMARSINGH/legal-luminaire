@@ -19,9 +19,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
+from api.redaction_utils import redact_indian_pii
 from config import settings
 from cache import cache, cached_async
-from .optimized_document_store import get_or_create_vectorstore
+from .document_store import get_or_create_vectorstore
 
 logger = logging.getLogger(__name__)
 
@@ -260,7 +261,8 @@ class HybridSearchEngine:
             semantic_weight /= total_weight
             keyword_weight /= total_weight
         
-        # Expand query with legal synonyms
+        # Mask supported identifiers before keyword expansion, cache, and embedding.
+        query = redact_indian_pii(query)
         expanded_query = self.keyword_expander.expand_query(query)
         
         # Check cache first

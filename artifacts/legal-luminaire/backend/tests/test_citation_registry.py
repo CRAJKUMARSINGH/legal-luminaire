@@ -406,3 +406,48 @@ class TestExportSafetyConsistency:
             d = evaluate_citation_gate_as_dict(text)
             assert dc.must_block == d["must_block"]
             assert dc.download_allowed == d["download_allowed"]
+@pytest.mark.asyncio
+@pytest.mark.parametrize("draft, blocked", [
+    ("Authorities include (2003) 4 GLR 3121.", True),
+    ("Authority marked FATAL_ERROR.", True),
+    ("Synthetic draft for advocate review.", False),
+])
+async def test_streaming_gate_before_emitting_draft(monkeypatch, draft, blocked):
+    import json
+    import sys
+    from types import ModuleType
+    from unittest.mock import Mock
+
+    from api import routes_legal_stream
+
+    crew = ModuleType("agents.crew")
+    crew.run_legal_crew = Mock(return_value={"success": True, "draft": draft})
+    monkeypatch.setitem(sys.modules, crew.__name__, crew)
+    monkeypatch.setattr(routes_legal_stream.settings, "openai_api_key", "synthetic-key")
+    retriever = Mock()
+    retriever.invoke.return_value = [
+        Mock(page_content="Synthetic evidence from witness@example.com", metadata={}),
+    ]
+    monkeypatch.setattr(routes_legal_stream, "case_has_documents", lambda _: True)
+    monkeypatch.setattr(routes_legal_stream, "get_retriever", lambda *_args, **_kwargs: retriever)
+
+    body = routes_legal_stream.HybridDraftRequest(
+        sessionId=1, query="Prepare a synthetic draft for author@example.com"
+    )
+    events = [
+        json.loads(event.removeprefix("data: "))
+        async for event in routes_legal_stream._draft_event_stream(body)
+    ]
+
+    query = crew.run_legal_crew.call_args.kwargs["query"]
+    assert "[EMAIL-REDACTED]" in query
+    assert "author@example.com" not in query
+    retriever.invoke.assert_called_once_with(query)
+    context = crew.run_legal_crew.call_args.kwargs["case_context"]
+    assert "Synthetic evidence from [EMAIL-REDACTED]" in context
+    if blocked:
+        assert events[-1]["stage"] == "error"
+        assert all("content" not in event for event in events)
+    else:
+        assert events[-1]["stage"] == "complete"
+        assert events[-1]["content"] == draft

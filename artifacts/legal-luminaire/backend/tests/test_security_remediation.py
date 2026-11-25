@@ -172,3 +172,26 @@ class TestPIIRedaction:
 
         chain.invoke.assert_called_once_with({"text": "Synthetic lab report for [EMAIL-REDACTED]"})
         assert raw_paths and not raw_paths[0].parent.exists()
+
+    @pytest.mark.asyncio
+    async def test_hybrid_search_masks_query_at_embedding_boundary(self, monkeypatch):
+        from unittest.mock import Mock
+
+        from rag import hybrid_search
+
+        store = Mock()
+        store.similarity_search_with_score.return_value = []
+        store.get.return_value = {"ids": [], "documents": [], "metadatas": []}
+        case_store = Mock(return_value=store)
+        monkeypatch.setattr(hybrid_search, "get_or_create_vectorstore", case_store)
+        monkeypatch.setattr(hybrid_search, "cache", Mock(get=Mock(return_value=None)))
+
+        result = await hybrid_search.HybridSearchEngine().hybrid_search(
+            "synthetic-case", "bail contact test@example.com"
+        )
+
+        assert result == []
+        embedding_input = store.similarity_search_with_score.call_args.args[0]
+        assert "test@example.com" not in embedding_input
+        assert "bail contact [EMAIL-REDACTED]" in embedding_input
+        assert all(call.args == ("synthetic-case",) for call in case_store.call_args_list)

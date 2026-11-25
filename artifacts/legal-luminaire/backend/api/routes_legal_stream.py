@@ -15,7 +15,8 @@ from fastapi import APIRouter
 from pydantic import BaseModel, Field
 from fastapi.responses import StreamingResponse
 
-from agents.crew import run_legal_crew
+from api.citation_registry import evaluate_citation_gate_as_dict
+from api.redaction_utils import redact_indian_pii
 from config import settings
 from rag.document_store import case_has_documents, get_retriever
 
@@ -25,22 +26,21 @@ router = APIRouter()
 
 
 def _evaluate_citation_gate(text: str) -> dict:
+    gate = evaluate_citation_gate_as_dict(text)
     normalized = (text or "").upper()
     statuses = {
-        "COURT_SAFE": len(re.findall(r"\bCOURT_SAFE\b", normalized)),
-        "VERIFIED": len(re.findall(r"\bVERIFIED\b", normalized)),
-        "SECONDARY": len(re.findall(r"\bSECONDARY\b", normalized)),
-        "PENDING": len(re.findall(r"\bPENDING\b", normalized)),
-        "FATAL_ERROR": len(re.findall(r"\bFATAL_ERROR\b", normalized)),
+        tier: len(re.findall(rf"\b{tier}\b", normalized))
+        for tier in ("COURT_SAFE", "VERIFIED", "SECONDARY", "PENDING", "FATAL_ERROR")
     }
-    must_block = statuses["PENDING"] > 0 or statuses["FATAL_ERROR"] > 0
-    needs_ack = statuses["SECONDARY"] > 0 and not must_block
-    return {
-        "statuses": statuses,
-        "must_block": must_block,
-        "needs_ack": needs_ack,
-        "download_allowed": not must_block,
-    }
+    for entry in gate["blocked_entries"] + gate["secondary_entries"]:
+        tier = entry["tier"]
+        if tier in statuses:
+            statuses[tier] += 1
+    gate["statuses"] = statuses
+    gate["must_block"] = gate["must_block"] or bool(statuses["PENDING"] or statuses["FATAL_ERROR"])
+    gate["needs_ack"] = bool(statuses["SECONDARY"]) and not gate["must_block"]
+    gate["download_allowed"] = not gate["must_block"]
+    return gate
 
 
 class HybridDraftRequest(BaseModel):
@@ -72,12 +72,12 @@ def _retrieve_context(case_id: str, query: str) -> str:
         retriever = get_retriever(case_id, k=10)
         docs = retriever.invoke(query)
         return "\n\n---\n\n".join(
-            f"[Source: {d.metadata.get('source_file', 'unknown')}]\n{d.page_content}"
+            redact_indian_pii(f"[Source: {d.metadata.get('source_file', 'unknown')}]\n{d.page_content}")
             for d in docs
         )
-    except Exception as e:
-        logger.warning("RAG retrieval failed for %s: %s", case_id, e)
-        return f"[RAG unavailable: {e}]"
+    except Exception as error:
+        logger.warning("RAG retrieval failed for %s (%s)", case_id, type(error).__name__)
+        return "[Case documents could not be retrieved.]"
 
 
 def _chunk_text(text: str, size: int = 280) -> list[str]:
@@ -92,6 +92,8 @@ def _chunk_text(text: str, size: int = 280) -> list[str]:
 
 
 def _run_crew_blocking(user_query: str, case_context: str) -> dict:
+    from agents.crew import run_legal_crew
+
     result = run_legal_crew(
         query=user_query,
         case_context=case_context,
@@ -115,7 +117,7 @@ def _run_crew_blocking(user_query: str, case_context: str) -> dict:
 
 async def _draft_event_stream(body: HybridDraftRequest) -> AsyncIterator[str]:
     case_id = _session_to_case_id(body.sessionId)
-    user_query = _build_user_query(body)
+    user_query = redact_indian_pii(_build_user_query(body))
     draft_id = int(hashlib.sha256(f"{case_id}:{time.time()}:{user_query[:200]}".encode()).hexdigest()[:12], 16) % (
         2**31 - 1
     )
