@@ -3,7 +3,7 @@
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [main, codex/code-junction-launch-hardening]
   workflow_dispatch:
 
 permissions:
