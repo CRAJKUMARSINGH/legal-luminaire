@@ -1,499 +1,193 @@
 # Unwired Files Inventory — Legal Luminaire
 
-Inventory of files that exist in the working repository but are **not wired into the
-running application** (`artifacts/legal-luminaire` frontend + Python backend) — i.e. content
-that is either **code awaiting incorporation** or **guidance / evidence material**.
+Current-state inventory of files that exist in the working repository but are not reachable from the canonical application entry points, plus standalone guidance, evidence, and reference material.
 
-- Generated: 2026-11-21
-- Baseline commit (HEAD): `c8f91cb` — "chore: remove duplicate enrichment docs and stale generated artifacts"
-- Branch: `main` (in sync with `origin/main`, 0 ahead / 0 behind)
-- Method: `git ls-files`, `git ls-files --others --ignored`, filesystem walk, import/reference grep.
+- Generated: 2026-11-26
+- Branch: `codex/code-junction-launch-hardening`
+- HEAD: `2e70ea2`
+- Canonical frontend entry: `artifacts/legal-luminaire/src/main.tsx`
+- Canonical backend entry: `artifacts/legal-luminaire/backend/main.py`
+- Method: static import graph traversal, Python AST import traversal, test-reachability traversal, Git/file inventory, and targeted reference searches.
 
-## Legend
+## Companion reports
 
-| Code | Meaning |
-|------|---------|
-| `[INCORPORATE]` | Code that should be wired into the app (or source recovered). |
-| `[GUIDANCE]` | Documentation / reports / evidence worth keeping; not executed. |
-| `[DATA]` | Bulk fixtures, demo case packs, generated legal outputs. |
-| `[BRAND]` | Logo / marketing visual assets. |
-| `[ORPHAN]` | Stale or source-less artifact — candidate for purge. |
-| `[WIRED]` | Listed only to prove it is *not* part of this backlog. |
+- [Unwired code inventory](unwired-code-inventory.md) — every runtime-unreachable source file, test-only module, utility, legacy package, and archived code file.
+- [Guidance material inventory](guidance-material-inventory.md) — every pre-existing standalone Markdown/text document, grouped by incorporation value and disposition.
+
+## What “unwired” means here
+
+A file is considered runtime-unwired when no static import, dynamic import, `require()`, router registration, or Python import reaches it from the canonical frontend or backend entry point. This is intentionally stricter than “not deployed”:
+
+- Test-only files are listed separately because they are wired to Vitest/pytest, not to the application runtime.
+- Documentation and evidence are intentionally non-executable; they are inventoried so their guidance can be incorporated deliberately.
+- Archived packages are already retired and should not be merged back into the canonical runtime.
+- The nested `legal-luminaire/` Git checkout is counted once as a duplicate checkout, not once per contained file.
+- Dependency folders, virtual environments, build output, caches, and bytecode are excluded from the backlog.
 
 ## Executive summary
 
-| Area | Files | Category | Disposition |
-|------|------:|----------|-------------|
-| `backend/drafting/`, `backend/registry/` | 2 dirs (11 `.pyc`) | Orphan bytecode, **source missing** | `[ORPHAN]` / `[INCORPORATE]` |
-| `backend/tests/` missing sources | 5 `.pyc` only | Test sources lost | `[ORPHAN]` / `[INCORPORATE]` |
-| Root debug/audit debris | 16 | Local-only, now git-ignored | `[ORPHAN]` |
-| `audit-results/` | 28 | Release/audit evidence | `[GUIDANCE]` |
-| `design-deliverables/` | 9 | Design evidence | `[GUIDANCE]` |
-| `final-deliverables/` | 13 | Release evidence | `[GUIDANCE]` |
-| `artifacts/{audit,final,release,reports,self-assessment,legal,design,demo-outputs}` | 23 | Scattered report collections | `[GUIDANCE]` |
-| `docs/` (tree) | ~102 | Project documentation / specs | `[GUIDANCE]` |
-| `.kiro/specs`, `.kiro/steering`, `.trae/specs` | 28 | Kiro/Trae spec framework | `[GUIDANCE]` |
-| `output_100426/` | 26 | Generated legal deliverables (Hemraj) | `[DATA]` |
-| `logo-ideas/` | ~50 | Brand / showcase assets | `[BRAND]` |
-| `faq/` | 2 | Forensic-testing FAQ copy | `[GUIDANCE]` |
-| `scripts/` | 15 | Repo utility scripts (mostly one-off) | `[INCORPORATE]` / `[ORPHAN]` |
-| `artifacts/api-server/` | pkg | Separate Express/Drizzle backend artifact | `[INCORPORATE]`? |
-| `artifacts/mockup-sandbox/` | pkg | Replit UI mockup sandbox | `[ORPHAN]` |
-| `ETERNAL_RESEARCH_CHILD/` | 4 | Research daemon | `[WIRED]` (see note) |
+| Area | Current count | Classification | Recommended treatment |
+|---|---:|---|---|
+| Frontend source unreachable from runtime and tests | 52 | Prototypes, duplicates, utilities, unused UI primitives | Triage individually; most are not feature-complete |
+| Backend source unreachable from runtime and tests | 11 | Two unwired feature clusters, alternates, utilities, one empty file | Register-or-retire decisions; do not wire blindly |
+| Frontend test-reachable but not runtime-reachable | 15 | 14 test files + `intake-schema.ts` | Keep tests; decide whether the schema belongs in runtime |
+| Backend test-reachable but not runtime-reachable | 22 | Tests/package initializers + 3 production modules | Keep tests; resolve variants and verification-module status |
+| Legacy `lib/**` workspace files | 79 | Express/Drizzle-era API spec, clients, schemas | Not consumed by the canonical app; retain only with the retired stack |
+| Archived package/script files | 93 | Retired Express API, mockup sandbox, retired scripts | Keep archived; do not reincorporate without a new ADR |
+| Pre-existing standalone `.md`/`.txt` documents | 452 | Guidance, specs, reports, evidence, case/data material | Keep, consolidate, or explicitly wire; see guidance report |
+| Duplicate nested Git checkout | 1 tree | Independent repository at `legal-luminaire/` | User disposition required; do not double-count |
+| Missing drafting/registry source files | 11 | Source never committed; only historical bytecode evidence | Product decision: supersede or rebuild |
 
-Wired areas **excluded** from this backlog: `artifacts/legal-luminaire/**` (the app),
-`lib/**` (shared packages), `real_cases/**`, `sample_cases/**`, `test-assets/**`
-(referenced by the app + backend seed scripts), `.github/**`, root config files.
+## Highest-priority findings
 
----
+### 1. Pleading variants are unsafe to register as-is
 
-## A. Not under version control (present on disk, absent from git)
+Cluster:
 
-### A1. Throwaway debug / audit debris — now git-ignored
+- `artifacts/legal-luminaire/backend/api/routes_pleading_variants.py`
+- `artifacts/legal-luminaire/backend/services/variant_engine.py`
+- Missing `artifacts/legal-luminaire/backend/data/subject_variants.json`
+- Missing imported gate/search services referenced by the router
 
-These were added to `.gitignore` during the last sync. They are local-only and are
-**not** part of the repo. Recommend deletion once no longer needed.
+The router is not registered in `backend/main.py`. It also catches `ImportError` around the Fact-Fit Gate and can continue without blocking. Registration must remain blocked until the gate is mandatory, the registry exists with verified authorities, authentication/case scoping are tested, and the 428 behavior is proven.
 
-```
-route-sweep.mjs
-artifacts/legal-luminaire/backend/check_imports.py
-artifacts/legal-luminaire/backend/scan_imports.py
-artifacts/legal-luminaire/preview-audit/home-desktop-1440.png
-artifacts/legal-luminaire/preview-audit/home-laptop-1024.png
-artifacts/legal-luminaire/preview-audit/home-mobile-375.png
-artifacts/legal-luminaire/preview-audit/home-tablet-768.png
-artifacts/legal-luminaire/preview-audit/keyboard-focus.png
-artifacts/legal-luminaire/preview-audit/preview-audit.mjs
-artifacts/legal-luminaire/preview-audit/reduced-motion.png
-artifacts/legal-luminaire/preview-audit/report.json
-artifacts/legal-luminaire/preview-audit/route-about.png
-artifacts/legal-luminaire/preview-audit/route-accuracy-academy.png
-artifacts/legal-luminaire/preview-audit/route-how-to-use.png
-artifacts/legal-luminaire/preview-audit/routes/F_Git_accuracy_academy.png
-artifacts/legal-luminaire/preview-audit/routes/_accuracy_academy.png
-artifacts/legal-luminaire/preview-audit/routes/report.json
-```
+### 2. Derivative drafting is a complete but unregistered cluster
 
-Disposition: `[ORPHAN]` — safe to delete.
+Cluster:
 
-### A2. Orphan bytecode with **no source** — `[INCORPORATE]` (recover source)
+- `artifacts/legal-luminaire/backend/api/routes_derivative.py`
+- `artifacts/legal-luminaire/backend/agents/derivative_drafter.py`
 
-These directories contain **only compiled `.pyc`** files. The `.py` sources have never
-been committed (`git log` for these paths is empty) and nothing in the codebase imports
-them. Either the source must be authored/recovered, or the bytecode purged.
+The code includes feature flags, pairing checks, lineage, synthetic labeling, and bilingual disclaimers. It still needs an explicit product decision, citation-gate integration, persistent family storage, and route tests before registration.
 
-```
-artifacts/legal-luminaire/backend/drafting/__pycache__/architecture.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/blocks.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/catalog.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/conflicts.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/engine.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/grounds.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/placeholders.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/prompts.cpython-314.pyc
-artifacts/legal-luminaire/backend/drafting/__pycache__/__init__.cpython-314.pyc
-artifacts/legal-luminaire/backend/registry/__pycache__/derivative_drafts.cpython-314.pyc
-artifacts/legal-luminaire/backend/registry/__pycache__/__init__.cpython-314.pyc
-```
+### 3. Alternate engines should be benchmarked, not silently swapped
 
-Implied (missing) sources: `drafting/{architecture,blocks,catalog,conflicts,engine,grounds,placeholders,prompts}.py`
-and `registry/derivative_drafts.py`.
+- `backend/agents/fact_fit_engine.py` is an optimized alternate Fact-Fit implementation.
+- `backend/rag/optimized_document_store.py` is an alternate RAG store.
 
-### A3. Test sources missing (only `.pyc` remain) — `[INCORPORATE]`
+Both are unreferenced. Compare correctness, latency, memory, offline behavior, and failure semantics against the wired implementations before any adoption.
 
-The tests directory is missing these test modules; their bytecode caches linger in
-`backend/tests/__pycache__/`:
+### 4. The PDF helper is plausible future code, but export remains gated
 
-```
-test_drafting_engine.py     (pyc present)
-test_variant_engine.py      (pyc present)
-test_health_route.py        (pyc present)
-test_http_contract.py       (pyc present)
-test_rate_limit.py          (pyc present)
-```
+`backend/utils/pdf_engine.py` is unreferenced. It may support a future court-ready PDF path, but no export integration should proceed unless `PENDING` and `FATAL_ERROR` citations remain physically blocked and advocate-review disclosures are preserved.
 
-Tracked tests actually present: `test_authentication.py`, `test_citation_registry.py`,
-`test_copilot.py`, `test_deadline_engine.py`, `test_route_registry.py`,
-`test_security_remediation.py`, `test_stadium_collapse_accuracy.py`,
-`test_verification_syntax.py`.
+### 5. Most frontend orphans are inventory, not ready features
 
----
+The 52 frontend orphans include 36 unused shadcn/Radix primitives, legacy/alternate views, small hooks/formatters, and several prototype panels. They should be triaged as:
 
-## B. Tracked but not wired into the running app
+- reusable primitive — keep until a real consumer exists;
+- prototype — promote only with route, API, tests, empty/error states, and feature-flag treatment;
+- duplicate/legacy — retire;
+- empty or trivial — delete if no planned consumer exists.
 
-### B1. Release / audit evidence collections (repo root) — `[GUIDANCE]`
+## Disposition legend
 
-#### `audit-results/` (28)
-```
-audit-results/API_AUTHORIZATION_MATRIX.md
-audit-results/BEFORE_AFTER_SCREENSHOTS.md
-audit-results/CITATION_EXPORT_REGRESSION.md
-audit-results/CI_AND_STAGING_VERIFICATION.md
-audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md
-audit-results/DEPLOYMENT_VERIFICATION.md
-audit-results/FINAL_RELEASE_DECISION.md
-audit-results/FULL_TEST_RESULTS.md
-audit-results/GITHUB_POLISH_REPORT.md
-audit-results/LATEST_COMMIT.md
-audit-results/LATEST_COMMIT_AND_MERGE_STATUS.md
-audit-results/LEGAL_ACCURACY_VERIFICATION.md
-audit-results/LEGAL_SOURCE_CLOSURE.md
-audit-results/PERFORMANCE_RESULTS.md
-audit-results/PLAYWRIGHT_ROUTE_INVENTORY.md
-audit-results/PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md
-audit-results/RELEASE_DECISION.md
-audit-results/REMAINING_RISKS.md
-audit-results/REMEDIATION_RECHECK.md
-audit-results/ROUTE_AND_COMPONENT_COVERAGE.md
-audit-results/ROUTE_BROWSER_COVERAGE.md
-audit-results/SE01_AUTH_AND_CASE_ISOLATION.md
-audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md
-audit-results/SECURITY_AND_CASE_ISOLATION.md
-audit-results/SECURITY_VERIFICATION.md
-audit-results/SIMULATED_USER_RESULTS.md
-audit-results/TEST_EXECUTION.md
-audit-results/UI_DESIGN_AUDIT.md
-```
+| Code | Meaning |
+|---|---|
+| `INCORPORATE` | Worth wiring after the listed prerequisites are satisfied |
+| `BLOCKED_REVIEW` | Do not wire until a product, data, legal, or safety decision is recorded |
+| `KEEP_TEST` | Intentional test-only code |
+| `KEEP_GUIDANCE` | Standalone instructions/specification worth retaining |
+| `KEEP_EVIDENCE` | Historical audit/release evidence; preserve in place |
+| `KEEP_DATA` | Case, fixture, template, or generated reference material |
+| `CONSOLIDATE` | Merge unique guidance into a canonical document, then archive the duplicate |
+| `ARCHIVE` | Already retired or superseded; do not merge into the canonical runtime |
+| `DELETE` | Empty, stale, or redundant candidate; confirm no planned consumer first |
+| `WIRED_AUXILIARY` | Not part of the web request path, but intentionally connected to workspace tooling |
 
-#### `design-deliverables/` (9)
-```
-design-deliverables/ACCESSIBILITY_AND_PERFORMANCE.md
-design-deliverables/ACCESSIBILITY_REPORT.md
-design-deliverables/BROWSER_NAVIGATION_RESULTS.md
-design-deliverables/DESIGN_TOKENS.md
-design-deliverables/LANDING_PAGE_DESIGN_AUDIT.md
-design-deliverables/PERFORMANCE_COMPARISON.md
-design-deliverables/REAL_RESPONSIVE_SCREENSHOTS.md
-design-deliverables/RESPONSIVE_SCREENSHOTS.md
-design-deliverables/VISUAL_CHANGELOG.md
-```
+## Code backlog by area
 
-#### `final-deliverables/` (13)
-```
-final-deliverables/AUTHORIZATION_TEST_RESULTS.md
-final-deliverables/AUTH_BOUNDARY_REVIEW.md
-final-deliverables/CITATION_EXPORT_RECHECK.md
-final-deliverables/CITATION_GATE_ADVERSARIAL_RESULTS.md
-final-deliverables/DEPLOYMENT_SMOKE_TESTS.md
-final-deliverables/FINAL_SECURITY_CLOSURE.md
-final-deliverables/FULL_TEST_EXECUTION.md
-final-deliverables/LEGAL_SOURCE_REVIEW.md
-final-deliverables/PRE_MERGE_AND_MERGE_REPORT.md
-final-deliverables/PRODUCTION_READINESS.md
-final-deliverables/RELEASE_CANDIDATE_MANIFEST.md
-final-deliverables/ROLLBACK_RUNBOOK.md
-final-deliverables/SECURITY_EXCEPTIONS.md
-```
+### Backend runtime orphans
 
-### B2. Scattered report collections under `artifacts/` — `[GUIDANCE]`
+| File | Disposition | Next action |
+|---|---|---|
+| `backend/api/routes_pleading_variants.py` | `BLOCKED_REVIEW` | Fix fail-open gate imports; supply verified registry; register or retire |
+| `backend/services/variant_engine.py` | `BLOCKED_REVIEW` | Keep test-only until variants decision; registry is missing |
+| `backend/api/routes_derivative.py` | `BLOCKED_REVIEW` | Decide register vs. retire; add gate, persistence, auth, tests |
+| `backend/agents/derivative_drafter.py` | `BLOCKED_REVIEW` | Treat as one feature cluster with its router |
+| `backend/agents/fact_fit_engine.py` | `INCORPORATE` only after benchmark | Compare against canonical gate; never weaken blocking |
+| `backend/rag/optimized_document_store.py` | `INCORPORATE` only after benchmark | Compare correctness and case isolation against wired store |
+| `backend/utils/pdf_engine.py` | `INCORPORATE` behind gate | Integrate only into a gated export path with Devanagari tests |
+| `backend/graph/neo4j_client.py` | `BLOCKED_REVIEW` | Optional future integration or retirement |
+| `backend/api/regional_audit.py` | `KEEP_TEST` / script | Keep as an audit utility; do not import into runtime |
+| `backend/api/stress_test_ingest.py` | `KEEP_TEST` / script | Keep as a standalone ingestion stress harness |
+| `backend/scripts/generator.py` | `DELETE` | Empty file |
+| `backend/scripts/seed_26_cases.py` | `INCORPORATE` as documented utility | Wire into setup/docs or retire; not application runtime |
 
-These sibling areas sit next to the app and are not used by it (only self-referenced).
+### Frontend runtime orphans
 
-```
-artifacts/audit/BASELINE_RESULTS.md
-artifacts/audit/FINDINGS_RECONCILIATION.md
-artifacts/audit/LATEST_COMMIT.md
-artifacts/audit/LEGAL_ACCURACY_RISKS.md
-artifacts/audit/REMEDIATION_PLAN.md
-artifacts/audit/REPOSITORY_INVENTORY.md
-artifacts/audit/SECURITY_FINDINGS.md
-artifacts/final/ARCHITECTURE.md
-artifacts/final/CHANGELOG.md
-artifacts/final/DEPLOYMENT_READINESS.md
-artifacts/final/FEATURE_MATRIX.md
-artifacts/final/LEGAL_VALIDATION.md
-artifacts/final/OPEN_RISKS.md
-artifacts/final/SECURITY_REPORT.md
-artifacts/final/TEST_EVIDENCE.md
-artifacts/release/RELEASE_READINESS.md
-artifacts/reports/PHASE_EXECUTION_LOG.md
-artifacts/self-assessment/SELF_ASSESSMENT_EVIDENCE.md
-artifacts/legal/PENDING_CITATION_GUARD.md
-artifacts/design/DESIGN_TOKENS.md
-artifacts/demo-outputs/README.md
-artifacts/demo-outputs/demo-03-accuracy-gate-report.md
-artifacts/demo-outputs/demo-04-standards-matrix.md
-```
+| Group | Count | Disposition |
+|---|---:|---|
+| Feature prototypes/alternate views | 8 | Review for promotion or retirement |
+| Duplicate/legacy layout and header | 2 | Retire or document why retained |
+| Data/hooks/formatters | 6 | Keep only with a named consumer or planned use |
+| Unused UI primitives | 36 | Design-system inventory; not automatically feature backlog |
 
-Note: `artifacts/docs/`, `artifacts/security/`, `artifacts/testing/` exist but are empty.
+See the code inventory for every path and a suggested integration point.
 
-### B3. Documentation tree `docs/` (~102) — `[GUIDANCE]`
+## Guidance and documentation backlog
 
-Root documents:
-```
-docs/APP_AUDIT_SCATTERED_CODE.md
-docs/CACHE_HYGIENE.md
-docs/COMPLETION_REPORT.md
-docs/DEVELOPER_GUIDE.md
-docs/FEATURE_FLAGS_MATRIX_W13.md
-docs/FEATURE_FLAGS_REFERENCE.md
-docs/HARVEY_AI_INTEGRATION.md
-docs/HYBRID_DIFF_ONLY_REPORT.md
-docs/HYBRID_FEATURE_COMPARISON_MATRIX.md
-docs/hybrid_feature_matrix_export.csv
-docs/HYBRID_MERGE_AUDIT_AND_ROLLBACK_PLAN.md
-docs/INDEX.md
-docs/INTAKE_EXAMPLES_51_HANDOFF.md
-docs/MERGER_EXECUTION_SUMMARY.md
-docs/MODERNIZATION_PLAN.md
-docs/PHASE1_FEATURE_AUDIT_MATRIX.md
-docs/PHASE2_COMPLETE.md
-docs/PHASE2_COMPLETION_REPORT.md
-docs/PHASE2_STATUS.txt
-docs/ROLLBACK_PLAN.md
-docs/SELF_ASSESSMENT.md
-docs/USER_MANUAL.md
-docs/VIDEO_MANUAL_SCRIPT.md
-```
+The guidance report lists all 452 pre-existing standalone Markdown/text files. The main consolidation targets are:
 
-Sub-trees:
-```
-docs/accuracy-governance/ACCURACY_RULES.md
+1. `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` — primary launch brief.
+2. `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` — consolidation candidate; retain only distinct architecture/triage criteria.
+3. `LAUNCH_HARDENING_REPORT.md` — current launch status; locally modified and must be preserved.
+4. `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` — missing drafting source decision.
+5. `docs/blockers/P2-02-PLEADING-VARIANTS.md` — variants registration decision.
+6. `docs/APP_AUDIT_SCATTERED_CODE.md` — earlier code-health audit; some recommendations are already implemented.
+7. `docs/MODERNIZATION_PLAN.md`, `docs/ROADMAP.md`, and enrichment/integration wave logs — historical planning input; reconcile before reuse.
+8. `audit-results/`, `final-deliverables/`, `design-deliverables/`, and scattered `artifacts/*` reports — preserve as evidence; do not rewrite history to match current code.
 
-docs/adr/ADR-001-accuracy-first-architecture.md
-docs/adr/ADR-002-local-first-fallback.md
-docs/adr/ADR-003-feature-flags-all-new-features.md
-docs/adr/ADR-004-monorepo-pnpm-workspace.md
-docs/adr/ADR-005-bilingual-hindi-english.md
-docs/adr/ADR-006-synthetic-data-only.md
-docs/adr/ADR-007-ci-gates-release-lock.md
-docs/adr/ADR-008-competition-readiness-lock.md
-docs/adr/ADR-009-canonical-runtime.md
+## Missing material that is not represented by a current source file
 
-docs/case-docs/ARBITRATION_CLAIM_AND_DECISION_500_700.lex
-docs/case-docs/ARBITRATION_CLAIM_AND_DECISION_500_700_HINDI.lex
-docs/case-docs/MASTERPIECE_ARBITRATION_CLAIM_PETITION_WITH_DECREE_STAY_HC_PENDENCY.lex
-docs/case-docs/MISC_CASE_DOCUMENT_LIBRARY.md
+| Missing path/material | Status | Required decision |
+|---|---|---|
+| `backend/drafting/{__init__,architecture,blocks,catalog,conflicts,engine,grounds,placeholders,prompts}.py` | Never committed; historical bytecode only | Supersede via ADR or rebuild deliberately from requirements |
+| `backend/registry/{__init__,derivative_drafts}.py` | Superseded predecessor evidence | Keep archived; do not reconstruct by inference |
+| `backend/data/subject_variants.json` | Missing | Supply verified schema/data or retire variants |
+| `backend/services/factfit_gate.py` | Referenced by unwired router but absent | Identify canonical gate adapter before any registration |
+| `backend/services/rag_store.py` | Referenced by unwired router but absent | Use canonical case-scoped search service or retire route |
+| `ETERNAL_RESEARCH_CHILD/tsconfig.phase2.json` | Referenced by package script but absent | Add the config or correct the script before relying on daemon typecheck |
 
-docs/enrichment/ENRICHMENT_5WEEK_SUMMARY.md
-docs/enrichment/WEEK01_KIRO_INTAKE_EXAMPLES.md
-docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md
-docs/enrichment/WEEK14_DEVIN_DEMO_POLISH.md
-docs/enrichment/WEEK15_TRAE_ACCURACY_HARDEN.md
-docs/enrichment/WEEK16_ANTIGRAVITY_RELEASE.md
-docs/enrichment/WEEK1_ANTIGRAVITY_HANDOFF.md
-docs/enrichment/WEEK1_DEVIN_AUDIT.md
-docs/enrichment/WEEK1_KIRO_COMPLETION.md
-docs/enrichment/WEEK1_TRAE_BACKEND_NOTE.md
-docs/enrichment/WEEK2_ANTIGRAVITY_UX_AUDIT.md
-docs/enrichment/WEEK2_DEVIN_COMPLETION.md
-docs/enrichment/WEEK2_KIRO_SUPPORT.md
-docs/enrichment/WEEK2_TRAE_BACKEND_NOTE.md
-docs/enrichment/WEEK3_ANTIGRAVITY_ACCURACY_AUDIT.md
-docs/enrichment/WEEK3_DEVIN_UI_NOTE.md
-docs/enrichment/WEEK3_KIRO_SUPPORT.md
-docs/enrichment/WEEK3_TRAE_COMPLETION.md
-docs/enrichment/WEEK4_ANTIGRAVITY_COMPLETION.md
-docs/enrichment/WEEK4_DEVIN_GUIDED_FLOW.md
-docs/enrichment/WEEK4_KIRO_SUPPORT.md
-docs/enrichment/WEEK4_TRAE_OBSERVABILITY.md
-docs/enrichment/WEEK5_ANTIGRAVITY_FINAL.md
-docs/enrichment/WEEK5_DEVIN_DOCS.md
-docs/enrichment/WEEK5_KIRO_FINAL_CHECK.md
-docs/enrichment/WEEK5_TRAE_BACKEND_FINAL.md
+## Archived and legacy code
 
-docs/integration/ACCURACY_OVERHAUL_IMPLEMENTATION_PLAN.md
-docs/integration/ACCURACY_OVERHAUL_PROGRESS_REPORT.md
-docs/integration/ADR-001-feature-flags.md
-docs/integration/ADR-002-local-first-redaction-before-ai.md
-docs/integration/ADR-003-copilot-read-only-grounded.md
-docs/integration/ADR-004-no-live-court-apis.md
-docs/integration/ENRICHMENT_INTEGRATION_12WEEK_SUMMARY.md
-docs/integration/WEEK01_KIRO_COMPLETION.md
-docs/integration/WEEK05_KIRO_COMPLETION.md
-docs/integration/WEEK06_DEVIN_COMPLETION.md
-docs/integration/WEEK08_ANTIGRAVITY_AUDIT.md
-docs/integration/WEEK09_KIRO_COMPLETION.md
-docs/integration/WEEK10_DEVIN_COMPLETION.md
-docs/integration/WEEK12_ANTIGRAVITY_FINAL.md
+- `archive/retired-packages/api-server/` — 20 files; retired Express/Drizzle backend.
+- `archive/retired-packages/mockup-sandbox/` — 69 files; retired Replit-era mockup.
+- `archive/retired-scripts/` — 4 files; retired one-off scripts.
+- `lib/` — 79 files; legacy API/spec/client/database workspace packages not imported by the canonical frontend or FastAPI backend.
+- `scripts/post-merge.sh` still invokes the legacy `db push` path and is not part of the canonical runtime.
 
-docs/marketing/DEMO_SCRIPT_90SEC_TC23_HIGHWAY.md
-docs/marketing/INFRA_ARB_SHOWCASE_TC22_TO_TC26.md
-docs/marketing/MARKETING_SHOWCASE_MAP.md
-docs/marketing/MARKETING_TASK_SPEC.md
+These are inventory/archive decisions, not incorporation tasks, unless a new architecture decision explicitly revives them.
 
-docs/roadmap/15_WEEK_OMNI_MODAL_STATUS.md
-docs/roadmap/6_MONTH_ROADMAP.md
+## Duplicate checkout and local-only material
 
-docs/submission/DRAFT_SUBMISSION.md
-docs/submission/JUDGE_WALKTHROUGH.md
-docs/submission/STATUTORY_FEATURE_PARITY.md
-docs/submission/vibecode-submit-workflow.md
-docs/submission/VIDEO_SCRIPT_60SEC.md
-docs/submission/WHY_THIS_WINS.md
-docs/submission/screenshots/01_home_dashboard.png
-docs/submission/screenshots/02_smart_ingest_redaction.png
-docs/submission/screenshots/03_grounded_copilot.png
-docs/submission/screenshots/04_chronology_studio.png
-docs/submission/screenshots/05_deadline_board.png
-docs/submission/screenshots/06_standards_explorer.png
-docs/submission/screenshots/07_accuracy_academy.png
+- `legal-luminaire/` is a separate nested Git repository at `ff68166`. It duplicates the main tree and must not be counted again file-by-file.
+- `.kilo/worktrees/succulent-buffer/` is a linked worktree at detached HEAD `8903cde`; it is tooling metadata, not product backlog.
+- `.pytest_cache/`, `.ruff_cache/`, `node_modules/`, virtual environments, `dist/`, and `__pycache__/` are local generated material and are excluded.
+- The old debug/audit debris listed in the 2026-11-21 inventory is no longer present in the current non-dependency working-tree scan.
 
-docs/task-specs/ACCURACY_GATE_TASK_SPEC.md
-docs/task-specs/DEMO_MODE_TASK_SPEC.md
+## Verified as wired or intentionally auxiliary
 
-docs/testing/ROBUSTNESS_REPORT.md
-docs/testing/SYNTHETIC_TEST_DATA_GUIDE.md
-docs/testing/TEST_CASE_MATRIX_21.md
-docs/testing/TEST_CASE_MATRIX_26.md
-```
+| Area | Why it is not in the actionable backlog |
+|---|---|
+| `artifacts/legal-luminaire/src/**` reachable from `main.tsx` | Canonical frontend runtime |
+| `artifacts/legal-luminaire/backend/**` reachable from `main.py` | Canonical FastAPI runtime |
+| `src/data/researchImprovements.generated.ts` | Imported by `ResearchImprovementView.tsx`; `/improvement-lab` is wired |
+| `ETERNAL_RESEARCH_CHILD/**` | Root `pnpm daemon*` scripts invoke it; it writes the wired improvement feed |
+| `real_cases/**` | Referenced by demo-case paths, template library, and backend seeding utility |
+| `output_100426/**` | Several files are referenced by the template library; retain as source/reference data |
+| `.github/**`, root workspace/config files | CI, deployment, and workspace infrastructure |
 
-### B4. Spec / steering framework — `[GUIDANCE]`
+## Recommended order of work
 
-```
-.kiro/specs/accuracy-academy/{requirements.md,design.md,tasks.md}
-.kiro/specs/ask-copilot/{requirements.md,design.md,tasks.md}
-.kiro/specs/chronology-studio/{requirements.md,design.md,tasks.md}
-.kiro/specs/citation-deeplink/{requirements.md,design.md,tasks.md}
-.kiro/specs/deadline-engine/{requirements.md,design.md,tasks.md}
-.kiro/specs/redaction-studio/{requirements.md,design.md,tasks.md}
-.kiro/specs/smart-drop/{requirements.md,design.md,tasks.md}
-.kiro/specs/standards-explorer/{requirements.md,design.md,tasks.md}
-.kiro/steering/accuracy-rules.md
-.kiro/steering/legal-luminaire-protected-files.md
-.trae/specs/kiro-max-reach-polish/spec.md
-.trae/specs/kiro-max-reach-polish/tasks.md
-```
+1. **Record the two drafting decisions:** P2-01 and P2-02. Do not wire either router before the decisions and safety prerequisites are complete.
+2. **Close the fail-open citation-gate path** in any future variants implementation.
+3. **Benchmark alternate engines** against canonical implementations; adopt only with parity tests.
+4. **Triage frontend prototypes** by named user journey; retire duplicates and unused primitives with no planned consumer.
+5. **Consolidate launch guidance** into the primary brief and current launch report; preserve historical evidence separately.
+6. **Document or retire utility scripts and legacy packages**; avoid creating a second runtime.
+7. **Resolve the duplicate checkout** with the user before any cleanup.
 
-### B5. Generated legal deliverables `output_100426/` (26) — `[DATA]`
+## Existing local changes preserved
 
-Court-ready artefacts for the Hemraj / Pitambara matters and TC-22…TC-26 infra cases.
-Referenced only by its own `README.md`.
-
-```
-output_100426/README.md
-output_100426/ANNEXURE_PDF_NAMES_MASTER.txt
-output_100426/AWARD_TC22_HOSPITAL.txt
-output_100426/AWARD_TC23_HIGHWAY.txt
-output_100426/CLAIM_TC22_HOSPITAL_FULL.txt
-output_100426/CLAIM_TC22_HOSPITAL_HINDI.txt
-output_100426/CLAIM_TC23_HIGHWAY_FULL.txt
-output_100426/CLAIM_TC23_HIGHWAY_HINDI.txt
-output_100426/CLAIM_TC24_DAM_FULL.txt
-output_100426/CLAIM_TC25_SUBSTATION_FULL.txt
-output_100426/CLAIM_TC26_LANDSCAPE_FULL.txt
-output_100426/CRIMINAL_APPEAL_HC_2026.txt
-output_100426/CROSS_REF_MATRIX_TC22_HOSPITAL.txt
-output_100426/CROSS_REF_MATRIX_TC23_HIGHWAY.txt
-output_100426/CROSS_REF_MATRIX_TC24_DAM.txt
-output_100426/CROSS_REF_MATRIX_TC25_SUBSTATION.txt
-output_100426/CROSS_REF_MATRIX_TC26_LANDSCAPE.txt
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.pdf
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_COURT_READY.txt
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_v4.pdf
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_v4.txt
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_v5.pdf
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_v5_ENGLISH.pdf
-output_100426/DISCHARGE_APPLICATION_HEMRAJ_v5_PRINT.html
-output_100426/NOTICE_REPLY_PITAMBARA_PRINT.html
-output_100426/SECTION_37_APPEAL_TC23_HIGHWAY.txt
-```
-
-### B6. Brand / showcase assets `logo-ideas/` (~50) — `[BRAND]`
-
-```
-logo-ideas/about the project.md
-logo-ideas/key features.md
-logo-ideas/key features.txt
-logo-ideas/logo 02.jpg
-logo-ideas/logo video form.mp4
-logo-ideas/logo-01.htm
-logo-ideas/logo-raj.png
-logo-ideas/legal-luminaire-showcase/README.md
-logo-ideas/legal-luminaire-showcase/SHOWCASE_DESCRIPTION.md
-logo-ideas/legal-luminaire-showcase/SHOWCASE_UPLOAD_GUIDE.md
-logo-ideas/legal-luminaire-showcase/gallery/01-home-onboarding.png
-logo-ideas/legal-luminaire-showcase/gallery/02-demo-cases.png
-logo-ideas/legal-luminaire-showcase/gallery/03-case-intake.png
-logo-ideas/legal-luminaire-showcase/gallery/04-case-dashboard.png
-logo-ideas/legal-luminaire-showcase/gallery/05-citation-research.png
-logo-ideas/legal-luminaire-showcase/gallery/06-ai-research.png
-logo-ideas/legal-luminaire-showcase/gallery/07-grounded-copilot.png
-logo-ideas/legal-luminaire-showcase/gallery/08-verification-gate.png
-logo-ideas/legal-luminaire-showcase/gallery/09-safe-draft-citation-gate.png
-logo-ideas/legal-luminaire-showcase/gallery/10-drafting-engine.png
-logo-ideas/legal-luminaire-showcase/gallery/11-chronology-studio.png
-logo-ideas/legal-luminaire-showcase/gallery/12-deadline-board.png
-logo-ideas/legal-luminaire-showcase/gallery/13-standards-explorer.png
-logo-ideas/legal-luminaire-showcase/gallery/14-accuracy-academy.png
-logo-ideas/legal-luminaire-showcase/gallery/15-filing-checklist.png
-logo-ideas/legal-luminaire-showcase/logo/verified-beacon-lockup.png
-logo-ideas/legal-luminaire-showcase/logo/verified-beacon-lockup.svg
-logo-ideas/legal-luminaire-showcase/logo/verified-beacon.png
-logo-ideas/legal-luminaire-showcase/logo/verified-beacon.svg
-logo-ideas/logo-01_files/… (23 CSS/JS/HTM capture assets — scraped page dump)
-```
-
-### B7. Forensic-testing FAQ copy `faq/` (2) — `[GUIDANCE]`
-
-```
-faq/construction-material-testing.md
-faq/forensic-construction-testing.md
-```
-
-### B8. Utility scripts `scripts/` (15) — `[INCORPORATE]` / `[ORPHAN]`
-
-One-off generators and maintenance helpers; not invoked by the app build/runtime
-(only `autopilot-one-hour.ps1` orchestrates workspace commands).
-
-```
-scripts/audit_scatter.ts
-scripts/autopilot-one-hour.ps1
-scripts/clean.ps1
-scripts/generate_discharge_english.py
-scripts/generate_discharge_pdf.py
-scripts/gen_discharge_v4.py
-scripts/gen_discharge_v5.py
-scripts/load_test_sim.py
-scripts/package.json
-scripts/post-merge.sh
-scripts/scan_markdown_duty.py
-scripts/seed-demo-data.ts
-scripts/tsconfig.json
-scripts/_gen.py
-scripts/src/hello.ts
-```
-
-Note: the four `*discharge*` / `gen_discharge_*` scripts overlap the backend
-drafting routes and the `output_100426/` PDFs — candidate to fold into the app or retire.
-
-### B9. Standalone workspace packages not part of the deployed app
-
-```
-artifacts/api-server/        [INCORPORATE]? — Express + Drizzle + @workspace/db backend.
-                             Wired only to .replit + autopilot script; app uses the
-                             Python backend instead. Decide: adopt or retire.
-artifacts/mockup-sandbox/    [ORPHAN]      — Vite UI mockup sandbox (Replit artifact).
-                             Referenced only by .replit + autopilot script.
-```
-
----
-
-## Appendix — Verified as wired (NOT in backlog)
-
-| Area | Why it is wired |
-|------|-----------------|
-| `artifacts/legal-luminaire/**` | The deployed frontend + Python backend. |
-| `lib/{api-spec,api-zod,api-client-react,db}` | Shared workspace packages. |
-| `real_cases/**` | Served by `src/data/case-pack-paths.ts`, `all-demo-cases.ts`, `DemoCaseBrowser.tsx`, `backend/repo_paths.py`, `preload_case01.py`, `seed_26_cases.py`. |
-| `sample_cases/**` | Demo/test packs consumed by the app demo browser. |
-| `test-assets/**` | Fixtures referenced by `docs/testing/*` and backend tests. |
-| `ETERNAL_RESEARCH_CHILD/**` | Wired via root `pnpm daemon*` scripts; writes `src/data/researchImprovements.generated.ts` consumed at `/improvement-lab`. |
-| `.github/**`, root configs | CI, deploy, workspace config. |
-
-> Note on `ETERNAL_RESEARCH_CHILD`: it is wired, but only as an offline daemon. Its
-> generated feed `artifacts/legal-luminaire/src/data/researchImprovements.generated.ts`
-> is the live integration point — if the daemon is not run, that feed goes stale.
-
----
-
-## Suggested order of work
-
-1. **Recover or purge orphan code** (A2/A3): the `drafting` / `registry` modules and the
-   5 missing test files. This is the only genuinely *broken* gap.
-2. **Decide on `artifacts/api-server`** (B9): adopt into the stack or delete.
-3. **Consolidate report collections** (B1/B2): merge `audit-results/`,
-   `design-deliverables/`, `final-deliverables/`, and `artifacts/{audit,final,release,
-   reports,self-assessment,legal,design,demo-outputs}` into a single `docs/reports/` tree.
-4. **Triage `scripts/` generators** (B8): fold reusable ones into the backend, retire the rest.
-5. **Retire debris** (A1): delete the git-ignored debug/audit files when done.
+This inventory does not modify application code. The working tree already contains user changes in `LAUNCH_HARDENING_REPORT.md`, backend agent/verification files, `test_verification_syntax.py`, untracked `CODE-JUNCTION/` briefs, the replacement `agents/legal_verifier.py`, and the nested checkout. Those changes were treated as current disk state and left untouched.

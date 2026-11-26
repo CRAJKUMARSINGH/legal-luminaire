@@ -6,7 +6,9 @@ artifact in the repository. Maintained as part of the
 
 - Generated: 2026-11-21
 - Baseline commit: `c8f91cb`
+- Current-state inventories refreshed: 2026-11-26 at `2e70ea2`
 - Companion manifest: [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md)
+- Current inventories: [Master unwired-files inventory](unwired-files-inventory.md) · [Code inventory](unwired-code-inventory.md) · [Guidance material inventory](guidance-material-inventory.md)
 
 > **Why this index exists instead of a mass `git mv`.** The scattered report
 > collections (`audit-results/`, `design-deliverables/`, `final-deliverables/`,
@@ -96,7 +98,7 @@ redaction, copilot read-only, no-live-court-APIs).
 | [DEPLOYMENT_SMOKE_AND_ROLLBACK.md](../audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md) · [DEPLOYMENT_VERIFICATION.md](../audit-results/DEPLOYMENT_VERIFICATION.md) | Deploy + rollback |
 | [REMAINING_RISKS.md](../audit-results/REMAINING_RISKS.md) | Open risks |
 | [PLAYWRIGHT_ROUTE_INVENTORY.md](../audit-results/PLAYWRIGHT_ROUTE_INVENTORY.md) · [PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md](../audit-results/PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md) · [ROUTE_*.md](../audit-results/) | Playwright route sweep |
-| [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md) · [UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md) · [unwired-files-inventory.md](unwired-files-inventory.md) | **This reconciliation** (manifest, resolution report, source inventory) |
+| [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md) · [UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md) · [unwired-files-inventory.md](unwired-files-inventory.md) · [unwired-code-inventory.md](unwired-code-inventory.md) · [guidance-material-inventory.md](guidance-material-inventory.md) | **Unwired-file reconciliation** (historical manifest/resolution + current master, code, and guidance inventories) |
 | [docs/blockers/](blockers/) — [P2-01](blockers/P2-01-DRAFTING-PACKAGE-GAP.md) · [P2-02](blockers/P2-02-PLEADING-VARIANTS.md) · [SE-01](blockers/SE-01-OIDC-CASE-ISOLATION.md) · [SE-08](blockers/SE-08-CHROMADB-ADVISORIES.md) · [LEGAL-11](blockers/LEGAL-SOURCE-CLOSURE.md) | **Five open blockers** — owner, severity, acceptance criteria & release gates |
 
 ### 4.2 `final-deliverables/` (release-candidate pack)
