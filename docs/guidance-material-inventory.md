@@ -2,9 +2,9 @@
 
 Per-file inventory of standalone guidance, specifications, reports, evidence, case notes, fixtures, templates, and other non-executable text material in the working repository.
 
-- Generated: 2026-11-26
+- Generated: 2026-11-27
 - Branch/HEAD: `codex/code-junction-launch-hardening` @ `2e70ea2`
-- Scope: 452 pre-existing tracked/untracked `.md` and `.txt` files, excluding two `requirements*.txt` dependency manifests.
+- Scope: 360 retained baseline `.md` and `.txt` files (452 baseline documents minus 25 removed enrichment reports, 10 earlier test-document removals, 27 stale result/snapshot documents, and 30 redundant reports removed on 2026-11-27), excluding two `requirements*.txt` dependency manifests.
 - Companion: [Master inventory](unwired-files-inventory.md) · [Code inventory](unwired-code-inventory.md)
 
 ## How to use this inventory
@@ -13,13 +13,15 @@ Documentation is not expected to be imported by React or FastAPI. The purpose of
 
 - `KEEP_CANONICAL` — authoritative instructions, architecture, user/developer guidance, or open blockers.
 - `KEEP_GUIDANCE` — specifications, task briefs, manuals, FAQs, and brand guidance worth retaining.
-- `CONSOLIDATE` — unique guidance should be merged into a canonical document, then the duplicate can be archived.
-- `KEEP_EVIDENCE` — historical audit/release/test evidence; preserve in place and do not rewrite history.
+- `CONSOLIDATE` — merge unique guidance into a canonical document, then delete the duplicate.
+- `KEEP_EVIDENCE` — retained audit/release/test evidence; stale generic snapshots are removed when superseded by a canonical current source.
 - `KEEP_DATA` — case material, fixtures, templates, or generated reference output; not executable guidance.
 - `BLOCKED_REVIEW` — do not publish, wire, or reuse until legal/privacy/source review is complete.
-- `ARCHIVE` — superseded or historical material that should remain discoverable but out of the active guidance path.
+- `ARCHIVE` — retired code or data retained for operational provenance, not active guidance.
 
-All paths are repository-relative. Each pre-existing text document appears exactly once in the per-file sections below. Non-Markdown companions are listed separately.
+All paths are repository-relative. Each retained pre-existing text document appears exactly once in the per-file sections below. Non-Markdown companions are listed separately.
+
+Test-artifact cleanup removed 27 stale result/snapshot documents plus the generated manifest CSV and one retired-package error log. A further 30 superseded audit, release, browser, deployment, phase-log, and self-assessment reports were removed on 2026-11-27. `docs/RELEASE_READINESS.md` is the current test/build baseline, `design-deliverables/DESIGN_TOKENS.md` is the retained design guidance, and `docs/testing/TEST_CASE_MATRIX_26.md` contains the consolidated primary and edge/stress specifications.
 
 # 1. Priority incorporation and consolidation queue
 
@@ -28,7 +30,7 @@ All paths are repository-relative. Each pre-existing text document appears exact
 | `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` | Primary phased launch-hardening brief | `KEEP_GUIDANCE`. Keep as the main task brief; fold completed items into the launch report and backlog. |
 | `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` | Broad autonomous-agent role and architecture/triage criteria | `CONSOLIDATE`. Retain distinct architecture and triage criteria; discard generic role/autonomy boilerplate after merge. |
 | `LAUNCH_HARDENING_REPORT.md` | Current launch status and restrictions | `KEEP_CANONICAL`. Preserve local modifications; keep this as the single current launch-status report. |
-| `BASELINE.md` | Test/build/browser baseline | `KEEP_EVIDENCE`. Refresh only by adding a new dated baseline, not by rewriting old results. |
+| `docs/RELEASE_READINESS.md` | Canonical current test/build baseline | `KEEP_CANONICAL`. Single source of truth for current regression status. |
 | `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` | Missing drafting package decision | `KEEP_CANONICAL`. Resolve supersede-vs-rebuild before any drafting-package work. |
 | `docs/blockers/P2-02-PLEADING-VARIANTS.md` | Missing variants registry and unwired router | `KEEP_CANONICAL`. Resolve register-vs-retire; preserve 428 citation blocking, auth, and case scope. |
 | `docs/blockers/SE-01-OIDC-CASE-ISOLATION.md` | Confidential-production identity/case-isolation blocker | `KEEP_CANONICAL`. Release-gating. |
@@ -38,18 +40,15 @@ All paths are repository-relative. Each pre-existing text document appears exact
 | `docs/MODERNIZATION_PLAN.md` | Broad UX/architecture modernization plan | `CONSOLIDATE`. Reconcile against current routes/components before reuse. |
 | `docs/INTAKE_EXAMPLES_51_HANDOFF.md` | Intake-example handoff | `KEEP_GUIDANCE`. Verify current fixture coverage and ownership before closing. |
 | `docs/HARVEY_AI_INTEGRATION.md` | Unfinished Harvey integration guidance | `BLOCKED_REVIEW`. No Harvey source files are currently present; decide retire vs. rebuild. |
-| `docs/DOCUMENTATION_INDEX.md` | Canonical documentation index | `KEEP_CANONICAL`. Keep links to these inventories and historical evidence. |
+| `docs/DOCUMENTATION_INDEX.md` | Canonical documentation index | `KEEP_CANONICAL`. Keep links to current inventories and active evidence only. |
 | `docs/adr/ADR-009-canonical-runtime.md` | Defines the only production web/API runtime | `KEEP_CANONICAL`. Use it to prevent legacy packages from becoming a second runtime. |
 | `archive/unwired-recovery/README.md` | Missing-source and bytecode recovery record | `KEEP_EVIDENCE`. Preserve; pair with P2-01/P2-02 decisions. |
-| `audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md` | Prior reconciliation record | `KEEP_EVIDENCE`. Historical baseline; do not treat as current reachability. |
-| `audit-results/UNWIRED_FILES_MANIFEST.md` | Prior per-file dispositions | `KEEP_EVIDENCE`. Historical baseline; current inventories supersede it for present-state decisions. |
 
 # 2. Root, launch, and continuity documents
 
 | File | Role | Disposition |
 |---|---|---|
 | `README.md` | Primary repository entry point and run commands | `KEEP_CANONICAL` |
-| `BASELINE.md` | Launch verification baseline | `KEEP_EVIDENCE` |
 | `CHANGELOG.md` | Product change history | `KEEP_CANONICAL`; append current changes |
 | `CODE_OF_CONDUCT.md` | Community conduct | `KEEP_GUIDANCE` |
 | `CONTRIBUTING.md` | Contribution workflow | `KEEP_GUIDANCE`; align with launch gate |
@@ -127,7 +126,7 @@ Disposition: `KEEP_GUIDANCE`; reconcile completed polish tasks with current UI b
 
 # 6. Canonical `docs/` tree
 
-## 6.1 Root documentation — 25 files
+## 6.1 Root documentation — 24 files
 
 | File | Role | Disposition |
 |---|---|---|
@@ -150,9 +149,8 @@ Disposition: `KEEP_GUIDANCE`; reconcile completed polish tasks with current UI b
 | `docs/PHASE2_COMPLETE.md` | Phase-2 completion note | `KEEP_EVIDENCE` |
 | `docs/PHASE2_COMPLETION_REPORT.md` | Phase-2 completion report | `KEEP_EVIDENCE` |
 | `docs/PHASE2_STATUS.txt` | Phase-2 status snapshot | `KEEP_EVIDENCE` |
-| `docs/RELEASE_READINESS.md` | Release-readiness assessment | `CONSOLIDATE` with current launch report |
+| `docs/RELEASE_READINESS.md` | Canonical release-readiness assessment and current test/build baseline | `KEEP_CANONICAL` |
 | `docs/ROLLBACK_PLAN.md` | General rollback plan | `KEEP_GUIDANCE`; validate current commands |
-| `docs/SELF_ASSESSMENT.md` | Product self-assessment | `CONSOLIDATE`; dated evidence, not current truth |
 | `docs/USER_MANUAL.md` | End-user manual | `KEEP_CANONICAL` |
 | `docs/VIDEO_MANUAL_SCRIPT.md` | Demo video manual | `KEEP_GUIDANCE`; align with current routes |
 | `docs/unwired-files-inventory.md` | Current master unwired-file inventory | `KEEP_CANONICAL`; refreshed by this task |
@@ -193,40 +191,13 @@ Disposition: `KEEP_GUIDANCE`; reconcile completed polish tasks with current UI b
 |---|---|---|
 | `docs/case-docs/MISC_CASE_DOCUMENT_LIBRARY.md` | Misc case-document library guide | `KEEP_GUIDANCE`; validate against current templates |
 
-## 6.6 Enrichment wave logs — 26 files
+## 6.6 CI-required enrichment lock — 1 file
 
-These are historical implementation/handoff logs. Extract any still-open action into the current roadmap or issue tracker, then retain the logs as evidence. Do not treat their completion claims as current verification.
+Only the Week 13 competition lock is retained because `.github/workflows/ci.yml` and ADR-008 require it. The other 25 weekly enrichment reports were removed during documentation cleanup.
 
-```text
-docs/enrichment/ENRICHMENT_5WEEK_SUMMARY.md
-docs/enrichment/WEEK01_KIRO_INTAKE_EXAMPLES.md
-docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md
-docs/enrichment/WEEK14_DEVIN_DEMO_POLISH.md
-docs/enrichment/WEEK15_TRAE_ACCURACY_HARDEN.md
-docs/enrichment/WEEK16_ANTIGRAVITY_RELEASE.md
-docs/enrichment/WEEK1_ANTIGRAVITY_HANDOFF.md
-docs/enrichment/WEEK1_DEVIN_AUDIT.md
-docs/enrichment/WEEK1_KIRO_COMPLETION.md
-docs/enrichment/WEEK1_TRAE_BACKEND_NOTE.md
-docs/enrichment/WEEK2_ANTIGRAVITY_UX_AUDIT.md
-docs/enrichment/WEEK2_DEVIN_COMPLETION.md
-docs/enrichment/WEEK2_KIRO_SUPPORT.md
-docs/enrichment/WEEK2_TRAE_BACKEND_NOTE.md
-docs/enrichment/WEEK3_ANTIGRAVITY_ACCURACY_AUDIT.md
-docs/enrichment/WEEK3_DEVIN_UI_NOTE.md
-docs/enrichment/WEEK3_KIRO_SUPPORT.md
-docs/enrichment/WEEK3_TRAE_COMPLETION.md
-docs/enrichment/WEEK4_ANTIGRAVITY_COMPLETION.md
-docs/enrichment/WEEK4_DEVIN_GUIDED_FLOW.md
-docs/enrichment/WEEK4_KIRO_SUPPORT.md
-docs/enrichment/WEEK4_TRAE_OBSERVABILITY.md
-docs/enrichment/WEEK5_ANTIGRAVITY_FINAL.md
-docs/enrichment/WEEK5_DEVIN_DOCS.md
-docs/enrichment/WEEK5_KIRO_FINAL_CHECK.md
-docs/enrichment/WEEK5_TRAE_BACKEND_FINAL.md
-```
-
-Disposition: `KEEP_EVIDENCE` with `CONSOLIDATE` for any unfinished guidance.
+| File | Role | Disposition |
+|---|---|---|
+| `docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md` | Week 13 foundation lock and CI evidence | `KEEP_CANONICAL`; required by CI and ADR-008 |
 
 ## 6.7 Governance exception — 1 file
 
@@ -287,120 +258,55 @@ Disposition: `KEEP_EVIDENCE` with `CONSOLIDATE` for any unfinished guidance.
 | `docs/task-specs/ACCURACY_GATE_TASK_SPEC.md` | Accuracy-gate task specification | `KEEP_GUIDANCE` |
 | `docs/task-specs/DEMO_MODE_TASK_SPEC.md` | Demo-mode task specification | `KEEP_GUIDANCE` |
 
-## 6.13 Testing guidance — 4 files
+## 6.13 Testing guidance — 2 files
 
 | File | Role | Disposition |
 |---|---|---|
-| `docs/testing/ROBUSTNESS_REPORT.md` | Robustness test report | `KEEP_EVIDENCE` |
 | `docs/testing/SYNTHETIC_TEST_DATA_GUIDE.md` | Synthetic test-data rules | `KEEP_CANONICAL` |
-| `docs/testing/TEST_CASE_MATRIX_21.md` | 21-case test matrix | `KEEP_EVIDENCE`; reconcile with 26-case matrix |
-| `docs/testing/TEST_CASE_MATRIX_26.md` | 26-case test matrix | `KEEP_GUIDANCE`; align with current fixtures |
+| `docs/testing/TEST_CASE_MATRIX_26.md` | Canonical matrix: 26 primary + 12 edge/stress scenarios | `KEEP_GUIDANCE`; align with current fixtures |
 
 # 7. Audit, release, and design evidence
 
-Preserve these files in place. They are historical evidence, not current runtime documentation. Link to them from the documentation index instead of moving them and breaking internal references.
+Retained evidence remains in place and is linked from the documentation index. Stale test logs, screenshots, generated bundles, and superseded release snapshots were removed; active security, citation, deployment, and release controls remain in the canonical blockers and procedures.
 
-## 7.1 `audit-results/` — 30 files
-
-| File | Focus | Disposition |
-|---|---|---|
-| `audit-results/API_AUTHORIZATION_MATRIX.md` | API authorization coverage | `KEEP_EVIDENCE` |
-| `audit-results/BEFORE_AFTER_SCREENSHOTS.md` | UI before/after evidence | `KEEP_EVIDENCE` |
-| `audit-results/CITATION_EXPORT_REGRESSION.md` | Citation-export regression | `KEEP_EVIDENCE` |
-| `audit-results/CI_AND_STAGING_VERIFICATION.md` | CI/staging verification | `KEEP_EVIDENCE` |
-| `audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md` | Deploy smoke/rollback | `KEEP_EVIDENCE` |
-| `audit-results/DEPLOYMENT_VERIFICATION.md` | Deployment verification | `KEEP_EVIDENCE` |
-| `audit-results/FINAL_RELEASE_DECISION.md` | Final release decision | `KEEP_EVIDENCE` |
-| `audit-results/FULL_TEST_RESULTS.md` | Full test results | `KEEP_EVIDENCE` |
-| `audit-results/GITHUB_POLISH_REPORT.md` | GitHub polish report | `KEEP_EVIDENCE` |
-| `audit-results/LATEST_COMMIT.md` | Commit snapshot | `KEEP_EVIDENCE` |
-| `audit-results/LATEST_COMMIT_AND_MERGE_STATUS.md` | Commit/merge snapshot | `KEEP_EVIDENCE` |
-| `audit-results/LEGAL_ACCURACY_VERIFICATION.md` | Legal accuracy verification | `KEEP_EVIDENCE` |
-| `audit-results/LEGAL_SOURCE_CLOSURE.md` | Legal-source closure evidence | `KEEP_EVIDENCE` |
-| `audit-results/PERFORMANCE_RESULTS.md` | Performance results | `KEEP_EVIDENCE` |
-| `audit-results/PLAYWRIGHT_ROUTE_INVENTORY.md` | Playwright route inventory | `KEEP_EVIDENCE` |
-| `audit-results/PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md` | Browser screenshots/results | `KEEP_EVIDENCE` |
-| `audit-results/RELEASE_DECISION.md` | Release decision | `KEEP_EVIDENCE` |
-| `audit-results/REMAINING_RISKS.md` | Open-risk snapshot | `KEEP_EVIDENCE`; reconcile with blockers |
-| `audit-results/REMEDIATION_RECHECK.md` | Remediation recheck | `KEEP_EVIDENCE` |
-| `audit-results/ROUTE_AND_COMPONENT_COVERAGE.md` | Route/component coverage | `KEEP_EVIDENCE` |
-| `audit-results/ROUTE_BROWSER_COVERAGE.md` | Browser route coverage | `KEEP_EVIDENCE`; refresh sweep separately |
-| `audit-results/SE01_AUTH_AND_CASE_ISOLATION.md` | Auth/case-isolation evidence | `KEEP_EVIDENCE` |
-| `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` | ChromaDB exception register | `KEEP_EVIDENCE` |
-| `audit-results/SECURITY_AND_CASE_ISOLATION.md` | Security/case isolation | `KEEP_EVIDENCE` |
-| `audit-results/SECURITY_VERIFICATION.md` | Security verification | `KEEP_EVIDENCE` |
-| `audit-results/SIMULATED_USER_RESULTS.md` | Simulated-user results | `KEEP_EVIDENCE` |
-| `audit-results/TEST_EXECUTION.md` | Test execution evidence | `KEEP_EVIDENCE` |
-| `audit-results/UI_DESIGN_AUDIT.md` | UI design audit | `KEEP_EVIDENCE` |
-| `audit-results/UNWIRED_FILES_MANIFEST.md` | Prior unwired-file manifest | `KEEP_EVIDENCE`; historical |
-| `audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md` | Prior reconciliation report | `KEEP_EVIDENCE`; historical |
-
-## 7.2 `design-deliverables/` — 9 files
+## 7.1 `audit-results/` — 1 file
 
 | File | Focus | Disposition |
 |---|---|---|
-| `design-deliverables/ACCESSIBILITY_AND_PERFORMANCE.md` | Accessibility/performance | `KEEP_EVIDENCE` |
-| `design-deliverables/ACCESSIBILITY_REPORT.md` | Accessibility report | `KEEP_EVIDENCE` |
-| `design-deliverables/BROWSER_NAVIGATION_RESULTS.md` | Browser navigation | `KEEP_EVIDENCE` |
-| `design-deliverables/DESIGN_TOKENS.md` | Design tokens | `CONSOLIDATE` with current token source |
-| `design-deliverables/LANDING_PAGE_DESIGN_AUDIT.md` | Landing-page audit | `KEEP_EVIDENCE` |
-| `design-deliverables/PERFORMANCE_COMPARISON.md` | Performance comparison | `KEEP_EVIDENCE` |
-| `design-deliverables/REAL_RESPONSIVE_SCREENSHOTS.md` | Responsive screenshot evidence | `KEEP_EVIDENCE` |
-| `design-deliverables/RESPONSIVE_SCREENSHOTS.md` | Responsive screenshots | `KEEP_EVIDENCE` |
-| `design-deliverables/VISUAL_CHANGELOG.md` | Visual changelog | `KEEP_EVIDENCE` |
+| `audit-results/API_AUTHORIZATION_MATRIX.md` | Current API authorization coverage and residual gaps | `KEEP_EVIDENCE` |
 
-## 7.3 `final-deliverables/` — 13 files
+## 7.2 `design-deliverables/` — 1 file
 
 | File | Focus | Disposition |
 |---|---|---|
-| `final-deliverables/AUTHORIZATION_TEST_RESULTS.md` | Authorization tests | `KEEP_EVIDENCE` |
+| `design-deliverables/DESIGN_TOKENS.md` | Current design-token guidance | `KEEP_GUIDANCE` |
+
+## 7.3 `final-deliverables/` — 5 files
+
+| File | Focus | Disposition |
+|---|---|---|
 | `final-deliverables/AUTH_BOUNDARY_REVIEW.md` | Auth boundary review | `KEEP_EVIDENCE` |
-| `final-deliverables/CITATION_EXPORT_RECHECK.md` | Citation-export recheck | `KEEP_EVIDENCE` |
-| `final-deliverables/CITATION_GATE_ADVERSARIAL_RESULTS.md` | Adversarial gate results | `KEEP_EVIDENCE` |
-| `final-deliverables/DEPLOYMENT_SMOKE_TESTS.md` | Deployment smoke tests | `KEEP_EVIDENCE` |
-| `final-deliverables/FINAL_SECURITY_CLOSURE.md` | Security closure | `KEEP_EVIDENCE` |
-| `final-deliverables/FULL_TEST_EXECUTION.md` | Full test execution | `KEEP_EVIDENCE` |
+| `final-deliverables/DEPLOYMENT_SMOKE_TESTS.md` | Deployment smoke specification | `KEEP_GUIDANCE` |
 | `final-deliverables/LEGAL_SOURCE_REVIEW.md` | Legal-source review | `KEEP_EVIDENCE` |
-| `final-deliverables/PRE_MERGE_AND_MERGE_REPORT.md` | Pre-merge/merge evidence | `KEEP_EVIDENCE` |
-| `final-deliverables/PRODUCTION_READINESS.md` | Production readiness | `KEEP_EVIDENCE`; reconcile with launch report |
-| `final-deliverables/RELEASE_CANDIDATE_MANIFEST.md` | RC manifest | `KEEP_EVIDENCE` |
 | `final-deliverables/ROLLBACK_RUNBOOK.md` | Rollback runbook | `KEEP_GUIDANCE`; validate current commands |
 | `final-deliverables/SECURITY_EXCEPTIONS.md` | Security exceptions | `KEEP_EVIDENCE`; track closure |
 
 # 8. Scattered `artifacts/` evidence and app-level guides
 
-## 8.1 Evidence and guides — 28 files
+## 8.1 Evidence and guides — 10 files
 
 | File | Role | Disposition |
 |---|---|---|
-| `artifacts/audit/BASELINE_RESULTS.md` | Earlier baseline | `KEEP_EVIDENCE` |
-| `artifacts/audit/FINDINGS_RECONCILIATION.md` | Findings reconciliation | `KEEP_EVIDENCE` |
-| `artifacts/audit/LATEST_COMMIT.md` | Commit snapshot | `KEEP_EVIDENCE` |
-| `artifacts/audit/LEGAL_ACCURACY_RISKS.md` | Legal accuracy risks | `KEEP_EVIDENCE` |
-| `artifacts/audit/REMEDIATION_PLAN.md` | Remediation plan | `CONSOLIDATE`; extract remaining work |
-| `artifacts/audit/REPOSITORY_INVENTORY.md` | Earlier repository inventory | `KEEP_EVIDENCE` |
-| `artifacts/audit/SECURITY_FINDINGS.md` | Security findings | `KEEP_EVIDENCE` |
 | `artifacts/demo-outputs/README.md` | Demo-output guide | `KEEP_GUIDANCE` |
 | `artifacts/demo-outputs/demo-03-accuracy-gate-report.md` | Accuracy-gate demo output | `KEEP_EVIDENCE` |
 | `artifacts/demo-outputs/demo-04-standards-matrix.md` | Standards-matrix demo output | `KEEP_EVIDENCE` |
-| `artifacts/design/DESIGN_TOKENS.md` | Earlier design tokens | `CONSOLIDATE` with current token source |
 | `artifacts/final/ARCHITECTURE.md` | Earlier architecture | `KEEP_EVIDENCE`; reconcile with ADR-009 |
-| `artifacts/final/CHANGELOG.md` | Earlier changelog | `KEEP_EVIDENCE` |
-| `artifacts/final/DEPLOYMENT_READINESS.md` | Earlier deployment readiness | `KEEP_EVIDENCE` |
-| `artifacts/final/FEATURE_MATRIX.md` | Earlier feature matrix | `KEEP_EVIDENCE` |
-| `artifacts/final/LEGAL_VALIDATION.md` | Legal validation | `KEEP_EVIDENCE` |
-| `artifacts/final/OPEN_RISKS.md` | Earlier open risks | `KEEP_EVIDENCE` |
-| `artifacts/final/SECURITY_REPORT.md` | Security report | `KEEP_EVIDENCE` |
-| `artifacts/final/TEST_EVIDENCE.md` | Test evidence | `KEEP_EVIDENCE` |
 | `artifacts/legal-luminaire/DEPLOY_AND_MULTI_CASE_GUIDE.md` | Deployment/multi-case guide | `KEEP_GUIDANCE`; validate current runtime |
 | `artifacts/legal-luminaire/MULTI_CASE_IMPLEMENTATION.md` | Multi-case implementation notes | `CONSOLIDATE` with current architecture |
 | `artifacts/legal-luminaire/docs/VIDEO_MANUAL_SCRIPT.md` | App-level video manual | `CONSOLIDATE` with `docs/VIDEO_MANUAL_SCRIPT.md` |
 | `artifacts/legal-luminaire/docs/marketing/INFRA_ARB_SHOWCASE.md` | App-level showcase guide | `CONSOLIDATE` with `docs/marketing/` |
 | `artifacts/legal-luminaire/src/data/PEETAMBARA_NOTICE_REPLY_v1.md` | Draft/source notice reply | `KEEP_DATA`; legal/source review before reuse |
 | `artifacts/legal/PENDING_CITATION_GUARD.md` | Pending-citation guard guidance | `KEEP_CANONICAL` |
-| `artifacts/release/RELEASE_READINESS.md` | Earlier release readiness | `KEEP_EVIDENCE` |
-| `artifacts/reports/PHASE_EXECUTION_LOG.md` | Phase execution log | `KEEP_EVIDENCE` |
-| `artifacts/self-assessment/SELF_ASSESSMENT_EVIDENCE.md` | Self-assessment evidence | `KEEP_EVIDENCE` |
 
 ## 8.2 Uploaded case material — 35 files
 
@@ -692,7 +598,7 @@ Disposition: `KEEP_DATA`. Duplicate hyphen/underscore template pairs should be c
 
 # 14. Non-Markdown guidance and evidence companions
 
-These files are not part of the 452-document text count but are relevant standalone guidance/evidence/data material.
+These files are not part of the 427-document retained baseline count but are relevant standalone guidance/evidence/data material.
 
 ## 14.1 `docs/` companions — 11 files
 
@@ -770,14 +676,14 @@ Disposition: `KEEP_EVIDENCE`; mark selected brand assets and archive unused vari
 - `docs/unwired-code-inventory.md` — new detailed code inventory.
 - `docs/guidance-material-inventory.md` — this new detailed guidance inventory.
 
-The two new companion reports are outputs of this inventory and are not included in the 452 pre-existing-document count.
+The two new companion reports are outputs of this inventory and are not included in the 360 retained baseline-document count.
 
 # 16. Recommended documentation work
 
-1. Keep `LAUNCH_HARDENING_REPORT.md` as the single current launch-status document.
+1. Keep `LAUNCH_HARDENING_REPORT.md` as the single current launch-status document and `docs/RELEASE_READINESS.md` as the canonical test/build baseline.
 2. Merge unique CODE-JUNCTION role/triage guidance into the primary brief or canonical architecture docs; archive the generic role preamble.
-3. Reconcile `MODERNIZATION_PLAN.md`, root `ROADMAP.md`, `docs/roadmap/`, and enrichment/integration logs into one current roadmap.
-4. Preserve audit/final/design evidence in place; link it from `DOCUMENTATION_INDEX.md` instead of moving it.
+3. Reconcile `MODERNIZATION_PLAN.md`, root `ROADMAP.md`, `docs/roadmap/`, and the CI-required Week 13 enrichment lock into one current roadmap.
+4. Retain active controls, procedures, and current evidence in place; keep superseded reports out of the documentation index.
 5. Resolve P2-01/P2-02 and keep their blocker documents canonical until acceptance criteria are met.
 6. Validate FAQs, statutory parity, marketing claims, and legal-source material before publication or court use.
 7. Keep real cases and `output_100426/` confidential; keep synthetic fixtures clearly labeled.

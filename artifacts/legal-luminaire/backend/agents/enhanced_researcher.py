@@ -12,7 +12,7 @@ from langchain_openai import ChatOpenAI
 
 from config import settings
 from agents.tools import web_search, browse_page, indian_kanoon_search, verify_is_standard
-from agents.tools.legal_verifier import (
+from agents.legal_verifier import (
     CrossDatabaseConsensus,
     IndianKanoonVerifier,
     SCCOnlineVerifier,

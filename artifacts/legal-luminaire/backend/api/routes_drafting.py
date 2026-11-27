@@ -8,6 +8,7 @@ from typing import Optional
 import os
 import logging
 from api.case_manager import case_manager
+from api.citation_registry import evaluate_citation_gate
 from api.court_styles import get_style_for_court
 from api.redaction_utils import redact_indian_pii
 
@@ -24,7 +25,7 @@ class DraftResponse(BaseModel):
     draft_content: str
     error: Optional[str] = None
 
-async def _generate_draft_impl(case_id: str, draft_type: str, additional_notes: Optional[str] = ""):
+async def _generate_draft_impl(case_id: str, draft_type: str, additional_notes: Optional[str] = "") -> DraftResponse:
     """Internal implementation shared by both path-param and body-param routes."""
     logger.info(
         "case_event",
@@ -116,27 +117,37 @@ async def _generate_draft_impl(case_id: str, draft_type: str, additional_notes: 
             "notes": redact_indian_pii(additional_notes or ""),
         })
 
+        draft = result.content
+        if not isinstance(draft, str) or not draft.strip():
+            return DraftResponse(success=False, draft_content="", error="The provider returned no draft text.")
+        if evaluate_citation_gate(draft).must_block:
+            return DraftResponse(
+                success=False,
+                draft_content="",
+                error="Citation Gate blocked the draft. Resolve the unverified authority before continuing.",
+            )
+
         logger.info(
             "case_event",
             extra={
                 "event": "draft_complete",
                 "case_id": case_id,
                 "draft_type": draft_type,
-                "draft_length": len(result.content),
+                "draft_length": len(draft),
             }
         )
 
-        return DraftResponse(success=True, draft_content=result.content)
-    except Exception as e:
+        return DraftResponse(success=True, draft_content=draft)
+    except Exception as error:
         logger.error(
             "case_event",
             extra={
                 "event": "draft_failed",
                 "case_id": case_id,
-                "error": str(e),
+                "error_type": type(error).__name__,
             }
         )
-        return DraftResponse(success=False, draft_content="", error=str(e))
+        return DraftResponse(success=False, draft_content="", error="Draft generation failed. Please retry.")
 
 
 @router.post("/generate-draft", response_model=DraftResponse)

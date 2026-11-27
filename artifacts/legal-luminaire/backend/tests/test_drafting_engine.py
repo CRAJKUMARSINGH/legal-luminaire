@@ -1,66 +1,72 @@
-"""
-test_drafting_engine.py — BLOCKED (documented skip stub; RECREATED placeholder).
+"""Exercise the drafting API selected in ADR-010 with a local provider double."""
 
-History
--------
-The original ``test_drafting_engine.py`` source was never committed (only its
-``.cpython-314.pyc`` survived). Its bytecode targeted the ``backend/drafting/``
-package — an "advocate-grade drafting generation layer" exposing, at minimum:
-``architecture``, ``blocks``, ``catalog``, ``conflicts``, ``engine``, ``grounds``,
-``placeholders``, ``prompts``, with a ~30-template catalog and
-``engine.resolve_legacy_draft_type()`` (``BAIL_439 -> regular_bail``,
-``DISCHARGE -> discharge``, ``BRIEF -> defence_brief``).
-
-That package was **never committed to Git** and its ``.py`` sources cannot be
-recovered. Python 3.14 bytecode cannot be reliably decompiled, and reconstructing
-legal drafting logic by inference would risk fabricating legal content — explicitly
-prohibited by the reconciliation directive ("Do not infer correctness from bytecode
-alone").
-
-Classification
---------------
-**UNCERTAIN — required and missing (BLOCKER P2-01).**
-
-The wired drafting path is ``api/routes_drafting.py`` (Gemini-prompt based; request
-``draft_type`` in ``BRIEF | DISCHARGE | BAIL_439``), which supersedes the orphan
-package at runtime.
-
-This module is retained (not deleted) so the gap remains visible in CI. Every test
-is skipped until the drafting-layer epic is either re-implemented deliberately from
-trustworthy requirements or formally dropped — a product decision, not a
-reconciliation action.
-"""
-from __future__ import annotations
+import sys
+from types import ModuleType, SimpleNamespace
+from unittest.mock import MagicMock, Mock
 
 import pytest
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from langchain_core.prompts import ChatPromptTemplate
 
-pytestmark = pytest.mark.skip(
-    reason=(
-        "BLOCKER P2-01: backend/drafting/ package was never committed; source "
-        "unrecoverable and bytecode cannot be safely decompiled. Awaiting product "
-        "decision (re-implement from requirements vs. formally drop the epic)."
-    )
-)
+from api import routes_drafting
 
 
-def test_drafting_catalog_exposes_templates():
-    from drafting import catalog  # noqa: F401  (module absent today)
+@pytest.fixture
+def drafting_client(monkeypatch):
+    monkeypatch.setattr(routes_drafting.case_manager, "get_case", Mock(return_value={
+        "title": "Synthetic case",
+        "brief": "Contact fixture@example.com",
+    }))
+    monkeypatch.setenv("GOOGLE_API_KEY", "synthetic-key")
+    provider = ModuleType("langchain_google_genai")
+    provider.ChatGoogleGenerativeAI = Mock()
+    monkeypatch.setitem(sys.modules, provider.__name__, provider)
+    chain = Mock()
+    prompt = MagicMock()
+    prompt.__or__.return_value = chain
+    monkeypatch.setattr(ChatPromptTemplate, "from_messages", Mock(return_value=prompt))
+    app = FastAPI()
+    app.include_router(routes_drafting.router, prefix="/api/v1")
+    return TestClient(app), chain
 
-    assert catalog.TEMPLATES
+
+@pytest.mark.parametrize("url", ["/api/v1/generate-draft", "/api/v1/cases/demo/generate-draft"])
+def test_supported_drafting_routes_redact_inputs(drafting_client, url):
+    client, chain = drafting_client
+    chain.invoke.return_value = SimpleNamespace(content="Synthetic draft for advocate review.")
+    payload = {"draft_type": "BRIEF", "additional_notes": "Email notes@example.com"}
+    if url.endswith("/v1/generate-draft"):
+        payload["case_id"] = "demo"
+
+    response = client.post(url, json=payload)
+
+    assert response.status_code == 200
+    assert response.json()["draft_content"] == "Synthetic draft for advocate review."
+    params = chain.invoke.call_args.args[0]
+    assert "Contact [EMAIL-REDACTED]" in params["context"]
+    assert params["notes"] == "Email [EMAIL-REDACTED]"
 
 
-def test_resolve_legacy_draft_type_mapping():
-    from drafting.engine import resolve_legacy_draft_type
+def test_generated_draft_with_a_pending_citation_is_withheld(drafting_client):
+    client, chain = drafting_client
+    chain.invoke.return_value = SimpleNamespace(content="Authority: (2003) 4 GLR 3121.")
 
-    assert resolve_legacy_draft_type("BAIL_439") == "regular_bail"
-    assert resolve_legacy_draft_type("DISCHARGE") == "discharge"
-    assert resolve_legacy_draft_type("BRIEF") == "defence_brief"
+    response = client.post("/api/v1/generate-draft", json={"case_id": "demo", "draft_type": "BRIEF"})
+
+    assert response.status_code == 200
+    assert response.json()["success"] is False
+    assert response.json()["draft_content"] == ""
+    assert "Citation Gate" in response.json()["error"]
 
 
-def test_skeleton_marks_not_filing_ready():
-    from drafting import engine
+def test_provider_errors_are_not_returned_to_the_caller(drafting_client):
+    client, chain = drafting_client
+    chain.invoke.side_effect = RuntimeError("Provider body includes private data")
 
-    skeleton = engine.build_skeleton("regular_bail")
-    assert "NOT filing-ready" in skeleton
-    assert "SOURCE CONTROL" in skeleton
-    assert "LIST OF ANNEXURES" in skeleton
+    response = client.post("/api/v1/generate-draft", json={"case_id": "demo", "draft_type": "BRIEF"})
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "success": False, "draft_content": "", "error": "Draft generation failed. Please retry."
+    }

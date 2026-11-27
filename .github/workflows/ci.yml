@@ -34,6 +34,9 @@ jobs:
       - name: Run Vitest suite
         run: pnpm --filter @workspace/legal-luminaire run test
 
+      - name: Test the synthetic demo seeder contract
+        run: pnpm --filter @workspace/scripts run test:seed-demo
+
       - name: Build frontend (Vite)
         run: pnpm --filter @workspace/legal-luminaire run build
 

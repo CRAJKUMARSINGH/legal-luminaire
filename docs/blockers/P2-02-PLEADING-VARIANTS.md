@@ -1,6 +1,6 @@
 # P2-02 — Pleading Variants: missing registry data and unwired routes
 **Priority:** P2
-**Status:** OPEN — requires an explicit *register-or-retire* decision; targeted browser regression passed and the full route sweep is pending
+**Status:** CLOSED — retired under [ADR-011](../adr/ADR-011-retire-pleading-chain.md)
 **Opened:** 2026-11-21
 **Owner:** Backend engineering (feature decision) + Frontend engineering (route sweep)
 **Linked commits:** `0abe110` (reconciliation — tests recreated, gap first recorded),
@@ -9,6 +9,8 @@
 ---
 
 ## What is missing
+
+The original inventory and acceptance criteria below are retained as historical evidence. ADR-011 records the current disposition. Registry-data and HTTP 428 acceptance criteria apply to a registered generation endpoint. The retired surface has no such endpoint.
 
 The pleading-variants feature is **half-present**. Two independent gaps exist, and
 neither has ever worked in a committed build.

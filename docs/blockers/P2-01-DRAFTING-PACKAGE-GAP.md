@@ -1,6 +1,7 @@
 # P2-01 — Drafting Package Gap
 **Priority:** P2  
-**Status:** OPEN — formal investigation complete; product decision required  
+**Status:** CLOSED — superseded under [ADR-010](../adr/ADR-010-gemini-direct-drafting.md)
+
 **Opened:** 2026-11-21  
 **Owner:** Backend engineering  
 **Linked commit:** `0abe110` (reconciliation — bytecode archived, test stub created)
@@ -8,6 +9,8 @@
 ---
 
 ## What is missing
+
+The inventory and options below record the original investigation. ADR-010 records the supersession decision and the current scope. Live-provider validation and court-use release gates are tracked separately.
 
 Nine Python source files were never committed. Their `.cpython-314.pyc` bytecodes
 were found in `__pycache__/` and archived to

@@ -3,7 +3,7 @@
 **Status:** PARTIAL — scoped API keys deployed; OIDC not implemented  
 **Opened:** Pre-2026-11  
 **Owner:** Backend engineering (security-controlled implementation)  
-**Reference:** `audit-results/SE01_AUTH_AND_CASE_ISOLATION.md`, SUPPLEMENT guide §1
+**Reference:** SUPPLEMENT guide §1
 
 ---
 

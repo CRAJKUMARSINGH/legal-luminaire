@@ -1,22 +1,17 @@
 # Legal Luminaire — Documentation Index
 
-Searchable index of every documentation, evidence, spec, legal-source and rollback
-artifact in the repository. Maintained as part of the
-[unwired-files reconciliation](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md).
+Searchable index of retained documentation, active evidence, specifications,
+legal-source records, and rollback procedures.
 
 - Generated: 2026-11-21
 - Baseline commit: `c8f91cb`
-- Current-state inventories refreshed: 2026-11-26 at `2e70ea2`
-- Companion manifest: [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md)
+- Current-state inventories refreshed: 2026-11-27 at `2e70ea2`
 - Current inventories: [Master unwired-files inventory](unwired-files-inventory.md) · [Code inventory](unwired-code-inventory.md) · [Guidance material inventory](guidance-material-inventory.md)
 
-> **Why this index exists instead of a mass `git mv`.** The scattered report
-> collections (`audit-results/`, `design-deliverables/`, `final-deliverables/`,
-> `artifacts/{audit,final,release,reports,…}`) are **historical release evidence**.
-> Relocating them would either leave their many internal cross-references stale or
-> require rewriting the records themselves — which the reconciliation directive
-> forbids ("Do not delete unique historical evidence"). They are therefore
-> **preserved in place** and made discoverable through this index.
+> **Retention rule.** Keep documentation only when it serves an active functional
+> purpose: CI/build/runtime consumers, canonical indexes, current release decisions,
+> or current security, legal, citation, and deployment controls. Stale result
+> snapshots and generated bundles are removed when superseded.
 
 ---
 
@@ -25,8 +20,8 @@ artifact in the repository. Maintained as part of the
 ```bash
 # Everything mentioning a term (docs + evidence + specs)
 rg -i "citation gate" docs/ audit-results/ final-deliverables/ design-deliverables/ \
-   artifacts/audit artifacts/final artifacts/release artifacts/reports \
-   artifacts/self-assessment artifacts/legal artifacts/design artifacts/demo-outputs \
+   artifacts/audit artifacts/final artifacts/reports \
+   artifacts/self-assessment artifacts/legal artifacts/demo-outputs \
    .kiro .trae faq
 
 # Find an ADR
@@ -85,46 +80,41 @@ redaction, copilot read-only, no-live-court-APIs).
 
 ## 4. Release / audit evidence
 
-### 4.1 `audit-results/` (canonical audit evidence)
+### 4.1 Current baseline and controls
 
 | Document | Focus |
 |---|---|
-| [FINAL_RELEASE_DECISION.md](../audit-results/FINAL_RELEASE_DECISION.md) · [RELEASE_DECISION.md](../audit-results/RELEASE_DECISION.md) | Go/no-go decisions |
-| [FULL_TEST_RESULTS.md](../audit-results/FULL_TEST_RESULTS.md) · [TEST_EXECUTION.md](../audit-results/TEST_EXECUTION.md) | Test evidence |
-| [SECURITY_VERIFICATION.md](../audit-results/SECURITY_VERIFICATION.md) · [SECURITY_AND_CASE_ISOLATION.md](../audit-results/SECURITY_AND_CASE_ISOLATION.md) · [SE01_AUTH_AND_CASE_ISOLATION.md](../audit-results/SE01_AUTH_AND_CASE_ISOLATION.md) | Security & case isolation |
-| [SE08_CHROMADB_ADVISORY_REGISTER.md](../audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md) | Vulnerability exception register (SE-08) |
-| [LEGAL_SOURCE_CLOSURE.md](../audit-results/LEGAL_SOURCE_CLOSURE.md) · [LEGAL_ACCURACY_VERIFICATION.md](../audit-results/LEGAL_ACCURACY_VERIFICATION.md) | Legal-source records |
-| [CITATION_EXPORT_REGRESSION.md](../audit-results/CITATION_EXPORT_REGRESSION.md) | Citation-export regression evidence |
-| [DEPLOYMENT_SMOKE_AND_ROLLBACK.md](../audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md) · [DEPLOYMENT_VERIFICATION.md](../audit-results/DEPLOYMENT_VERIFICATION.md) | Deploy + rollback |
-| [REMAINING_RISKS.md](../audit-results/REMAINING_RISKS.md) | Open risks |
-| [PLAYWRIGHT_ROUTE_INVENTORY.md](../audit-results/PLAYWRIGHT_ROUTE_INVENTORY.md) · [PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md](../audit-results/PLAYWRIGHT_SCREENSHOTS_AND_RESULTS.md) · [ROUTE_*.md](../audit-results/) | Playwright route sweep |
-| [UNWIRED_FILES_MANIFEST.md](../audit-results/UNWIRED_FILES_MANIFEST.md) · [UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md) · [unwired-files-inventory.md](unwired-files-inventory.md) · [unwired-code-inventory.md](unwired-code-inventory.md) · [guidance-material-inventory.md](guidance-material-inventory.md) | **Unwired-file reconciliation** (historical manifest/resolution + current master, code, and guidance inventories) |
-| [docs/blockers/](blockers/) — [P2-01](blockers/P2-01-DRAFTING-PACKAGE-GAP.md) · [P2-02](blockers/P2-02-PLEADING-VARIANTS.md) · [SE-01](blockers/SE-01-OIDC-CASE-ISOLATION.md) · [SE-08](blockers/SE-08-CHROMADB-ADVISORIES.md) · [LEGAL-11](blockers/LEGAL-SOURCE-CLOSURE.md) | **Five open blockers** — owner, severity, acceptance criteria & release gates |
+| [RELEASE_READINESS.md](RELEASE_READINESS.md) · [LAUNCH_HARDENING_REPORT.md](../LAUNCH_HARDENING_REPORT.md) | Canonical current test/build and launch baseline |
+| [API_AUTHORIZATION_MATRIX.md](../audit-results/API_AUTHORIZATION_MATRIX.md) | Current API authorization coverage and residual gaps |
+| [unwired-files-inventory.md](unwired-files-inventory.md) · [unwired-code-inventory.md](unwired-code-inventory.md) · [guidance-material-inventory.md](guidance-material-inventory.md) | Current unwired-file, code, and guidance inventories |
+| [docs/blockers/](blockers/) — [P2-01](blockers/P2-01-DRAFTING-PACKAGE-GAP.md) · [P2-02](blockers/P2-02-PLEADING-VARIANTS.md) · [SE-01](blockers/SE-01-OIDC-CASE-ISOLATION.md) · [SE-08](blockers/SE-08-CHROMADB-ADVISORIES.md) · [LEGAL-11](blockers/LEGAL-SOURCE-CLOSURE.md) | Three open blockers. [ADR-010](adr/ADR-010-gemini-direct-drafting.md) supersedes P2-01 and [ADR-011](adr/ADR-011-retire-pleading-chain.md) retires P2-02. |
 
-### 4.2 `final-deliverables/` (release-candidate pack)
+Dated audit, test, browser, and deployment snapshots were removed after their
+active controls were consolidated into the current blockers, release baseline,
+and procedures below.
+
+### 4.2 `final-deliverables/` (active controls and procedures)
 
 | Document | Focus |
 |---|---|
-| [RELEASE_CANDIDATE_MANIFEST.md](../final-deliverables/RELEASE_CANDIDATE_MANIFEST.md) | RC manifest |
-| [PRODUCTION_READINESS.md](../final-deliverables/PRODUCTION_READINESS.md) | Production readiness |
 | [ROLLBACK_RUNBOOK.md](../final-deliverables/ROLLBACK_RUNBOOK.md) | **Rollback procedure** |
-| [FINAL_SECURITY_CLOSURE.md](../final-deliverables/FINAL_SECURITY_CLOSURE.md) · [SECURITY_EXCEPTIONS.md](../final-deliverables/SECURITY_EXCEPTIONS.md) · [AUTH_BOUNDARY_REVIEW.md](../final-deliverables/AUTH_BOUNDARY_REVIEW.md) · [AUTHORIZATION_TEST_RESULTS.md](../final-deliverables/AUTHORIZATION_TEST_RESULTS.md) | Security closure |
-| [CITATION_EXPORT_RECHECK.md](../final-deliverables/CITATION_EXPORT_RECHECK.md) · [CITATION_GATE_ADVERSARIAL_RESULTS.md](../final-deliverables/CITATION_GATE_ADVERSARIAL_RESULTS.md) | Citation gate |
+| [SECURITY_EXCEPTIONS.md](../final-deliverables/SECURITY_EXCEPTIONS.md) · [AUTH_BOUNDARY_REVIEW.md](../final-deliverables/AUTH_BOUNDARY_REVIEW.md) | Security exceptions and browser/backend boundary |
 | [LEGAL_SOURCE_REVIEW.md](../final-deliverables/LEGAL_SOURCE_REVIEW.md) | Legal-source review |
-| [FULL_TEST_EXECUTION.md](../final-deliverables/FULL_TEST_EXECUTION.md) · [DEPLOYMENT_SMOKE_TESTS.md](../final-deliverables/DEPLOYMENT_SMOKE_TESTS.md) · [PRE_MERGE_AND_MERGE_REPORT.md](../final-deliverables/PRE_MERGE_AND_MERGE_REPORT.md) | Test / merge evidence |
+| [DEPLOYMENT_SMOKE_TESTS.md](../final-deliverables/DEPLOYMENT_SMOKE_TESTS.md) | Deployment smoke specification |
 
 ### 4.3 `design-deliverables/`
 
-Accessibility, performance, responsive screenshots and design tokens —
-see [design-deliverables/](../design-deliverables/).
+Current design-token guidance is retained in
+[DESIGN_TOKENS.md](../design-deliverables/DESIGN_TOKENS.md). Dated browser and
+accessibility result snapshots were removed; outstanding runtime checks are
+tracked in [Release Readiness](RELEASE_READINESS.md).
 
-### 4.4 Scattered `artifacts/` evidence collections (preserved in place)
+### 4.4 Scattered `artifacts/` guidance and data
 
-`artifacts/audit/`, `artifacts/final/`, `artifacts/release/`, `artifacts/reports/`,
-`artifacts/self-assessment/`, `artifacts/legal/`, `artifacts/design/`,
-`artifacts/demo-outputs/` — earlier-phase evidence packs (baseline results, repository
-inventory, security findings, architecture, changelog, demo outputs). See §7 for
-dispositions.
+[Architecture](../artifacts/final/ARCHITECTURE.md), demo-output guidance, and legal
+control guidance remain in place. Superseded audit, release, phase-log, and
+self-assessment reports were removed; current status lives in the launch and
+release-readiness baselines above.
 
 ## 5. Rollback & recovery procedures
 
@@ -133,7 +123,7 @@ dispositions.
 | [docs/ROLLBACK_PLAN.md](ROLLBACK_PLAN.md) | General rollback plan |
 | [docs/HYBRID_MERGE_AUDIT_AND_ROLLBACK_PLAN.md](HYBRID_MERGE_AUDIT_AND_ROLLBACK_PLAN.md) | Merge audit + rollback |
 | [final-deliverables/ROLLBACK_RUNBOOK.md](../final-deliverables/ROLLBACK_RUNBOOK.md) | Release rollback runbook |
-| [audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md](../audit-results/DEPLOYMENT_SMOKE_AND_ROLLBACK.md) | Deploy smoke + rollback |
+| [final-deliverables/DEPLOYMENT_SMOKE_TESTS.md](../final-deliverables/DEPLOYMENT_SMOKE_TESTS.md) | Deployment smoke specification |
 
 ## 6. Legal-source & case material
 
@@ -143,20 +133,30 @@ dispositions.
 | [docs/accuracy-governance/](accuracy-governance/) | Accuracy rules |
 | [artifacts/legal/PENDING_CITATION_GUARD.md](../artifacts/legal/PENDING_CITATION_GUARD.md) | Pending-citation guard |
 | [output_100426/](../output_100426/) | Generated court-ready deliverables (**confidential — not for publication / court-use export; see resolution report §6**) |
-| [faq/](../faq/) | Forensic-testing FAQ copy |
+| [Construction material testing](../faq/construction-material-testing.md) | FAQ copy |
+| [Forensic construction testing](../faq/forensic-construction-testing.md) | FAQ copy |
 
 ## 7. Dispositions
 
-Every path above is assigned exactly one disposition in
-[UNWIRED_FILES_RESOLUTION_REPORT.md](../audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md):
-`KEEP_RUNTIME`, `KEEP_TEST`, `KEEP_DOCUMENTATION`, `KEEP_EVIDENCE`, `INCORPORATE`,
-`ARCHIVE`, `DELETE`, `BLOCKED_REVIEW`.
+Every retained path above is assigned a disposition in the current inventories:
+`KEEP_CANONICAL`, `KEEP_GUIDANCE`, `KEEP_EVIDENCE`, `KEEP_DATA`, `CONSOLIDATE`,
+`BLOCKED_REVIEW`, or `DELETE`.
 
 | Area | Disposition |
 |---|---|
-| `docs/**`, `.kiro/**`, `.trae/**` | KEEP_DOCUMENTATION |
-| `audit-results/**`, `final-deliverables/**`, `design-deliverables/**` | KEEP_EVIDENCE |
-| `artifacts/{audit,final,release,reports,self-assessment,legal,design,demo-outputs}/**` | KEEP_EVIDENCE |
-| `faq/**` | KEEP_DOCUMENTATION |
+| `docs/**`, `.kiro/**`, `.trae/**` | KEEP_CANONICAL / KEEP_GUIDANCE |
+| `audit-results/**` | KEEP_EVIDENCE for the current authorization matrix only; dated snapshots removed |
+| `final-deliverables/**` | KEEP_GUIDANCE / KEEP_EVIDENCE for active runbooks, smoke specification, security controls, and legal-source records |
+| `design-deliverables/**` | KEEP_GUIDANCE for current design tokens |
+| `artifacts/{audit,final,reports,self-assessment,legal,demo-outputs}/**` | KEEP_GUIDANCE / KEEP_DATA for retained architecture, demo, and legal material; stale reports removed |
+| `faq/**` | KEEP_GUIDANCE |
 | `output_100426/**` | KEEP_EVIDENCE (confidential — no publish/court-use export) |
 | `logo-ideas/**` | KEEP_EVIDENCE (selected brand assets) / ARCHIVE (unused variants) |
+
+### Operator scripts
+
+| Path | Disposition |
+|---|---|
+| [Discharge generators](../output_100426/README.md) | Keep the three generators at the documented paths for reproducibility of historical outputs. |
+| [Markdown duty scan](../scripts/scan_markdown_duty.py) | Keep as a manual inventory tool. A successful exit records completion of the scan, so it is unsuitable as a Markdown compliance gate. |
+| [Demo seeder](../scripts/seed-demo-data.ts) | Keep as an operator tool. The [README](../README.md#production-status-and-launch-checks) documents the command. Its loopback contract test checks the multipart upload and indexing response. |

@@ -18,7 +18,6 @@ This milestone completes Weeks 13–16 of the post-integration enrichment progra
 - `Shimmer` component exported from `skeleton-loaders.tsx` — used by CitationGraph + JudgeAnalytics
 - Bilingual empty-state CTAs on JudgeAnalytics and CitationGraph blank pages
 - Persistent SYNTHETIC / Demo Mode banner confirmed active on all demo pages
-- `docs/enrichment/WEEK14_DEVIN_DEMO_POLISH.md` committed
 
 #### Week 15 — Trae (Backend / Accuracy Hardening)
 - Copilot grounding tightened: only cites `PRECEDENT_ACCURACY` allowlist; unknown citations → `NEEDS_VERIFICATION`
@@ -26,12 +25,10 @@ This milestone completes Weeks 13–16 of the post-integration enrichment progra
 - Limitation engine deterministic: Rajasthan HC calendar seeded, `datetime.date` throughout
 - TC-01 through TC-21 offline stubs confirmed in `backend/rag/offline_stubs.py`
 - Session usage card at `/improvement-lab` → `GET /api/v1/observability/session-summary`
-- `docs/enrichment/WEEK15_TRAE_ACCURACY_HARDEN.md` committed
 
 #### Week 16 — Antigravity (Release / Submission Package)
 - E2E judge walkthrough verified: landing → full guided workflow in 3 min 42 sec
 - Submission package complete: `docs/submission/WHY_THIS_WINS.md` + `VIDEO_SCRIPT_60SEC.md`
-- `WEEK16_ANTIGRAVITY_RELEASE.md` committed
 - Release tagged: **v2.3.0-competition**
 
 ---

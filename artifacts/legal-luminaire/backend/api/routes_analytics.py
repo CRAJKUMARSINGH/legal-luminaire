@@ -7,7 +7,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-from ..agents.judgment_parser import parse_judgment, ParsedJudgment
+from agents.judgment_parser import parse_judgment, ParsedJudgment
 
 router = APIRouter(prefix="/api/analytics", tags=["analytics"])
 

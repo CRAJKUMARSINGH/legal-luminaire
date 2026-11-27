@@ -18,6 +18,8 @@
 | Citation gate tests | ✅ PASS | Deterministic scanner suite and 13 adversarial probes |
 | Offline browser smoke | ✅ PASS | TC-01, Safe Draft, bilingual download and compatibility-route checks |
 
+This section is the canonical current test/build baseline. Separate historical result snapshots are not retained as competing sources of truth. The dated browser summary is not a current full-route certification; a fresh route sweep, axe/Lighthouse checks, and live-backend staging verification remain outstanding.
+
 ---
 
 ## Open blockers
@@ -26,11 +28,11 @@
 
 | Release | Blocked by | May proceed? |
 |---|---|---|
-| **Synthetic-data demo / staging** | Pleading Chain is omitted from primary navigation while its registry work is open | ✅ Yes |
+| **Synthetic-data demo / staging** | Legacy Pleading Chain links lead users to Safe Draft | ✅ Yes |
 | **Confidential production** | SE-01 | ❌ No |
 | **Court-use exports** | SE-01 + Legal sources (all 11 items) | ❌ No |
 
-Full blocker set (**5**): `P2-01`, `P2-02`, `SE-01`, `SE-08`, `LEGAL-11` — details below.
+Open blockers (**3**): `SE-01`, `SE-08`, and `LEGAL-11`.
 
 ---
 
@@ -76,60 +78,23 @@ eliminates the dependency. Exception void if `chromadb serve` or
 
 ---
 
-### P2-01 — Drafting package gap
-**Priority:** P2  
-**Detail:** `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md`
+### P2-01 — Drafting package superseded
 
-9 Python source files (`drafting/` + `registry/`) were never committed.
-Current runtime path (`api/routes_drafting.py` → Gemini) is fully functional
-for `BRIEF | DISCHARGE | BAIL_439`. Missing: composable block layer,
-~30-template catalog, structural placeholder validation, conflict detection,
-prompt injection defence, and draft provenance tracking.
-
-**Acceptance:** Either (A) product decision + ADR formally superseding the
-package, or (B) rebuild from requirements with full test coverage.
+The existing Gemini-direct endpoints remain the backend drafting integration for advocate review. The frontend Draft Template Library serves template discovery. The provider-backed workflow remains subject to live validation. [ADR-010](adr/ADR-010-gemini-direct-drafting.md)
 
 ---
 
-### P2-02 — Pleading variants: missing data + unwired routes
-**Priority:** P2  
-**Detail:** `docs/blockers/P2-02-PLEADING-VARIANTS.md`
+### P2-02 — Pleading Chain retired
 
-Two gaps: (A) `backend/data/subject_variants.json` was never committed, so every
-registry-backed call in `services/variant_engine.py` fails; and (B)
-`api/routes_pleading_variants.py` is **not registered** in `main.py` (17 routers are),
-so the whole `/api/v1/variants/*` surface 404s. The route now handles unavailable
-data and the focused browser check passes. Draft Family links to Safe Draft, and
-the main navigation omits Pleading Chain pending a registry decision.
-
-**Acceptance:** A recorded decision to **register or retire** the feature; if
-registered, a schema-valid `subject_variants.json` (no fabricated authorities) and an
-intentionally registered router preserving the Fact-Fit Gate (428) and auth/case
-scoping; the 2 registry-gated test skips resolved; and the browser unhandled rejection
-fixed.
+The unused API and registry-dependent generation code were removed. The legacy URL shows a bilingual retirement notice with a link to Safe Draft. [ADR-011](adr/ADR-011-retire-pleading-chain.md)
 
 ---
 
 ## Recommended execution order
 
-1. **P2-01 + P2-02 first** — both are drafting-surface decisions and can be resolved
-   together: P2-01 (recover/rebuild/retire the missing package) and P2-02
-   (register or retire the variants feature and resolve its missing data). Include
-   the compatibility route in the next full browser sweep.
-2. **SE-01 second** — dedicated security-controlled implementation.
+1. **SE-01** — complete and verify identity and case isolation.
    Unlocks confidential production.
-3. **SE-08 third** — reassess when a patched `chromadb` release ships.
+2. **SE-08** — reassess when a patched `chromadb` release ships.
    No action needed until then unless architecture changes.
-4. **Legal source closure proceeds in parallel** — independent of engineering.
+3. **Legal source closure proceeds in parallel** — independent of engineering.
    Unlocks court-use export once SE-01 is also resolved.
-
----
-
-## Archive of superseded reports
-
-| Report | Location | Superseded by |
-|---|---|---|
-| Unwired files manifest | `audit-results/UNWIRED_FILES_MANIFEST.md` | This document (blocker tracking) |
-| Unwired files resolution report | `audit-results/UNWIRED_FILES_RESOLUTION_REPORT.md` | Blockers in `docs/blockers/` |
-| Prior release decisions | `audit-results/FINAL_RELEASE_DECISION.md`, `audit-results/RELEASE_DECISION.md` | This document |
-| Prior production readiness | `final-deliverables/PRODUCTION_READINESS.md` | This document |

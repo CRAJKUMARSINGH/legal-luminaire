@@ -21,7 +21,7 @@ from agents.fact_checker import create_fact_checker_agent
 from agents.drafter import create_drafter_agent
 from agents.hallucination_breaker import check_hallucination
 from agents.chain_custody_specialist import create_chain_custody_specialist_agent, analyze_chain_custody_procedure
-from agents.tools.legal_verifier import CrossDatabaseConsensus
+from agents.legal_verifier import CrossDatabaseConsensus
 from rag.query_classifier import classify_query, get_drafter_style_instruction
 from rag.standards_database import ISStandardsDatabase
 from rag.case_isolated_store import CaseIsolatedDocumentStore

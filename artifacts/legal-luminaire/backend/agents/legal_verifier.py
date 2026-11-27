@@ -1,5 +1,5 @@
 """
-Enhanced Legal Verification Tools
+Enhanced legal verification tools
 Direct API integration for Indian legal databases to ensure citation accuracy
 """
 from __future__ import annotations

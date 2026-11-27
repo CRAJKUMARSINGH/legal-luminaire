@@ -1,4 +1,4 @@
-"""Static route-registry checks that do not import the optional AI stack."""
+"""Checks for duplicate routes and retired API surfaces."""
 
 from __future__ import annotations
 
@@ -38,3 +38,13 @@ def test_backend_routes_have_no_duplicate_method_and_path_pairs() -> None:
                     seen[key] = (source_path, node.lineno)
 
     assert not duplicates, "Duplicate backend routes found:\n" + "\n".join(duplicates)
+
+
+def test_pleading_chain_api_is_retired() -> None:
+    from importlib.util import find_spec
+
+    from main import app
+
+    assert find_spec("api.routes_pleading_variants") is None
+    paths = app.openapi()["paths"]
+    assert not any(path == "/api/v1/variants" or path.startswith("/api/v1/variants/") for path in paths)

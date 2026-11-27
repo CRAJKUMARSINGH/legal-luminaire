@@ -98,22 +98,17 @@ def main() -> None:
         assert "Fact-Fit Gate — English: SAFE | Hindi: SAFE" in exported_text
         assert PENDING_CITATION not in exported_text
 
-        for status, body, expected in (
-            (404, "Unavailable", "Pleading variants are unavailable"),
-            (200, "[]", "Pleading variants are unavailable"),
-            (200, '[{"id":"sample","label":{"en":"Sample","hi":"नमूना"}}]', "Select subject"),
-        ):
-            def respond_subjects(route, _request, *, response_status=status, response_body=body) -> None:
-                route.fulfill(status=response_status, body=response_body, content_type="application/json")
-
-            page.route("**/variants/subjects", respond_subjects)
-            page.goto(f"{CASE_URL}/draft-variants", wait_until="commit")
-            expect(page.get_by_text(expected, exact=False)).to_be_visible()
-            page.unroute("**/variants/subjects", respond_subjects)
+        variant_requests = []
+        page.on("request", lambda request: variant_requests.append(request.url) if "/variants/" in request.url else None)
+        page.goto(f"{CASE_URL}/draft-variants", wait_until="commit")
+        expect(page.get_by_role("heading", name="Pleading Chain has been retired")).to_be_visible()
+        page.get_by_role("link", name="Open Safe Draft", exact=False).click()
+        expect(page).to_have_url(f"{CASE_URL}/safe-draft")
+        assert not variant_requests, variant_requests
 
         assert not errors, errors
         browser.close()
-    print("Offline TC-01, Safe Draft printing, bilingual export, and Draft Variants smoke tests passed.")
+    print("Offline TC-01, Safe Draft printing, bilingual export, and the retired Pleading Chain route passed.")
 
 
 if __name__ == "__main__":

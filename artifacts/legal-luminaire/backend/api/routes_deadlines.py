@@ -29,7 +29,7 @@ from .models import (
     DeadlineItem,
     DeadlineScheduleResponse,
 )
-from ..services.limitation_engine import (
+from services.limitation_engine import (
     compute_for_case,
     load_rules,
     ComputedDeadline,

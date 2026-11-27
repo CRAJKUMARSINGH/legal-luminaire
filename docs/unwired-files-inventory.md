@@ -2,7 +2,7 @@
 
 Current-state inventory of files that exist in the working repository but are not reachable from the canonical application entry points, plus standalone guidance, evidence, and reference material.
 
-- Generated: 2026-11-26
+- Generated: 2026-11-27
 - Branch: `codex/code-junction-launch-hardening`
 - HEAD: `2e70ea2`
 - Canonical frontend entry: `artifacts/legal-luminaire/src/main.tsx`
@@ -12,7 +12,7 @@ Current-state inventory of files that exist in the working repository but are no
 ## Companion reports
 
 - [Unwired code inventory](unwired-code-inventory.md) — every runtime-unreachable source file, test-only module, utility, legacy package, and archived code file.
-- [Guidance material inventory](guidance-material-inventory.md) — every pre-existing standalone Markdown/text document, grouped by incorporation value and disposition.
+- [Guidance material inventory](guidance-material-inventory.md) — every retained pre-existing standalone Markdown/text document, grouped by incorporation value and disposition.
 
 ## What “unwired” means here
 
@@ -34,7 +34,7 @@ A file is considered runtime-unwired when no static import, dynamic import, `req
 | Backend test-reachable but not runtime-reachable | 22 | Tests/package initializers + 3 production modules | Keep tests; resolve variants and verification-module status |
 | Legacy `lib/**` workspace files | 79 | Express/Drizzle-era API spec, clients, schemas | Not consumed by the canonical app; retain only with the retired stack |
 | Archived package/script files | 93 | Retired Express API, mockup sandbox, retired scripts | Keep archived; do not reincorporate without a new ADR |
-| Pre-existing standalone `.md`/`.txt` documents | 452 | Guidance, specs, reports, evidence, case/data material | Keep, consolidate, or explicitly wire; see guidance report |
+| Retained baseline standalone `.md`/`.txt` documents | 360 | 452 baseline documents minus 25 removed enrichment reports, 10 earlier test-document removals, 27 stale result/snapshot documents, and 30 redundant reports removed on 2026-11-27 | Keep only active functional material; see guidance report |
 | Duplicate nested Git checkout | 1 tree | Independent repository at `legal-luminaire/` | User disposition required; do not double-count |
 | Missing drafting/registry source files | 11 | Source never committed; only historical bytecode evidence | Product decision: supersede or rebuild |
 
@@ -88,10 +88,10 @@ The 52 frontend orphans include 36 unused shadcn/Radix primitives, legacy/altern
 | `BLOCKED_REVIEW` | Do not wire until a product, data, legal, or safety decision is recorded |
 | `KEEP_TEST` | Intentional test-only code |
 | `KEEP_GUIDANCE` | Standalone instructions/specification worth retaining |
-| `KEEP_EVIDENCE` | Historical audit/release evidence; preserve in place |
+| `KEEP_EVIDENCE` | Retained audit/release evidence; stale generic snapshots are removed when superseded |
 | `KEEP_DATA` | Case, fixture, template, or generated reference material |
-| `CONSOLIDATE` | Merge unique guidance into a canonical document, then archive the duplicate |
-| `ARCHIVE` | Already retired or superseded; do not merge into the canonical runtime |
+| `CONSOLIDATE` | Merge unique guidance into a canonical document, then delete the duplicate |
+| `ARCHIVE` | Retired code or data kept for operational provenance; do not merge into the canonical runtime |
 | `DELETE` | Empty, stale, or redundant candidate; confirm no planned consumer first |
 | `WIRED_AUXILIARY` | Not part of the web request path, but intentionally connected to workspace tooling |
 
@@ -127,7 +127,7 @@ See the code inventory for every path and a suggested integration point.
 
 ## Guidance and documentation backlog
 
-The guidance report lists all 452 pre-existing standalone Markdown/text files. The main consolidation targets are:
+The guidance report lists the 360 documents retained from the 452-document baseline. The main consolidation targets are:
 
 1. `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` — primary launch brief.
 2. `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` — consolidation candidate; retain only distinct architecture/triage criteria.
@@ -135,8 +135,8 @@ The guidance report lists all 452 pre-existing standalone Markdown/text files. T
 4. `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` — missing drafting source decision.
 5. `docs/blockers/P2-02-PLEADING-VARIANTS.md` — variants registration decision.
 6. `docs/APP_AUDIT_SCATTERED_CODE.md` — earlier code-health audit; some recommendations are already implemented.
-7. `docs/MODERNIZATION_PLAN.md`, `docs/ROADMAP.md`, and enrichment/integration wave logs — historical planning input; reconcile before reuse.
-8. `audit-results/`, `final-deliverables/`, `design-deliverables/`, and scattered `artifacts/*` reports — preserve as evidence; do not rewrite history to match current code.
+7. `docs/MODERNIZATION_PLAN.md`, `docs/ROADMAP.md`, `docs/roadmap/`, and the CI-required Week 13 enrichment lock — reconcile current planning input before reuse.
+8. `audit-results/`, `final-deliverables/`, `design-deliverables/`, and scattered `artifacts/*` — retain active controls, procedures, and current evidence; superseded reports have been removed.
 
 ## Missing material that is not represented by a current source file
 
@@ -184,7 +184,7 @@ These are inventory/archive decisions, not incorporation tasks, unless a new arc
 2. **Close the fail-open citation-gate path** in any future variants implementation.
 3. **Benchmark alternate engines** against canonical implementations; adopt only with parity tests.
 4. **Triage frontend prototypes** by named user journey; retire duplicates and unused primitives with no planned consumer.
-5. **Consolidate launch guidance** into the primary brief and current launch report; preserve historical evidence separately.
+5. **Consolidate launch guidance** into the primary brief and current launch report; keep one current test/build baseline and retain only actively referenced evidence.
 6. **Document or retire utility scripts and legacy packages**; avoid creating a second runtime.
 7. **Resolve the duplicate checkout** with the user before any cleanup.
 

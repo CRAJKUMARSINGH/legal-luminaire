@@ -1,69 +1,55 @@
-/**
- * Seed Demo Data — Legal Luminaire
- * Loads Case 01 documents into ChromaDB for offline demo use.
- * Run: pnpm --filter @workspace/scripts run seed-demo
- *
- * ASSUMPTION: Backend must be running on localhost:8000
- * ASSUMPTION: OPENAI_API_KEY must be set in environment
- */
+import { readFile } from "node:fs/promises";
+import { pathToFileURL } from "node:url";
 
-const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:8000";
+const CASE_ID = "synthetic-construction-demo";
+const FIXTURE = new URL("../test-assets/synthetic-inputs/construction-defect-report.md", import.meta.url);
 
-interface SeedResult {
-  case: string;
-  status: "ok" | "error";
-  message: string;
-}
-
-async function checkHealth(): Promise<boolean> {
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/v1/health`);
-    return res.ok;
-  } catch {
-    return false;
+export async function seedDemo(backendUrl: string, apiKey?: string): Promise<number> {
+  const backend = new URL(backendUrl);
+  const localHosts = ["localhost", "127.0.0.1", "[::1]"];
+  if (!["http:", "https:"].includes(backend.protocol) ||
+      !localHosts.includes(backend.hostname) || backend.username || backend.password) {
+    throw new Error("BACKEND_URL must point to a local HTTP or HTTPS backend.");
   }
+
+  const document = await readFile(FIXTURE, "utf8");
+  if (!document.startsWith("[SYNTHETIC TEST DATA — NOT REAL]")) {
+    throw new Error("The demo fixture is missing its synthetic data label.");
+  }
+  const form = new FormData();
+  form.append("files", new Blob([document], { type: "text/markdown" }), "construction-defect-report.md");
+
+  const response = await fetch(new URL(`/api/v1/cases/${CASE_ID}/upload`, backend), {
+    method: "POST",
+    headers: apiKey ? { "X-API-Key": apiKey } : undefined,
+    body: form,
+    redirect: "error",
+    signal: AbortSignal.timeout(120_000),
+  });
+  if (!response.ok) {
+    throw new Error(`Demo upload failed (HTTP ${response.status}).`);
+  }
+
+  const result = await response.json() as {
+    success?: boolean;
+    case_id?: string;
+    errors?: unknown[];
+    total_chunks?: number;
+  } | null;
+  if (result?.success !== true || result.case_id !== CASE_ID ||
+      !Array.isArray(result.errors) || result.errors.length ||
+      typeof result.total_chunks !== "number" ||
+      !Number.isSafeInteger(result.total_chunks) || result.total_chunks <= 0) {
+    throw new Error("The backend did not confirm successful indexing of the synthetic fixture.");
+  }
+  return result.total_chunks;
 }
 
-async function seedCase(caseId: string, documents: string[]): Promise<SeedResult> {
-  try {
-    const res = await fetch(`${BACKEND_URL}/api/v1/upload`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ case_id: caseId, documents }),
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  seedDemo(process.env.BACKEND_URL ?? "http://127.0.0.1:8000", process.env.LL_DEMO_API_KEY)
+    .then((chunks) => console.log(`Indexed ${chunks} synthetic chunks for ${CASE_ID}.`))
+    .catch((error: unknown) => {
+      console.error(error instanceof Error ? error.message : "Demo seeding failed.");
+      process.exitCode = 1;
     });
-    if (!res.ok) {
-      const err = await res.text();
-      return { case: caseId, status: "error", message: err };
-    }
-    return { case: caseId, status: "ok", message: "Seeded successfully" };
-  } catch (e) {
-    return { case: caseId, status: "error", message: String(e) };
-  }
 }
-
-async function main() {
-  console.log("Legal Luminaire — Demo Data Seeder");
-  console.log("====================================");
-
-  const healthy = await checkHealth();
-  if (!healthy) {
-    console.error(`Backend not reachable at ${BACKEND_URL}. Start it first.`);
-    process.exit(1);
-  }
-  console.log("✅ Backend healthy");
-
-  // Case 01 — Building Collapse (primary demo case)
-  const case01Result = await seedCase("case01", [
-    "real_cases/CASE01_HEMRAJ_STATE_2025/FIR_456_2025.md",
-    "real_cases/CASE01_HEMRAJ_STATE_2025/Charge_Sheet.md",
-    "real_cases/CASE01_HEMRAJ_STATE_2025/FSL_Report.md",
-  ]);
-  console.log(`Case 01: ${case01Result.status} — ${case01Result.message}`);
-
-  console.log("\nSeed complete. Start the frontend with: pnpm dev");
-}
-
-main().catch((e) => {
-  console.error("Seed failed:", e);
-  process.exit(1);
-});

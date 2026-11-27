@@ -67,9 +67,11 @@ The frontend is available for synthetic-data demonstrations. Open TC-01 from the
 
 Keep confidential material out of hosted demos and shared fixtures. The demo uses browser-local storage. Backend-enabled workflows can send content to configured providers, so confirm their data-handling terms before using client material.
 
-Install the backend test dependencies and Ruff in your active Python environment with `python -m pip install -r artifacts/legal-luminaire/backend/requirements.txt ruff`. From the repository root, `pnpm launch:gate` runs Python lint checks, workspace typechecking, the frontend suite including the Fact-Fit Gate regressions, the production frontend build, and backend pytest. See the [launch hardening report](LAUNCH_HARDENING_REPORT.md) for current validation and release blockers.
+Install the backend test dependencies and Ruff in your active Python environment with `python -m pip install -r artifacts/legal-luminaire/backend/requirements.txt ruff`. From the repository root, `pnpm launch:gate` runs Python lint checks, workspace typechecking, the synthetic seeder contract test, the frontend suite including the Fact-Fit Gate regressions, the production frontend build, and backend pytest. See the [launch hardening report](LAUNCH_HARDENING_REPORT.md) for current validation and release blockers.
 
 After building, run the browser smoke tests with `python -m pip install playwright`, `python -m playwright install chromium`, and `python scripts/test_launch_browser.py`. The tests open the static production build and use only synthetic case data.
+
+For a local backend indexing demo, configure embeddings on the running backend and run `pnpm --filter @workspace/scripts run seed-demo`. The command uploads one labelled synthetic report into the separate `synthetic-construction-demo` case. It defaults to `http://127.0.0.1:8000` and accepts a loopback `BACKEND_URL`. If backend authentication is enabled, set `LL_DEMO_API_KEY` to a key authorized for that case. The offline frontend demo works without this command.
 
 ---
 

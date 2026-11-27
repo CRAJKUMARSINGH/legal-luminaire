@@ -55,7 +55,7 @@ def test_verification_systems_exist():
         backend_dir / "agents" / "enhanced_researcher.py",
         backend_dir / "rag" / "advanced_processor.py",
         backend_dir / "rag" / "case_isolated_store.py",
-        backend_dir / "agents" / "tools" / "legal_verifier.py",
+        backend_dir / "agents" / "legal_verifier.py",
         backend_dir / "rag" / "standards_database.py",
         backend_dir / "agents" / "chain_custody_specialist.py",
     ]

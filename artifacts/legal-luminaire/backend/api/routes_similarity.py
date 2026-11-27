@@ -7,7 +7,7 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import Optional
-from ..agents.case_similarity import (
+from agents.case_similarity import (
     extract_features, find_similar_cases, score_similarity,
     CaseFeatures, SimilarityScore,
 )

@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 
-from agents.tools.legal_verifier import CrossDatabaseConsensus
+from agents.legal_verifier import CrossDatabaseConsensus
 from rag.standards_database import ISStandardsDatabase
 
 logger = logging.getLogger(__name__)

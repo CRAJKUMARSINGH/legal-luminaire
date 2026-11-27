@@ -1,183 +1,19 @@
-/**
- * DraftVariantsPage — Drafting Studio → "Spawn Connected Variants".
- * Route: /case/:id/draft-variants
- *
- * Flow:
- *  1. Select subject (50 available) → variant family loads.
- *  2. Paste / confirm the base draft → MatterContext extracted (deterministic).
- *  3. Click any archetype chip → variant streams into the chain, threaded to
- *     the SAME matter (parties / court / case no. carried verbatim).
- *  4. Fill [[CITATION:n]] slots via Citation Search → Add to Draft
- *     (COURT_SAFE / VERIFIED only — Fact-Fit Gate applies).
- */
-import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'wouter'
-import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { VariantChain } from '@/components/VariantChain'
-import { CitationAddToDraft } from '@/components/CitationAddToDraft'
-import { usePleadingVariants } from '@/hooks/usePleadingVariants'
-import { variantsApi, type Archetype, type Bilingual, type CitationHit } from '@/lib/variantsApi'
-
-const KIND_TAG: Record<string, string> = {
-  defence: '🛡 Defence', subsequent: '🔗 Subsequent', interlocutory: '⚖ Interlocutory',
-  execution: '⚒ Execution', appeal: '🔀 Appeal',
-}
+import { Link, useParams } from "wouter";
+import { Button } from "@/components/ui/button";
 
 export default function DraftVariantsPage() {
-  const { id: caseId } = useParams<{ id: string }>()
-  const [subjects, setSubjects] = useState<{ id: string; label: Bilingual }[] | null>(null)
-  const [subjectsFailed, setSubjectsFailed] = useState(false)
-  const [subject, setSubject] = useState('')
-  const [baseDraft, setBaseDraft] = useState('')
-  const [activeNode, setActiveNode] = useState(0)
-  const { family, matter, chain, gateBlock, loadFamily, extractContext, spawnVariant, addCitationToDraft } =
-    usePleadingVariants(caseId ?? 'demo-1', subject)
-
-  useEffect(() => {
-    const controller = new AbortController()
-    variantsApi.subjects(controller.signal).then((availableSubjects) => {
-      if (!controller.signal.aborted) setSubjects(availableSubjects)
-    }).catch(() => {
-      if (!controller.signal.aborted) setSubjectsFailed(true)
-    })
-    return () => controller.abort()
-  }, [])
-  useEffect(() => {
-    if (subject) void loadFamily()
-  }, [subject, loadFamily])
-
-  const archetypes = useMemo(() => family?.variants ?? [], [family])
-
-  if (subjectsFailed || !subjects?.length) {
-    return (
-      <div className="container mx-auto max-w-6xl space-y-6 px-4 py-8">
-        <h1 className="text-2xl font-bold">Pleading Chain — Connected Drafts</h1>
-        {subjectsFailed || subjects !== null ? (
-          <Alert>
-            <AlertTitle>Pleading variants are unavailable · अभिवचन के वैकल्पिक मसौदे उपलब्ध नहीं हैं</AlertTitle>
-            <AlertDescription>Return to Drafting Studio to continue working on your base draft.</AlertDescription>
-          </Alert>
-        ) : (
-          <p role="status" className="text-sm text-muted-foreground">Loading pleading subjects…</p>
-        )}
-      </div>
-    )
-  }
+  const { id } = useParams<{ id: string }>();
 
   return (
-    <div className="container mx-auto max-w-6xl space-y-6 py-8 px-4">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold">⚡ Pleading Chain — Connected Drafts</h1>
-        <p className="text-sm text-muted-foreground">
-          One petition/application → rejoinder, supplementary affidavit, IA, contempt, execution and more —
-          all threaded to the same matter.
-        </p>
-      </header>
-
-      {gateBlock && (
-        <Alert variant="destructive">
-          <AlertTitle>🔒 Fact-Fit Gate blocked variant generation</AlertTitle>
-          <AlertDescription>
-            {gateBlock.message} Resolve PENDING citations on the base draft first — same rule as export.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="space-y-4 md:col-span-2">
-          <div className="flex gap-2 items-center">
-            <Select value={subject} onValueChange={setSubject}>
-              <SelectTrigger className="w-[320px]">
-                <SelectValue placeholder="Select subject" />
-              </SelectTrigger>
-              <SelectContent>
-                {subjects.map((s) => (
-                  <SelectItem key={s.id} value={s.id}>
-                    {s.label.en} · {s.label.hi}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              variant="outline"
-              disabled={!subject || !baseDraft.trim()}
-              onClick={() => void extractContext(baseDraft)}
-            >
-              Extract Matter Context
-            </Button>
-          </div>
-
-          {matter && (
-            <Alert>
-              <AlertTitle>Matter locked 🔗</AlertTitle>
-              <AlertDescription className="text-xs">
-                {matter.court} · {matter.case_no}
-                <br />
-                Pet: {matter.petitioners.join(', ') || '—'} | Res: {matter.respondents.join(', ') || '—'}
-              </AlertDescription>
-            </Alert>
-          )}
-
-          <textarea
-            className="w-full min-h-[220px] rounded-md border bg-background p-3 font-mono text-xs"
-            placeholder="Paste the base petition / application drafted in Drafting Studio…"
-            value={baseDraft}
-            onChange={(e) => setBaseDraft(e.target.value)}
-          />
-
-          {family && (
-            <div className="space-y-2">
-              <h2 className="font-semibold text-sm">
-                Connected variants for {family.label.en} ({archetypes.length})
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {archetypes.map((a: Archetype) => (
-                  <Button
-                    key={a.id}
-                    size="sm"
-                    variant="secondary"
-                    disabled={!matter}
-                    title={a.glossary.join(' · ')}
-                    onClick={() => spawnVariant(baseDraft, a)}
-                  >
-                    {KIND_TAG[a.kind] ?? a.kind} {a.label.en}
-                  </Button>
-                ))}
-              </div>
-              {!matter && <p className="text-xs text-muted-foreground">Extract Matter Context first — variants inherit it verbatim.</p>}
-            </div>
-          )}
-
-          <VariantChain baseTitle="Base Draft" nodes={chain} />
-        </div>
-
-        <div className="space-y-3">
-          <h2 className="font-semibold text-sm">🔍 Citation Search → Add to Draft</h2>
-          <CitationAddToDraft
-            onInsert={(hit: CitationHit) => {
-              addCitationToDraft(activeNode, hit)
-            }}
-          />
-          <div className="rounded-md border p-3 max-h-[420px] overflow-y-auto">
-            {chain[activeNode] ? (
-              <>
-                <div className="flex gap-1 mb-2 flex-wrap">
-                  {chain.map((n, i) => (
-                    <Button key={i} size="sm" variant={i === activeNode ? 'default' : 'ghost'} onClick={() => setActiveNode(i)}>
-                      {n.title}
-                    </Button>
-                  ))}
-                </div>
-                <pre className="whitespace-pre-wrap text-xs font-mono">{chain[activeNode].content || '(streaming…)'}</pre>
-              </>
-            ) : (
-              <p className="text-xs text-muted-foreground">Generate a variant to edit and insert citations here.</p>
-            )}
-          </div>
-        </div>
-      </div>
+    <div className="mx-auto max-w-5xl space-y-4 p-6">
+      <h1 className="text-2xl font-bold">Pleading Chain has been retired</h1>
+      <p lang="hi">अभिवचन श्रृंखला सुविधा बंद कर दी गई है।</p>
+      <p className="text-sm text-muted-foreground">
+        Open Safe Draft to continue drafting and review citations before exporting.
+      </p>
+      <Button asChild>
+        <Link href={`/case/${encodeURIComponent(id)}/safe-draft`}>Open Safe Draft · सुरक्षित मसौदा खोलें</Link>
+      </Button>
     </div>
-  )
+  );
 }

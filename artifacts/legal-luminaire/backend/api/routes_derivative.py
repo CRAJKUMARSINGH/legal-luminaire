@@ -46,7 +46,7 @@ from .models import (
     DerivativeTypeInfo,
 )
 
-from ..agents.derivative_drafter import (
+from agents.derivative_drafter import (
     build_document_family,
     generate_derivative_draft,
     list_all_subjects,

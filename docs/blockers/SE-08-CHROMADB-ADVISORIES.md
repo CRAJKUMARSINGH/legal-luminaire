@@ -3,8 +3,7 @@
 **Status:** OPEN — 4 advisories active; all assessed as UNREACHABLE in current deployment  
 **Opened:** Pre-2026-11  
 **Owner:** Backend engineering  
-**Reference:** `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md`,
-`final-deliverables/SECURITY_EXCEPTIONS.md`
+**Reference:** `final-deliverables/SECURITY_EXCEPTIONS.md`
 
 ---
 
@@ -55,13 +54,13 @@ SE-08 is resolved when **one** of the following is true:
 1. A `chromadb` release ships that fixes all 4 CVEs (verify with `pip-audit --no-deps chromadb==<version>`).
 2. The patched version is tested in an isolated branch: RAG ingestion, retrieval, persistence, migration, and performance all pass.
 3. `--ignore-vuln` flags removed from CI `pip-audit` invocation.
-4. `audit-results/SE08_CHROMADB_ADVISORY_REGISTER.md` updated with resolution date and version.
+4. This exception record updated with the resolution date and version.
 
 ### B — Architecture change eliminates the dependency
 
 1. If `chromadb` is replaced by another vector store, verify the replacement has no equivalent advisories.
 2. Remove `chromadb` from `requirements.txt`; remove `--ignore-vuln` flags.
-3. Update register with resolution date.
+3. Update this exception record with the resolution date.
 
 ### C — New advisory requiring reassessment
 

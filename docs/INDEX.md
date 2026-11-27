@@ -15,15 +15,15 @@
 - ADR-005: Bilingual Hindi + English: `docs/adr/ADR-005-bilingual-hindi-english.md`
 - ADR-006: Synthetic data only: `docs/adr/ADR-006-synthetic-data-only.md`
 
-## Weekly Enrichment Reports
-- Week 13 — Kiro Foundation Lock: `docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md`
+## CI-Required Enrichment Evidence
+- Week 13 competition lock (required by CI and ADR-008): `docs/enrichment/WEEK13_KIRO_COMPETITION_LOCK.md`
 
 ## Feature Flags
 - Full flag reference + rollback procedures: `docs/FEATURE_FLAGS_REFERENCE.md`
 
 ## Testing
-- Robustness report: `docs/testing/ROBUSTNESS_REPORT.md`
-- Test case matrix (21 cases): `docs/testing/TEST_CASE_MATRIX_21.md`
+- Current test/build baseline and outstanding runtime checks: `docs/RELEASE_READINESS.md`
+- Canonical test matrix (26 primary + 12 edge/stress): `docs/testing/TEST_CASE_MATRIX_26.md`
 - Synthetic test data guide: `docs/testing/SYNTHETIC_TEST_DATA_GUIDE.md`
 - All sample cases (21 functional + edge + stress + showcase): `Sample_cases/`
 
@@ -36,7 +36,6 @@
 ## Planning
 - Modernization plan: `docs/MODERNIZATION_PLAN.md`
 - Cache hygiene: `docs/CACHE_HYGIENE.md`
-- Self-assessment: `docs/SELF_ASSESSMENT.md`
 
 ## Case Packs
 - Hemraj case pack (working folder): `CASE01_HEMRAJ_STATE_2025/`

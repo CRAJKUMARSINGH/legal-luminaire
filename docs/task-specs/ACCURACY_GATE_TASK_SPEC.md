@@ -6,8 +6,8 @@
 ## TASK ID: FEAT-ACCURACY-001
 
 ## PURPOSE
-Strengthen the existing accuracy gate to cover edge cases identified in
-`docs/testing/ROBUSTNESS_REPORT.md` — specifically date validation,
+Strengthen the existing accuracy gate to cover the canonical edge cases in
+`docs/testing/TEST_CASE_MATRIX_26.md` — specifically date validation,
 OCR noise warnings, and document deduplication.
 
 ## CURRENT STATE

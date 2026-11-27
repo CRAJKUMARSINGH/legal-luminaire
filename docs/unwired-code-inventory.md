@@ -355,7 +355,6 @@ These files are already under `archive/`. Default disposition is `ARCHIVE`; do n
 ```text
 archive/retired-packages/api-server/.replit-artifact/artifact.toml
 archive/retired-packages/api-server/build.mjs
-archive/retired-packages/api-server/error.log
 archive/retired-packages/api-server/package.json
 archive/retired-packages/api-server/src/app.ts
 archive/retired-packages/api-server/src/index.ts

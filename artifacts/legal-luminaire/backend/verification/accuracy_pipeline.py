@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import json
 
-from agents.tools.legal_verifier import CrossDatabaseConsensus, CitationVerification
+from agents.legal_verifier import CrossDatabaseConsensus, CitationVerification
 from rag.standards_database import ISStandardsDatabase, ChainOfCustodySpecialist
 from agents.hallucination_breaker import check_hallucination, HallucinationReport
 

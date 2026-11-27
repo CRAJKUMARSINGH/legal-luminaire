@@ -74,7 +74,7 @@ Court-use export is re-enabled when **all** of the following are true:
    - Correct paragraph reference
    - Applicability to the specific case facts
 3. `final-deliverables/LEGAL_SOURCE_REVIEW.md` updated with resolution evidence.
-4. `final-deliverables/PRODUCTION_READINESS.md` updated to reflect court-use gate status.
+4. `docs/RELEASE_READINESS.md` updated to reflect court-use gate status.
 5. SE-01 (OIDC case isolation) is also resolved — court-use exports must not be
    accessible without per-user authentication.
 

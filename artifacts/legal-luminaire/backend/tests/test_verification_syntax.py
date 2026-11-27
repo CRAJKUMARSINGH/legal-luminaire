@@ -188,5 +188,13 @@ def test_verification_systems_syntax_and_structure():
     )
 
 
+def test_verification_consumers_can_import_the_shared_verifier():
+    from agents.legal_verifier import CrossDatabaseConsensus
+    from verification import accuracy_pipeline, error_detector
+
+    assert accuracy_pipeline.CrossDatabaseConsensus is CrossDatabaseConsensus
+    assert error_detector.CrossDatabaseConsensus is CrossDatabaseConsensus
+
+
 if __name__ == "__main__":
     sys.exit(main())
