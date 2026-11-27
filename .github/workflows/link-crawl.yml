@@ -1,0 +1,50 @@
+name: link-crawl
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Route-crawl regression gate (TICKET 1): fails if any nav path renders an
+# empty <main> or emits a console error. Installs @playwright/test ad hoc so it
+# never desyncs the workspace lockfile used by ci.yml.
+permissions:
+  contents: read
+
+jobs:
+  crawl:
+    name: Nav route crawl (Playwright)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: artifacts/legal-luminaire
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm 10, matches netlify.toml)
+        run: corepack enable && corepack prepare pnpm@10 --activate
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - run: pnpm install --no-frozen-lockfile
+
+      - name: Install Playwright test runner (ad hoc, not in lockfile)
+        run: pnpm add -D @playwright/test
+
+      - run: pnpm exec playwright install --with-deps chromium
+
+      - run: pnpm build
+
+      - name: Crawl every nav route
+        run: pnpm exec playwright test
+        env:
+          E2E_BASE_URL: http://127.0.0.1:4173
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: artifacts/legal-luminaire/playwright-report

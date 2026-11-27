@@ -1,4 +1,5 @@
 # Citation Deep-Link — Requirements
+**Status**: ACTIVE — promoted 2026-11-27 (`Legal kiro 26.txt` C1; see docs/DOCUMENTATION_INDEX.md §3)
 **Flag**: `citation_deeplink` (default OFF)
 **Week**: 7 (Trae primary)
 **Source**: Vyaas Docket — every citation links to its source document

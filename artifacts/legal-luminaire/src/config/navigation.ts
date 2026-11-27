@@ -8,6 +8,14 @@ import {
 } from "lucide-react";
 import { featureFlags } from "@/config/featureFlags";
 
+/**
+ * The always-present seeded demo case. Every case-scoped href falls back to this
+ * id so a cold profile (empty localStorage) never produces `/case/undefined/*`.
+ * Re-exported from the canonical case store so navigation consumers import a
+ * single source of truth.
+ */
+export { DEFAULT_CASE_ID } from "@/lib/case-store";
+
 export type NavItem = {
   path: string;
   label: string;

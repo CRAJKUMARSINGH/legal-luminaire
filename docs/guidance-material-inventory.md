@@ -3,7 +3,7 @@
 Per-file inventory of standalone guidance, specifications, reports, evidence, case notes, fixtures, templates, and other non-executable text material in the working repository.
 
 - Generated: 2026-11-27
-- Branch/HEAD: `codex/code-junction-launch-hardening` @ `2e70ea2`
+- Branch/HEAD: `codex/code-junction-launch-hardening` @ `08c5929`
 - Scope: 360 retained baseline `.md` and `.txt` files (452 baseline documents minus 25 removed enrichment reports, 10 earlier test-document removals, 27 stale result/snapshot documents, and 30 redundant reports removed on 2026-11-27), excluding two `requirements*.txt` dependency manifests.
 - Companion: [Master inventory](unwired-files-inventory.md) · [Code inventory](unwired-code-inventory.md)
 
@@ -27,12 +27,12 @@ Test-artifact cleanup removed 27 stale result/snapshot documents plus the genera
 
 | File | Why it matters | Disposition / next action |
 |---|---|---|
-| `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` | Primary phased launch-hardening brief | `KEEP_GUIDANCE`. Keep as the main task brief; fold completed items into the launch report and backlog. |
-| `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` | Broad autonomous-agent role and architecture/triage criteria | `CONSOLIDATE`. Retain distinct architecture and triage criteria; discard generic role/autonomy boilerplate after merge. |
+| ~~`CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt`~~ (removed 2026-11-27) | Primary phased launch-hardening brief | `CONSOLIDATED`. Applied and folded into [LAUNCH_HARDENING_REPORT.md](../LAUNCH_HARDENING_REPORT.md); source removed after compliance. |
+| ~~`CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md`~~ (removed 2026-11-27) | Broad autonomous-agent role and architecture/triage criteria | `CONSOLIDATED`. Distinct architecture/triage criteria retained in the launch report; generic role boilerplate discarded; source removed. |
 | `LAUNCH_HARDENING_REPORT.md` | Current launch status and restrictions | `KEEP_CANONICAL`. Preserve local modifications; keep this as the single current launch-status report. |
 | `docs/RELEASE_READINESS.md` | Canonical current test/build baseline | `KEEP_CANONICAL`. Single source of truth for current regression status. |
-| `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` | Missing drafting package decision | `KEEP_CANONICAL`. Resolve supersede-vs-rebuild before any drafting-package work. |
-| `docs/blockers/P2-02-PLEADING-VARIANTS.md` | Missing variants registry and unwired router | `KEEP_CANONICAL`. Resolve register-vs-retire; preserve 428 citation blocking, auth, and case scope. |
+| `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` | Closed drafting-package decision record | `KEEP_CANONICAL`. Superseded by ADR-010; not an open blocker. |
+| `docs/blockers/P2-02-PLEADING-VARIANTS.md` | Closed Pleading Chain decision record | `KEEP_CANONICAL`. Retired by ADR-011; not an open blocker. |
 | `docs/blockers/SE-01-OIDC-CASE-ISOLATION.md` | Confidential-production identity/case-isolation blocker | `KEEP_CANONICAL`. Release-gating. |
 | `docs/blockers/SE-08-CHROMADB-ADVISORIES.md` | Dependency exception lifecycle | `KEEP_CANONICAL`. Release-gating until exception is closed or formally accepted. |
 | `docs/blockers/LEGAL-SOURCE-CLOSURE.md` | Court-use legal-source verification items | `KEEP_CANONICAL`. Release-gating for court-use exports. |
@@ -42,7 +42,7 @@ Test-artifact cleanup removed 27 stale result/snapshot documents plus the genera
 | `docs/HARVEY_AI_INTEGRATION.md` | Unfinished Harvey integration guidance | `BLOCKED_REVIEW`. No Harvey source files are currently present; decide retire vs. rebuild. |
 | `docs/DOCUMENTATION_INDEX.md` | Canonical documentation index | `KEEP_CANONICAL`. Keep links to current inventories and active evidence only. |
 | `docs/adr/ADR-009-canonical-runtime.md` | Defines the only production web/API runtime | `KEEP_CANONICAL`. Use it to prevent legacy packages from becoming a second runtime. |
-| `archive/unwired-recovery/README.md` | Missing-source and bytecode recovery record | `KEEP_EVIDENCE`. Preserve; pair with P2-01/P2-02 decisions. |
+| `archive/unwired-recovery/README.md` | Missing-source and bytecode recovery record | `KEEP_EVIDENCE`. Preserve; pair with the ADR-010/ADR-011 closure records. |
 
 # 2. Root, launch, and continuity documents
 
@@ -58,12 +58,21 @@ Test-artifact cleanup removed 27 stale result/snapshot documents plus the genera
 | `ETERNAL_RESEARCH_CHILD/README.md` | Research daemon runbook and integration map | `KEEP_GUIDANCE`; fix missing `tsconfig.phase2.json` reference |
 | `archive/unwired-recovery/README.md` | Archived bytecode/source-gap evidence | `KEEP_EVIDENCE` |
 
-# 3. CODE-JUNCTION briefs
+# 3. CODE-JUNCTION briefs (removed 2026-11-27)
 
-| File | Role | Disposition |
+The `CODE-JUNCTION/` staging folder held the launch-hardening briefs and their synced
+instruction copies. All instructions were applied (launch task, TICKET 1 routing fixes,
+`Legal kiro 26.txt` remediation) and the source folder was deleted after compliance.
+The applied outcomes are recorded in [LAUNCH_HARDENING_REPORT.md](../LAUNCH_HARDENING_REPORT.md)
+and [docs/DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md); the once-standalone instruction
+documents now live only at their canonical repository paths.
+
+| Former file | Role | Disposition |
 |---|---|---|
-| `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` | Phased launch checklist and non-negotiable safety rules | `KEEP_GUIDANCE`; primary brief |
-| `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` | Agent role, architecture, triage, and launch criteria | `CONSOLIDATE`; retain unique criteria only |
+| `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` | Phased launch checklist and non-negotiable safety rules | Applied; folded into the launch report; source removed |
+| `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` | Agent role, architecture, triage, and launch criteria | Distinct criteria consolidated; source removed |
+| `CODE-JUNCTION/Legal kiro 26.txt` | A4/B1/B2/C1/C2 remediation guide | Applied (see launch report §remediation); source removed |
+| `CODE-JUNCTION/instruction-files/**` (10 files) | Staging copies of `.kiro/steering` + `docs/*` canonical files | All hash-verified identical to canonical paths; staging copy removed |
 
 # 4. GitHub issue guidance
 
@@ -175,13 +184,13 @@ Disposition: `KEEP_GUIDANCE`; reconcile completed polish tasks with current UI b
 | `docs/adr/ADR-008-competition-readiness-lock.md` | Competition-readiness lock | `KEEP_CANONICAL` |
 | `docs/adr/ADR-009-canonical-runtime.md` | Canonical web/API runtime | `KEEP_CANONICAL` |
 
-## 6.4 Open blockers — 5 files
+## 6.4 Blocker records — 5 files (3 open, 2 closed)
 
 | File | Role | Disposition |
 |---|---|---|
 | `docs/blockers/LEGAL-SOURCE-CLOSURE.md` | Court-use source-verification blocker | `KEEP_CANONICAL` |
-| `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` | Missing drafting package | `KEEP_CANONICAL` |
-| `docs/blockers/P2-02-PLEADING-VARIANTS.md` | Missing variants registry/unwired route | `KEEP_CANONICAL` |
+| `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` | Closed drafting-package decision | `KEEP_CANONICAL`; superseded by ADR-010 |
+| `docs/blockers/P2-02-PLEADING-VARIANTS.md` | Closed Pleading Chain decision | `KEEP_CANONICAL`; retired by ADR-011 |
 | `docs/blockers/SE-01-OIDC-CASE-ISOLATION.md` | Identity/case-isolation blocker | `KEEP_CANONICAL` |
 | `docs/blockers/SE-08-CHROMADB-ADVISORIES.md` | ChromaDB advisory exception | `KEEP_CANONICAL` |
 
@@ -668,7 +677,7 @@ Disposition: `KEEP_EVIDENCE`; mark selected brand assets and archive unused vari
 - `artifacts/legal-luminaire/backend/requirements313.txt`
 - `node_modules/**`, virtual environments, `dist/**`, `__pycache__/**`, `.pytest_cache/**`, `.ruff_cache/**`
 - `.kilo/worktrees/succulent-buffer/**` — linked worktree metadata
-- `legal-luminaire/**` — duplicate nested Git checkout; counted once in the master inventory
+- ~~`legal-luminaire/**` — duplicate nested Git checkout~~ — **removed 2026-11-27** (redundant duplicate clone, same remote/commit, no unique commits)
 
 ## Reports generated by this task
 
@@ -681,10 +690,10 @@ The two new companion reports are outputs of this inventory and are not included
 # 16. Recommended documentation work
 
 1. Keep `LAUNCH_HARDENING_REPORT.md` as the single current launch-status document and `docs/RELEASE_READINESS.md` as the canonical test/build baseline.
-2. Merge unique CODE-JUNCTION role/triage guidance into the primary brief or canonical architecture docs; archive the generic role preamble.
+2. CODE-JUNCTION role/triage guidance has been consolidated into the launch report; no further merge is pending.
 3. Reconcile `MODERNIZATION_PLAN.md`, root `ROADMAP.md`, `docs/roadmap/`, and the CI-required Week 13 enrichment lock into one current roadmap.
 4. Retain active controls, procedures, and current evidence in place; keep superseded reports out of the documentation index.
-5. Resolve P2-01/P2-02 and keep their blocker documents canonical until acceptance criteria are met.
+5. P2-01 and P2-02 are closed by ADR-010 and ADR-011; keep the remaining release gates active.
 6. Validate FAQs, statutory parity, marketing claims, and legal-source material before publication or court use.
 7. Keep real cases and `output_100426/` confidential; keep synthetic fixtures clearly labeled.
 8. Add explicit loaders/tests if `sample_cases/`, `test-assets/`, or template files are intended to become user-visible runtime content.

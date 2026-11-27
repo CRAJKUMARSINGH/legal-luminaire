@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useCaseContext } from "@/context/CaseContext";
 import { Scale, X, Globe, ChevronDown, ChevronRight } from "lucide-react";
-import { NAV_GROUPS, type NavGroup, type NavGroupId, type NavItem } from "@/config/navigation";
+import { NAV_GROUPS, DEFAULT_CASE_ID, type NavGroup, type NavGroupId, type NavItem } from "@/config/navigation";
 
 interface SidebarProps {
   open: boolean;
@@ -19,7 +19,8 @@ export function Sidebar({ open, onClose }: SidebarProps) {
     setup: false, research: false, drafting: false, review: false, week04: false,
   });
 
-  const hrefFor = (item: NavItem) => (item.caseScoped ? `/case/${selectedCase.id}${item.path}` : item.path);
+  const hrefFor = (item: NavItem) =>
+    item.caseScoped ? `/case/${selectedCaseId || DEFAULT_CASE_ID}${item.path}` : item.path;
   const isActive = (item: NavItem) => location === hrefFor(item);
 
   const renderItem = (item: NavItem) => {

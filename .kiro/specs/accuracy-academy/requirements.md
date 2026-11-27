@@ -1,4 +1,5 @@
 # Accuracy Academy — Requirements
+**Status**: ACTIVE — promoted 2026-11-27 (`Legal kiro 26.txt` C1; see docs/DOCUMENTATION_INDEX.md §3)
 **Flag**: `accuracy_academy` (default OFF)
 **Week**: 12 (Antigravity primary)
 **Source**: vibecode-submit skill — branching walkthrough + trade-off meters

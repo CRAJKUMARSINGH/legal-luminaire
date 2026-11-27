@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { useCaseContext } from "@/context/CaseContext";
 import { CASE_CATALOG } from "@/cases/registry";
 
@@ -11,11 +11,17 @@ import { CASE_CATALOG } from "@/cases/registry";
 export function CaseRouteSync() {
   const [match, params] = useRoute<{ id: string }>("/case/:id/*?");
   const { cases, selectedCaseId, setSelectedCaseId, loadDemoCase } = useCaseContext();
+  const [, setLocation] = useLocation();
   const inflight = useRef<string | null>(null);
 
   const urlId = match ? params.id : null;
 
   useEffect(() => {
+    // Cold-link guard: "/case/undefined/dashboard" → "/case/case-01/dashboard"
+    if (urlId === "undefined") {
+      setLocation(window.location.pathname.replace("/case/undefined", "/case/case-01"), { replace: true });
+      return;
+    }
     if (!urlId || urlId === selectedCaseId || inflight.current === urlId) return;
     if (cases.some((c) => c.id === urlId)) {
       setSelectedCaseId(urlId);

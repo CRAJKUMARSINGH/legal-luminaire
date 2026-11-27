@@ -48,8 +48,7 @@ It accepts `draft_type ∈ {BRIEF, DISCHARGE, BAIL_439}`, loads case data,
 builds a context string from the case timeline and forensic grounding,
 selects a system prompt, and calls `gemini-1.5-flash` via LangChain.
 
-The `services/variant_engine.py` adds pleading variant generation on top,
-inserting `[[CITATION:n]]` slots and enforcing the Fact-Fit Gate.
+The separate Pleading Chain variant engine was retired under ADR-011 and is no longer part of the runtime.
 
 **The Gemini-direct path is fully functional for synthetic demo use.**
 
@@ -62,7 +61,7 @@ inserting `[[CITATION:n]]` slots and enforcing the Fact-Fit Gate.
 | Generate BRIEF / DISCHARGE / BAIL_439 | ✅ Wired | Would have added composable blocks |
 | Template catalog (~30 templates) | ❌ Not present | Would have mapped legacy draft types |
 | Conflict detection between sections | ❌ Not present | Missing |
-| Placeholder validation / slot management | ⚠️ Partial (variant_engine) | Would have been centralised |
+| Placeholder validation / slot management | ⚠️ Prompt-level only | Would have been centralised; Pleading Chain retired |
 | Prompt injection defence (structural) | ❌ Not present — relies on LLM | Would have used XML delimiters |
 | Provenance / version tracking of drafts | ❌ Not present | Missing (registry/) |
 | Grounded-only generation (no fabrication) | ⚠️ Prompt-level only | Would have been enforced structurally |

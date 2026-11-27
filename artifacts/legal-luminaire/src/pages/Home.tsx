@@ -74,10 +74,10 @@ const overallStrength = Math.round(
 );
 
 export default function Home() {
-  const { cases, selectedCase, selectedCaseId, setSelectedCaseId, isDemoMode } = useCaseContext();
+  const { cases, selectedCase, selectedCaseId, setSelectedCaseId, isDemoMode, loadDemoCase } = useCaseContext();
   const [, setLocation] = useLocation();
   const { metrics, accuracyLevel } = useAccuracyContext();
-  const caseId = selectedCase?.id ?? selectedCaseId;
+  const caseId = selectedCaseId || DEFAULT_CASE_ID;
   const isHemraj = caseId === DEFAULT_CASE_ID;
   const caseLawMatrix  = selectedCase?.caseLaw ?? [];
   const timelineEvents = selectedCase?.timeline ?? [];
@@ -102,6 +102,11 @@ export default function Home() {
   const pendingCount   = useMemo(() => caseLawMatrix.filter((c) => c.status === "PENDING").length, [caseLawMatrix]);
   const secondaryCount = useMemo(() => caseLawMatrix.length - verifiedCount - pendingCount, [caseLawMatrix.length, verifiedCount, pendingCount]);
   const total          = caseLawMatrix.length;
+
+  // Cold-profile guard: ensure the seeded demo case exists before any tile is clickable.
+  useEffect(() => {
+    if (cases.length === 0) void loadDemoCase("TC-01");
+  }, [cases.length, loadDemoCase]);
 
   // Fetch overdue deadlines for dashboard (Week 10)
   useEffect(() => {
@@ -308,7 +313,7 @@ export default function Home() {
           </CardContent>
         </Card>
 
-        <Link href={`/case/${selectedCaseId}/upload`}>
+        <Link href={`/case/${caseId}/upload`}>
           <Card className="glass-surface hover-elevate cursor-pointer group">
             <CardContent className="flex items-center gap-4 p-5">
               <div className="rounded-lg bg-blue-500/10 p-3 group-hover:bg-blue-500/20 transition-colors">
@@ -323,7 +328,7 @@ export default function Home() {
           </Card>
         </Link>
 
-        <Link href={`/case/${selectedCaseId}/case-law`}>
+        <Link href={`/case/${caseId}/case-law`}>
           <Card className="glass-surface hover-elevate cursor-pointer group">
             <CardContent className="flex items-center gap-4 p-5">
               <div className="rounded-lg bg-emerald-500/10 p-3 group-hover:bg-emerald-500/20 transition-colors">
@@ -338,7 +343,7 @@ export default function Home() {
           </Card>
         </Link>
 
-        <Link href={`/case/${selectedCaseId}/drafting`}>
+        <Link href={`/case/${caseId}/drafting`}>
           <Card className="glass-surface hover-elevate cursor-pointer group">
             <CardContent className="flex items-center gap-4 p-5">
               <div className="rounded-lg bg-violet-500/10 p-3 group-hover:bg-violet-500/20 transition-colors">
@@ -387,7 +392,7 @@ export default function Home() {
                 </p>
               )}
             </div>
-            <Link href={`/case/${selectedCaseId}/deadlines`}>
+            <Link href={`/case/${caseId}/deadlines`}>
               <Button variant="outline" size="sm" className="w-full mt-3">
                 View All Deadlines
               </Button>

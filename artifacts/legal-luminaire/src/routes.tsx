@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useState, type ComponentType, type ReactNode } f
 import { Switch, Route, Redirect, useLocation } from "wouter";
 import { useCaseContext } from "@/context/CaseContext";
 import { featureFlags } from "@/config/featureFlags";
-import { LEGACY_FLAT_PATHS } from "@/config/navigation";
+import { LEGACY_FLAT_PATHS, DEFAULT_CASE_ID } from "@/config/navigation";
 import { Layout } from "@/components/layout/Layout";
 import type { LpsRoute, FlatRoute } from "@/types";
 import { isLpsRoute, LPS_ROUTE_MAP } from "@/types";
@@ -210,9 +210,49 @@ function Wrap<T extends SafePageProps>(
   );
 }
 
+/**
+ * Case-scoped pages must never render a blank body. Loading → skeleton,
+ * no case → explicit empty state with a recovery action, otherwise the page.
+ * Mirrors `Wrap` but adds the case-availability gate ahead of the boundaries.
+ */
+function CaseScoped(node: ReactNode, componentName: string): ReactNode {
+  return <CaseGate componentName={componentName}>{node}</CaseGate>;
+}
+
+function CaseGate({ componentName, children }: { componentName: string; children: ReactNode }) {
+  const { cases, isLoading, loadDemoCase } = useCaseContext();
+
+  if (isLoading) return <LoadingFallback />;
+
+  if (cases.length === 0) {
+    return (
+      <div className="p-6 max-w-lg space-y-4" role="status">
+        <h2 className="text-lg font-semibold">No case loaded / कोई केस लोड नहीं है</h2>
+        <p className="text-sm text-muted-foreground">
+          Load the seeded demo case to continue. / जारी रखने के लिए डेमो केस लोड करें।
+        </p>
+        <button
+          type="button"
+          onClick={() => void loadDemoCase("TC-01")}
+          className="px-4 py-2 rounded-md bg-primary text-primary-foreground text-sm font-semibold"
+        >
+          Load demo case / डेमो केस लोड करें
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <AppErrorBoundary componentName={componentName}>
+      <Suspense fallback={<LoadingFallback />}>{children}</Suspense>
+    </AppErrorBoundary>
+  );
+}
+
 export function Router() {
-  const { selectedCase } = useCaseContext();
-  const [, setLocation] = useLocation();
+  const { selectedCaseId } = useCaseContext();
+  const caseId = selectedCaseId || DEFAULT_CASE_ID;
+  const [location, setLocation] = useLocation();
   const [ldrLang, setLdrLang] = useState<"en" | "hi" | "both">("both");
 
   const handleLpsNavigate = (route: string) => {
@@ -256,8 +296,16 @@ export function Router() {
 
           {/* Legacy flat case routes (e.g. /dashboard) → redirect into the active case. */}
           {LEGACY_FLAT_PATHS.map((p) => (
-            <Route key={p} path={p} component={() => <Redirect to={`/case/${selectedCase.id}${p}`} replace />} />
+            <Route key={p} path={p} component={() => <Redirect to={`/case/${caseId}${p}`} replace />} />
           ))}
+
+          {/* Cold-link normalisation: /case/undefined/* → /case/case-01/* */}
+          <Route
+            path="/case/undefined/*"
+            component={() => (
+              <Redirect to={`/case/${DEFAULT_CASE_ID}${location.replace("/case/undefined", "")}`} replace />
+            )}
+          />
 
           {/* Document Review Routes */}
           <Route path="/ldr-home" component={() => Wrap(<LDR_HomePage lang={ldrLang} />, "LDR_HomePage")} />
@@ -280,40 +328,43 @@ export function Router() {
           <Route path="/lps-standards" component={() => Wrap(<LPS_StandardsPage />, "LPS_StandardsPage")} />
 
           {/* Case-scoped routes */}
-          <Route path="/case/:id/copilot"               component={() => Wrap(<CopilotPage />, "CopilotPage")} />
-          <Route path="/case/:id/citation-search"       component={() => Wrap(<CitationSearchPage />, "CitationSearchPage")} />
-          <Route path="/case/:id/dashboard"             component={() => <div className="p-6">{Wrap(<DynamicDashboardView />, "DynamicDashboardView")}</div>} />
-          <Route path="/case/:id/chat"                  component={() => <div className="flex flex-col h-full">{Wrap(<ChatView />, "ChatView")}</div>} />
-          <Route path="/case/:id/case-law"              component={() => <div className="p-0">{Wrap(<CaseLawView />, "CaseLawView")}</div>} />
-          <Route path="/case/:id/case-research"         component={() => Wrap(<CaseResearch />, "CaseResearch")} />
-          <Route path="/case/:id/cross-reference"       component={() => Wrap(<CrossReferenceMatrix />, "CrossReferenceMatrix")} />
-          <Route path="/case/:id/ai-research"           component={() => Wrap(<AIResearchEngine />, "AIResearchEngine")} />
-          <Route path="/case/:id/ai-draft-engine"       component={() => Wrap(<AIDraftEngine />, "AIDraftEngine")} />
+          <Route path="/case/:id/copilot"               component={() => CaseScoped(<CopilotPage />, "CopilotPage")} />
+          <Route path="/case/:id/citation-search"       component={() => CaseScoped(<CitationSearchPage />, "CitationSearchPage")} />
+          <Route path="/case/:id/dashboard"             component={() => <div className="p-6">{CaseScoped(<DynamicDashboardView />, "DynamicDashboardView")}</div>} />
+          <Route path="/case/:id/chat"                  component={() => <div className="flex flex-col h-full">{CaseScoped(<ChatView />, "ChatView")}</div>} />
+          <Route path="/case/:id/case-law"              component={() => <div className="p-0">{CaseScoped(<CaseLawView />, "CaseLawView")}</div>} />
+          <Route path="/case/:id/case-research"         component={() => CaseScoped(<CaseResearch />, "CaseResearch")} />
+          <Route path="/case/:id/cross-reference"       component={() => CaseScoped(<CrossReferenceMatrix />, "CrossReferenceMatrix")} />
+          <Route path="/case/:id/ai-research"           component={() => CaseScoped(<AIResearchEngine />, "AIResearchEngine")} />
+          <Route path="/case/:id/ai-draft-engine"       component={() => CaseScoped(<AIDraftEngine />, "AIDraftEngine")} />
           <Route path="/standards"                 component={() => <div className="p-0">{Wrap(<StandardsView />, "StandardsView")}</div>} />
-          <Route path="/case/:id/standards"             component={() => <div className="p-0">{Wrap(<StandardsView />, "StandardsView")}</div>} />
-          <Route path="/case/:id/timeline"              component={() => <div className="p-0">{Wrap(<TimelineView />, "TimelineView")}</div>} />
-          <Route path="/case/:id/documents"             component={() => <div className="p-0">{Wrap(<DocumentsView />, "DocumentsView")}</div>} />
-          <Route path="/case/:id/upload"                component={() => <div className="p-0">{Wrap(<UploadView />, "UploadView")}</div>} />
-          <Route path="/case/:id/drafting"              component={() => <div className="p-0">{Wrap(<DraftingView />, "DraftingView")}</div>} />
-          <Route path="/case/:id/draft-family"          component={() => Wrap(<DraftFamilyPanel />, "DraftFamilyPanel")} />
-          <Route path="/case/:id/draft-variants"        component={() => Wrap(<DraftVariantsPage />, "DraftVariantsPage")} />
-          <Route path="/case/:id/matter-drafting-studio" component={() => <div className="p-0">{Wrap(<MatterDraftingStudio />, "MatterDraftingStudio")}</div>} />
-          <Route path="/case/:id/draft-template-library" component={() => Wrap(<DraftTemplateLibraryPage />, "DraftTemplateLibraryPage")} />
-          <Route path="/case/:id/safe-draft"            component={() => Wrap(<SafeDraftPage />, "SafeDraftPage")} />
-          <Route path="/case/:id/notice-reply"          component={() => Wrap(<NoticeReplyPage />, "NoticeReplyPage")} />
-          <Route path="/case/:id/discharge-print"       component={() => Wrap(<DischargeApplicationPrint />, "DischargeApplicationPrint")} />
-          <Route path="/case/:id/verification"          component={() => Wrap(<VerificationPanel />, "VerificationPanel")} />
-          <Route path="/case/:id/filing-checklist"      component={() => Wrap(<FilingChecklist />, "FilingChecklist")} />
-          <Route path="/case/:id/discharge-application" component={() => Wrap(<DischargeApplication />, "DischargeApplication")} />
-          <Route path="/case/:id/defence-reply"         component={() => Wrap(<DefenceReply />, "DefenceReply")} />
-          <Route path="/case/:id/oral-arguments"        component={() => Wrap(<OralArguments />, "OralArguments")} />
+          <Route path="/case/:id/standards"             component={() => <div className="p-0">{CaseScoped(<StandardsView />, "StandardsView")}</div>} />
+          <Route path="/case/:id/timeline"              component={() => <div className="p-0">{CaseScoped(<TimelineView />, "TimelineView")}</div>} />
+          <Route path="/case/:id/documents"             component={() => <div className="p-0">{CaseScoped(<DocumentsView />, "DocumentsView")}</div>} />
+          <Route path="/case/:id/upload"                component={() => <div className="p-0">{CaseScoped(<UploadView />, "UploadView")}</div>} />
+          <Route path="/case/:id/drafting"              component={() => <div className="p-0">{CaseScoped(<DraftingView />, "DraftingView")}</div>} />
+          <Route path="/case/:id/draft-family"          component={() => CaseScoped(<DraftFamilyPanel />, "DraftFamilyPanel")} />
+          {/* Pleading Chain Engine — OFF until subject_variants.json data contract exists (P2-02) */}
+          {featureFlags.pleadingChain && (
+            <Route path="/case/:id/draft-variants"      component={() => CaseScoped(<DraftVariantsPage />, "DraftVariantsPage")} />
+          )}
+          <Route path="/case/:id/matter-drafting-studio" component={() => <div className="p-0">{CaseScoped(<MatterDraftingStudio />, "MatterDraftingStudio")}</div>} />
+          <Route path="/case/:id/draft-template-library" component={() => CaseScoped(<DraftTemplateLibraryPage />, "DraftTemplateLibraryPage")} />
+          <Route path="/case/:id/safe-draft"            component={() => CaseScoped(<SafeDraftPage />, "SafeDraftPage")} />
+          <Route path="/case/:id/notice-reply"          component={() => CaseScoped(<NoticeReplyPage />, "NoticeReplyPage")} />
+          <Route path="/case/:id/discharge-print"       component={() => CaseScoped(<DischargeApplicationPrint />, "DischargeApplicationPrint")} />
+          <Route path="/case/:id/verification"          component={() => CaseScoped(<VerificationPanel />, "VerificationPanel")} />
+          <Route path="/case/:id/filing-checklist"      component={() => CaseScoped(<FilingChecklist />, "FilingChecklist")} />
+          <Route path="/case/:id/discharge-application" component={() => CaseScoped(<DischargeApplication />, "DischargeApplication")} />
+          <Route path="/case/:id/defence-reply"         component={() => CaseScoped(<DefenceReply />, "DefenceReply")} />
+          <Route path="/case/:id/oral-arguments"        component={() => CaseScoped(<OralArguments />, "OralArguments")} />
           {/* Week 10: Chronology Studio & Deadline Board */}
-          <Route path="/case/:id/chronology"           component={() => Wrap(<ChronologyPage />, "ChronologyPage")} />
-          <Route path="/case/:id/deadlines"            component={() => Wrap(<DeadlinePage />, "DeadlinePage")} />
+          <Route path="/case/:id/chronology"           component={() => CaseScoped(<ChronologyPage />, "ChronologyPage")} />
+          <Route path="/case/:id/deadlines"            component={() => CaseScoped(<DeadlinePage />, "DeadlinePage")} />
           {/* Week 12: Accuracy Academy */}
           <Route path="/academy"                       component={() => Wrap(<AccuracyAcademyPage />, "AccuracyAcademyPage")} />
           <Route path="/accuracy-academy"              component={() => Wrap(<AccuracyAcademyPage />, "AccuracyAcademyPage")} />
-          <Route path="/case/:id/academy"              component={() => Wrap(<AccuracyAcademyPage />, "AccuracyAcademyPage")} />
+          <Route path="/case/:id/academy"              component={() => CaseScoped(<AccuracyAcademyPage />, "AccuracyAcademyPage")} />
           {/* Statutory Competition Features */}
           <Route path="/court-tracker"        component={() => Wrap(<CourtCaseTrackerPage />,   "CourtCaseTrackerPage")} />
           <Route path="/client-matter"        component={() => Wrap(<ClientMatterPage />,        "ClientMatterPage")} />
@@ -325,12 +376,12 @@ export function Router() {
           <Route path="/bilingual-generator"  component={() => Wrap(<BilingualGeneratorPage />,  "BilingualGeneratorPage")} />
           {/* Bilingual Draft Studio — side-by-side editing with discrepancy check + citation gate */}
           <Route path="/bilingual-draft"      component={() => Wrap(<BilingualDraftPage />,       "BilingualDraftPage")} />
-          <Route path="/case/:id/bilingual-draft" component={() => Wrap(<BilingualDraftPage />,   "BilingualDraftPage")} />
+          <Route path="/case/:id/bilingual-draft" component={() => CaseScoped(<BilingualDraftPage />,   "BilingualDraftPage")} />
           {/* Chamber Mode — multi-lawyer role-based access */}
           <Route path="/chamber"              component={() => Wrap(<ChamberModePage />,          "ChamberModePage")} />
           {/* Court Formatter — court-specific caption + cause title */}
           <Route path="/court-formatter"      component={() => Wrap(<CourtFormatterPage />,       "CourtFormatterPage")} />
-          <Route path="/case/:id/court-formatter" component={() => Wrap(<CourtFormatterPage />,   "CourtFormatterPage")} />
+          <Route path="/case/:id/court-formatter" component={() => CaseScoped(<CourtFormatterPage />,   "CourtFormatterPage")} />
           {/* LDR Common — shared LDR section (legacy alias) */}
           <Route path="/ldr-common"           component={() => Wrap(<LDR_CommonPage lang="both" />, "LDR_CommonPage")} />
           <Route path="/manual"               component={() => Wrap(<HowToUsePage />,            "HowToUsePage")} />
@@ -351,22 +402,22 @@ export function Router() {
           <Route path="/example-40" component={() => Wrap(<Example40Page />, "Example40Page")} />
           <Route path="/example-41" component={() => Wrap(<Example41Page />, "Example41Page")} />
           {featureFlags.hybridStandardsValidity && (
-            <Route path="/case/:id/standards-validity"  component={() => Wrap(<StandardsValidity />, "StandardsValidity")} />
+            <Route path="/case/:id/standards-validity"  component={() => CaseScoped(<StandardsValidity />, "StandardsValidity")} />
           )}
           {featureFlags.hybridSessionWorkspace && (
-            <Route path="/case/:id/session-workspace"   component={() => Wrap(<SessionWorkspace />, "SessionWorkspace")} />
+            <Route path="/case/:id/session-workspace"   component={() => CaseScoped(<SessionWorkspace />, "SessionWorkspace")} />
           )}
           {featureFlags.hybridDraftViewer && (
             <Route path="/draft/:id"                    component={() => Wrap(<DraftViewer />, "DraftViewer")} />
           )}
           {(featureFlags.enableCitationGraph || featureFlags.enableCitationExtraction) && (
-            <Route path="/case/:id/citation-graph"    component={() => Wrap(<CitationGraphPage />, "CitationGraphPage")} />
+            <Route path="/case/:id/citation-graph"    component={() => CaseScoped(<CitationGraphPage />, "CitationGraphPage")} />
           )}
           {(featureFlags.enableCaseSimilarity || featureFlags.enableQueryUnderstanding) && (
-            <Route path="/case/:id/case-similarity"   component={() => Wrap(<CaseSimilarityPage />, "CaseSimilarityPage")} />
+            <Route path="/case/:id/case-similarity"   component={() => CaseScoped(<CaseSimilarityPage />, "CaseSimilarityPage")} />
           )}
           {(featureFlags.enableJudgeAnalytics || featureFlags.enableCourtAnalytics) && (
-            <Route path="/case/:id/judge-analytics"   component={() => Wrap(<JudgeAnalyticsPage />, "JudgeAnalyticsPage")} />
+            <Route path="/case/:id/judge-analytics"   component={() => CaseScoped(<JudgeAnalyticsPage />, "JudgeAnalyticsPage")} />
           )}
           <Route component={() => Wrap(<NotFound />, "NotFound")} />
         </Switch>

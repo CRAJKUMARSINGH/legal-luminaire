@@ -1,6 +1,6 @@
 # Legal Source Closure — 11 Outstanding Items
 **Priority:** P0 for court-use exports  
-**Status:** OPEN — 11 procurement actions pending; all are non-engineering  
+**Status:** OPEN — 11 procurement actions pending; all are non-engineering · Reviewed 2026-11-27 (`Legal kiro 26.txt` A4): still OPEN — requires certified copies / BIS-ASTM purchases and qualified advocate review.  
 **Opened:** 2026-11-15 (downgrade audit commit `0a4e5c8`)  
 **Owner:** Legal team / advocate  
 **Reference:** `final-deliverables/LEGAL_SOURCE_REVIEW.md`
@@ -96,7 +96,7 @@ Court-use export is re-enabled when **all** of the following are true:
 
 This work can proceed entirely independently of:
 - SE-01 (OIDC) — legal procurement does not require engineering
-- P2-01 (drafting package) — citation tier changes are data updates, not code changes
+- P2-01 / ADR-010 (closed drafting-package decision) — citation tier changes are data updates, not code changes
 - SE-08 (chromadb) — no overlap
 
 The only dependency is SE-01: once the sources are verified, the court-use

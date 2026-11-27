@@ -1,6 +1,6 @@
 # SE-08 — chromadb Vulnerability Exception Lifecycle
 **Priority:** P1  
-**Status:** OPEN — 4 advisories active; all assessed as UNREACHABLE in current deployment  
+**Status:** OPEN — 4 advisories active; all assessed as UNREACHABLE in current deployment · Reviewed 2026-11-27 (`Legal kiro 26.txt` A4): still OPEN — no patched `chromadb` release; exception and compensating control retained.  
 **Opened:** Pre-2026-11  
 **Owner:** Backend engineering  
 **Reference:** `final-deliverables/SECURITY_EXCEPTIONS.md`

@@ -1,6 +1,6 @@
 # SE-01 — OIDC Authentication and Case Isolation
 **Priority:** P0 for confidential production  
-**Status:** PARTIAL — scoped API keys deployed; OIDC not implemented  
+**Status:** PARTIAL — scoped API keys deployed; OIDC not implemented · Reviewed 2026-11-27 (`Legal kiro 26.txt` A4): still OPEN — needs an OIDC provider, BFF server-side sessions, and a real-database cross-user test matrix.  
 **Opened:** Pre-2026-11  
 **Owner:** Backend engineering (security-controlled implementation)  
 **Reference:** SUPPLEMENT guide §1

@@ -2,8 +2,8 @@
 
 Per-file inventory of source code that is not reachable from the canonical frontend (`src/main.tsx`) or backend (`backend/main.py`), including test-only modules, standalone utilities, legacy workspace packages, archived code, and missing-source gaps.
 
-- Generated: 2026-11-26
-- Branch/HEAD: `codex/code-junction-launch-hardening` @ `2e70ea2`
+- Generated: 2026-11-27
+- Branch/HEAD: `codex/code-junction-launch-hardening` @ `08c5929`
 - Companion: [Master inventory](unwired-files-inventory.md) · [Guidance inventory](guidance-material-inventory.md)
 
 ## Method and limits
@@ -19,9 +19,9 @@ Per-file inventory of source code that is not reachable from the canonical front
 | Class | Count |
 |---|---:|
 | Frontend runtime-and-test unreachable | 52 |
-| Backend runtime-and-test unreachable | 11 |
+| Backend runtime-and-test unreachable | 10 |
 | Frontend test-only | 15 |
-| Backend test-only | 22 |
+| Backend test-only | 20 |
 | Legacy `lib/**` files not used by the canonical app | 79 |
 | Active root utility/support files | 11 |
 | App-level utility scripts | 3 |
@@ -34,19 +34,7 @@ Per-file inventory of source code that is not reachable from the canonical front
 
 # 1. Backend runtime orphans
 
-## 1.1 Pleading variants — blocked cluster
-
-| File | Current state | Disposition and required work |
-|---|---|---|
-| `artifacts/legal-luminaire/backend/api/routes_pleading_variants.py` | Complete `/variants` router; not registered in `main.py` | `BLOCKED_REVIEW`. Do not register as-is. The Fact-Fit import is inside `try/except ImportError` and can fail open. Citation search also degrades to empty results on import failure. |
-| `artifacts/legal-luminaire/backend/services/variant_engine.py` | Reached only by tests and the unwired router | `BLOCKED_REVIEW`. Keep test-only until the register-or-retire decision. `DATA_FILE` points to missing `backend/data/subject_variants.json`. |
-| `artifacts/legal-luminaire/backend/data/subject_variants.json` | **Missing** | Supply a validated registry with real, court-checkable authorities or retire the feature. Do not invent legal data. |
-| `artifacts/legal-luminaire/backend/services/factfit_gate.py` | **Missing**, but imported by the router | Identify/build an adapter to the canonical citation gate. Import failure must block generation, not bypass it. |
-| `artifacts/legal-luminaire/backend/services/rag_store.py` | **Missing**, but imported by the router | Use the canonical case-scoped retrieval service or remove the route. Missing search must not look like “no citations.” |
-
-Acceptance gate: explicit register-or-retire ADR/issue; verified registry if registered; intentional router registration; mandatory 428 blocking for `PENDING`/`FATAL_ERROR`; auth and case scoping on every route; no silent test skips; browser route sweep passes.
-
-## 1.2 Derivative drafting — blocked cluster
+## 1.1 Derivative drafting — blocked cluster
 
 | File | Current state | Disposition and required work |
 |---|---|---|
@@ -55,7 +43,7 @@ Acceptance gate: explicit register-or-retire ADR/issue; verified registry if reg
 
 The router already has useful controls: `FEATURE_DERIVATIVE_DRAFTS`, subject/type pairing, structured lineage, synthetic labeling, bilingual disclaimers, and deterministic fallback drafts. Those controls are necessary but not sufficient for production registration.
 
-## 1.3 Alternate implementations
+## 1.2 Alternate implementations
 
 | File | Current state | Disposition and required work |
 |---|---|---|
@@ -64,7 +52,7 @@ The router already has useful controls: `FEATURE_DERIVATIVE_DRAFTS`, subject/typ
 | `artifacts/legal-luminaire/backend/utils/pdf_engine.py` | Court-ready PDF helper with Devanagari font handling, watermark, margins, header/footer; no references | `INCORPORATE` only behind a gated export path. Add citation-blocking tests, font fallback tests, print-layout tests, and advocate-review disclosure tests. |
 | `artifacts/legal-luminaire/backend/graph/neo4j_client.py` | Optional Neo4j client; no references | `BLOCKED_REVIEW`. Adopt only with a named graph feature, configuration, failure/fallback behavior, and tests; otherwise retire. |
 
-## 1.4 Standalone backend utilities
+## 1.3 Standalone backend utilities
 
 | File | Current state | Disposition and required work |
 |---|---|---|
@@ -174,13 +162,12 @@ Disposition: `KEEP_TEST`. The fifteenth file is production-shaped but test-reach
 |---|---|
 | `artifacts/legal-luminaire/src/lib/intake-schema.ts` | Decide whether intake runtime should consume this schema. If yes, wire it into the active intake form and keep validation tests; if no, move it beside the tests or remove it. |
 
-## 3.2 Backend — 22 files
+## 3.2 Backend — 20 files
 
 ```text
 artifacts/legal-luminaire/backend/api/__init__.py
 artifacts/legal-luminaire/backend/rag/__init__.py
 artifacts/legal-luminaire/backend/services/__init__.py
-artifacts/legal-luminaire/backend/services/variant_engine.py
 artifacts/legal-luminaire/backend/tests/__init__.py
 artifacts/legal-luminaire/backend/tests/conftest.py
 artifacts/legal-luminaire/backend/tests/test_authentication.py
@@ -194,7 +181,6 @@ artifacts/legal-luminaire/backend/tests/test_rate_limit.py
 artifacts/legal-luminaire/backend/tests/test_route_registry.py
 artifacts/legal-luminaire/backend/tests/test_security_remediation.py
 artifacts/legal-luminaire/backend/tests/test_stadium_collapse_accuracy.py
-artifacts/legal-luminaire/backend/tests/test_variant_engine.py
 artifacts/legal-luminaire/backend/tests/test_verification_syntax.py
 artifacts/legal-luminaire/backend/verification/__init__.py
 artifacts/legal-luminaire/backend/verification/accuracy_pipeline.py
@@ -204,10 +190,8 @@ artifacts/legal-luminaire/backend/verification/error_detector.py
 Disposition notes:
 
 - Tests and package initializers: `KEEP_TEST`.
-- `services/variant_engine.py`: `BLOCKED_REVIEW`; see the pleading-variants cluster.
 - `verification/accuracy_pipeline.py` and `verification/error_detector.py`: test-only production modules with existing local modifications. Treat as modification-in-progress, not deletion candidates. Decide whether the active verification route should consume them.
 - `tests/test_drafting_engine.py` is a documented skip stub for P2-01.
-- `tests/test_variant_engine.py` contains registry-gated skips for P2-02.
 
 # 4. Active utility and support code
 
@@ -475,7 +459,7 @@ artifacts/legal-luminaire/backend/registry/__init__.py
 artifacts/legal-luminaire/backend/registry/derivative_drafts.py
 ```
 
-Evidence: `archive/unwired-recovery/README.md` and `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md`. The source was never committed and cannot be safely reconstructed from the archived Python 3.14 bytecode. Choose supersede-by-ADR or deliberate rebuild.
+Evidence: `archive/unwired-recovery/README.md` and `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md`. The source was never committed and cannot be safely reconstructed from the archived Python 3.14 bytecode. ADR-010 supersedes the package; do not reconstruct it by inference.
 
 # 8. Wired auxiliary and duplicate checkout
 
@@ -496,16 +480,15 @@ Configuration gap: `ETERNAL_RESEARCH_CHILD/package.json` runs `tsc -p tsconfig.p
 
 ## Duplicate checkout
 
-`legal-luminaire/` is a separate nested Git repository at `ff68166`. It duplicates the main tree and is intentionally counted once. Do not merge or delete it without user direction.
+`legal-luminaire/` is a separate nested Git repository retained at canonical commit `08c5929`. Its tracked file list matches the root tree and is intentionally counted once. Do not delete it without explicit user approval.
 
 `.kilo/worktrees/succulent-buffer/` is a linked worktree at detached HEAD `8903cde`; it is tooling metadata, not source backlog.
 
 # 9. Recommended implementation order
 
-1. Resolve P2-01 and P2-02; keep the variants router blocked until fail-open behavior is removed.
-2. Add explicit citation-gate, auth, case-scope, persistence, and test requirements to any derivative-draft registration plan.
-3. Benchmark alternate gate/RAG implementations against canonical behavior.
-4. Triage frontend prototypes by named route and user journey; retire duplicates.
-5. Document seeder/audit/stress utilities and retire duplicate PDF/drafting generators.
-6. Keep archived packages archived; decide whether legacy `lib/db` and the Hemraj seeder are still needed.
-7. Remove the empty generator and resolve the duplicate checkout only after user approval.
+1. Decide whether to register or retire derivative drafting; require citation-gate, auth, case-scope, persistence, and route tests before registration.
+2. Benchmark alternate gate/RAG implementations against canonical behavior.
+3. Triage frontend prototypes by named route and user journey; retire duplicates.
+4. Document seeder/audit/stress utilities and retire duplicate PDF/drafting generators.
+5. Keep archived packages archived; decide whether legacy `lib/db` and the Hemraj seeder are still needed.
+6. Remove the empty generator and keep the nested checkout synchronized; remove it only after explicit user approval.

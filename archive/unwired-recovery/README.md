@@ -12,10 +12,10 @@ Baseline: `c8f91cb` · Branch: `reconcile/unwired-files`
 
 | Archived files | Origin | Classification | Reason |
 |---|---|---|---|
-| `bytecode/drafting/*.pyc` (8 + `__init__`) | `backend/drafting/` | **UNCERTAIN** | `git log --diff-filter=A` shows these `.py` files were *never* committed. `test_drafting_engine` expected a ~30-template catalog (`TEMPLATES`, `resolve_legacy_draft_type`) and a skeleton builder (SOURCE CONTROL / VERIFICATION / LIST OF ANNEXURES / `Legal grounds` / `आधार`). No wired backend equivalent exists; `api/routes_drafting.py` uses a different, simpler Gemini-prompt path. |
-| `bytecode/registry/*.pyc` (2) | `backend/registry/` | **SUPERSEDED** | Bytecode API is identical to the wired `backend/services/variant_engine.py` (`MatterContext`, `load_registry`, `subject_families`, `extract_matter_context`, `build_archetype_prompt`, `DATA_FILE = subject_variants.json`). `registry/` is a predecessor of the shipped service. |
-| `bytecode/tests/test_variant_engine*.pyc` | `backend/tests/` | **RECREATED** | Targets `services.variant_engine`, which exists and is wired via `api/routes_pleading_variants.py`. Re-authored from the wired implementation (not decompiled): see `backend/tests/test_variant_engine.py` — 10 pass, 2 registry-gated tests skip (see BLOCKER P2-02). |
-| `bytecode/tests/test_drafting_engine*.pyc` | `backend/tests/` | **UNCERTAIN** | Targets the missing `drafting` package. Recreated as a documented **skip stub** (`backend/tests/test_drafting_engine.py`) so the gap stays visible in CI (BLOCKER P2-01). |
+| `bytecode/drafting/*.pyc` (8 + `__init__`) | `backend/drafting/` | **SUPERSEDED** | `git log --diff-filter=A` shows these `.py` files were *never* committed. `test_drafting_engine` expected a ~30-template catalog (`TEMPLATES`, `resolve_legacy_draft_type`) and a skeleton builder (SOURCE CONTROL / VERIFICATION / LIST OF ANNEXURES / `Legal grounds` / `आधार`). ADR-010 supersedes the package; `api/routes_drafting.py` remains the canonical Gemini-direct path. |
+| `bytecode/registry/*.pyc` (2) | `backend/registry/` | **RETIRED** | Bytecode API matches the former `backend/services/variant_engine.py` (`MatterContext`, `load_registry`, `subject_families`, `extract_matter_context`, `build_archetype_prompt`, `DATA_FILE = subject_variants.json`). The Pleading Chain was retired under ADR-011; this is historical evidence only. |
+| `bytecode/tests/test_variant_engine*.pyc` | `backend/tests/` | **RETIRED** | Targeted the former `services.variant_engine`. The source, router, and test were removed with the Pleading Chain under ADR-011; only the archived bytecode remains. |
+| `bytecode/tests/test_drafting_engine*.pyc` | `backend/tests/` | **SUPERSEDED** | Targeted the missing `drafting` package. A documented **skip stub** (`backend/tests/test_drafting_engine.py`) preserves the historical gap after ADR-010 superseded the package. |
 | `bytecode/tests/test_health_route*.pyc` | `backend/tests/` | **HISTORICAL → RECREATED** | Original targeted `api.routes_health`, `RequestIdMiddleware`, `register_error_handlers` — removed runtime. Re-authored against the CURRENT wired health surface (`backend/tests/test_health_route.py`). |
 | `bytecode/tests/test_http_contract*.pyc` | `backend/tests/` | **HISTORICAL → RECREATED** | Original targeted `api.request_context.current_trace_id` and the `api.http_errors` envelope — removed runtime. Re-authored against the CURRENT auth/429/404 envelope contract (`backend/tests/test_http_contract.py`). |
 | `bytecode/tests/test_rate_limit*.pyc` | `backend/tests/` | **HISTORICAL → RECREATED** | Original targeted `api.rate_limit.RateLimiter` / `is_expensive_endpoint` — removed (limiter now lives inline in `main.py`). Re-authored against the CURRENT limiter (`backend/tests/test_rate_limit.py`), extracting the real functions from `main.py` via AST. |
@@ -30,13 +30,8 @@ Baseline: `c8f91cb` · Branch: `reconcile/unwired-files`
 carried `[Information required: …]` placeholders plus SOURCE CONTROL / VERIFICATION /
 LIST OF ANNEXURES sections and marked output `NOT filing-ready`.
 
-## Blocker raised
+## Decision records
 
-**BLOCKER P2-01** — the `drafting` package is *required by a test* (`test_drafting_engine`)
-but was never committed and cannot be safely reconstructed. Requires a product decision:
-re-implement deliberately, or formally drop the drafting-layer epic.
+**P2-01 / ADR-010 — CLOSED.** The `drafting` package was never committed and cannot be safely reconstructed. ADR-010 supersedes it with the existing Gemini-direct drafting path; the skip stub remains as historical evidence.
 
-**BLOCKER P2-02** — `services.variant_engine.DATA_FILE` resolves to
-`backend/data/subject_variants.json`, which **does not exist** anywhere in the repo. The
-wired route `api/routes_pleading_variants.py` will fail at `load_registry()`. This is a
-pre-existing runtime gap independent of this reconciliation.
+**P2-02 / ADR-011 — CLOSED.** The Pleading Chain variant engine, router, frontend client, and test were retired. The missing `subject_variants.json` registry is not a current runtime requirement, and the legacy URL now links to Safe Draft with a retirement notice.

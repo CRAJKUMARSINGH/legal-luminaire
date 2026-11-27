@@ -93,3 +93,19 @@ Retirement verification passed 388 frontend tests and 204 backend tests, with th
 Drafting supersession verification passed 388 frontend tests and 208 backend tests with zero skips. The former skip-only drafting tests were replaced with mocked-provider tests. Live Gemini validation remains open.
 
 The seeder now uses the case-scoped upload route, sends only the labelled synthetic fixture to a local backend, and treats indexing errors or zero chunks as failure. The scripts typecheck and loopback contract test passed. The test is wired into the launch command and GitHub CI. The checklist score remains 64% because this item also requires live-provider verification.
+
+## CODE-JUNCTION remediation — `Legal kiro 26.txt`
+
+Applied the post-facto unwired-files action guide on 2026-11-27.
+
+| # | Item | Outcome |
+| --- | --- | --- |
+| A4 | Blockers [SE-01](docs/blockers/SE-01-OIDC-CASE-ISOLATION.md), [SE-08](docs/blockers/SE-08-CHROMADB-ADVISORIES.md), [LEGAL-SOURCE-CLOSURE](docs/blockers/LEGAL-SOURCE-CLOSURE.md) | Remain **OPEN** — each is gated on an external dependency (an OIDC provider and a real-database cross-user test matrix; a patched `chromadb` release; certified legal sources plus advocate review). No code-only change can close them. The assessment is recorded on each blocker's status line and in the go/no-go checklist above. |
+| B1 | Discharge generators (`scripts/gen_discharge_v5.py`, `generate_discharge_english.py`, `generate_discharge_pdf.py`) | **Kept** in place. The archive recommendation was declined: [output_100426/README.md](output_100426/README.md#L7-L13) and the [documentation index](docs/DOCUMENTATION_INDEX.md) call them canonical and retain them for reproducibility. No files moved. |
+| B2 | `scripts/scan_markdown_duty.py`, `scripts/seed-demo-data.ts` | Dispositions recorded in the [documentation index](docs/DOCUMENTATION_INDEX.md) §7. The Markdown scan stays a manual inventory tool (not a CI gate); the seeder stays an operator tool wired through the README. |
+| C1 | `.kiro/specs/*` + `.trae/specs/kiro-max-reach-polish/` | **Promoted** `citation-deeplink`, `deadline-engine`, and `accuracy-academy` to ACTIVE (a status note was added to each `requirements.md`). The remaining five Kiro packs and the Trae polish spec are marked **parked** in the [documentation index](docs/DOCUMENTATION_INDEX.md) §3. |
+| C2 | FAQ pages and retained material | `faq/*.md` were already linked from the [documentation index](docs/DOCUMENTATION_INDEX.md) §6; no mass moves were made. The index was refreshed 2026-11-27. |
+
+No application code changed in this pass, so the frontend (388 tests) and backend
+suites are unaffected and the citation gate is unchanged (PENDING citations still
+return HTTP 428).

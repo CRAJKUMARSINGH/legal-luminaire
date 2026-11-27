@@ -89,6 +89,15 @@ export const featureFlags = {
   /** Accuracy Academy - branching walkthrough + trade-off meters */
   accuracyAcademy: isEnabled(env.VITE_FF_ACCURACY_ACADEMY, true),
   accuracy_academy: isEnabled(env.VITE_FF_ACCURACY_ACADEMY, true),
+
+  // === PLEADING CHAIN ENGINE (blocked — P2-02) ===
+  /**
+   * Pleading Chain Engine — OFF by default. The variant registry
+   * (`subject_variants.json`) is a documented open data gap
+   * (docs/blockers/P2-02-PLEADING-VARIANTS.md); the route is dead-ended
+   * until that data contract exists. Do not stub the registry with invented data.
+   */
+  pleadingChain: isEnabled(env.VITE_FF_PLEADING_CHAIN, false),
 } as const;
 
 /**

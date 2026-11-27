@@ -1,4 +1,5 @@
 # Limitation & Deadline Engine — Requirements
+**Status**: ACTIVE — promoted 2026-11-27 (`Legal kiro 26.txt` C1; see docs/DOCUMENTATION_INDEX.md §3)
 **Flag**: `deadline_engine` (default OFF)
 **Weeks**: 9 (Kiro backend) → 10 (Devin board UI)
 **Source**: Statutory — *Limitation & Deadline Tracking* feature (vibecode.law/showcase/Statutory-723173)

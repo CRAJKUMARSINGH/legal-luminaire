@@ -4,7 +4,7 @@ Current-state inventory of files that exist in the working repository but are no
 
 - Generated: 2026-11-27
 - Branch: `codex/code-junction-launch-hardening`
-- HEAD: `2e70ea2`
+- HEAD: `08c5929`
 - Canonical frontend entry: `artifacts/legal-luminaire/src/main.tsx`
 - Canonical backend entry: `artifacts/legal-luminaire/backend/main.py`
 - Method: static import graph traversal, Python AST import traversal, test-reachability traversal, Git/file inventory, and targeted reference searches.
@@ -21,7 +21,7 @@ A file is considered runtime-unwired when no static import, dynamic import, `req
 - Test-only files are listed separately because they are wired to Vitest/pytest, not to the application runtime.
 - Documentation and evidence are intentionally non-executable; they are inventoried so their guidance can be incorporated deliberately.
 - Archived packages are already retired and should not be merged back into the canonical runtime.
-- The nested `legal-luminaire/` Git checkout is counted once as a duplicate checkout, not once per contained file.
+- A nested duplicate `legal-luminaire/` Git checkout was present; it was removed on 2026-11-27 (see “Duplicate checkout and local-only material”).
 - Dependency folders, virtual environments, build output, caches, and bytecode are excluded from the backlog.
 
 ## Executive summary
@@ -29,29 +29,18 @@ A file is considered runtime-unwired when no static import, dynamic import, `req
 | Area | Current count | Classification | Recommended treatment |
 |---|---:|---|---|
 | Frontend source unreachable from runtime and tests | 52 | Prototypes, duplicates, utilities, unused UI primitives | Triage individually; most are not feature-complete |
-| Backend source unreachable from runtime and tests | 11 | Two unwired feature clusters, alternates, utilities, one empty file | Register-or-retire decisions; do not wire blindly |
+| Backend source unreachable from runtime and tests | 10 | One unwired feature cluster, alternates, utilities, one empty file | Register-or-retire decision for derivative drafting; do not wire blindly |
 | Frontend test-reachable but not runtime-reachable | 15 | 14 test files + `intake-schema.ts` | Keep tests; decide whether the schema belongs in runtime |
-| Backend test-reachable but not runtime-reachable | 22 | Tests/package initializers + 3 production modules | Keep tests; resolve variants and verification-module status |
+| Backend test-reachable but not runtime-reachable | 20 | Tests/package initializers + 2 production modules | Keep tests; resolve verification-module status |
 | Legacy `lib/**` workspace files | 79 | Express/Drizzle-era API spec, clients, schemas | Not consumed by the canonical app; retain only with the retired stack |
 | Archived package/script files | 93 | Retired Express API, mockup sandbox, retired scripts | Keep archived; do not reincorporate without a new ADR |
 | Retained baseline standalone `.md`/`.txt` documents | 360 | 452 baseline documents minus 25 removed enrichment reports, 10 earlier test-document removals, 27 stale result/snapshot documents, and 30 redundant reports removed on 2026-11-27 | Keep only active functional material; see guidance report |
-| Duplicate nested Git checkout | 1 tree | Independent repository at `legal-luminaire/` | User disposition required; do not double-count |
+| Duplicate nested Git checkout | 0 | Independent repository at `legal-luminaire/` | **Removed 2026-11-27** — redundant clone (same remote/commit, no unique commits) |
 | Missing drafting/registry source files | 11 | Source never committed; only historical bytecode evidence | Product decision: supersede or rebuild |
 
 ## Highest-priority findings
 
-### 1. Pleading variants are unsafe to register as-is
-
-Cluster:
-
-- `artifacts/legal-luminaire/backend/api/routes_pleading_variants.py`
-- `artifacts/legal-luminaire/backend/services/variant_engine.py`
-- Missing `artifacts/legal-luminaire/backend/data/subject_variants.json`
-- Missing imported gate/search services referenced by the router
-
-The router is not registered in `backend/main.py`. It also catches `ImportError` around the Fact-Fit Gate and can continue without blocking. Registration must remain blocked until the gate is mandatory, the registry exists with verified authorities, authentication/case scoping are tested, and the 428 behavior is proven.
-
-### 2. Derivative drafting is a complete but unregistered cluster
+### 1. Derivative drafting is a complete but unregistered cluster
 
 Cluster:
 
@@ -60,18 +49,18 @@ Cluster:
 
 The code includes feature flags, pairing checks, lineage, synthetic labeling, and bilingual disclaimers. It still needs an explicit product decision, citation-gate integration, persistent family storage, and route tests before registration.
 
-### 3. Alternate engines should be benchmarked, not silently swapped
+### 2. Alternate engines should be benchmarked, not silently swapped
 
 - `backend/agents/fact_fit_engine.py` is an optimized alternate Fact-Fit implementation.
 - `backend/rag/optimized_document_store.py` is an alternate RAG store.
 
 Both are unreferenced. Compare correctness, latency, memory, offline behavior, and failure semantics against the wired implementations before any adoption.
 
-### 4. The PDF helper is plausible future code, but export remains gated
+### 3. The PDF helper is plausible future code, but export remains gated
 
 `backend/utils/pdf_engine.py` is unreferenced. It may support a future court-ready PDF path, but no export integration should proceed unless `PENDING` and `FATAL_ERROR` citations remain physically blocked and advocate-review disclosures are preserved.
 
-### 5. Most frontend orphans are inventory, not ready features
+### 4. Most frontend orphans are inventory, not ready features
 
 The 52 frontend orphans include 36 unused shadcn/Radix primitives, legacy/alternate views, small hooks/formatters, and several prototype panels. They should be triaged as:
 
@@ -101,8 +90,6 @@ The 52 frontend orphans include 36 unused shadcn/Radix primitives, legacy/altern
 
 | File | Disposition | Next action |
 |---|---|---|
-| `backend/api/routes_pleading_variants.py` | `BLOCKED_REVIEW` | Fix fail-open gate imports; supply verified registry; register or retire |
-| `backend/services/variant_engine.py` | `BLOCKED_REVIEW` | Keep test-only until variants decision; registry is missing |
 | `backend/api/routes_derivative.py` | `BLOCKED_REVIEW` | Decide register vs. retire; add gate, persistence, auth, tests |
 | `backend/agents/derivative_drafter.py` | `BLOCKED_REVIEW` | Treat as one feature cluster with its router |
 | `backend/agents/fact_fit_engine.py` | `INCORPORATE` only after benchmark | Compare against canonical gate; never weaken blocking |
@@ -129,11 +116,11 @@ See the code inventory for every path and a suggested integration point.
 
 The guidance report lists the 360 documents retained from the 452-document baseline. The main consolidation targets are:
 
-1. `CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt` — primary launch brief.
-2. `CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md` — consolidation candidate; retain only distinct architecture/triage criteria.
+1. ~~`CODE-JUNCTION/COMPREHENSIVE LAUNCH-READY TASK FOR.txt`~~ — primary launch brief (removed 2026-11-27; applied and folded into `LAUNCH_HARDENING_REPORT.md`).
+2. ~~`CODE-JUNCTION/lel# SYSTEM  ROLE DEFINITION.md`~~ — consolidation candidate (removed 2026-11-27; distinct criteria consolidated).
 3. `LAUNCH_HARDENING_REPORT.md` — current launch status; locally modified and must be preserved.
-4. `docs/blockers/P2-01-DRAFTING-PACKAGE-GAP.md` — missing drafting source decision.
-5. `docs/blockers/P2-02-PLEADING-VARIANTS.md` — variants registration decision.
+4. `docs/adr/ADR-010-gemini-direct-drafting.md` — closed drafting-package supersession decision.
+5. `docs/adr/ADR-011-retire-pleading-chain.md` — closed Pleading Chain retirement decision.
 6. `docs/APP_AUDIT_SCATTERED_CODE.md` — earlier code-health audit; some recommendations are already implemented.
 7. `docs/MODERNIZATION_PLAN.md`, `docs/ROADMAP.md`, `docs/roadmap/`, and the CI-required Week 13 enrichment lock — reconcile current planning input before reuse.
 8. `audit-results/`, `final-deliverables/`, `design-deliverables/`, and scattered `artifacts/*` — retain active controls, procedures, and current evidence; superseded reports have been removed.
@@ -144,10 +131,9 @@ The guidance report lists the 360 documents retained from the 452-document basel
 |---|---|---|
 | `backend/drafting/{__init__,architecture,blocks,catalog,conflicts,engine,grounds,placeholders,prompts}.py` | Never committed; historical bytecode only | Supersede via ADR or rebuild deliberately from requirements |
 | `backend/registry/{__init__,derivative_drafts}.py` | Superseded predecessor evidence | Keep archived; do not reconstruct by inference |
-| `backend/data/subject_variants.json` | Missing | Supply verified schema/data or retire variants |
-| `backend/services/factfit_gate.py` | Referenced by unwired router but absent | Identify canonical gate adapter before any registration |
-| `backend/services/rag_store.py` | Referenced by unwired router but absent | Use canonical case-scoped search service or retire route |
 | `ETERNAL_RESEARCH_CHILD/tsconfig.phase2.json` | Referenced by package script but absent | Add the config or correct the script before relying on daemon typecheck |
+
+The former Pleading Chain registry, gate, and retrieval gaps were closed by ADR-011 when that unreleased feature was retired. They are not current source requirements.
 
 ## Archived and legacy code
 
@@ -161,7 +147,7 @@ These are inventory/archive decisions, not incorporation tasks, unless a new arc
 
 ## Duplicate checkout and local-only material
 
-- `legal-luminaire/` is a separate nested Git repository at `ff68166`. It duplicates the main tree and must not be counted again file-by-file.
+- `legal-luminaire/` was a separate nested Git repository at canonical commit `08c5929`; it was **removed on 2026-11-27** after confirmation (redundant clone: same remote, same commit, no unique commits).
 - `.kilo/worktrees/succulent-buffer/` is a linked worktree at detached HEAD `8903cde`; it is tooling metadata, not product backlog.
 - `.pytest_cache/`, `.ruff_cache/`, `node_modules/`, virtual environments, `dist/`, and `__pycache__/` are local generated material and are excluded.
 - The old debug/audit debris listed in the 2026-11-21 inventory is no longer present in the current non-dependency working-tree scan.
@@ -180,14 +166,13 @@ These are inventory/archive decisions, not incorporation tasks, unless a new arc
 
 ## Recommended order of work
 
-1. **Record the two drafting decisions:** P2-01 and P2-02. Do not wire either router before the decisions and safety prerequisites are complete.
-2. **Close the fail-open citation-gate path** in any future variants implementation.
-3. **Benchmark alternate engines** against canonical implementations; adopt only with parity tests.
-4. **Triage frontend prototypes** by named user journey; retire duplicates and unused primitives with no planned consumer.
-5. **Consolidate launch guidance** into the primary brief and current launch report; keep one current test/build baseline and retain only actively referenced evidence.
-6. **Document or retire utility scripts and legacy packages**; avoid creating a second runtime.
-7. **Resolve the duplicate checkout** with the user before any cleanup.
+1. **Decide whether to register or retire derivative drafting.** Do not wire the router before the decision and safety prerequisites are complete.
+2. **Benchmark alternate engines** against canonical implementations; adopt only with parity tests.
+3. **Triage frontend prototypes** by named user journey; retire duplicates and unused primitives with no planned consumer.
+4. **Consolidate launch guidance** into the primary brief and current launch report; keep one current test/build baseline and retain only actively referenced evidence.
+5. **Document or retire utility scripts and legacy packages**; avoid creating a second runtime.
+6. **Nested checkout resolved** — the redundant `legal-luminaire/` clone was removed on 2026-11-27 after explicit approval; no synchronization is now required.
 
-## Existing local changes preserved
+## Nested checkout disposition
 
-This inventory does not modify application code. The working tree already contains user changes in `LAUNCH_HARDENING_REPORT.md`, backend agent/verification files, `test_verification_syntax.py`, untracked `CODE-JUNCTION/` briefs, the replacement `agents/legal_verifier.py`, and the nested checkout. Those changes were treated as current disk state and left untouched.
+The nested `legal-luminaire/` repository (a redundant duplicate clone at canonical commit `08c5929`, same remote, no unique commits) was **removed on 2026-11-27** after explicit user approval. The root repository is now the single working tree.
