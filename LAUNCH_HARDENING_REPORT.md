@@ -109,3 +109,23 @@ Applied the post-facto unwired-files action guide on 2026-11-27.
 No application code changed in this pass, so the frontend (388 tests) and backend
 suites are unaffected and the citation gate is unchanged (PENDING citations still
 return HTTP 428).
+
+## Launch baseline re-verification — 2026-11-27
+
+Re-ran the launch baseline against `fa4918b` on a developer host:
+
+- The protected folders `Attached_Assets`, `CODE-JUNCTION`, and
+  `real_cases/CASE01_HEMRAJ_STATE_2025/Attached_Assets` are present and unmodified
+  (`CODE-JUNCTION/` remains untracked).
+- Workspace typecheck passed. The frontend suite passed all 388 tests. The
+  production build succeeded; the entry bundle was 616.05 kB minified and
+  183.16 kB gzipped, with the existing Vite chunk-size warning.
+- Fixed a broken landing-page link: the premium hero "Explore Workbench" CTA
+  pointed to `/demo-cases`, which has no route; it now targets `/demo-browser`.
+  Every remaining landing-page link was checked against the route table in
+  `artifacts/legal-luminaire/src/routes.tsx` and resolves to a defined route.
+- Backend pytest and Ruff could not run in this pass: both backend virtual
+  environments (`backend/.venv`, `backend/.venv313`) reference missing
+  interpreters, and the system Python is the non-functional Windows Store alias.
+  This is the environment limitation recorded in earlier passes, not a code
+  regression.

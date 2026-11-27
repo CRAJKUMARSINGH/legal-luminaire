@@ -1,186 +1,302 @@
 # ⚖️ Legal Luminaire
 
-**India's Evidence-First Legal Research & Litigation Intelligence Workbench**
+**Stop hallucinated citations before they reach a court file — accuracy-first AI research & drafting for Indian litigation.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-D8B36A.svg)](LICENSE)
-[![Build](https://img.shields.io/github/actions/workflow/status/CRAJKUMARSINGH/legal-luminaire/ci.yml?branch=main&label=CI)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
-[![Tests](https://img.shields.io/badge/tests-558%20passing-15803D)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/CRAJKUMARSINGH/legal-luminaire/ci.yml?branch=main&label=CI)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
+[![Tests](https://img.shields.io/badge/tests-Vitest%20%2B%20pytest-15803D)](https://github.com/CRAJKUMARSINGH/legal-luminaire/actions)
+[![Made for Indian Courts](https://img.shields.io/badge/made%20for-Indian%20Courts-B8860B)](#-what-makes-this-brilliant)
+[![Bilingual](https://img.shields.io/badge/UI-Hindi%20%2B%20English-6A0DAD)](#-key-features)
+[![pnpm monorepo](https://img.shields.io/badge/monorepo-pnpm-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/)
 
 ---
 
-## ✨ What Makes This Brilliant
+## ✨ What Makes This Brilliant?
 
-Legal Luminaire is not a generic AI chatbot bolted onto legal templates. It is a **citation-safe, bilingual, evidence-grounded** platform built for the specific demands of Indian litigation.
+Legal Luminaire is not a generic chatbot bolted onto legal templates. It is a **citation-safe, bilingual, evidence-grounded** platform built for the specific demands of Indian litigation — and its rules come from courtroom experience, not marketing.
 
-Every precedent is independently tier-graded — `COURT_SAFE`, `VERIFIED`, `SECONDARY`, or `PENDING`. Unverified citations are hard-blocked from any court-ready export. The limitation engine computes CrPC deadlines deterministically, without an LLM, with full bilingual audit trails. Advocates stay in control: AI drafts require human review before anything reaches a court file.
+Consider the forensic standards guard. In real construction-defect defence, the prosecution often relies on **IS 1199:2018**, which governs sampling of **fresh concrete only**. For hardened masonry mortar, the correct authority is **IS 2250:1981** (with ASTM C1324 for hardened-mortar forensics). A tool that cannot tell the two apart will confidently draft a defence around the wrong standard. Legal Luminaire flags that exact misapplication and warns before filing.
+
+> **That's not a feature. That's a weapon.**
+
+**Non-negotiables.** These are enforced in code, not just documented:
+
+- Every precedent carries a tier; `PENDING` and `FATAL_ERROR` citations are blocked from all draft output.
+- Every draft ships with a verification report and a pre-filing checklist.
+- Demo data is **synthetic** — never real client records.
+
+> *"I built this because I needed it. Every accuracy rule in this app is a scar from a real case."* — the creator
+
+**The 5-tier verification ladder:**
+
+| Tier | Meaning | Draft behaviour |
+|---|---|---|
+| `COURT_SAFE` | Certified copy + paragraph number confirmed | Allowed |
+| `VERIFIED` | Existence confirmed on an official source | Allowed |
+| `SECONDARY` | Credible secondary source, pending primary check | Allowed with an explicit qualification note |
+| `PENDING` | Unverified | **Blocked** from all output |
+| `FATAL_ERROR` | Factually mismatched or fabricated | **Blocked** |
 
 ---
 
 ## 🚀 Key Features
 
-- **Citation Safety Gate** — real-time scan of every draft; PENDING citations blocked from export automatically
-- **Verification Engine** — 5-tier registry (COURT_SAFE → FATAL_ERROR) with verbatim holdings and para references
-- **19 Graded Precedents** — Hemraj stadium collapse defence: Kattavellai SC 2025, Prafulla Kumar Samal, Baldev Singh, Jacob Mathew, and more
-- **Deterministic Deadline Engine** — CrPC §167, §173, §439, §468 computed without LLM; CANNOT_COMPUTE safety for missing dates
-- **Bilingual Drafting** — English/Hindi side-by-side; discharge applications, written submissions, arbitration claims
-- **26 Demo Cases** — criminal, civil, and infrastructure arbitration (TC-01 through TC-26)
-- **Document Intelligence** — PDF/DOCX/MD upload, OCR, ChromaDB vector store, BM25 + semantic hybrid search
-- **PII Redaction** — Aadhaar, PAN, phone, email, passport, voter ID masked before any AI processing
-- **Accuracy Academy** — training module for legal citation standards
-- **Fully typed** — strict TypeScript + Python type hints throughout; 388 frontend + 170 backend tests
+- 🛡️ **Citation Safety Gate** — every draft is scanned in real time; `PENDING` citations are blocked from export automatically.
+- 🪜 **5-tier verification engine** — `COURT_SAFE → VERIFIED → SECONDARY → PENDING → FATAL_ERROR`, with verbatim holdings and paragraph references.
+- 🎯 **Fact-Fit Gate** — scores each precedent 0–100 across incident, evidence, and procedural-defect match; below 30 is auto-rejected.
+- 🔬 **Forensic standards guard** — catches IS/ASTM misapplication (for example IS 1199:2018 vs IS 2250:1981) before a draft goes out.
+- 🧭 **55+ routes** across Case Setup, Research, Drafting, and Review.
+- 📁 **26 demo cases** — criminal, civil, and infrastructure-arbitration bundles (TC-01 … TC-26) plus intake examples.
+- 🌐 **Bilingual by default** — Hindi and English side by side in the UI and in generated drafts.
+- 🧱 **Four-step guided workflow** — Case Setup → Research → Drafting → Review.
+- 📝 **Court-ready outputs** — drafts, a verification report, and a pre-filing checklist.
+- 💻 **Local-first demo mode** — explore every case and the Citation Gate with **zero API keys**.
+- 🗂️ **Multi-case system** — switch between 26 pre-loaded bundles; case context follows you across routes.
+- 🎓 **Accuracy Academy** — a branching walkthrough that trains the citation standards themselves.
+- 🕸️ **Research intelligence** — citation graph, case similarity, judge analytics, and cross-reference matrix.
+- 🏗️ **Infrastructure arbitration modules** — LDR (liquidated-damages review) and LPS (lab/standards) packs for TC-22 … TC-26.
+- ✅ **Tested and CI-locked** — Vitest frontend suite, pytest backend suite, production build, and a pinned launch gate on GitHub Actions.
 
 ---
 
-## 📸 Screenshots
+## 📸 Demo / Screenshots
 
-> _Add screenshots here. Suggested: Home dashboard, Citation Gate in action, Deadline Board, Bilingual Draft Editor._
->
-> **Quick recording tip:** A 20–40 second screen recording of the Citation Gate blocking a PENDING citation makes the most compelling demo.
+| | |
+|---|---|
+| ![Document ingest with PII redaction before AI processing](docs/submission/screenshots/02_smart_ingest_redaction.png) | ![Copilot answering from source-cited holdings](docs/submission/screenshots/03_grounded_copilot.png) |
+| **Ingest with redaction** — Aadhaar, PAN, phone, email, passport and voter ID are masked before anything reaches a model | **Grounded copilot** — answers carry the tier of the authority they rest on |
+| ![Chronology studio with sourced timeline entries](docs/submission/screenshots/04_chronology_studio.png) | ![Deadline board with computed CrPC dates](docs/submission/screenshots/05_deadline_board.png) |
+| **Chronology studio** — every entry keeps its source document | **Deadline board** — §167, §173, §439, §468 computed without an LLM |
+| ![Standards explorer showing clause text and validity status](docs/submission/screenshots/06_standards_explorer.png) | ![Accuracy academy citation-drill module](docs/submission/screenshots/07_accuracy_academy.png) |
+| **Standards explorer** — IS/ASTM clause status, superseded clauses flagged | **Accuracy academy** — drills on the citation tiers before you draft |
+
+**Recording tip:** a 20–40 second capture of the Citation Gate blocking a PENDING citation, then a draft export refusing it, is the strongest demo — stronger than any still.
 
 ---
 
 ## ⚡ Quick Start
 
-**Prerequisites:** Node 22+, pnpm 10+, Python 3.11–3.13 (for backend)
+**Prerequisites:** Node 22+, pnpm 10+, and Python 3.11–3.13 (only if you want the optional backend and AI features).
 
 ```bash
+# Windows (PowerShell)
+
 # 1. Clone
 git clone https://github.com/CRAJKUMARSINGH/legal-luminaire.git
 cd legal-luminaire
 
-# 2. Install (all workspace packages)
-pnpm install
+# 2. Install every workspace package
+pnpm install --frozen-lockfile
 
-# 3. Run frontend (works without backend — uses localStorage)
+# 3. Run the frontend (works with no backend, uses browser-local storage)
 pnpm --filter @workspace/legal-luminaire run dev
 # → http://localhost:5173
 ```
 
-The frontend runs fully without a backend. All 26 demo cases, the Citation Gate, Verification Engine, and Deadline Board are available immediately.
+```bash
+# macOS / Linux (bash)
 
-### Production status and launch checks
+# 1. Clone
+git clone https://github.com/CRAJKUMARSINGH/legal-luminaire.git
+cd legal-luminaire
 
-The frontend is available for synthetic-data demonstrations. Open TC-01 from the Demo Case Browser, review sources in the Verification Panel, and use Safe Draft to see how the Fact-Fit Gate controls output. Confidential production requires the identity and case-isolation work tracked in [SE-01](docs/blockers/SE-01-OIDC-CASE-ISOLATION.md). Court-use exports also require closure of the [11 outstanding source-verification items](docs/blockers/LEGAL-SOURCE-CLOSURE.md). Treat outputs as research and drafting aids. A qualified Indian advocate must review any AI-assisted draft before filing.
+# 2. Install every workspace package
+pnpm install --frozen-lockfile
 
-Keep confidential material out of hosted demos and shared fixtures. The demo uses browser-local storage. Backend-enabled workflows can send content to configured providers, so confirm their data-handling terms before using client material.
+# 3. Run the frontend (works with no backend, uses browser-local storage)
+pnpm --filter @workspace/legal-luminaire run dev
+# → http://localhost:5173
+```
 
-Install the backend test dependencies and Ruff in your active Python environment with `python -m pip install -r artifacts/legal-luminaire/backend/requirements.txt ruff`. From the repository root, `pnpm launch:gate` runs Python lint checks, workspace typechecking, the synthetic seeder contract test, the frontend suite including the Fact-Fit Gate regressions, the production frontend build, and backend pytest. See the [launch hardening report](LAUNCH_HARDENING_REPORT.md) for current validation and release blockers.
+Open `http://localhost:5173`, click **Demo Mode**, and pick a case. All 26 demo cases, the Citation Gate, the Verification Engine, and the Deadline Board work immediately — **no API keys required**.
 
-After building, run the browser smoke tests with `python -m pip install playwright`, `python -m playwright install chromium`, and `python scripts/test_launch_browser.py`. The tests open the static production build and use only synthetic case data.
+### Full-stack (optional — needed for AI research & drafting)
 
-For a local backend indexing demo, configure embeddings on the running backend and run `pnpm --filter @workspace/scripts run seed-demo`. The command uploads one labelled synthetic report into the separate `synthetic-construction-demo` case. It defaults to `http://127.0.0.1:8000` and accepts a loopback `BACKEND_URL`. If backend authentication is enabled, set `LL_DEMO_API_KEY` to a key authorized for that case. The offline frontend demo works without this command.
+```powershell
+# Windows (PowerShell)
+
+# 1. Configure the backend
+Copy-Item artifacts/legal-luminaire/backend/.env.example artifacts/legal-luminaire/backend/.env
+# Edit .env and add OPENAI_API_KEY and TAVILY_API_KEY
+
+# 2. Create a virtual environment and install
+cd artifacts/legal-luminaire/backend
+python -m venv .venv
+.venv\Scripts\pip install -r requirements.txt
+
+# 3. Start the backend
+.venv\Scripts\python main.py
+```
+
+```bash
+# macOS / Linux (bash)
+
+# 1. Configure the backend
+cp artifacts/legal-luminaire/backend/.env.example artifacts/legal-luminaire/backend/.env
+# Edit .env and add OPENAI_API_KEY and TAVILY_API_KEY
+
+# 2. Create a virtual environment and install
+cd artifacts/legal-luminaire/backend
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+# 3. Start the backend
+.venv/bin/python main.py
+```
+
+Then start the frontend in a second terminal with `pnpm --filter @workspace/legal-luminaire run dev`.
+
+### One-command launch gate (optional)
+
+Once the backend test dependencies and Ruff are installed, `pnpm launch:gate` runs Python lint, workspace typechecking, the synthetic seeder contract test, the Vitest suite (including the Fact-Fit Gate regressions), the production frontend build, and pytest. See [LAUNCH_HARDENING_REPORT.md](LAUNCH_HARDENING_REPORT.md) for the current baseline and release blockers.
 
 ---
 
 ## 📖 How to Use
 
-### Frontend Only (Demo Mode)
+### A. Run the Hemraj Stadium Collapse demo
 
-1. Open `http://localhost:5173`
-2. Browse demo cases from the **Demo Case Browser** or **Infra Arbitration Browser**
-3. Open TC-01 (Hemraj Stadium Collapse) to see a fully loaded case
-4. Navigate to **Safe Draft** — type or paste text containing a citation to see the Citation Gate in action
-5. Navigate to **Deadline Board** — see CrPC deadlines with bilingual basis strings
-6. Navigate to **Verification Panel** — inspect tier-graded precedents
+1. Open `http://localhost:5173` and click **Demo Mode**.
+2. Open **Demo Case Browser** and pick **TC-01 — Hemraj Stadium Collapse**.
+3. Walk the four steps: **Case Setup → Research → Drafting → Review**.
+4. Open the **Verification Panel** to inspect the 5-tier graded precedents.
+5. Open **Safe Draft**, paste a sentence containing a `PENDING` citation, and watch the gate block export.
 
-### Full Stack (with AI features)
+### B. Generate a discharge application
+
+1. Open a case and go to **Drafting → Safe Draft** (or the **Discharge Application** page).
+2. Write or paste your draft. The Citation Gate scans as you type.
+3. Clear every blocked citation — the **Print A4** / finalise controls re-enable only when the draft clears the gate.
+4. Print or export the draft; the verification report and pre-filing checklist are included.
+
+### C. Use the citation verification gate and cross-reference matrix
+
+1. Open **Cross-Reference Matrix** for the case to see every authority mapped to the facts.
+2. Open **Verification Panel** to read the tier, holding, and source reference for each citation.
+3. Use **Citation Search** to look up an authority and open its deep-linked source.
+4. Export nothing until every `PENDING` / `FATAL_ERROR` entry is resolved.
+
+### D. Switch between the 26 demo cases
+
+1. Open **Demo Case Browser** (criminal/civil bundles) or **Infra Arbitration Browser** (TC-22 … TC-26).
+2. Select a case — the case context is carried through every case-scoped route.
+3. Cold-link guard: opening a deep link without a selected case redirects you safely instead of rendering blank.
+
+**Seed a case into a local backend index (operator example):**
 
 ```bash
-# 1. Create backend/.env from the example
-cp artifacts/legal-luminaire/backend/.env.example artifacts/legal-luminaire/backend/.env
-# Edit .env — add OPENAI_API_KEY and TAVILY_API_KEY
-
-# 2. Create Python virtualenv and install
-cd artifacts/legal-luminaire/backend
-python -m venv .venv
-.venv/Scripts/pip install -r requirements.txt  # Windows
-# or: .venv/bin/pip install -r requirements.txt  # Linux/Mac
-
-# 3. Start backend
-.venv/Scripts/python main.py
-
-# 4. Frontend (separate terminal)
-cd ../../../
-pnpm --filter @workspace/legal-luminaire run dev
+# Windows (PowerShell) / macOS / Linux (bash) — requires a running backend
+pnpm --filter @workspace/scripts run seed-demo
 ```
+
+The seeder uploads one labelled synthetic report into the `synthetic-construction-demo` case. It defaults to `http://127.0.0.1:8000`; set `LL_DEMO_API_KEY` if backend auth is enabled. The offline frontend demo does not need it.
 
 ---
 
-## 🔧 Configuration
+## 🔧 Configuration / Options
 
 | Variable | Purpose | Required |
-|----------|---------|---------|
-| `OPENAI_API_KEY` | GPT-4o agents + embeddings | For AI research/drafting |
+|---|---|---|
+| `OPENAI_API_KEY` | GPT agents + embeddings | For AI research/drafting |
 | `TAVILY_API_KEY` | Live citation verification | For web verification |
 | `GOOGLE_API_KEY` | Gemini omni-modal ingestion | Optional |
 | `CORS_ORIGINS` | Allowed frontend origins | Production |
 | `APP_ENV` | `development` or `production` | Deployment |
 | `HALLUCINATION_THRESHOLD` | Block output above this ungrounded ratio | Optional (default 0.25) |
 
+**Frontend feature flags** (all default **off**; override with `VITE_FF_*=true`):
+
+| Flag | Area | Default |
+|---|---|---|
+| `VITE_FF_REDACTION_STUDIO` | Client-side PII redaction + recompile | off |
+| `VITE_FF_SMART_DROP` | Document drop classification | off |
+| `VITE_FF_ASK_COPILOT` | Grounded read-only case copilot | off |
+| `VITE_FF_CITATION_DEEPLINK` | Every citation deep-links to source | off |
+| `VITE_FF_DEADLINE_ENGINE` | Limitation/deadline engine | off |
+| `VITE_FF_CHRONOLOGY_STUDIO` | Chronology list/board/calendar | off |
+| `VITE_FF_STANDARDS_EXPLORER` | IS/ASTM/NABL standards browser | off |
+| `VITE_FF_ACCURACY_ACADEMY` | Accuracy Academy walkthrough | off |
+
+The hidden `/system/flags` dev route lets you toggle flags at runtime without editing `.env`. A `docker-compose.yml` is included for full-stack runs, and `netlify.toml` is preconfigured for the frontend deploy.
+
 ---
 
 ## 🛠 Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 19, TypeScript 5.9, Vite 7, Tailwind CSS 4, Wouter, TanStack Query |
-| UI | Radix UI primitives, Lucide icons, Recharts, Framer Motion |
-| Backend | FastAPI, Python 3.14, Pydantic v2, ChromaDB, LangChain 0.3 |
-| AI | OpenAI GPT-4o, CrewAI, SBERT embeddings, BM25 + semantic hybrid |
-| Testing | Vitest 4 (388 tests), pytest 9 (170 tests) |
-| Deployment | Netlify (frontend), Docker (full stack), pnpm monorepo |
+| Layer | Technologies |
+|---|---|
+| Frontend | React 19, TypeScript 5.9, Vite 7, Tailwind CSS 4, Wouter, Zustand, TanStack Query, Zod, Framer Motion, Recharts, Radix UI |
+| Backend | FastAPI, Pydantic v2, CrewAI, LangChain, ChromaDB, BM25 + semantic hybrid search, Python 3.11+ |
+| Testing | Vitest (frontend), pytest (backend), Playwright (offline browser smoke) |
+| Tooling | pnpm monorepo, Ruff, strict TypeScript, GitHub Actions CI |
+| Deploy | Netlify (frontend), Docker Compose (full stack), Vercel |
 
 ---
 
-## 🗺 Roadmap
+## 🗺 Roadmap / Planned Features
 
-- [ ] Live Manupatra / SCC Online API integration (citation verification)
-- [ ] Advocate approval workflow with digital signature
-- [ ] Court holiday calendar for precise working-day deadline computation
-- [ ] Additional IS/ASTM clause text from official BIS purchases
-- [ ] Redis-backed rate limiting for multi-instance production
-- [ ] Backend API key authentication
+**Active / in progress** — promoted to the current enhancement cycle and behind `VITE_FF_*` flags (see [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md)):
+
+- **Deadline Engine** (`deadline_engine`) — deterministic CrPC limitation dates, no LLM.
+- **Accuracy Academy** (`accuracy_academy`) — branching citation-standards walkthrough.
+- **Citation Deep-Link** (`citation_deeplink`) — every citation opens its source document.
+
+**Upcoming** (flip the matching `VITE_FF_*=true` to preview):
+
+- 🔜 Redaction Studio (`redaction_studio`)
+- 🔜 Smart Drop (`smart_drop`)
+- 🔜 Ask Copilot (`ask_copilot`)
+- 🔜 Chronology Studio (`chronology_studio`)
+- 🔜 Standards Explorer (`standards_explorer`)
+
+**Stretch goals:**
+
+- 🧑‍🤝‍🧑 Multi-user workspace with shared case files
+- 🔗 Indian Kanoon live API integration
+- 🔄 Harvey.ai bi-directional sync
+- ✍️ PDF signature overlay for filing
+- 📱 Mobile PWA for chambers
 
 See [ROADMAP.md](ROADMAP.md) for the full plan.
 
 ---
 
-## ⚠️ Important Disclaimers
-
-1. **Demo data only** — all case data is synthetic. Do not use real client information.
-2. **Not legal advice** — this is a research and drafting aid. All outputs require review by a qualified Indian advocate before filing.
-3. **Court-use exports** — SECONDARY citations require the advocate to confirm the holding independently. PENDING citations are blocked automatically.
-4. **Deadline calculations** — working-day rules use a 1.4× approximation. Always verify against the official court holiday calendar before relying on a computed deadline.
-
----
-
 ## 🤝 How to Contribute
 
-We welcome contributions from Indian legal professionals, TypeScript developers, and Python engineers.
+We welcome contributions from Indian legal professionals, TypeScript developers, and Python engineers. First-time contributors are genuinely welcome — accuracy-first is a culture, not a gate.
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. Key rules:
-- Never add a legal citation without a `status` field and a `sourceUrl`
-- Never set `blockedFromDraft: false` on a PENDING citation
-- Never claim a test passes without actual command output
-- Keep the Citation Gate and Verification Engine wired — removing either violates the accuracy rules
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. The non-negotiables:
+
+- Never add a legal citation without a `status` field and a `sourceUrl`.
+- Never set `blockedFromDraft: false` on a `PENDING` citation.
+- Never claim a test passes without real command output.
+- Keep the Citation Gate and Verification Engine wired — removing either violates the accuracy rules.
 
 ---
 
 ## 📜 License
 
-MIT — see [LICENSE](LICENSE)
+MIT — see [LICENSE](LICENSE).
+
+Copyright (c) 2026 Rajkumar Singh Chauhan.
 
 ---
 
-## ❤️ Acknowledgements
+## ❤️ Shout-outs & Thanks
 
-Built for the Indian legal community. Inspired by the need for rigorous, source-cited legal research that holds up in court — not just in a demo.
+**Built by a dual expert.** Rajkumar Singh Chauhan is a **Senior Counsel and a Civil Engineer (B.E. Civil + LL.B.)** with 30+ years in Indian litigation. That combination is why the software understands both the law and the physical evidence behind it — the standards guard exists because the physics and the procedure have to agree.
+
+- 🙏 To the **open-source legal-tech community** — you proved that rigorous, transparent tooling belongs in law.
+- 🏛️ To the **Indian Judiciary's open data** and public reporting, which make traceable research possible.
+- 🤖 To the four AI collaborators behind the 12-week integration — **Kiro, Devin, Trae, and Antigravity**.
 
 ---
 
-⭐ **If Legal Luminaire saves you time or improves your research quality, please star the repo and share it with a colleague.**
+## ⭐ Star Legal Luminaire
 
-> Topics: `legal-tech` · `indian-law` · `legal-research` · `legal-ai` · `litigation` · `citation-verification` · `react` · `typescript` · `fastapi` · `document-intelligence`
+If Legal Luminaire saves you hours of research or one citation mistake — star the repo and share it with a fellow advocate! ⚖️🔥
+
+> `#legaltech` · `#indianlaw` · `#legalai` · `#accuracyfirst` · `#zerohallucination` · `#citationverification` · `#indiancourts` · `#bilingual` · `#constructionlaw` · `#forensics`

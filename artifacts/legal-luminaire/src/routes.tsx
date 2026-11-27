@@ -337,7 +337,6 @@ export function Router() {
           <Route path="/case/:id/cross-reference"       component={() => CaseScoped(<CrossReferenceMatrix />, "CrossReferenceMatrix")} />
           <Route path="/case/:id/ai-research"           component={() => CaseScoped(<AIResearchEngine />, "AIResearchEngine")} />
           <Route path="/case/:id/ai-draft-engine"       component={() => CaseScoped(<AIDraftEngine />, "AIDraftEngine")} />
-          <Route path="/standards"                 component={() => <div className="p-0">{Wrap(<StandardsView />, "StandardsView")}</div>} />
           <Route path="/case/:id/standards"             component={() => <div className="p-0">{CaseScoped(<StandardsView />, "StandardsView")}</div>} />
           <Route path="/case/:id/timeline"              component={() => <div className="p-0">{CaseScoped(<TimelineView />, "TimelineView")}</div>} />
           <Route path="/case/:id/documents"             component={() => <div className="p-0">{CaseScoped(<DocumentsView />, "DocumentsView")}</div>} />

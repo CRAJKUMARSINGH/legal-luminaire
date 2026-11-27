@@ -193,7 +193,7 @@ export function PremiumHeroBanner() {
 
           {/* CTA buttons — 44px min-height for touch targets */}
           <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
-            <Link href="/demo-cases">
+            <Link href="/demo-browser">
               <a
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold no-underline transition-colors ll-btn-primary"
                 style={{
@@ -343,8 +343,8 @@ export function PremiumHeroBanner() {
             Legal Luminaire — Evidence-first Indian legal research and litigation intelligence.
           </p>
           <div className="flex items-center gap-4 text-xs" style={{ color: "#64748b" }}>
-            <a href="/about" className="hover:text-slate-300 transition-colors">About</a>
-            <a href="/how-to-use" className="hover:text-slate-300 transition-colors">Documentation</a>
+            <Link href="/about" className="hover:text-slate-300 transition-colors">About</Link>
+            <Link href="/how-to-use" className="hover:text-slate-300 transition-colors">Documentation</Link>
             <a
               href="https://github.com/CRAJKUMARSINGH/legal-luminaire"
               target="_blank"

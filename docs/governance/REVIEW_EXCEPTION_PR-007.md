@@ -25,7 +25,7 @@ independent approval:
 |---|---|---|
 | Branch protection on `main` | `gh api repos/CRAJKUMARSINGH/legal-luminaire/branches/main/protection` | `404 — Branch not protected` |
 | Repository rulesets | `gh api repos/CRAJKUMARSINGH/legal-luminaire/rulesets` | `[]` (none) |
-| Written review policy | [CONTRIBUTING.md](../CONTRIBUTING.md#L45-L54) | PR *guidelines* only — **no independent-approval gate** |
+| Written review policy | [CONTRIBUTING.md](../../CONTRIBUTING.md#L45-L54) | PR *guidelines* only — **no independent-approval gate** |
 
 The review requirement is therefore a self-imposed process rule, not a GitHub-enforced
 gate. Repository policy does not forbid recording an owner-approved exception.
