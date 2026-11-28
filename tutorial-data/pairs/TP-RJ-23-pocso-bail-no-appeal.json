@@ -1,0 +1,210 @@
+{
+  "id": "TP-RJ-23",
+  "title": "Bail granted to the tuition teacher; the family wants an appeal and there is no appeal",
+  "stage": "appeal",
+  "level": "expert",
+  "forum": "high-court",
+  "district": "Kota",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "reply-instruction",
+    "language": "en",
+    "channel": "walk-in",
+    "text": "The Special Judge granted him bail on Thursday. Conditions are only surety and address. He is still in Kota and the mother saw him near the school on Saturday. She wants an appeal against the bail order. Her words: 'appeal karna hai, bail cancel karwana hai'. The bail order is not certified, we have the photo from the reader. Grounds she wants: he is still in the area, the child is terrified, and the Judge did not deal with the message evidence at all. Two questions — how long do we have, and does the child have to come to the High Court?",
+    "attachments": [
+      "Photo of bail order (3 pages)",
+      "Message chronology from the earlier file",
+      "Child's 183 statement copy",
+      "Special Judge's order (partial)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "conflicting",
+      "oneLineRead": "There is no appeal against a bail order. It is a cancellation application, the standard is perversity and not re-argument, and the client has been told the wrong word by everyone including us."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the remedy is an appeal or a cancellation application",
+        "status": "CONFLICT",
+        "note": "The family says appeal. A bail order is not appealable as of right; cancellation lies under the court's bail power. Filing an appeal invites a maintainability objection."
+      },
+      {
+        "issue": "Which court and under what power",
+        "status": "OPEN",
+        "note": "High Court under s. 483 BNSS; the Sessions Court also has the power, but the order is the Special Judge's and a Sessions court would be reviewing a court of coordinate jurisdiction."
+      },
+      {
+        "issue": "Whether there is any limitation",
+        "status": "OPEN",
+        "note": "No statutory period for cancellation, which the client will hear as 'no hurry'. It is not no hurry — the longer the accused is out on unbroken bail, the harder cancellation becomes."
+      },
+      {
+        "issue": "Whether 'he is still in the area' is a ground at all",
+        "status": "OPEN",
+        "note": "Not by itself. The condition is surety and address; he is complying. The ground is that the conditions do not meet the risk."
+      },
+      {
+        "issue": "Whether the order's silence on the message evidence is perversity or a gap",
+        "status": "OPEN",
+        "note": "Silence on a material piece of evidence is the strongest available point. It must be framed as non-application of mind, not as a re-argument."
+      },
+      {
+        "issue": "Whether the child must attend the High Court",
+        "status": "OPEN",
+        "note": "Usually not at the cancellation stage, which is the practical answer the mother needs and nobody has given her."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Earlier",
+        "event": "Bail opposed before the Special Judge; conditions sought",
+        "source": "earlier file",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Thursday",
+        "event": "Bail granted on surety and address",
+        "source": "order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Saturday",
+        "event": "Mother sees the accused near the school",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in; no certified order",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Cancellation or variation of bail by the High Court or Sessions Court",
+        "provision": "BNSS 2023, s. 483 [formerly CrPC s. 439(2)]",
+        "legacyEquivalent": "CrPC s. 439(2)",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Sub-section numbering to be confirmed against the bare Act. Official bare-Act link added."
+      },
+      {
+        "proposition": "No statutory appeal lies from an order granting bail",
+        "provision": "BNSS 2023, s. 430 (appeals, general bar)",
+        "legacyEquivalent": "CrPC s. 372",
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Must be sourced; it is the maintainability answer and the pair turns on it."
+      },
+      {
+        "proposition": "Cancellation standard is perversity or supervening circumstance, not re-weighing",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "The whole application. Named authority with paragraph required."
+      },
+      {
+        "proposition": "Child not to be called repeatedly",
+        "provision": "POCSO Act 2012, s. 33(5) read with s. 36",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Answers the mother's second question. Official bare-Act link added."
+      },
+      {
+        "proposition": "Timely completion of trial",
+        "provision": "POCSO Act 2012, s. 42A",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Useful where the accused relies on the trial being distant. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "UNKNOWN",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Cancellation Application — Grounds Skeleton",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Order Versus Evidence — Silence Table",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped annexure; NOT filing-ready. [PENDING] holes are deliberate.\n\nOrder vs Evidence — Silence Table\n(Special Judge's bail order, read against the material on record)\n\n| Material on record | What the order says about it | Gap / note |\n|---|---|---|\n| Dated message chronology | [UNREAD — the order's treatment is not yet known] | Whether the order engages with the messages at all is the strongest point. |\n| Child's 183 statement | [UNREAD — see certified order] | Frame as omission, not re-argument. |\n| Risk of proximity to the school | Order sets surety + address only | Does the order say why these conditions meet the risk? Blank where blank. |\n| Condition compliance (accused still in Kota) | Not a breach on its face | Compliance is not a ground; inadequacy of the conditions is. |\n\nNotes:\n- Cancellation standard is perversity / non-application of mind, not re-weighing the messages. [PENDING — named authority with paragraph required]\n- No statutory appeal lies from a bail order; it is a cancellation application. [PENDING — source the general bar; the maintainability answer]\n- Child not to be called repeatedly: POCSO Act 2012, s. 33(5) read with s. 36.\n- Timely completion of trial, where the accused relies on a distant trial: POCSO Act 2012, s. 42A.\n- Relief: cancellation under s. 483 BNSS; in the alternative, the conditions be strengthened (named)."
+      },
+      {
+        "type": "memo",
+        "title": "Client Note — Why This Is Not an Appeal",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped client note; NOT filing-ready. [PENDING] holes are deliberate.\n\nClient Note — Why This Is Not an Appeal\nMatter: bail to the tuition teacher (Special Judge, Kota). Mother: \"appeal karna hai, bail cancel karwana hai.\"\n\n1. The word is wrong. There is no appeal against an order granting bail; the remedy is a cancellation application. [PENDING — source the bar on appeals; this is the maintainability point]\n2. Right court and power: High Court, Jodhpur, under s. 483 BNSS. The Sessions Court also has power, but would review a court of coordinate jurisdiction — the weaker route.\n3. Standard: not whether the Judge weighed the messages differently, but whether the order engages with the material at all — non-application of mind / perversity. [PENDING — named authority with paragraph]\n4. \"He is still in the area\" is not, by itself, a ground; he is complying with surety + address. The ground is that the conditions were set too low for the risk.\n5. How long do we have: there is no statutory period. That is not \"no hurry\" — the longer he is out on unbroken bail, the harder cancellation becomes.\n6. Does the child have to come to the High Court? Ordinarily not at the cancellation stage (POCSO Act 2012, s. 33(5) read with s. 36) — the practical answer she needs.\n\nNext: apply for the certified order today (the reader's photo is not a record copy), build the silence table, reframe the application, and file with the mother's affidavit."
+      },
+      {
+        "type": "application",
+        "title": "Certified Copy Application",
+        "status": "blocked",
+        "blockedReason": "Not yet filed; the photo is not a record copy and the High Court will want the certified order."
+      }
+    ],
+    "checklist": [
+      "Certified copy of the bail order — apply today",
+      "The order read line by line for what it does not say",
+      "The message chronology, with each message dated",
+      "The 183 statement, for what the order omitted from it",
+      "What exactly the accused did near the school — proximity, contact, or both",
+      "Whether any condition was breached, not merely complied with thinly",
+      "Whether the trial has a date, and how distant",
+      "The mother's affidavit"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Hold the grounds until the certified order is read and the standard is reframed from appeal to perversity",
+      "rationale": "Two separate defects. The remedy is named wrong, and the standard is wrong with it. An application that reads as an appeal, arguing that the Judge should have weighed the messages differently, will be met with 'the learned Judge has considered the material' and dismissed. What has to be shown is that the order does not engage with the material at all.",
+      "nextAction": "Apply for certified copies, build the silence table, reframe the draft as non-application of mind, and file under s. 483 BNSS with the mother's affidavit."
+    },
+    "teachingNotes": [
+      "The family says appeal because appeal is the word they know. We said it too in the earlier file. Correcting our own vocabulary in front of the client is part of the exercise.",
+      "'He is still in the area' is not a ground. He is complying with the conditions. The ground is that the conditions were set too low for the risk, which is a different submission and a better one.",
+      "Perversity is not a harder version of correctness. Correctness asks whether the Judge was right. Perversity asks whether the Judge engaged. The silence table is how you show the difference.",
+      "The engine leaves limitation UNKNOWN. There is no period, and a trainee who reads that as 'no urgency' has missed the point — unbroken bail is itself the clock."
+    ],
+    "commonMistakes": [
+      "Titling it an appeal and being met with a maintainability objection.",
+      "Re-arguing the messages as though the Special Judge had not seen them.",
+      "Treating compliance with conditions as a breach.",
+      "Bringing the child to the High Court for the cancellation hearing.",
+      "Filing on the reader's photo because the certified copy takes a week."
+    ],
+    "seniorVariants": [
+      "Frame the single ground as non-application of mind: the order does not deal with the message evidence at all, and does not say why conditions met the risk.",
+      "Build the silence table as an annexure — each piece of evidence, and the order's treatment of it, blank where blank.",
+      "Take the mother's affidavit on what she saw on Saturday, narrowly, without inflating it into contact.",
+      "Ask in the alternative for the conditions to be strengthened rather than for bail to be cancelled outright, and name the conditions.",
+      "Answer the child-attendance question in the client note, in one line, so the mother is not carrying it."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the mother spoke to the accused on Saturday, or if any message after release went to her, the 'no contact' complaint is weaker and the real ground narrows to the conditions being inadequate on their face.",
+    "unresolvedFacts": [
+      "Whether the order mentions the messages at all — UNREAD",
+      "Whether contact occurred on Saturday — UNCONFIRMED",
+      "Whether the trial has a listing date — UNKNOWN",
+      "Whether any condition has been breached — UNKNOWN"
+    ],
+    "jurisdictionNote": "High Court, Jodhpur. The Special Judge is in Kota; a cancellation before the Sessions Court would be before a court of coordinate jurisdiction to the Special Judge and is the weaker route."
+  }
+}

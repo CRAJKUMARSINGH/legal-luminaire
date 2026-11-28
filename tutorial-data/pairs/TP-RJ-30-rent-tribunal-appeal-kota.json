@@ -1,0 +1,168 @@
+{
+  "id": "TP-RJ-30",
+  "title": "Kota shopkeeper evicted in one month — appeal and same-day stay before the Appellate Rent Tribunal",
+  "stage": "appeal",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Kota",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, Rent Tribunal Kota ne humein ek mahine mein nikaal diya. Shop in Ghantaghar area, kiraya 18 saal se de rahe hain, receipts hain 2019 tak, uske baad UPI. Landlord bola arrears hain aur uske bete ko showroom chahiye. Order last week aaya, certified copy kal mili. Appeal kitne din mein, stay kaise, kya rent deposit karna padega? Main beginner hoon. BNS/BNSS se yeh Act change hua kya? Client dar raha hai lock nikal denge next week.",
+    "attachments": [
+      "Rent Tribunal order (certified, yesterday)",
+      "Rent receipts till 2019",
+      "UPI screenshots 2020–2026 (partial)",
+      "No written lease"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "A state Rent Control appeal with a live execution risk; the 2001 Act is untouched by the 2023 codes, and stay practice is local."
+    },
+    "issueMap": [
+      {
+        "issue": "Limitation for appeal to the Appellate Rent Tribunal",
+        "status": "UNCONFIRMED",
+        "note": "Read Rajasthan Rent Control Act 2001 s. 19 / s. 9 cluster from a current bare Act. Do not guess the number of days."
+      },
+      {
+        "issue": "Stay of eviction pending appeal",
+        "status": "OPEN",
+        "note": "Same-day stay usually needs a deposit offer. The amount is not invented."
+      },
+      {
+        "issue": "Whether UPI after 2019 proves rent",
+        "status": "OPEN",
+        "note": "It is evidence of payment, not automatically 'no arrears'."
+      },
+      {
+        "issue": "Bonafide need of the son",
+        "status": "OPEN",
+        "note": "Trial finding; appeal is not a second trial unless perversity is pleaded."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Last week",
+        "event": "Rent Tribunal eviction order",
+        "source": "order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Yesterday",
+        "event": "Certified copy received",
+        "source": "endorsement",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in for appeal + stay",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Appeal from Rent Tribunal",
+        "provision": "Rajasthan Rent Control Act 2001, appeal provision (confirm s. 19 / allied)",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18822",
+        "sourceUrlNote": "State Act. Untouched by BNS/BNSS. Confirm the section against a current reprint. Official bare-Act link added."
+      },
+      {
+        "proposition": "Grounds of eviction including bonafide need and default",
+        "provision": "Rajasthan Rent Control Act 2001, s. 9",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18822",
+        "sourceUrlNote": "Confirm the clause letters as charged in the order. Official bare-Act link added."
+      },
+      {
+        "proposition": "Stay pending appeal",
+        "provision": "tribunal practice / CPC principles analogically — not a blank cheque",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Do not cite a High Court stay case without a COURT_SAFE grade."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Appeal memo — Appellate Rent Tribunal, Kota",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "application",
+        "title": "Same-day stay with rent-deposit offer",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nBEFORE THE APPELLATE RENT TRIBUNAL, KOTA\nAppeal No. ____ of 2026\n[Tenant/Appellant] ... Appellant\nv.\n[Landlord/Respondent] ... Respondent\n\nAPPLICATION FOR INTERIM STAY OF THE EVICTION ORDER (review skeleton)\n\n1. Rent Tribunal, Kota ne [PENDING — order date] ko Ghantaghar area ki shop ka eviction order diya; certified copy [PENDING — date] ko mili. Appeal limitation: Rajasthan Rent Control Act 2001, appeal provision (confirm s. 19 / allied) — [PENDING — bare Act se exact din confirm karna hai].\n2. Execution ka khatra: malik ne kaha lock nikal denge next week. Isliye same-day stay zaroori hai.\n3. Stay pending appeal: [PENDING — koi High Court stay case COURT_SAFE grade ke bina cite nahi]. Stay blank cheque nahi hai.\n4. Appellant decreed amount / admitted kiraya deposit karne ko taiyar hai — deposit offer ke bina same-day stay mushkil hai. Admitted rent vs claimed arrears ka calculation [PENDING].\n5. Grounds (Rajasthan Rent Control Act 2001, s. 9): arrears aur bete ki bonafide need challenged — yeh trial finding hai; perversity plead karna hai (arrears me UPI ignore hua), dobara trial nahi.\n\nPRAYER: eviction order par interim stay; appellant rent-deposit ki condition sweekar karta hai; hearing aaj.\n\nNOTE: yeh state Act hai (Rajasthan Rent Control Act 2001), BNS/BNSS se untouched."
+      },
+      {
+        "type": "table",
+        "title": "Payment chronology 2019 receipts vs UPI",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nPAYMENT CHRONOLOGY — shop, Ghantaghar, Kota (tenant, 18 saal ka kabza)\n\n| Period | Mode | Evidence | Status |\n|---|---|---|---|\n| [PENDING — up to 2019] | Kiraya receipts | Receipts 2019 tak | FACT |\n| 2020–2026 | UPI | Screenshots (partial) | FACT — payee identity [UNCONFIRMED] |\n\n| Check | Question | Status |\n|---|---|---|\n| UPI payee | Malik ke account ka naam order me hai? | [UNCONFIRMED — personal number ho to 'paid' story unproved] |\n| Admitted rent vs claimed arrears | Calculation | [PENDING] |\n| Complete UPI export with UTR | Checklist | [PENDING] |\n\nReading: UPI ek chronology hai, legal argument nahi — jab tak claimed arrears se match na kare. 18 saal ka kabza malikana haq (ownership) nahi banata."
+      },
+      {
+        "type": "instruction",
+        "title": "Beginner cover note: this is a state Act, not BNSS",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nCOVER NOTE (beginner) — Kota rent appeal\n\n1. Yeh Rajasthan Rent Control Act 2001 ka matter hai — ek STATE Act. BNS/BNSS (2023 codes) ne ise chhua nahi. Appeal memo me BNSS quote karna beginner ki galti hai.\n2. Sahi forum: Appellate Rent Tribunal, Kota — District Court me civil first appeal NAHI.\n3. Limitation: Rent Control Act ka appeal provision (confirm s. 19 / allied) — [PENDING — 30 din maan lena galat hai; bare Act se confirm karo]. Certified copy kal mili, isliye jaldi.\n4. Same-day stay: deposit offer ke saath. Stay pending appeal [PENDING — COURT_SAFE authority chahiye].\n5. Grounds: Rajasthan Rent Control Act 2001, s. 9 (arrears, bete ki bonafide need). Perversity plead karo, dobara trial nahi.\n6. Checklist: certified order + copy endorsement, complete UPI export (UTR), koi written lease / shop licence, admitted rent vs arrears calculation, vakalatnama for Appellate Tribunal.\n\nClient ko samjhao: appeal jaldi, stay deposit ke saath — lock change hone se pehle."
+      }
+    ],
+    "checklist": [
+      "Certified order + copy endorsement",
+      "Complete UPI export with UTR",
+      "Any written lease or shop licence",
+      "Calculation of admitted rent vs claimed arrears",
+      "Vakalatnama for Appellate Tribunal"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "File the appeal urgently with a stay and a deposit offer — after reading the limitation section",
+      "rationale": "Execution next week is the real emergency. The codes of 2023 do not rewrite this Act.",
+      "nextAction": "Confirm appeal limitation from the bare Act, prepare stay + deposit, do not attack 'son's need' as if facts can be re-tried without a perversity ground."
+    },
+    "teachingNotes": [
+      "Rent Control in Rajasthan is a state statute. Quoting BNSS in the appeal memo is a beginner tell.",
+      "Stay without a deposit offer is how locks get changed while you 'research'.",
+      "UPI is a chronology, not a legal argument, until it is matched to the claimed arrears."
+    ],
+    "commonMistakes": [
+      "Filing a civil first appeal in the District Court instead of the Appellate Rent Tribunal.",
+      "Inventing a 30-day limitation because 'most appeals are 30 days'.",
+      "Writing that 18 years of possession creates ownership."
+    ],
+    "seniorVariants": [
+      "Lead the stay application with readiness to deposit the decreed amount / admitted rent.",
+      "Plead perversity on arrears if the Tribunal ignored UPI; do not merely re-argue equities.",
+      "Check whether a written statement was even filed below — mid-journey defects travel."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the UPI is to a personal number not named in the order as the landlord's account, the 'we paid' story may be treated as unproved and the default finding will stand.",
+    "unresolvedFacts": [
+      "Exact appeal limitation period — PENDING confirmation from bare Act",
+      "Whether execution is already listed — UNKNOWN",
+      "Identity of UPI payee — UNCONFIRMED"
+    ],
+    "jurisdictionNote": "Appellate Rent Tribunal, Kota. High Court (Jaipur Bench) is the next writ/supervisory rung, not a first appeal."
+  }
+}

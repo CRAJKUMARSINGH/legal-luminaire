@@ -1,0 +1,196 @@
+{
+  "id": "TP-RJ-07",
+  "title": "Civil first appeal where the previous advocate filed nothing for eleven months",
+  "stage": "appeal",
+  "level": "expert",
+  "forum": "high-court",
+  "district": "Jodhpur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "handover",
+    "language": "en",
+    "channel": "email",
+    "text": "Decree against our client in a partition suit, preliminary decree, eleven months ago. Previous advocate told the client an appeal was 'being prepared'. Nothing was filed. Client now wants us to file the first appeal with a delay condonation. We have the decree, the judgment, and a set of the trial pleadings from the client's own file. Certified copies not obtained. Previous advocate is not responding to calls. Grounds: the trial court excluded the 1987 family settlement and treated a post-1994 revenue entry as conclusive. Two questions — is the delay condonable at all, and how do we handle the previous advocate's non-cooperation without making him a party?",
+    "attachments": [
+      "Judgment",
+      "Preliminary decree",
+      "Client's pleadings set",
+      "Family settlement 1987 (photocopy)",
+      "Revenue entry 1994"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Eleven-month delay with no filing, no certified copies, an unresponsive previous advocate, and a limitation question that turns on whether the delay is explained day by day."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether an eleven-month delay is condonable",
+        "status": "OPEN",
+        "note": "Condonation is discretionary and fact-dependent. Eleven months is long but not fatal; the explanation must be specific and supported, not 'counsel did not file'."
+      },
+      {
+        "issue": "Whether the previous advocate's inaction is a sufficient cause",
+        "status": "CONFLICT",
+        "note": "Client inaction is usually fatal; counsel inaction is more forgivable but needs a factual record. The two are often mixed and that is where applications fail."
+      },
+      {
+        "issue": "Whether the client did anything in the eleven months",
+        "status": "UNCONFIRMED",
+        "note": "Any letter, visit or call to the previous advocate becomes the spine of the application."
+      },
+      {
+        "issue": "Whether the 1987 family settlement was proved or merely marked",
+        "status": "OPEN",
+        "note": "Exclusion on a legal ground is a far better ground than exclusion on weight."
+      },
+      {
+        "issue": "Whether the decree is preliminary and therefore appealable",
+        "status": "OPEN",
+        "note": "Appealability of a preliminary decree is settled, but the framing must be exact or the appeal will be met with a maintainability objection."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "1987",
+        "event": "Family settlement",
+        "source": "photocopy",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "1994",
+        "event": "Revenue entry relied on by the trial court",
+        "source": "entry",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "11 months ago",
+        "event": "Judgment and preliminary decree",
+        "source": "decree",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "During the eleven months",
+        "event": "Alleged follow-ups with previous advocate",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "First appeal from an original decree",
+        "provision": "CPC 1908, s. 96 read with O. 41 r. 1",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Memo must be accompanied by the judgment and decree. Official bare-Act link added."
+      },
+      {
+        "proposition": "Condonation of delay in appeal",
+        "provision": "Limitation Act 1963, s. 5",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1565",
+        "sourceUrlNote": "Sufficient cause, day-by-day explanation expected. Official bare-Act link added."
+      },
+      {
+        "proposition": "Appeal limitation in a partition suit",
+        "provision": "Limitation Act 1963, Art. 116 (appeal from a decree)",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1565",
+        "sourceUrlNote": "Article reference to be confirmed; ninety days. Official bare-Act link added."
+      },
+      {
+        "proposition": "Delay caused by counsel's conduct can constitute sufficient cause",
+        "proposition_note": null,
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Must be sourced; it is the whole application."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Application under s. 5 Limitation Act with Affidavit",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "pleading",
+        "title": "Memo of Appeal — Substantial Questions and Grounds",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nMEMO OF APPEAL — SUBSTANTIAL QUESTIONS AND GROUNDS\nIn the High Court of Judicature for Rajasthan at Jodhpur (first appeal from a Jodhpur district decree).\n\nCause title (complete from the decree): Appellant [client]; Respondent [ ]; in the partition suit in which the preliminary decree was passed.\n\nStatutory frame:\n  - First appeal from an original decree — CPC 1908, s. 96 r/w O. 41 r. 1 (VERIFIED).\n  - Limitation — Limitation Act 1963, Art. 116, 90 days (SECONDARY; article reference to be confirmed).\n  - Condonation, if needed, is a separate application — Limitation Act 1963, s. 5 (VERIFIED).\nGate from the file: citationGate BLOCKED; limitationGate EXPIRED-RISK.\n\nFacts relied on (from the file): partition suit; preliminary decree passed 11 months ago; the trial court excluded the 1987 family settlement and relied on a post-1994 revenue entry as conclusive. The 1987 settlement is a photocopy; whether it was proved or only marked is UNCONFIRMED.\n\nSUBSTANTIAL QUESTIONS / GROUNDS (fact plus law — first appeal):\n  1. That the exclusion of the 1987 family settlement is a legal error going to admissibility, not a weighing error. [PENDING — it is a photocopy; if it required registration or was never proved, the exclusion may be correct.]\n  2. That treating the post-1994 revenue entry as conclusive is an error of law. [PENDING — no named authority on the evidentiary value of a revenue entry in the file.]\n  3. Maintainability — the decree is preliminary and therefore appealable; the framing must be kept exact to meet any maintainability objection. (Core: CPC 1908, s. 96 r/w O. 41 r. 1, VERIFIED.)\n\nCaveat: this memo must be filed WITH the certified judgment and decree (CPC O. 41 r. 1). Certified copies not yet obtained. File the memo and any s. 5 application together only once the client's delay affidavit can be sworn truthfully."
+      },
+      {
+        "type": "affidavit",
+        "title": "Client Affidavit — Day-by-Day Delay Explanation",
+        "status": "blocked",
+        "blockedReason": "Client has not yet supplied dates of follow-up; the affidavit cannot be sworn without them."
+      },
+      {
+        "type": "letter",
+        "title": "Letter to Previous Advocate — Record and No-Objection",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\n[On the letterhead of the advocate]\nDate: [date of dispatch to be inserted]\nTo: [previous advocate's name and address, from the client's file]\nSubject: Partition suit — [cause title] — preliminary decree — request for the trial record and a no-objection.\n\nRespected Sir,\n  1. We have been approached by [client], who was your client in the above partition suit in which a preliminary decree was passed 11 months ago.\n  2. We are instructed to file a first appeal before the Rajasthan High Court, Jodhpur (CPC 1908, s. 96 r/w O. 41 r. 1, VERIFIED).\n  3. We are told nothing was filed after the decree. We make no allegation; we only record that we are instructed to carry the matter forward.\n  4. We request you to hand over, or permit us to inspect and copy: (a) the complete trial record — pleadings, issues and order sheets; (b) the certified copy of the judgment and the preliminary decree, if you hold one; (c) the exhibit number and status of the 1987 family settlement and the 1994 revenue entry.\n  5. We also request your no-objection to our appearance. This is a courtesy and a record-protection measure; it is not a legal precondition, and we shall file on our client's fresh vakalatnama regardless. (Practice, Rajasthan — SECONDARY.)\n  6. We are separately applying for certified copies, so this request is not load-bearing.\n\nKindly treat this as urgent and favour us with an early reply. [PENDING — dispatch proof to be preserved on file.]\nYours faithfully,\n[advocate]"
+      }
+    ],
+    "checklist": [
+      "Certified copies of judgment and decree — apply today",
+      "Client's own record of every follow-up: dates, mode, who spoke to whom",
+      "Any WhatsApp or call log with the previous advocate",
+      "Certified copy of the 1987 settlement or its exhibit number",
+      "Trial court's exact reason for excluding the settlement",
+      "Whether the client paid the previous advocate and any receipt",
+      "Whether the decree has been executed in the meantime",
+      "Substantial question of law formulation — this is a first appeal, so frame it as fact plus law"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Hold the filing until the delay affidavit is actually supported, then file the appeal and the s. 5 application together",
+      "rationale": "An unsupported s. 5 application is the single most common way these appeals die. 'Counsel did not file' is an assertion; a dated call log is a case. The appeal itself is decent, which makes the delay application the whole file.",
+      "nextAction": "Take a dated delay statement from the client today, apply for certified copies, and file appeal and application together once the affidavit can be sworn truthfully."
+    },
+    "teachingNotes": [
+      "An expert's first question on a delay file is never 'is the delay condonable' — it is 'what does the client's own record show'. The client's conduct decides it, not the previous advocate's.",
+      "Eleven months with zero filing is not 'counsel was preparing'. The application must account for the months, not the reason.",
+      "Do not make the previous advocate a party. He is a witness, not a respondent, and a letter asking for the record creates the paper trail without a sideshow.",
+      "The engine blocks the client affidavit outright. That is the correct refusal — an affidavit sworn from memory about dates is worse than no affidavit."
+    ],
+    "commonMistakes": [
+      "Filing the appeal with a one-line 'counsel failed to file' explanation.",
+      "Waiting for the previous advocate to respond before doing anything.",
+      "Framing grounds on the weight of the 1987 settlement when the trial court excluded it on a legal ground.",
+      "Filing the appeal without the certified decree, so it is listed defective and the delay grows."
+    ],
+    "seniorVariants": [
+      "Build the s. 5 affidavit around the client's own follow-up record, annexed, with the previous advocate's non-response as corroboration rather than as the case.",
+      "Frame the first ground on the exclusion of the settlement as a legal error going to admissibility, not as a weighing error.",
+      "Send the letter to the previous advocate for the trial record and a no-objection, and file without waiting for a reply.",
+      "Check execution status first — if the decree is under execution, an application to stay execution is as urgent as the appeal itself."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The 1987 family settlement is a photocopy. If it was never proved or was held to require registration, the trial court's exclusion may be correct and the principal ground collapses.",
+    "unresolvedFacts": [
+      "Whether the client has any dated follow-up record — UNKNOWN",
+      "Whether the settlement was proved or only marked — UNCONFIRMED",
+      "Whether execution has begun — UNKNOWN",
+      "Whether the client paid the previous advocate — UNKNOWN"
+    ],
+    "jurisdictionNote": "First appeal from a Jodhpur district decree lies to the Rajasthan High Court, Jodhpur. If execution is pending in the trial court, coordinate the stay application."
+  }
+}

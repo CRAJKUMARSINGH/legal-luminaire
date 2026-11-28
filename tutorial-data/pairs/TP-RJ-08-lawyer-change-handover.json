@@ -1,0 +1,188 @@
+{
+  "id": "TP-RJ-08",
+  "title": "Mid-trial client wants the previous advocate replaced without a scene",
+  "stage": "mid-journey",
+  "level": "intermediate",
+  "forum": "district",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "handover",
+    "language": "hinglish",
+    "channel": "whatsapp",
+    "text": "Sir, case chal raha hai Jaipur Mein. Pichhle vakil se complaint hai — do hearing miss kar di, aur pichli baar court mein baithe the par argument nahi kiya. Ab badalna hai. Case 498A aur DV ka hai, Patni vs Pati, hum respondent hain. Teen gawah ho chuke hain prosecution ke. Agla hearing 4 December. Pichhle vakil se no objection chahiye ya bina bhi ho jayega? Aur kya kya papers lene hain unse? Fees ka bhi jhagda hai.",
+    "attachments": [
+      "Cause title photo",
+      "Last order sheet photo",
+      "Vakalatnama copy (previous advocate)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Mid-trial change of counsel three prosecution witnesses in, with a hearing in days, an unpaid-fee dispute and no case file in hand. The handover audit is the work, not the vakalatnama."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether a no-objection is legally required from the previous advocate",
+        "status": "SETTLED",
+        "note": "No. A new vakalatnama with the client's signature displaces the old one; the no-objection is a courtesy and a record-protection measure."
+      },
+      {
+        "issue": "Whether the previous advocate can withhold the case file over unpaid fees",
+        "status": "OPEN",
+        "note": "He has a lien for fees, but he cannot strand the client mid-trial. The practical answer is a fee reconciliation, not a standoff."
+      },
+      {
+        "issue": "What the client must recover before the next date",
+        "status": "OPEN",
+        "note": "Certified copies of depositions already recorded, the order sheets, and any documents filed — the client can get these independently from the copying agency."
+      },
+      {
+        "issue": "Whether the change of counsel needs to be recorded on 4 December",
+        "status": "OPEN",
+        "note": "Yes — file the new vakalatnama before the date and seek a short accommodation if the record is incomplete."
+      },
+      {
+        "issue": "Whether the DV Act proceedings and the 498A trial need separate vakalatnamas",
+        "status": "CONFLICT",
+        "note": "They are separate proceedings. One vakalatnama will not cover both."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Earlier",
+        "event": "Three prosecution witnesses examined",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Recent",
+        "event": "Two hearings missed by previous advocate (client's account)",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "4 December",
+        "event": "Next hearing",
+        "source": "order sheet",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Advocate may act on a vakalatnama; a new vakalatnama displaces the earlier one",
+        "provision": "CPC 1908, O. 3 r. 4",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Criminal side is governed by practice and the court's rules; the effect is the same. Official bare-Act link added."
+      },
+      {
+        "proposition": "No-objection of the previous advocate is not a precondition",
+        "provision": "practice, Rajasthan — no statutory requirement",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": null,
+        "sourceUrlNote": "Courts routinely allow substitution on a fresh vakalatnama."
+      },
+      {
+        "proposition": "Cruelty by husband or relatives",
+        "provision": "BNSS 2023 s. 85 [formerly IPC s. 498A]",
+        "legacyEquivalent": "IPC s. 498A",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Charge and stage confirmed from the cause title. Official bare-Act link added."
+      },
+      {
+        "proposition": "Protection, residence and maintenance reliefs",
+        "provision": "Protection of Women from Domestic Violence Act 2005, ss. 12, 18–22",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2021",
+        "sourceUrlNote": "Separate proceeding; needs its own vakalatnama. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "SECONDARY",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "instruction",
+        "title": "Handover Audit — What to Recover and From Where",
+        "status": "ready-for-supervising-advocate",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nHANDOVER AUDIT — KYA RECOVER KARNA HAI AUR KAHAN SE (Jaipur)\nMatter: 498A (BNSS 2023, s. 85) aur DV Act, 2005 (ss. 12, 18-22) — Patni vs Pati; hum respondent hain. Agla hearing 4 December.\n\nA. Client se lena hai (apna record):\n  1. Fresh vakalatnama — 498A trial ke liye, client ke signature se.\n  2. Alag vakalatnama — DV Act proceeding ke liye (dono alag proceedings hain; ek vakalatnama dono cover nahi karta).\n  3. Fee ledger aur receipts — fee jhagde ke liye. [PENDING — ledger/receipts abhi nahi mile.]\n\nB. Copying agency se lena hai (previous vakil par depend na raho):\n  4. Teen prosecution witnesses ki certified depositions jo already record ho chuki hain.\n  5. Poori order sheet — institution se aaj tak.\n  6. Documents filed aur exhibits marked ki list.\n\nC. Court record se check karna hai:\n  7. Koi application pending undecided hai ya nahi. [PENDING — UNKNOWN.]\n  8. Client kehta hai pichhle vakil ne do hearing miss ki — order sheet se verify karo. [PENDING — client ka account UNCONFIRMED.]\n\nD. Previous vakil ko likhna hai (courtesy + record):\n  9. No-objection aur file handover ki written request, dispatch proof ke saath.\n  Note: no-objection legally zaroori nahi — naya vakalatnama purana displace kar deta hai (CPC 1908, O. 3 r. 4, VERIFIED; practice-Rajasthan, SECONDARY).\n\nRule: no-objection ka intezaar mat karo. Naya vakalatnama 4 December se pehle file karo."
+      },
+      {
+        "type": "letter",
+        "title": "Letter to Previous Advocate — No-Objection and Record",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\n[Advocate ke letterhead par]\nDate: [bhejne ki tareekh daalni hai]\nSeva mein: [previous advocate ka naam aur pata]\nVishay: 498A (BNSS 2023, s. 85) trial aur DV Act, 2005 (ss. 12, 18-22) proceeding — [cause title] — record aur no-objection ki request.\n\nAadarniya Sir,\n  1. Aapke purane client [naam] ne humein approach kiya hai. Dono matters ab hum dekh rahe hain.\n  2. Naya vakalatnama client ne sign kar diya hai; wahi purana displace karta hai (CPC 1908, O. 3 r. 4, VERIFIED).\n  3. Kripya no-objection de dijiye — yeh courtesy hai, precondition nahi (practice-Rajasthan, SECONDARY). Hum aapki reply ka intezaar kiye bina file karenge.\n  4. Kripya case file hand over kariye ya inspect karne dijiye: (a) order sheets — institution se aaj tak; (b) documents filed aur exhibits marked ki list; (c) jo applications pending hain unki details.\n  5. Fees ke bare mein: hum aapka lien maante hain, par mid-trial file rokna client ke case ko nuksaan karega. Hum ek written fee reconciliation propose karte hain. [PENDING — ledger/receipts client se aane baaki hain.]\n  6. Depositions hum copying agency se alag se le rahe hain, isliye file aapke paas rukne se case nahi rukega.\n\nKripya ise urgent maaniye.\nBhava-diya,\n[advocate]"
+      },
+      {
+        "type": "checklist",
+        "title": "Pre-4-December Court Readiness List",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nPRE-4-DECEMBER COURT READINESS LIST — Jaipur\nMatter: 498A (BNSS 2023, s. 85) + DV Act, 2005 (ss. 12, 18-22). Hum respondent. Agla hearing: 4 December.\n\n[ ] Fresh vakalatnama — 498A trial, client ke signature se tayyar.\n[ ] Alag vakalatnama — DV Act proceeding ke liye.\n[ ] Dono vakalatnamas 4 December se pehle file.\n[ ] Teen recorded depositions ki certified copies — copying agency se. [PENDING — abhi nahi mili.]\n[ ] Poori order sheet — institution se aaj tak.\n[ ] Documents filed aur exhibits marked ki list.\n[ ] Koi application pending undecided — check karo. [PENDING — UNKNOWN.]\n[ ] Fee ledger aur receipts — client se. [PENDING — abhi nahi mile.]\n[ ] Previous vakil ko no-objection + record letter bheja, dispatch proof ke saath.\n[ ] Do miss hearing ki baat order sheet se verify karo (client ka account UNCONFIRMED hai).\n[ ] 4 December ko court ko batao ki record reconstruct ho raha hai; zaroorat ho to short accommodation maango.\n[ ] Teeno depositions padho — charge/complaint se koi contradiction milta hai kya, cross ke liye."
+      },
+      {
+        "type": "memo",
+        "title": "Fee Reconciliation Note",
+        "status": "blocked",
+        "blockedReason": "Client's fee ledger and receipts not yet supplied."
+      }
+    ],
+    "checklist": [
+      "Fresh vakalatnama for the 498A trial, signed by the client",
+      "Separate vakalatnama for the DV Act proceeding",
+      "Certified copies of the three depositions already recorded — from the copying agency, not from the previous advocate",
+      "Full order sheet from institution to date",
+      "List of documents filed and exhibits marked",
+      "Whether any application is pending undecided",
+      "Fee ledger and receipts, and a written settlement with the previous advocate",
+      "Written no-objection request sent, with proof of dispatch"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Take the file over, but do not wait for the no-objection to file the new vakalatnama",
+      "rationale": "The client's position decays with every date. The substitution can be done unilaterally. The no-objection and the fee dispute are conveniences and records, not gatekeepers.",
+      "nextAction": "File the fresh vakalatnamas on both matters before 4 December, obtain certified depositions independently, and send the no-objection letter in parallel."
+    },
+    "teachingNotes": [
+      "'No objection chahiye ya nahi' is the question every client asks and most beginners answer with a yes. It is no. Waiting for a no-objection from an unresponsive advocate is how a hearing date is lost.",
+      "The fee lien is real but it is not a stranglehold. An advocate who withholds the file mid-trial while depositions are being recorded is betting the client's case against his bill.",
+      "Two proceedings, two vakalatnamas. The 498A trial and the DV Act application run on separate files and a single vakalatnama leaves one of them unrepresented.",
+      "The engine marks the fee note blocked. You cannot reconcile a ledger you have not seen, and guessing at a settlement figure is how the dispute restarts."
+    ],
+    "commonMistakes": [
+      "Advising the client to pay whatever is demanded to 'get the file' before checking the ledger.",
+      "Filing one vakalatnama and assuming it covers both matters.",
+      "Waiting for the previous advocate's no-objection before filing the new vakalatnama.",
+      "Not obtaining the recorded depositions, so the next date is spent asking for copies."
+    ],
+    "seniorVariants": [
+      "File the fresh vakalatnamas immediately and inform the court on 4 December that the record is being reconstructed, with the certified-copy applications annexed.",
+      "Send the no-objection letter with a polite, itemised request for the file and a stated fee position — not a demand.",
+      "Obtain the depositions from the copying agency so the previous advocate's cooperation is not load-bearing.",
+      "Read the three depositions before the next date and identify whether any contradiction with the charge or the complaint is available for cross-examination."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The client says two hearings were missed. If the order sheets show the previous advocate was present and the matter was adjourned for a reason, the 'negligence' narrative weakens and the fee dispute becomes harder to win.",
+    "unresolvedFacts": [
+      "Whether the previous advocate actually missed the hearings — UNCONFIRMED",
+      "Fee ledger and amount disputed — UNKNOWN",
+      "Which documents and exhibits are on record — UNKNOWN",
+      "Whether any application is pending — UNKNOWN"
+    ],
+    "jurisdictionNote": "Jaipur district. Both the 498A trial and the DV Act proceeding are before courts in Jaipur; confirm the two courts separately from the cause title."
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "id": "TP-RJ-27",
+  "title": "Builder's cheque bounced — s. 138 demand notice where the 30-day window may already be dead",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "demand",
+    "language": "hinglish",
+    "channel": "whatsapp",
+    "text": "Bhai sahab, builder ne 18 lakh ka cheque diya tha, Vaishali Nagar flat ke against. Cheque no. 704421, SBI, dated 12.06.2026, bounce 20.06.2026, bank memo 'funds insufficient'. Maine memo 22.06.2026 ko collect kiya. Aaj 28.11.2026 hai. Notice abhi nahi bheja. Builder phone nahi utha raha. Notice draft kar do jaldi, 138 NI Act, Jaipur district. Main beginner hoon, dates theek se bata dena — 30 din notice, 15 din pay, 1 mahina complaint. Kya ab bhi notice chalega?",
+    "attachments": [
+      "Cheque photocopy (unclear)",
+      "Return memo (photo)",
+      "No postal receipt",
+      "Builder's visiting card"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "critical",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "A s. 138 demand notice is being asked for after the statutory 30-day notice window, on the dates the client himself gave."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the 30-day notice window still lives",
+        "status": "CONFLICT",
+        "note": "Memo collected 22.06.2026; today 28.11.2026. On these dates the window is gone unless a later presentation/return exists."
+      },
+      {
+        "issue": "Whether re-presentation can restart the clock",
+        "status": "OPEN",
+        "note": "Only if there is a later dishonour. Do not invent one."
+      },
+      {
+        "issue": "Whether a civil recovery notice is still available",
+        "status": "OPEN",
+        "note": "s. 138 dying does not kill the debt."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "12.06.2026",
+        "event": "Cheque dated",
+        "source": "cheque photo",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "20.06.2026",
+        "event": "Alleged bounce",
+        "source": "oral / memo photo",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "22.06.2026",
+        "event": "Memo collected",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "28.11.2026",
+        "event": "First instructions for notice",
+        "source": "whatsapp",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Payee must send notice within 30 days of receiving the return memo",
+        "provision": "NI Act 1881, s. 138 proviso (b)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "The clock is the product. Do not 'approximately' it. Official bare-Act link added."
+      },
+      {
+        "proposition": "Fifteen days to pay after notice",
+        "provision": "NI Act 1881, s. 138 proviso (c)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "The 15-day payment window is the very thing being tested — read it off the current NI Act text, not from memory. Official bare-Act link added."
+      },
+      {
+        "proposition": "Complaint within one month of cause of action",
+        "provision": "NI Act 1881, s. 142(b)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "Do not fix the one-month complaint window from memory; check it against the current NI Act text. Official bare-Act link added."
+      },
+      {
+        "proposition": "Re-presentation restarts the notice clock",
+        "provision": "case law — [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Do not tell the client to re-present as if the law is settled in this fixture."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "notice",
+        "title": "s. 138 demand notice",
+        "status": "blocked",
+        "blockedReason": "On the stated dates the 30-day notice window has expired. Sending a back-dated or 'as if in time' notice would be dishonest."
+      },
+      {
+        "type": "table",
+        "title": "Statutory clock matrix (notice / pay / complaint)",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nSTATUTORY CLOCK MATRIX — cheque no. 704421, SBI, ₹18,00,000, Vaishali Nagar flat\n\n| Event | Date (client ke diye hue) | Confidence |\n|---|---|---|\n| Cheque dated | 12.06.2026 | UNCONFIRMED |\n| Bounce | 20.06.2026 | UNCONFIRMED |\n| Memo mila (receipt) | 22.06.2026 | UNCONFIRMED |\n| Aaj instructions | 28.11.2026 | CONFIRMED |\n\n| Statutory step | Provision (VERIFIED) | Window | Client ki dates par |\n|---|---|---|---|\n| Memo receipt se 30 din me notice | NI Act 1881, s. 138 proviso (b) | 30 din | 22.06.2026 + 30 din ≈ 22.07.2026 tak. Aaj 28.11.2026 — window khatam (EXPIRED-RISK). |\n| Notice ke baad 15 din pay | NI Act 1881, s. 138 proviso (c) | 15 din | Abhi notice hi nahi gaya — step pale nahi. |\n| Cause of action ke 1 mahine me complaint | NI Act 1881, s. 142(b) | 1 mahina | Cause of action pale nahi — complaint abhi file nahi ho sakti. |\n\nRe-presentation se clock restart hota hai ya nahi: [PENDING — citation graded nahi; settled kehna galat hoga]. Isliye s. 138 notice abhi nahi bheja ja raha. Lekin debt zinda hai — civil recovery alag raasta hai."
+      },
+      {
+        "type": "letter",
+        "title": "Civil demand without s. 138 pretence",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\n[Advocate letterhead]\nTo: Builder (address: [PENDING — service ke liye complete address])\nDate: [PENDING]\n\nSubject: Civil demand — ₹18,00,000, cheque no. 704421 (SBI), Vaishali Nagar flat\n\nAapko soochit kiya jata hai ki aapne cheque no. 704421, SBI, dated 12.06.2026, ₹18,00,000 ka diya tha, jo 20.06.2026 ko 'funds insufficient' ke saath return hua (memo 22.06.2026 ko prapt).\n\nYeh notice s. 138 NI Act ke kisi dawe ke bina bheja ja raha hai. Client ki di hui dates par 30-din ka notice window (NI Act 1881, s. 138 proviso (b)) khatam ho chuka hai; isliye s. 138 par baithe criminal complaint ki dhamki nahi di ja rahi. Jo kaha nahi ja sakta, wo likha nahi ja raha.\n\nDebt zinda hai. Kripya 15 din ke andar ₹18,00,000 ka bhugtan karein, anyatha civil recovery ke liye aage badhna padega — forum aur relief [PENDING — supervising advocate grade karwa kar]. Bina prejudice."
+      },
+      {
+        "type": "instruction",
+        "title": "Re-presentation questions for the bank file",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nINSTRUCTION LIST — bank file se yeh likhit me confirm karna hai\n\n1. Cheque no. 704421 (SBI, 12.06.2026) 20.06.2026 ke baad dobara present hua? Kab? (re-presentation se clock restart — [PENDING — citation graded nahi]).\n2. Aakhri dishonour ka return memo — original, bank ki receiving stamp ke saath. Memo prapti ki asli taarek?\n3. June 2026 ke baad koi aur later presentation / later memo?\n4. Flat/account-loan papers (legally enforceable debt dikhane ke liye).\n5. Builder ka complete address, service ke liye.\n\nRule: agar koi later dishonour nahi hai, to 30-din window (NI Act 1881, s. 138 proviso (b)) khatam — s. 138 notice HOLD, sirf civil recovery. Agar later memo mila, to arithmetic dobara — nayi date se 30 / 15 / 1-mahina (s. 138 provisos aur s. 142(b)).\n\nBank se likhit jawab lo, zubaani nahi."
+      }
+    ],
+    "checklist": [
+      "Original cheque",
+      "Bank return memo with receiving stamp",
+      "Any later presentation",
+      "Account / loan papers for the flat",
+      "Builder's complete address for service"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Do not send a s. 138 notice that pretends to be in time",
+      "rationale": "The client's own dates kill proviso (b). A late notice does not create a complaint; it creates a false complaint.",
+      "nextAction": "Verify memo receipt date from the bank file. If no later dishonour exists, switch to civil recovery and say so in writing to the client."
+    },
+    "teachingNotes": [
+      "The 30-day clock is not a courtesy. It is the offence.",
+      "Beginners send the notice anyway 'to put pressure'. That is how a 138 complaint dies on the first date.",
+      "Civil recovery remains; do not tell the client the money is gone because 138 is gone."
+    ],
+    "commonMistakes": [
+      "Antedating the notice.",
+      "Counting 30 days from bounce instead of from receipt of the memo.",
+      "Promising a criminal complaint next month on these dates."
+    ],
+    "seniorVariants": [
+      "Show the client the matrix: notice due by ~22.07.2026 on his dates; today is 28.11.2026.",
+      "Ask one question only: was the cheque presented again after June?",
+      "If yes, take the later memo and restart the arithmetic. If no, hold 138."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the memo photo is from a later presentation that the client forgot, the window may still be alive — which is why the engine holds, rather than declaring the offence dead forever.",
+    "unresolvedFacts": [
+      "True date of receipt of the return memo — UNCONFIRMED",
+      "Any subsequent presentation — UNKNOWN",
+      "Whether the cheque was for a legally enforceable debt or 'booking money' — UNCONFIRMED"
+    ],
+    "jurisdictionNote": "Metropolitan / Judicial Magistrate, Jaipur. NI Act is untouched by BNS/BNSS."
+  }
+}

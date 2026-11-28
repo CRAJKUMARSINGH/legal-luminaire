@@ -6,7 +6,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "seed-demo": "tsx seed-demo-data.ts",
-    "test:seed-demo": "tsx --test seed-demo-data.test.ts"
+    "test:seed-demo": "tsx --test seed-demo-data.test.ts",
+    "validate-tutorial-pairs": "tsx ./validate-tutorial-pairs.ts"
   },
   "devDependencies": {
     "@types/node": "catalog:",

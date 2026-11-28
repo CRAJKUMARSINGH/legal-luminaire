@@ -1,0 +1,214 @@
+{
+  "id": "TP-RJ-05",
+  "title": "Forty-page title bundle dumped at counter with a demand for an urgent stay",
+  "stage": "initial",
+  "level": "advanced",
+  "forum": "district",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "submit",
+    "language": "en",
+    "channel": "counter",
+    "text": "Bundle attached. Client's father bought this plot in 1998 by registered sale deed, chain of three deeds before that. Client inherited on father's death, mutation done 2019. Brother-in-law of the client is now claiming the plot on the strength of an unregistered agreement to sell purportedly signed by the father in 2015, and has started digging a boundary wall since Saturday. Client wants a suit and an immediate stay on the digging. Valuation: circle rate 42 lakh, deed consideration 6 lakh in 1998. There is an old municipal notice about set-back in the bundle too. Draft the plaint and the stay application. Client is flying out on Thursday.",
+    "attachments": [
+      "Sale deeds x4",
+      "Death certificate",
+      "Mutation order 2019",
+      "Unregistered agreement to sell 2015",
+      "Photographs of digging",
+      "Municipal notice",
+      "Circle rate extract"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "complete",
+      "requestClarity": "clear",
+      "oneLineRead": "Registered title chain against an unregistered agreement to sell, with live construction. The stay is genuinely urgent; the plaint needs a court-fee and valuation decision the bundle cannot supply."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether an unregistered agreement to sell confers any right to build",
+        "status": "OPEN",
+        "note": "An agreement gives a right to sue for specific performance; it does not transfer title. Building on that basis is a trespass on the client's title."
+      },
+      {
+        "issue": "Court fee and valuation basis",
+        "status": "OPEN",
+        "note": "Market value under the Rajasthan Court Fees and Suits Valuation Act, not the 1998 consideration. The circle rate extract is 42 lakh; the exact section and computation are unverified."
+      },
+      {
+        "issue": "Whether the 2015 agreement is within limitation for the brother-in-law",
+        "status": "OPEN",
+        "note": "Specific performance limitation runs from the date fixed for performance or notice of refusal. Not visible in the bundle."
+      },
+      {
+        "issue": "Whether the municipal set-back notice is a separate cause or a defence",
+        "status": "CONFLICT",
+        "note": "If the client's own construction is non-compliant, the brother-in-law will use it. It is not currently pleaded."
+      },
+      {
+        "issue": "Whether the digging is by the brother-in-law personally or by contractors he claims to have engaged",
+        "status": "UNCONFIRMED",
+        "note": "Determines who is defendant no. 1 and whether police help is needed for the interim order."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Pre-1998",
+        "event": "Three prior deeds in the chain",
+        "source": "deeds",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "1998",
+        "event": "Father's registered sale deed",
+        "source": "deed",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "2015",
+        "event": "Unregistered agreement to sell allegedly signed by father",
+        "source": "agreement",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "2019",
+        "event": "Mutation on inheritance",
+        "source": "order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Last Saturday",
+        "event": "Boundary digging begins",
+        "source": "photos",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Suit for declaration of title and permanent injunction",
+        "provision": "Specific Relief Act 1963, ss. 34, 38",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1583",
+        "sourceUrlNote": "Post-2018 numbering. Official bare-Act link added."
+      },
+      {
+        "proposition": "Interim injunction to restrain construction pending suit",
+        "provision": "CPC 1908, O. 39 rr. 1–2",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Triple test applies; prima facie case is strong here. Official bare-Act link added."
+      },
+      {
+        "proposition": "Court fee on market value in a declaration suit",
+        "provision": "Rajasthan Court Fees and Suits Valuation Act 1961 — section unverified",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18719",
+        "sourceUrlNote": "Section and computation must be confirmed at the filing counter; a wrong fee gets the plaint returned. Official bare-Act link added."
+      },
+      {
+        "proposition": "Unregistered agreement to sell does not convey title",
+        "provision": "Transfer of Property Act 1882, s. 54 read with Registration Act 1908, s. 17",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/12924",
+        "sourceUrlNote": "Core proposition, stable. Official bare-Act link added."
+      },
+      {
+        "proposition": "Specific performance limitation",
+        "provision": "Limitation Act 1963, Art. 54",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1565",
+        "sourceUrlNote": "Three years from the date fixed or refusal; the agreement's date term is unread. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "SECONDARY",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Plaint — Declaration and Permanent Injunction",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nIN THE COURT OF THE CIVIL JUDGE, JAIPUR\nSUIT FOR DECLARATION OF TITLE AND PERMANENT INJUNCTION\n\nA. PARTIES\n1. Plaintiff: [name], son of the late [father], resident of Jaipur.\n2. Defendant No. 1: [brother-in-law of the plaintiff].\n[PENDING — other legal heirs of the father to be arrayed; their consent is unconfirmed.]\n[PENDING — whether the digging is by the defendant personally or by contractors; that fixes who is defendant no. 1 and whether police help is needed.]\n\nB. SUIT PROPERTY\nPlot described by [PENDING — boundary, area and khasra/plot particulars to be taken from the deeds].\n\nC. FACTS\n3. The plaintiff's father bought the plot in 1998 by a registered sale deed, with a chain of three deeds before it.\n4. The plaintiff inherited on his father's death; mutation was done in 2019.\n5. The defendant claims the plot on an unregistered agreement to sell purportedly signed by the father in 2015. Under s. 54, Transfer of Property Act 1882 read with s. 17, Registration Act 1908, an unregistered agreement conveys no title.\n6. Since last Saturday the defendant has been digging a boundary wall.\n\nD. CAUSE OF ACTION AND RELIEF\n7. Declaration of title and permanent injunction under ss. 34 and 38, Specific Relief Act 1963, with interim relief under O. 39 rr. 1-2, CPC 1908.\n8. Court fee: market-value basis; the circle rate extract is 42 lakh; the 1998 consideration of 6 lakh is NOT the basis. [PENDING — exact section and computation under the Rajasthan Court Fees and Suits Valuation Act 1961 to be settled at the filing counter.]\n9. [PENDING — the 2015 agreement's performance date is not read; whether the defendant's specific-performance claim is within Art. 54, Limitation Act 1963 is open.]\n10. [PENDING — the old municipal set-back notice must be pleaded and explained; if the plaintiff's own construction is non-compliant it will be raised as unclean hands.]"
+      },
+      {
+        "type": "application",
+        "title": "Application under O. 39 rr. 1–2 CPC with Affidavit",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nIN THE COURT OF THE CIVIL JUDGE, JAIPUR\nAPPLICATION UNDER O. 39 rr. 1-2, CPC 1908 (with accompanying affidavit)\n\nApplicant/Plaintiff: [name]\nRespondent/Defendant: [brother-in-law]\n\n1. The suit for declaration of title and permanent injunction is filed, and this application is moved with it.\n2. The plaintiff's title rests on the 1998 registered sale deed and the 2019 mutation of inheritance.\n3. The defendant relies on an unregistered agreement to sell of 2015, which under s. 54, Transfer of Property Act 1882 read with s. 17, Registration Act 1908, conveys no title.\n4. Since last Saturday the defendant has been digging a boundary wall — a continuing trespass causing irreparable injury.\n5. Triple test (O. 39 rr. 1-2, CPC 1908): (a) prima facie case — a registered title chain against an unregistered agreement; (b) balance of convenience — construction, once built, is hard to undo; (c) irreparable loss — [PENDING — the extent of the digging must be supported by dated photographs / video].\n6. Prayer: restrain the defendant from digging or constructing on the plot pending suit; ex parte ad interim order is sought.\n\n[PENDING — the municipal set-back notice to be disclosed; a same-day affidavit must accompany this application.]"
+      },
+      {
+        "type": "index",
+        "title": "Annexure Index and Court-Fee Worksheet",
+        "status": "blocked",
+        "blockedReason": "Court fee section and valuation basis unverified against the 1961 Act."
+      },
+      {
+        "type": "affidavit",
+        "title": "Client Affidavit — Title Chain and Digging",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nAFFIDAVIT (skeleton) — Title Chain and Digging (Jaipur)\n\nI, [name], son of the late [father], aged [ ], resident of Jaipur, do solemnly affirm and state on oath:\n\n1. That my father purchased the plot in 1998 by a registered sale deed, with a chain of three deeds before it.\n2. That I inherited the plot on my father's death and the mutation was done in 2019.\n3. That the defendant is my brother-in-law and claims the plot on an unregistered agreement to sell purportedly signed by my father in 2015.\n4. That the said agreement is unregistered and, under s. 54, Transfer of Property Act 1882 read with s. 17, Registration Act 1908, conveys no title.\n5. That since last Saturday the defendant has been digging a boundary wall, as seen in the dated photographs.\n6. That the circle rate of the plot is 42 lakh.\n\nHoles: [PENDING — I have not personally read the 2015 agreement; the father's signature on it is unconfirmed.] [PENDING — particulars of the other legal heirs and whether they consent.] [PENDING — the old municipal set-back notice; whether my own construction complies.]\n\nDeponent    Date: [PENDING]"
+      }
+    ],
+    "checklist": [
+      "Certified copies of all four deeds, not photocopies",
+      "Death certificate and legal-heir particulars of all heirs, not just the client",
+      "Mutation order and the revenue record post-2019",
+      "Read the 2015 agreement for the performance date and the attesting witnesses",
+      "Circle rate extract and the court-fee computation",
+      "Dated photographs and, if possible, a video with a timestamp",
+      "Whether a caveat is needed against the brother-in-law filing first",
+      "Police complaint copy, if the digging was forcible",
+      "Client's departure date and who holds the power of attorney while he is away"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "File the plaint and stay application, but hold the index until the court fee is settled",
+      "rationale": "The injunction is urgent and the prima facie case is strong. But the suit cannot be instituted without the correct fee, and an under-stamped plaint is returned — which loses the very days the stay was meant to save.",
+      "nextAction": "Settle the fee with the filing counter today, file the plaint and O. 39 application together, and move for an ex parte ad interim order the same day."
+    },
+    "teachingNotes": [
+      "The client has done everything right on documents and the bundle is complete — this is the rare file where the risk is procedural, not evidentiary.",
+      "The one genuinely missing thing is the court fee. An advanced file fails on the boring item, which is the lesson.",
+      "An unregistered agreement to sell is the classic bluff in Rajasthan plot litigation. It is powerful-sounding and legally thin on title, but it is not nothing — it can ground specific performance.",
+      "The municipal set-back notice in the bundle is a landmine nobody mentioned. If the client's own wall is non-compliant, the injunction application will be met with unclean hands."
+    ],
+    "commonMistakes": [
+      "Valuing the suit at the 1998 consideration because it is in the deed.",
+      "Drafting the plaint for the client alone without impleading the other legal heirs of the father.",
+      "Ignoring the municipal notice and being surprised by it in the reply.",
+      "Filing without certified copies and relying on the client's photocopies."
+    ],
+    "seniorVariants": [
+      "File the declaration and injunction suit with the full heir array and an express paragraph that the 2015 agreement is unregistered and conveys no title.",
+      "Apply for an ex parte ad interim injunction with a same-day affidavit, and take a local commissioner application in the alternative for a boundary measurement.",
+      "Plead the municipal notice openly and explain compliance, so the set-back point is met before it is raised.",
+      "Advise on a caveat and on a written power of attorney before the client flies out — a client abroad mid-injunction is a practical problem, not a legal one."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The 2015 agreement may carry the father's genuine signature and an attesting witness who is still alive. If so, the brother-in-law has a specific performance case, and the suit shifts from a simple trespass to a contest over the father's dealings.",
+    "unresolvedFacts": [
+      "Whether the father's signature on the 2015 agreement is genuine — UNCONFIRMED",
+      "Performance date in the agreement — not read",
+      "Whether the municipal set-back notice was complied with — UNKNOWN",
+      "Whether other legal heirs consent to the suit — UNKNOWN"
+    ],
+    "jurisdictionNote": "Jaipur district; suit property within the civil judge's territorial limits. Valuation decides which court. Nothing here fixes pecuniary jurisdiction."
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "id": "TP-RJ-02",
+  "title": "s. 138 notice received on a cheque given as security, not against a debt",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Jodhpur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "notice-text",
+    "language": "en",
+    "channel": "whatsapp",
+    "text": "Received this by RPAD yesterday. Notice dated 18.11.2026 from advocate for one Suresh Purohit. Says my cheque of Rs 4,50,000 dated 02.09.2026 was dishonoured, memo attached, demands payment in 15 days. Cheque was given as SECURITY for a plot agreement that fell through — no debt was due on 02.09.2026. I have the agreement. Do I reply or wait? What happens if I don't?",
+    "attachments": [
+      "Photo of notice (3 pages)",
+      "Bank return memo photo",
+      "Agreement to sell (4 pages, unstamped)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Statutory reply window is running on a cheque the client says was security, not consideration. Reply must be sent, and the legal character of the cheque is the defence."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the reply is sent within the statutory period from receipt",
+        "status": "OPEN",
+        "note": "Receipt date must be fixed from the RPAD cover, not from the notice date."
+      },
+      {
+        "issue": "Whether a cheque given as security attracts the s. 139 presumption",
+        "status": "OPEN",
+        "note": "The presumption is rebuttable; 'security cheque' alone is not a complete defence and courts differ on the effect."
+      },
+      {
+        "issue": "Whether the underlying agreement being unstamped hurts the defence",
+        "status": "OPEN",
+        "note": "An unstamped agreement may need impounding before it is relied on."
+      },
+      {
+        "issue": "Whether the 15-day demand has in fact elapsed",
+        "status": "CONFLICT",
+        "note": "Notice date is 18.11.2026; receipt is 'yesterday'. Two different anchors."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "02.09.2026",
+        "event": "Cheque dated; delivered as security per client",
+        "source": "client + cheque",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Date unknown (Sep–Nov 2026)",
+        "event": "Cheque presented and dishonoured",
+        "source": "return memo",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "18.11.2026",
+        "event": "Notice issued",
+        "source": "notice",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Day before intake",
+        "event": "Notice received by RPAD",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Dishonour of cheque for insufficiency of funds is an offence",
+        "provision": "Negotiable Instruments Act 1881, s. 138",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "Bare provision, stable. Official bare-Act link added."
+      },
+      {
+        "proposition": "Presumption that the holder received the cheque for discharge of a debt or liability",
+        "provision": "Negotiable Instruments Act 1881, s. 139",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "Presumption is rebuttable; the fixture does not cite a holding. Official bare-Act link added."
+      },
+      {
+        "proposition": "Statutory demand and reply period",
+        "provision": "Negotiable Instruments Act 1881, s. 138 proviso (b)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "15-day reply window from receipt. Official bare-Act link added."
+      },
+      {
+        "proposition": "Cheque issued as security can still ground s. 138 where a legally enforceable liability exists at presentation",
+        "provision": "case law on s. 138/139 — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs a named judgment with a paragraph before it enters the reply as authority."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "notice",
+        "title": "Reply to s. 138 Notice — Security Cheque Defence",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nLEGAL NOTICE — REPLY TO NOTICE DATED 18.11.2026 UNDER s. 138, NEGOTIABLE INSTRUMENTS ACT, 1881\n\nTo: [Advocate for Mr. Suresh Purohit, Jodhpur]\nFrom: Advocate for the Noticee\n\nSub: Reply to your notice dated 18.11.2026 re cheque of Rs 4,50,000 dated 02.09.2026\n\n1. Without admitting any liability, this replies to your notice dated 18.11.2026, received by the reply-writer on [PENDING — exact RPAD receipt date to be fixed from the cover].\n\n2. The cheque for Rs 4,50,000 dated 02.09.2026 was not issued toward any debt. It was handed as SECURITY under an agreement to sell that fell through. The agreement is on record.\n\n3. The statutory presumption under s. 139, NI Act 1881 is rebuttable. No legally enforceable liability subsisted on 02.09.2026, and my client puts your client to strict proof of such liability on the date of presentation.\n\n4. Your client's remedy, if any, is to sue on the agreement, not to invoke s. 138, NI Act 1881.\n\n5. The agreement produced is unstamped; it is relied on subject to the law on impounding.\n\n6. The proposition that a security cheque can still ground s. 138 where an enforceable liability exists at presentation is contested, and no authority is cited here. [PENDING — a named judgment with a paragraph on s. 138/139 and security cheques must be verified before it is pleaded.]\n\n7. My client reserves all rights. Reply under proviso (b) to s. 138, NI Act 1881 is hereby given within the statutory period from receipt.\n\nPlace: Jodhpur    Date: [PENDING — dispatch date]\n\nFor the Noticee"
+      },
+      {
+        "type": "chronology",
+        "title": "Date-and-Receipt Chronology",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nDATE-AND-RECEIPT CHRONOLOGY — reply to s. 138, NI Act 1881 notice (Jodhpur)\n\n| Date | Event | Source | Confidence |\n|---|---|---|---|\n| 02.09.2026 | Cheque of Rs 4,50,000 dated; handed as security per client | client + cheque | UNCONFIRMED |\n| Sep-Nov 2026 (date unknown) | Cheque presented and dishonoured | return memo | UNCONFIRMED |\n| 18.11.2026 | Notice under s. 138, NI Act 1881 issued by advocate for Suresh Purohit | notice | CONFIRMED |\n| Day before intake (date to fix) | Notice received by RPAD | client | UNCONFIRMED |\n\nNote: two anchors differ — the notice date is 18.11.2026, but receipt is \"yesterday\". The 15-day reply window under proviso (b) to s. 138, NI Act 1881 runs from the RECEIPT date. [PENDING — confirm the exact receipt date from the RPAD cover before computing the deadline.]"
+      },
+      {
+        "type": "checklist",
+        "title": "Pre-Presentation Defence Bundle",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nPRE-PRESENTATION DEFENCE BUNDLE — tick-list (defence to s. 138, NI Act 1881)\n\n[ ] Preserve the RPAD cover with the receipt date intact — do not discard the envelope\n[ ] Certified copy of the bank return memo\n[ ] Original agreement to sell and its stamp status\n[ ] Proof the agreement fell through (cancellation / refund / correspondence)\n[ ] Any writing showing the cheque was handed as security\n[ ] Reply dispatched by RPAD; retain proof of dispatch\n[ ] Diary the exact date the 15-day period (proviso (b), s. 138) ends\n[ ] Diary the complaint window and prepare the accused's defence evidence. [PENDING — the provision for the accused's affidavit evidence is not verified in this file]\n\nGate note: no authority for the \"security cheque\" defence is cited here. [PENDING — a named judgment on s. 138/139 with a paragraph must be verified before any authority is pleaded.]"
+      }
+    ],
+    "checklist": [
+      "Preserve the RPAD cover with the receipt date intact — do not discard the envelope",
+      "Certified copy of the return memo from the bank",
+      "Original agreement to sell and its stamp status",
+      "Proof the agreement fell through (cancellation, refund, correspondence)",
+      "Any writing showing the cheque was handed as security",
+      "Reply dispatched by RPAD with proof of dispatch retained",
+      "Note the exact date the 15-day period ends and diary the complaint window"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Send the reply, but supervisor review the 'security' framing before dispatch",
+      "rationale": "The reply window is a hard statutory clock. Missing it forfeits a right that cannot be recovered later. But 'it was a security cheque' is a defence of contested strength, so the framing needs a human before it goes out.",
+      "nextAction": "Fix the receipt date from the cover, settle the reply, dispatch by RPAD, and diary the date on which a complaint may be filed."
+    },
+    "teachingNotes": [
+      "'Do I reply or wait?' is the beginner's default question on every s. 138 notice. Waiting is only safe when the receipt date is far off. Here it is not.",
+      "The statutory reply is not an admission document. Its job is to create the record of the defence and to preserve the right to be heard on it.",
+      "A security cheque is not an automatic acquittal. The live question is whether an enforceable liability existed when the cheque was presented — which is why the cancellation correspondence matters more than the word 'security'.",
+      "The unstamped agreement is a trap: it may need impounding, and an advocate who waves it around at the reply stage without noticing looks careless."
+    ],
+    "commonMistakes": [
+      "Computing the reply period from the notice date instead of the receipt date.",
+      "Writing a bare 'the cheque was given as security' with no factual scaffolding.",
+      "Discarding the RPAD cover, which destroys the receipt-date proof.",
+      "Admitting the signature and the debt in the same sentence as denying liability."
+    ],
+    "seniorVariants": [
+      "Reply without either admitting or denying the debt: state the agreement, the security purpose, the failure of consideration, and put the complainant to proof of a subsisting liability on the presentation date.",
+      "Call for the complainant's ledger and the presentation particulars.",
+      "Flag the unstamped agreement and pre-empt the impounding objection.",
+      "Diary the one-month complaint window from the day after the reply period ends, and prepare the accused's s. 145 NI Act evidence in advance."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the agreement to sell provided for forfeiture of the earnest money on the buyer's default, part of the cheque amount may well be due — the security defence then narrows to the excess rather than the whole sum.",
+    "unresolvedFacts": [
+      "Exact date of receipt — UNCONFIRMED",
+      "Whether any part of the sum became due on cancellation — UNKNOWN",
+      "Whether the cheque was presented once or repeatedly — UNKNOWN",
+      "Stamp duty status of the agreement — UNCONFIRMED"
+    ],
+    "jurisdictionNote": "Jodhpur district; complaint would lie before the Magistrate having territorial jurisdiction over the bank branch or the notice address, subject to verification."
+  }
+}

@@ -1,0 +1,176 @@
+{
+  "id": "TP-RJ-04",
+  "title": "Reply instruction on a s. 138 notice where the client admits the signature",
+  "stage": "reply",
+  "level": "intermediate",
+  "forum": "district",
+  "district": "Alwar",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "reply-instruction",
+    "language": "en",
+    "channel": "email",
+    "text": "Client admits the signature on the cheque and admits he owed the money. His only point is that the notice demand includes 60,000 as 'interest and costs' which was never agreed, and that the notice was sent to his old Alwar address although he shifted to Bhiwadi eight months ago and the society has his new address. He wants the reply to say (a) notice is bad for wrong address, (b) the excess 60,000 makes the demand invalid, (c) he will pay the principal 3,40,000 in instalments. Draft it. Also tell me if the instalment offer is wise — he wants to buy time.",
+    "attachments": [
+      "Notice",
+      "Cheque copy",
+      "Client's electricity bill at Bhiwadi",
+      "Society change-of-address letter"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "complete",
+      "requestClarity": "clear",
+      "oneLineRead": "Liability is admitted; the only live issues are address service and the excess demand. The instalment offer is the real strategic question, not the draft."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether service at the old address invalidates the notice",
+        "status": "OPEN",
+        "note": "Service is judged on the sender's reasonable diligence, not the recipient's convenience. A notice correctly addressed to the address on record is usually good service even if the client has shifted."
+      },
+      {
+        "issue": "Whether an inflated demand invalidates the notice",
+        "status": "CONFLICT",
+        "note": "A demand in excess of the cheque amount is generally not fatal; courts have taken both views. The safer course is to pay the cheque amount, not to rely on the excess."
+      },
+      {
+        "issue": "Whether to offer instalments",
+        "status": "OPEN",
+        "note": "An instalment offer that is not honoured becomes a weapon against the client. Terms must be tight and conditional."
+      },
+      {
+        "issue": "Whether to tender the cheque amount in the reply itself",
+        "status": "OPEN",
+        "note": "Tender changes the whole posture and may defeat the offence; it needs a client decision, not a drafting decision."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "c. 8 months ago",
+        "event": "Client shifts to Bhiwadi; society informed",
+        "source": "society letter",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Unknown",
+        "event": "Notice dispatched to Alwar address",
+        "source": "notice",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Unknown",
+        "event": "Notice actually received (by whom is unclear)",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Presumption of debt; burden shifts to the accused",
+        "provision": "NI Act 1881, s. 139",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "Core to why an admission is costly. Official bare-Act link added."
+      },
+      {
+        "proposition": "Notice must be given within 30 days of receipt of information of dishonour",
+        "provision": "NI Act 1881, s. 138 proviso (b)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2189",
+        "sourceUrlNote": "Relevant to any service-date challenge. Official bare-Act link added."
+      },
+      {
+        "proposition": "Service by registered post to the correct address is good service",
+        "provision": "General Clauses Act 1897, s. 27",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2328",
+        "sourceUrlNote": "Presumption of service; needs the notice's address to be checked against the cheque/agreement. Official bare-Act link added."
+      },
+      {
+        "proposition": "Excess demand does not by itself vitiate a s. 138 notice",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Both directions exist in the reports; a named judgment is required before pleading it."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "notice",
+        "title": "Reply to s. 138 Notice — Partial Admission, Address and Excess Demand",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nREPLY TO NOTICE UNDER s. 138, NEGOTIABLE INSTRUMENTS ACT, 1881 — Alwar\n\n1. My client admits his signature on the cheque and admits the principal sum of Rs 3,40,000.\n\n2. The only dispute is the Rs 60,000 claimed as \"interest and costs\", which was never agreed. My client puts your client to strict proof of the basis and computation of that sum. The total demanded (Rs 4,00,000) is to that extent inflated.\n\n3. Your notice was addressed to my client's former Alwar address. My client shifted to Bhiwadi about eight months ago and informed the society; the electricity bill and the society's change-of-address letter are annexed. Service is judged by the sender's reasonable diligence: under s. 27 of the General Clauses Act 1897, service to the address on record is presumed good. [PENDING — this point is weak if the Alwar address is the one printed on the cheque; verify.]\n\n4. The proposition that an excess demand vitiates a s. 138 notice is contested and no authority is cited. [PENDING — both views exist in the reports; a named judgment with a paragraph is required before this is pleaded.]\n\n5. Reply is given within the period under proviso (b) to s. 138, NI Act 1881. The presumption of debt under s. 139, NI Act 1881 is duly noted.\n\n6. [PENDING — client's instruction on tender vs instalments is awaited; the instalment offer is deliberately NOT made in this draft pending that decision.]\n\nPlace: Alwar    Date: [PENDING]"
+      },
+      {
+        "type": "table",
+        "title": "Amount Reconciliation (principal / interest / costs)",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nAMOUNT RECONCILIATION — s. 138 notice (Alwar)\n\n| Head | Amount (Rs) | Client's position | Status |\n|---|---|---|---|\n| Cheque / principal | 3,40,000 | Admitted | Agreed |\n| Interest and costs | 60,000 | Disputed — never agreed | Basis to be proved |\n| Total demanded | 4,00,000 | Inflated by 60,000 | Partly disputed |\n\nReconciliation note: 3,40,000 + 60,000 = 4,00,000. The principal is admitted; only the 60,000 is contested. No authority is cited on excess demand. [PENDING — a named judgment on excess demand is required before pleading it.]\n\n[PENDING — whether the client tenders 3,40,000 or offers instalments is still open; the reconciliation does not change until that choice is made.]"
+      },
+      {
+        "type": "letter",
+        "title": "Client Advice Note — Tender vs Instalments",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nCLIENT ADVICE NOTE — Tender vs Instalments (Alwar)\n\nDear Client,\n\nYou have admitted the signature and the principal of Rs 3,40,000. Two strategic routes follow, and the choice is yours, not ours.\n\nRoute A — TENDER the cheque amount with the reply.\nEffect: the enforceable liability is answered and the offence under s. 138, NI Act 1881 may be taken off the table. Cost: you must fund it now. [PENDING — confirm your funding capacity.]\n\nRoute B — INSTALMENTS.\nEffect: buys time. Risk: an unhonoured offer becomes a weapon; the complainant may file on day 16 and cite your offer as an admission. If chosen, the offer must be tight — a fixed deadline, a default clause, and conditional on withdrawal of the complaint with a written no-objection. [PENDING — written instruction required before this goes into the reply.]\n\nOn the two points you asked us to plead: the \"wrong address\" point is half-right at best — service under s. 27 of the General Clauses Act 1897 turns on the address on record, so check the address printed on the cheque. The excess-demand point is contested; no authority can be pleaded yet. [PENDING — a named judgment on excess demand is required.]\n\nThe reply period is a hard clock. Please decide today.\n\nFor the Firm    Date: [PENDING]"
+      }
+    ],
+    "checklist": [
+      "Confirm the address printed on the cheque and in the agreement against the Alwar address used",
+      "Electricity bill and society letter — keep originals, attach copies to the reply",
+      "Reconciliation of 4,00,000 principal against the 60,000 claimed as interest and costs",
+      "Client's written instruction on whether to tender or offer instalments",
+      "RPAD dispatch with proof, and a copy to the advocate's email if given",
+      "Diary the complaint window from the reply period end"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Draft now, but hold the instalment offer until the client chooses tender or instalments",
+      "rationale": "The draft is straightforward. The strategic fork is not: an instalment offer without tender invites the complainant to file anyway and use the offer as an admission of liability.",
+      "nextAction": "Send the client advice note with both routes and their consequences, take a written instruction, then finalise and dispatch the reply."
+    },
+    "teachingNotes": [
+      "The client's instruction contains a confident legal proposition ('notice is bad for wrong address') that is only half right. A beginner drafts what the client said; an intermediate checks it first.",
+      "Admitting signature and debt is fine — but then the reply must not read as if anything is still contested. Half-admissions read as evasions.",
+      "Instalments buy time and cost leverage. Once an offer is on record, a complainant can file on day 16 and cite the offer.",
+      "The engine blocks the excess-demand proposition. That is not pedantry — it is the exact point where a confident wrong sentence would be filed."
+    ],
+    "commonMistakes": [
+      "Pleading 'wrong address' as if it invalidates the notice, without checking the address on the cheque.",
+      "Offering instalments in the reply without a default clause or a deadline.",
+      "Attaching the Bhiwadi bill without explaining that the client shifted, so it looks like a contradiction.",
+      "Letting the reply period run while waiting for the client's decision on tender."
+    ],
+    "seniorVariants": [
+      "Serve a short, hard reply: admit signature, admit principal, dispute only the 60,000, and record the shift of address with documents — without over-arguing service.",
+      "Put the complainant to proof of the interest and costs basis, and call for the computation.",
+      "If the client can fund it, tender the cheque amount with the reply and take the offence off the table; keep instalments for the balance.",
+      "If instalments are chosen, make the offer conditional on withdrawal of the complaint and a no-objection in writing."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the Alwar address is the one printed on the cheque, the wrong-address point is weak and a reply built on it will be met with s. 27 of the General Clauses Act.",
+    "unresolvedFacts": [
+      "Address printed on the cheque — UNCONFIRMED",
+      "Who actually received the notice — UNKNOWN",
+      "Whether 60,000 was ever discussed in writing — UNKNOWN",
+      "Client's funding capacity for a tender — UNKNOWN"
+    ],
+    "jurisdictionNote": "Alwar district for the notice; the complaint will follow the bank branch or the notice address. Client's Bhiwadi shift does not move jurisdiction by itself."
+  }
+}

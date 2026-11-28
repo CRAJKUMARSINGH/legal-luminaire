@@ -1,0 +1,197 @@
+{
+  "id": "TP-RJ-11",
+  "title": "Demand notice for structural defects against a developer, four years post-handover",
+  "stage": "initial",
+  "level": "expert",
+  "forum": "rera",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "demand",
+    "language": "en",
+    "channel": "email",
+    "text": "Client is an allottee, possession 2021, RERA-registered project, registered agreement. Ceiling slab in the living room has a crack that has widened over eight months, and the bathroom waterproofing has failed into the flat below — the neighbour has complained twice to the society. Developer says the defect liability period expired and cites the agreement's 5-year clause but also says 'structural' does not cover waterproofing. Society has issued a notice to our client to repair. Engineer's inspection note attached, photographs, society notices, agreement, possession letter. Client wants a demand notice and then RERA. Draft the demand. Also tell me whether the five-year clause helps or hurts us.",
+    "attachments": [
+      "Engineer's inspection note",
+      "Photographs (12)",
+      "Society notices (2)",
+      "Registered agreement",
+      "Possession letter",
+      "Payment receipts"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "complete",
+      "requestClarity": "clear",
+      "oneLineRead": "Live structural risk with a third-party exposure to the flat below. The five-year clause is the client's best asset, not the developer's, and the drafting must pin the defect as structural within that period."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether a slab crack is a 'structural defect' within the statutory defect-liability provision",
+        "status": "OPEN",
+        "note": "This is the whole case. If the crack is structural, the statutory five-year window applies and the developer's 'expired' answer is wrong."
+      },
+      {
+        "issue": "Whether waterproofing failure falls inside or outside the clause",
+        "status": "OPEN",
+        "note": "The developer will argue it is a maintenance item. Engineer's note must be read for causation, not just description."
+      },
+      {
+        "issue": "Whether the defect was notified within five years of possession",
+        "status": "SETTLED",
+        "note": "Possession 2021, notice 2026 — inside the window if possession is the trigger. Confirm the exact possession date."
+      },
+      {
+        "issue": "Whether the client's own liability to the flat below and to the society is running in parallel",
+        "status": "OPEN",
+        "note": "It is, and it creates urgency and a recoverable head of loss."
+      },
+      {
+        "issue": "Whether the remedy lies in RERA, a civil suit, or both",
+        "status": "CONFLICT",
+        "note": "RERA has jurisdiction over the allottee-promoter dispute; the third-party claim against the client is separate. Parallel proceedings risk inconsistent findings."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "2021",
+        "event": "Possession under registered agreement",
+        "source": "possession letter",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "8 months ago",
+        "event": "Crack first noticed and reported",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Recent",
+        "event": "Waterproofing failure into flat below; two society notices",
+        "source": "notices",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Now",
+        "event": "Engineer inspection",
+        "source": "note",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Promoter's obligation to rectify structural defects within five years of possession",
+        "provision": "Real Estate (Regulation and Development) Act 2016, s. 14(3)",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2158",
+        "sourceUrlNote": "Sub-section number and the proviso on compensation to be confirmed against the bare Act before pleading. Official bare-Act link added."
+      },
+      {
+        "proposition": "Allottee's remedy before the RERA authority",
+        "provision": "RERA Act 2016, s. 31 read with s. 18",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2158",
+        "sourceUrlNote": "Forum confirmed; relief framing is fact-dependent. Official bare-Act link added."
+      },
+      {
+        "proposition": "Defect liability runs from possession, not from registration",
+        "provision": "RERA Act 2016, s. 14(3) — trigger",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "The exact trigger wording matters and is unverified in the fixture."
+      },
+      {
+        "proposition": "Structural defect must be distinguished from ordinary wear",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs authority; it is the dividing line the developer will fight on."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "notice",
+        "title": "Demand Notice — Structural Defect and Consequential Loss",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nDEMAND NOTICE — STRUCTURAL DEFECT AND CONSEQUENTIAL LOSS\n(Gate-shaped skeleton; to be settled before issue)\n\nTo: The Promoter / Developer\n[PENDING — full registered name and address from the RERA registration record]\n[PENDING — project RERA registration number]\n\nFrom: The Allottee, as per the registered agreement, Jaipur.\n\n1. The allottee was put in possession in 2021 under a registered agreement, in a RERA-registered project.\n2. Structural defect alleged: a crack in the living-room ceiling slab, widening over about eight months, and failure of the bathroom waterproofing into the flat below. Photographs (12), the engineer's inspection note, and the two society notices are annexed.\n3. Statutory position: the promoter's obligation to rectify structural defects within five years of possession — Real Estate (Regulation and Development) Act 2016, s. 14(3). This notice is issued within that window.\n4. [PENDING — the exact trigger wording of s. 14(3) must be read from the bare Act before this paragraph is finalised.]\n5. Rectification of the structural defect is demanded within [PENDING — compliance period to be fixed]; consequential loss, including the society's notices and the neighbour's damage, is reserved as a separate head of claim.\n6. The allottee's remedy before the RERA authority is reserved — RERA Act 2016, s. 31 read with s. 18.\n7. [PENDING — whether the crack is a 'structural defect' as distinguished from ordinary wear requires authority that is not in the file.]\n\nTake notice and act. Without prejudice to all rights."
+      },
+      {
+        "type": "table",
+        "title": "Defect, Causation and Loss Matrix",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nDEFECT, CAUSATION AND LOSS MATRIX\n\n| Defect | Location | Alleged cause | Evidence | Loss / exposure | Status |\n|---|---|---|---|---|---|\n| Ceiling slab crack | Living room | [PENDING — engineer's causation finding not yet read] | Photographs (12); engineer's inspection note | Rectification cost | [PENDING — causation unverified] |\n| Waterproofing failure | Bathroom, into the flat below | [PENDING — causation to be confirmed] | Society notices (2); neighbour's complaint | Third-party damage; society notice to the client to repair | OPEN |\n| Earlier report of the crack | Living room | Client says reported about eight months ago | [PENDING — whether the report was in writing is UNKNOWN] | Notice-of-defect argument | UNCONFIRMED |\n| Statutory window | Project-wide | Obligation to rectify structural defects within five years of possession — RERA Act 2016, s. 14(3) | Possession letter (2021); registered agreement | The client's shield | SECONDARY — confirm trigger |\n\nNote: the dividing line between a structural defect and ordinary wear requires authority not in the file — [PENDING — to be sourced]."
+      },
+      {
+        "type": "checklist",
+        "title": "Expert and Evidence Bundle for RERA",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nEXPERT AND EVIDENCE BUNDLE FOR RERA — tick list\n\n[ ] Exact possession date from the possession letter\n[ ] Engineer's inspection note — does it state structural causation, and on what basis\n[ ] Agreement's defect-liability clause verbatim, including any 5-year term\n[ ] Both society notices and the society's resolution, if any\n[ ] Photographs with dates and a measurement of crack-width progression\n[ ] Neighbour's damage and any claim made against the client\n[ ] Whether the developer was notified in writing at the eight-month point\n[ ] RERA registration number of the project\n[ ] [PENDING — authority distinguishing a structural defect from ordinary wear]\n[ ] [PENDING — exact trigger wording of RERA Act 2016, s. 14(3)]\n\nForum: Rajasthan RERA authority, Jaipur. Remedy reserved under RERA Act 2016, s. 31 read with s. 18."
+      },
+      {
+        "type": "pleading",
+        "title": "RERA Complaint — Not Yet Filed",
+        "status": "blocked",
+        "blockedReason": "Notice period and the engineer's causation opinion are not yet complete."
+      }
+    ],
+    "checklist": [
+      "Exact possession date from the possession letter",
+      "Engineer's note — does it say structural, and on what basis",
+      "Agreement's defect-liability clause verbatim, including any 5-year term",
+      "Both society notices and the society's resolution, if any",
+      "Photographs with dates, and a measurement of crack width progression",
+      "Neighbour's damage and any claim made against the client",
+      "Whether the developer was notified in writing at the eight-month point",
+      "RERA registration number of the project"
+    ],
+    "terminalOutcome": {
+      "kind": "proceed",
+      "label": "Issue the demand, but pin the defect as structural and within five years on the face of the notice",
+      "rationale": "The statutory window is the client's shield and it is closing. The developer's two arguments — expiry and 'not structural' — are answered by the possession date and the engineer's causation opinion. The notice should not be a general complaint; it should read as a s. 14(3) notice.",
+      "nextAction": "Settle the notice around the possession date and the engineer's causation finding, issue it, and prepare the RERA complaint in parallel for filing on expiry of the notice period."
+    },
+    "teachingNotes": [
+      "The client asks whether the five-year clause helps or hurts. It helps, and enormously — a beginner would read it as the developer's defence. Read the clause as the client's limitation grant, not the developer's escape.",
+      "'Structural' is the battleground. The engineer's note is worth more than every photograph if it says why the crack is structural; if it only describes the crack, the notice will be met with 'cosmetic'.",
+      "The parallel exposure to the flat below is the urgency. A demand letter that ignores the society notices looks like a grumble; one that annexes them looks like a claim.",
+      "The engine blocks the RERA complaint but allows the notice. Correct sequencing: notice first, complaint on expiry. Filing the complaint today hands the developer a notice objection."
+    ],
+    "commonMistakes": [
+      "Reading the five-year clause as the developer's defence and advising the client the case is time-barred.",
+      "Issuing a general grievance letter with no statutory framing.",
+      "Ignoring the society notices so the third-party loss is never quantified.",
+      "Filing the RERA complaint before the notice period runs out."
+    ],
+    "seniorVariants": [
+      "Frame the notice as a statutory s. 14(3) notice: possession date, defect, engineer's causation opinion, rectification demand, consequential loss, and a stated compliance period.",
+      "Put the developer to production of the structural drawings and the slab design, and reserve the right to a joint expert inspection.",
+      "Write to the society confirming the client is pursuing the developer, so the client's own position with the society is protected.",
+      "Quantify the neighbour's damage and any repair estimate as a separate head, and keep the two claims analytically distinct."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the agreement's defect-liability clause is shorter than five years, the developer will argue contractual restriction. The statutory floor is generally read as non-derogable, but the clause must be read and answered rather than assumed away.",
+    "unresolvedFacts": [
+      "Exact possession date — UNCONFIRMED",
+      "Whether the engineer's note states structural causation — UNKNOWN",
+      "Whether the eight-month report to the developer was in writing — UNKNOWN",
+      "Extent of the neighbour's damage — UNKNOWN"
+    ],
+    "jurisdictionNote": "Rajasthan RERA authority, Jaipur. Project registration and the allottee-promoter relationship place it there; the neighbour's claim against the client is separate."
+  }
+}

@@ -1,0 +1,203 @@
+{
+  "id": "TP-RJ-16",
+  "title": "Appeal to the Collector after the SDO confirmed the mutation — and recorded the client's own defects",
+  "stage": "appeal",
+  "level": "intermediate",
+  "forum": "revenue",
+  "district": "Chittorgarh",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "handover",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, yahi case hai jo pichhli baar laaye the — jamabandi se naam kaatne wala. SDO ne appeal par sunwai ki aur hamari appeal kharij kar di, teen hafte pehle. Order mein likha hai ki appeal der se aayi thi, isliye condone kar rahe hain, lekin merits mein client jamabandi hi pesh nahi kar paya. Ab Collector ke paas jana hai. Client bol raha hai ki SDO ke reader ne paise maange the. Order ki certified copy nahi hai, sirf photo hai. Kya Collector ke paas appeal mein naya evidence de sakte hain?",
+    "attachments": [
+      "Photo of SDO's order (4 pages)",
+      "Tehsildar's order photo (from the earlier file)",
+      "Client's own handwritten note of the SDO hearing"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "incomplete",
+      "requestClarity": "clear",
+      "oneLineRead": "The SDO confirmed the mutation and, worse, wrote the client's own defects into the order — late filing and no jamabandi. The Collector appeal has to cure both, and a fresh allegation of demand against the SDO's reader has to be placed or dropped deliberately."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether fresh evidence can be produced at the Collector stage",
+        "status": "OPEN",
+        "note": "Revenue appeals permit additional evidence on cause shown in some circumstances; the provision and the Collector's practice must both be checked."
+      },
+      {
+        "issue": "Whether the SDO's adverse recording about the jamabandi is fatal or curable",
+        "status": "OPEN",
+        "note": "It is curable by producing the record now, but the appeal must explain the earlier omission rather than pretend it did not happen."
+      },
+      {
+        "issue": "Whether the delay recorded by the SDO affects the Collector appeal",
+        "status": "CONFLICT",
+        "note": "The SDO condoned it. That helps, but a pattern of late filing invites a stricter view above."
+      },
+      {
+        "issue": "Whether the allegation against the SDO's reader goes in, and how",
+        "status": "OPEN",
+        "note": "Unsupported oral allegations in a revenue appeal look sloppy. Either plead it with particulars or leave it out."
+      },
+      {
+        "issue": "Whether the appeal period from the SDO's order has already run",
+        "status": "OPEN",
+        "note": "Three weeks may be inside or outside depending on the rung's period. Compute from the Act today."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Two months ago",
+        "event": "Tehsildar's order deleting the client's name",
+        "source": "earlier file",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Six weeks ago",
+        "event": "Client's appeal to the SDO, filed late",
+        "source": "SDO order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Three weeks ago",
+        "event": "SDO dismisses; delay condoned, merits against the client",
+        "source": "SDO order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in; no certified copy of the SDO order",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Appeal from an SDO's order to the Collector",
+        "provision": "Rajasthan Land Revenue Act 1956 — appeal provision, unverified",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Section and period unverified; the rung above TP-RJ-14 is not the same provision."
+      },
+      {
+        "proposition": "Additional evidence in a revenue appeal",
+        "provision": "Rajasthan Land Revenue Act 1956 — evidence provision, unverified",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Core to the appeal; must be sourced."
+      },
+      {
+        "proposition": "Mutation entry does not confer title",
+        "provision": "settled practice — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Still unsourced from TP-RJ-14; carry the gap forward honestly."
+      },
+      {
+        "proposition": "Bar of civil jurisdiction",
+        "provision": "Rajasthan Tenancy Act 1955, s. 207",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18540",
+        "sourceUrlNote": "Why the revenue ladder and not a civil suit. Official bare-Act link added."
+      },
+      {
+        "proposition": "Condonation of delay in revenue appeals",
+        "provision": "Limitation Act 1963, s. 5 read with s. 29(2)",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Same open question as TP-RJ-13; do not assume the answer travels between rungs."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Appeal Memo to the Collector — Grounds Skeleton",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nVishay: SDO, Chittorgarh ke aadesh (tareekh — sirf photo hai, certified copy nahi) ke viruddh Collector, Chittorgarh ko appeal ki grounds-rockharekh.\n\nAppeal ka raasta: Rajasthan Land Revenue Act 1956 ke antargat appeal — [PENDING — dhara aur avadhi asatyapit; ye rung TP-RJ-14 se upar ka alag provision hai]. Civil suit nahi, kyunki Rajasthan Tenancy Act 1955, s. 207 civil court ko rokta hai aur yahi revenue ladder chunta hai.\n\nParsh: Apilkar — [naam], nivas [pata agyat], zila Chittorgarh. Pratyarthi — bhai aur anya [naam agyat].\n\nChronology (sakshya se):\n- Do maah purv: Tehsildar ka aadesh; apilkar ka naam jamabandi se kata.\n- Chhah saptah purv: SDO ke paas appeal, der se dakhil.\n- Teen saptah purv: SDO ne der condone karke merits mein appeal kharij; aadesh mein darj — client ne jamabandi pesh nahi ki.\n- Aaj: walk-in; SDO order ki certified copy nahi, sirf photo.\n\nGrounds (prayog ke liye):\n1. SDO ke aadesh ka woh ansh jo jamabandi na pesh hone ka hai — chhipaya nahi jayega; appeal pehle prishth se uska saamna karegi.\n2. Jamabandi ab sanlagn, saath mein purv-chook ka spashtikaran dena hai: [PENDING — additional evidence ka provision asatyaapit].\n3. Mutation entry se sveatta nahi banti — [PENDING — koi namit aadesh fixture mein nahi].\n4. Der: SDO ne condone kiya, par wahi truti record par aage ke liye bani hui hai — [PENDING — Limitation Act 1963, s. 5 r/w 29(2)].\n\nReader-allegation: alag file-memo mein rakhi hai — ek anuchhed, specifics ke saath, warna poori bahar.\n\nDakhil karne se pehle chahiye: certified SDO order + jamabandi ka spashtikaran. Inke bina ye skeleton filing-ready nahi hai."
+      },
+      {
+        "type": "application",
+        "title": "Application for Additional Evidence",
+        "status": "blocked",
+        "blockedReason": "The evidence provision is unsourced."
+      },
+      {
+        "type": "memo",
+        "title": "Note on the Reader Allegation — In or Out",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nFile Note (internal): Reader allegation — in ya out?\nMatter: jamabandi/mutation se naam kaatna, zila Chittorgarh. Teesra rung (Collector).\n\nTathya: Client kehta hai ki SDO ke reader ne paise maange the. Koi tareekh, rakam ya receipt nahi. SDO ke aadesh mein iska koi zikr nahi.\n\nVichaar:\n- Revenue appeal mein unsupported oral allegation bina tareekh/rakam ke amateur dikhta hai aur asli mudde (jamabandi + der) ko dabata hai.\n- Agar particulars mil jaayein (kab, kisse, kitna, koi receipt) to ek hi anuchhed mein rakhna; warna chord dena.\n- Client ke paas receipt ya koi likhit vigat abhi nahi.\n\nFaisla (proposed): 48 ghante mein particulars aayein to ek anuchhed, alag paragraph mein; warna poori tarah bahar. Is note ko supervising advocate se confirm karana hai.\n\n[PENDING — aisi shikayat ke liye koi departmental/statutory route hai ya nahi — asatyapit]"
+      },
+      {
+        "type": "chronology",
+        "title": "Two-Rung Chronology with the Omission Explained",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nDo-rung Chronology — Tehsildar se SDO, aur SDO se Collector.\nZila: Chittorgarh. Matter: jamabandi se naam kaatna.\n\n| Tareekh | Ghatna | Source | Confidence | Note |\n|---|---|---|---|---|\n| Do maah purv | Tehsildar ka aadesh; naam jamabandi se kata | earlier file | CONFIRMED | Pehla rung |\n| Chhah saptah purv | Client ki SDO ke paas appeal, der se | SDO order | CONFIRMED | Der ka mudda |\n| Teen saptah purv | SDO ne der condone karke merits mein kharij | SDO order | CONFIRMED | Aadesh mein jamabandi na pesh hone ka zikr |\n| Aaj | Walk-in; certified SDO order nahi, sirf photo | counter | CONFIRMED | Collector appeal ki file shuru |\n\nOmission (jamabandi) ka spashtikaran:\n- Client ne SDO ke saamne jamabandi kyun nahi pesh ki — asli kaaran [PENDING — client se likhit mein lena hai].\n- Jamabandi abhi maujood hai ya nahi — [PENDING — UNKNOWN].\n- Ye ek paragraph appeal mein; agar allowed ho to additional-evidence application ke saath.\n\nAppeal avadhi (SDO se Collector) — [PENDING — Act se aaj hi compute karni hai].\n\nAage: certified SDO copy aane par ye chronology finalize."
+      }
+    ],
+    "checklist": [
+      "Certified copy of the SDO order — apply today",
+      "Certified copy of the Tehsildar order, if not already held",
+      "The jamabandi the client failed to produce at the SDO stage, plus the reason for the omission",
+      "The SDO's appeal-period computation from the Act",
+      "Whether the SDO's condonation helps or is neutral above",
+      "Particulars of the reader allegation: when, to whom, how much, any receipt",
+      "Whether the brother has moved for possession since the SDO order"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Hold the grounds until the certified SDO order is read and the jamabandi gap is explained",
+      "rationale": "The SDO's order is the appeal's own case file. Its adverse recording about the missing jamabandi is the first thing the Collector will see, and an appeal that does not address it reads as though the client is hiding it. The reader allegation is secondary and must not be allowed to crowd out the cure.",
+      "nextAction": "Apply for certified copies, read the order's actual reasons, produce the jamabandi with an explanation for the earlier omission, then draft."
+    },
+    "teachingNotes": [
+      "This is the same file as TP-RJ-14, two months on. If your week-9 work was weak, you are now looking at the cost of it in the SDO's own words. That is the point of the pair.",
+      "The SDO condoned the delay. Beginners read that as a win. It is a warning: the same defect is now on the record for the next authority.",
+      "The reader allegation is the most tempting and the least useful thing in the file. A revenue appeal that leads with 'the reader asked for money' without a date or an amount looks amateur.",
+      "Note the engine blocks the additional-evidence application, not the appeal. The appeal can be drafted; the evidence route cannot be invented."
+    ],
+    "commonMistakes": [
+      "Drafting grounds that ignore the SDO's adverse recording about the jamabandi.",
+      "Leading with the reader allegation.",
+      "Filing without the certified SDO order.",
+      "Assuming the condonation the SDO granted protects the appeal above.",
+      "Producing the jamabandi without explaining why it was not produced below."
+    ],
+    "seniorVariants": [
+      "Open the appeal by meeting the SDO's order head-on: the delay was condoned, the jamabandi was the only real defect, and it is now produced with the reason for the omission.",
+      "File the additional-evidence application with the jamabandi attached, so the record is complete before the first hearing.",
+      "Keep the reader allegation to a single paragraph with particulars, or drop it.",
+      "Check whether the brother has moved for possession and, if so, apply for stay at the Collector stage in the same filing."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The SDO's order records that the client produced nothing at the hearing. If the collector reads that alongside a fresh jamabandi, the appeal can look like a rebuild rather than a challenge — the explanation for the omission has to be credible and documented.",
+    "unresolvedFacts": [
+      "Appeal period and evidence provision — UNRESOLVED",
+      "Whether the jamabandi exists at all — UNKNOWN",
+      "Particulars of the reader allegation — UNKNOWN",
+      "Whether possession has been disturbed since — UNKNOWN"
+    ],
+    "jurisdictionNote": "Chittorgarh district; appeal lies to the Collector of the district. Third rung of the ladder in TP-RJ-13's map."
+  }
+}

@@ -277,6 +277,16 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) first. The non-negotiables:
 
 ---
 
+## 📌 Standing Orders
+
+These rules are permanent and apply to every future change:
+
+1. **Rolling session log.** The project's session chat log is kept in [CREAT.MD](CREAT.MD) and refreshed **every 12 minutes** by a scheduled task. Newest entries go at the top; prior entries are never deleted.
+2. **Keep folders, even when empty.** Directories are never removed for being empty. Empty folders are preserved with a `.gitkeep` placeholder so they survive version control and cleanup.
+3. **Protected folders.** `Attached_Assets/` and `CODE-JUNCTION/` are protected: they must always exist and must never be altered adversely, even if empty.
+
+---
+
 ## 📜 License
 
 MIT — see [LICENSE](LICENSE).

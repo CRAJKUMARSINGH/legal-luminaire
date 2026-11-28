@@ -1,0 +1,168 @@
+{
+  "id": "TP-RJ-14",
+  "title": "Name deleted from jamabandi on the brother's mutation application",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "revenue",
+  "district": "Chittorgarh",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, jamabandi se mera naam kaat diya hai. Bhai ne mutation lagaya tha, Tehsildar ne barah din pehle order de diya. Mujhe pata hi nahi tha, koi notice nahi aaya. Ab kya karein? Order ki photo hai, bas wahi laaya hoon. Jamabandi ki copy nahi hai, khasra bhi yaad nahi. Bhai ke paas zameen hai, humein kuch nahi diya. Tehsildar ke pehle wale babu ne bola SDO ke paas jao.",
+    "attachments": [
+      "Photo of Tehsildar's order (2 pages, partially legible)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "incomplete",
+      "requestClarity": "clear",
+      "oneLineRead": "Revenue mutation deleting the client's name, twelve days old, and revenue appeal periods are short. The clock is the whole case right now."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the client was heard before the mutation",
+        "status": "OPEN",
+        "note": "He says no notice came. If true it goes to the order's sustainability; the notice record must be seen, not assumed."
+      },
+      {
+        "issue": "The appeal period and how much of it is left",
+        "status": "OPEN",
+        "note": "Revenue limitation is short. Twelve days may be most of the window. Must be computed from the order date today, not later."
+      },
+      {
+        "issue": "Whether the mutation affects title or only the record",
+        "status": "OPEN",
+        "note": "A mutation is a fiscal entry. It does not decide title, but it decides who is presumed to hold, and that matters immediately."
+      },
+      {
+        "issue": "Whether the brother's claim rests on a deed, a will, or succession",
+        "status": "UNCONFIRMED",
+        "note": "The order photo may show it. Not yet read."
+      },
+      {
+        "issue": "Whether the SDO is the correct appellate authority",
+        "status": "OPEN",
+        "note": "Ladder is Tehsildar to SDO, but the provision and the period both need the bare Act."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Date unknown",
+        "event": "Brother files mutation application",
+        "source": "order",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "12 days ago",
+        "event": "Tehsildar passes order deleting the client's name",
+        "source": "order",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in; order photo only",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Civil court jurisdiction barred in tenancy matters",
+        "provision": "Rajasthan Tenancy Act 1955, s. 207",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18540",
+        "sourceUrlNote": "Why this is a revenue matter and not a civil suit. Official bare-Act link added."
+      },
+      {
+        "proposition": "Appeal from a Tehsildar's order to the Sub-Divisional Officer",
+        "provision": "Rajasthan Land Revenue Act 1956 — appeal provision, unverified",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Section and period both unverified; read the bare Act before drafting."
+      },
+      {
+        "proposition": "Mutation entry does not confer title",
+        "provision": "settled practice — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Frequently asserted, must be sourced before it goes in an appeal."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "memo",
+        "title": "Triage Memo — Clock First",
+        "status": "intake-only",
+        "blockedReason": null
+      },
+      {
+        "type": "instruction",
+        "title": "Requisition List — Certified Order, Jamabandi, Notice Record",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nREQUISITION LIST — CERTIFIED ORDER, JAMABANDI, NOTICE RECORD\n(Chittorgarh, revenue matter)\n\nYeh list office/client ke liye hai — isse pehle kuch draft nahi karna.\n\n1. Certified copy of Tehsildar ka order (barah din purana) — aaj hi application. Endorsement date note karo, yaad se nahi.\n2. Certified jamabandi — current aur do pichhle saal.\n3. Mutation case file number, aur notice/service record — kya notice gaya, kisko, kab.\n4. Khasra numbers — jo mutation se affected hain.\n5. Bhai ka mutation application aur woh document jiske aadhaar par lagaya gaya.\n6. Koi anya heir affected hai kya — jaano.\n7. Client ki version ki likhit note, signed.\n8. Appeal period — Rajasthan Land Revenue Act 1956 ka appeal provision [PENDING — section aur period bare Act se padh kar likhna, yaad se nahi].\n9. SDO hi sahi appellate authority hai — [PENDING — ladder confirm karna].\n10. Civil court jurisdiction bar — Rajasthan Tenancy Act 1955, s. 207 (isliye yeh revenue matter hai, civil suit nahi).\n11. Mutation title nahi deta — [PENDING — authority source karna, warna appeal mein na likhna].\n\nDiary: last date file cover par likho, notebook mein nahi."
+      },
+      {
+        "type": "pleading",
+        "title": "Appeal to the SDO — Not Yet Drafted",
+        "status": "blocked",
+        "blockedReason": "Certified order copy and the appeal period are both absent."
+      }
+    ],
+    "checklist": [
+      "Certified copy of the Tehsildar's order — apply today",
+      "Certified jamabandi for the current and two prior years",
+      "The mutation case file number and the notice/service record",
+      "Khasra numbers of the land affected",
+      "The brother's application and the document he relied on",
+      "Whether any other heir is affected",
+      "Written note of the client's version of events, signed"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Apply for the certified order today and do not draft until the period is confirmed",
+      "rationale": "The appeal period is short and partly spent. A beautifully drafted appeal on day twenty-two is worth less than a plain one filed inside the period. The order photo is also only partly legible, so the grounds cannot be settled from it.",
+      "nextAction": "Apply for the certified order and jamabandi, find the appeal period in the bare Act, diary the last date, then draft."
+    },
+    "teachingNotes": [
+      "Beginners draft. On a revenue matter the first act is a copying application, because the period will not wait for your prose.",
+      "'Tehsildar ke babu ne bola SDO ke paas jao' is better advice than the same sentence from a tehsildar in TP-RJ-01 — but it is still only a pointer. The period is in the Act.",
+      "Mutation does not equal title. Say it early and say it plainly, or the client will believe he has already lost the land.",
+      "Note the engine marks urgency URGENT on a file with almost nothing in it. Urgency here comes from the clock, not from the facts."
+    ],
+    "commonMistakes": [
+      "Waiting for the jamabandi before filing, and losing the period.",
+      "Drafting grounds from a half-legible photo.",
+      "Filing a civil suit for declaration instead of a revenue appeal.",
+      "Telling the client the mutation has taken his land."
+    ],
+    "seniorVariants": [
+      "Copying application and diary entry the same day; the period is diarised on the file cover, not in a notebook.",
+      "Plead the absence of notice as a procedural infirmity and call for the service record.",
+      "Keep the mutation-versus-title distinction in the appeal, so the SDO is not invited to treat the entry as conclusive.",
+      "Ask whether the brother has moved for possession or partition on the strength of the entry — that is the real next threat."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The order photo may show that service was effected on another family member at the same address. If so, the no-notice ground is weak and the appeal has to rest on the merits of the brother's document.",
+    "unresolvedFacts": [
+      "Appeal period — UNRESOLVED",
+      "Whether notice was served and on whom — UNKNOWN",
+      "What document the brother relied on — UNREAD",
+      "Khasra numbers — UNKNOWN"
+    ],
+    "jurisdictionNote": "Chittorgarh district. Appeal lies to the SDO of the sub-division, not the civil court. Chittorgarh is on the Jodhpur side for High Court purposes."
+  }
+}

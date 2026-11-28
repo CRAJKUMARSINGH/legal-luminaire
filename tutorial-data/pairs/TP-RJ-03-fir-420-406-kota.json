@@ -1,0 +1,204 @@
+{
+  "id": "TP-RJ-03",
+  "title": "FIR under cheating and criminal breach of trust after a failed machinery deal",
+  "stage": "initial",
+  "level": "intermediate",
+  "forum": "district",
+  "district": "Kota",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "fir",
+    "language": "en",
+    "channel": "walk-in",
+    "text": "FIR copy attached. Complainant is the buyer of my printing machine. He paid 12 lakh of 18 lakh, took delivery, used the machine for five months, now says it was defective and I cheated him. Sections shown are 420 and 406 IPC. Police have called me for interrogation on Monday. The FIR says I 'dishonestly induced' him and 'misappropriated' the advance. Nothing about the machine being returned. I have the sale agreement, delivery receipt, and his WhatsApp messages refusing to return the machine. What do I do before Monday?",
+    "attachments": [
+      "FIR copy (2 pages)",
+      "Sale agreement",
+      "Delivery receipt",
+      "WhatsApp export (41 messages)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "complete",
+      "requestClarity": "clear",
+      "oneLineRead": "Pure commercial dispute dressed as cheating and criminal breach of trust. The strongest material is that the buyer has retained the machine while alleging misappropriation."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether s. 420 (cheating) is made out at all or this is a breach of contract",
+        "status": "OPEN",
+        "note": "The inducement must be dishonest at inception; a defective machine alone usually is not cheating."
+      },
+      {
+        "issue": "Whether s. 406 (criminal breach of trust) is even the right section",
+        "status": "CONFLICT",
+        "note": "If the seller is the accused and the buyer paid money, the entrustment direction is often pleaded wrongly. Both sections may be misapplied."
+      },
+      {
+        "issue": "Whether the machine's retention by the complainant defeats misappropriation",
+        "status": "OPEN",
+        "note": "This is the strongest single fact in the client's favour."
+      },
+      {
+        "issue": "Whether anticipatory bail should be sought before Monday",
+        "status": "OPEN",
+        "note": "Depends on whether the client is named as accused and whether any s. 35/35(3) BNSS notice has been served."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Date unknown",
+        "event": "Sale agreement executed, 18 lakh agreed",
+        "source": "agreement",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Date unknown",
+        "event": "12 lakh paid; machine delivered",
+        "source": "receipt + bank",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "+5 months",
+        "event": "Defect complaint raised on WhatsApp",
+        "source": "chat",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Recent",
+        "event": "FIR registered",
+        "source": "FIR",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Monday",
+        "event": "Interrogation called",
+        "source": "oral/police",
+        "confidence": "UNCONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Cheating — dishonest inducement to deliver property",
+        "provision": "BNSS 2023 s. 318(4) [formerly IPC s. 420]",
+        "legacyEquivalent": "IPC s. 420",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Mapping to BNSS s. 318(4) confirmed; the FIR still cites IPC. Official bare-Act link added."
+      },
+      {
+        "proposition": "Criminal breach of trust",
+        "provision": "BNSS 2023 s. 316(2) [formerly IPC s. 406]",
+        "legacyEquivalent": "IPC s. 406",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Mapping confirmed. Official bare-Act link added."
+      },
+      {
+        "proposition": "Notice of appearance before arrest for offences up to 7 years",
+        "provision": "BNSS 2023 s. 35(3)",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Relevant to whether the client can be arrested on Monday. Official bare-Act link added."
+      },
+      {
+        "proposition": "Anticipatory bail",
+        "provision": "BNSS 2023 s. 482 [formerly CrPC s. 438]",
+        "legacyEquivalent": "CrPC s. 438",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Forum and maintainability depend on the Sessions/CJM position. Official bare-Act link added."
+      },
+      {
+        "proposition": "Commercial dispute is not cheating merely because a contract is broken",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs a named judgment; this is the core submission and cannot go in unsourced."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Anticipatory Bail Application (s. 482 BNSS) — Skeleton",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "memo",
+        "title": "Interrogation Brief — Do's, Don'ts, Document Set",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nINTERNAL FILE MEMO — Interrogation Brief for Monday (Kota)\nRe: FIR under s. 318(4) BNSS (formerly IPC s. 420) and s. 316(2) BNSS (formerly IPC s. 406)\n\n1. POSTURE. The FIR pleads cheating and criminal breach of trust over a printing-machine sale (18 lakh agreed; 12 lakh paid; machine delivered and used five months). Treat this as a commercial dispute with a criminal label.\n\n2. CORE FACT. The complainant retains the machine and refuses to return it. Misappropriation is hard to sustain against a party still holding the goods. This is the file's best point.\n\n3. DO. Attend with the client. Carry: certified FIR and GD entry; sale agreement; delivery receipt; invoice/warranty; bank statement for the 12 lakh; full WhatsApp export (hash/timestamp) and machine serial number; machine photographs at the complainant's premises.\n\n4. DON'T. Do not argue merits. Do not let the client make any oral admission about the machine being defective.\n\n5. ARREST QUESTION. s. 35(3) BNSS governs notice of appearance for offences up to 7 years. [PENDING — confirm whether a s. 35(3) notice has actually been served; it changes the arrest calculus.]\n\n6. BAIL. Anticipatory bail lies under s. 482, BNSS 2023 (formerly CrPC s. 438). [PENDING — forum (Sessions / High Court) and maintainability to be re-checked.]\n\n7. HOLE. No authority is named for the submission that a broken contract is not cheating. [PENDING — a named judgment must be verified before this is argued.]"
+      },
+      {
+        "type": "table",
+        "title": "Contract-vs-Crime Fact Matrix",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nCONTRACT-VS-CRIME FACT MATRIX — printing-machine deal (Kota)\n\n| Element | Allegation in FIR | Client's material | Which way it cuts |\n|---|---|---|---|\n| Inducement at inception | \"dishonestly induced\" | Sale agreement; delivery receipt | Contract, not dishonest inducement |\n| Entrustment / property | money allegedly misappropriated (s. 316(2) BNSS, formerly IPC s. 406) | Buyer paid 12 of 18 lakh; machine delivered | Entrustment direction pleaded wrongly |\n| Possession of the machine | not addressed in the FIR | Complainant still holds the machine; WhatsApp refuses return | Strongest point for the client |\n| Defect | machine \"defective\" | defect raised on WhatsApp after +5 months | Breach of contract, not cheating (s. 318(4) BNSS, formerly IPC s. 420) |\n| Timing | recent FIR | agreement; delivery; 5 months of use | looks like a bolt-on after commercial failure |\n\nHole: no authority is named that a broken contract is not cheating. [PENDING — a verified named judgment is required before this row is argued.]"
+      },
+      {
+        "type": "pleading",
+        "title": "Quashing Petition (s. 528 BNSS) — Not Yet Filed",
+        "status": "blocked",
+        "blockedReason": "Investigation is at FIR stage; a quash petition now would be premature and costly."
+      }
+    ],
+    "checklist": [
+      "Certified FIR copy and the GD entry",
+      "Sale agreement, delivery receipt, invoice, warranty terms",
+      "Bank statement evidencing the 12 lakh receipt",
+      "Full WhatsApp export with hash/timestamp, machine serial number",
+      "Photographs of the machine at the complainant's premises",
+      "Whether any s. 35(3) BNSS notice has actually been served",
+      "Any service report or inspection report of the alleged defect",
+      "Whether the complainant has filed a consumer or civil suit in parallel"
+    ],
+    "terminalOutcome": {
+      "kind": "proceed",
+      "label": "Prepare for Monday, and file anticipatory bail only if arrest is realistically on the table",
+      "rationale": "The file is unusually complete and the client's best material is documentary. The immediate risk is custodial interrogation, not conviction. A bail application is cheap insurance; a quash petition this early is not.",
+      "nextAction": "Brief the client for interrogation, assemble the document set, and take a call on s. 482 BNSS after confirming whether a s. 35(3) notice has been served."
+    },
+    "teachingNotes": [
+      "Beginners read the sections on the FIR and start arguing them. The first job is different: protect the client on Monday and fix the record.",
+      "The complaint pleads two mutually awkward sections. If money was paid to the seller, the entrustment logic of s. 406 has to be pleaded carefully or it collapses into s. 420.",
+      "The retention of the machine is the fact that wins. Misappropriation is hard to sustain against a man who still holds the goods.",
+      "Note the engine blocks the quash petition and allows the bail application. That asymmetry is deliberate: bail is protective, quashing is strategic, and the file does not yet support strategy."
+    ],
+    "commonMistakes": [
+      "Filing a quashing petition within days of the FIR because the client wants the FIR 'cancelled'.",
+      "Letting the client attend interrogation without the document set, so he makes an oral admission about the defect.",
+      "Arguing the merits in the bail application instead of the triple test.",
+      "Missing that a s. 35(3) notice changes the arrest calculus entirely."
+    ],
+    "seniorVariants": [
+      "Send a written representation to the IO before Monday with the agreement, delivery receipt and machine photographs, and ask that it be placed on the investigation file.",
+      "Attend the interrogation with the client and secure the s. 35 BNSS position in writing.",
+      "Frame the bail application on the documentary nature of the dispute, the client's roots, and the complainant's continued possession of the machine — not on 'the machine was fine'.",
+      "Prepare the s. 528 BNSS quash draft in the background, to be filed only if the charge-sheet repeats both sections mechanically."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The FIR alleges the machine was never the client's to sell — if title or hypothecation turns out to sit with a financier, the cheating allegation strengthens sharply and the bail calculus changes.",
+    "unresolvedFacts": [
+      "Whether a s. 35(3) BNSS notice has been served — UNKNOWN",
+      "Whether the machine is under any hypothecation — UNKNOWN",
+      "Whether a parallel civil or consumer suit exists — UNKNOWN",
+      "Exact agreement and delivery dates — not visible in the supplied pages"
+    ],
+    "jurisdictionNote": "Kota district. Anticipatory bail lies before the Sessions Court or the High Court; the CJM cannot grant it. Confirmed position should be re-checked before filing."
+  }
+}

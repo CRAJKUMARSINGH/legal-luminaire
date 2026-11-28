@@ -1,0 +1,162 @@
+{
+  "id": "TP-RJ-13",
+  "title": "Second appeal to the Board of Revenue, Ajmer — dismissal four months ago, receipt in the file",
+  "stage": "appeal",
+  "level": "expert",
+  "forum": "revenue",
+  "district": "Ajmer",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "handover",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, previous advocate ne Collector ke saamne appeal haar di, order aaya lagbhag chaar mahine pehle. Client Bhilwara se hai, zameen agricultural, jamabandi dispute. Ab Board of Revenue, Ajmer ke paas second appeal karna hai. File mein ek receipt hai 'appeal fee paid' jiski date pehle order se pehle ki hai — previous advocate bola yehi proof hai ki appeal time par thi. Certified copy Collector order ki hai, but limitation period client ko nahi pata. Vakalatnama purana hai. Client kahta hai 'Board mein jeet jayenge, civil court mat jaana'. Kya second appeal maintainable hai, kitne din bache, aur receipt se kya hota hai?",
+    "attachments": [
+      "Collector's order (certified, date ~4 months ago)",
+      "Fee receipt (date earlier than the Collector order)",
+      "Old vakalatnama",
+      "Jamabandi extract (photocopy)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "overbroad",
+      "oneLineRead": "A possible Board of Revenue second appeal is already late on its face; a receipt that predates the impugned order cannot prove timely filing, and the appeal chapter of the Land Revenue Act is still PENDING in this fixture."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether a second appeal lies to the Board of Revenue from this Collector order",
+        "status": "UNCONFIRMED",
+        "note": "Depends on the exact provision under which the Collector sat. Do not assume every Collector order is second-appealable."
+      },
+      {
+        "issue": "Limitation for the second appeal",
+        "status": "UNCONFIRMED",
+        "note": "The Act's appeal chapter numbers are PENDING. Four months is a red flag, not a computed period."
+      },
+      {
+        "issue": "Whether the fee receipt saves limitation",
+        "status": "CONFLICT",
+        "note": "A receipt dated before the Collector order cannot be the filing of an appeal against that order."
+      },
+      {
+        "issue": "Whether condonation under Limitation Act s. 5 is available",
+        "status": "OPEN",
+        "note": "s. 29(2) interaction with special revenue limitation is PENDING. Do not invent the answer."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Date on receipt",
+        "event": "Fee receipt in file (predates Collector order)",
+        "source": "receipt",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "c. four months ago",
+        "event": "Collector dismissed / decided the first appeal",
+        "source": "certified copy",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Handover intake for Board of Revenue second appeal",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Appeals and second appeals in revenue matters lie as provided in the Rajasthan Land Revenue Act",
+        "provision": "Rajasthan Land Revenue Act 1956, appeal chapter (section numbers PENDING)",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Read the current bare Act. Do not copy a remembered section number into a memo of appeal."
+      },
+      {
+        "proposition": "Condonation of delay in special-law appeals",
+        "provision": "Limitation Act 1963, s. 5 read with s. 29(2)",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Whether s. 5 is excluded by the Land Revenue Act is the whole question; it is not settled in this fixture."
+      },
+      {
+        "proposition": "Board of Revenue sits at Ajmer",
+        "provision": "institutional fact — confirm current seat and roster",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": null,
+        "sourceUrlNote": "Seat is well known; roster and filing practice still need a current check."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "memo",
+        "title": "Forum and Clock Memo — Board of Revenue",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "no-filing-note",
+        "title": "No-Filing Note — Receipt Predates Impugned Order",
+        "status": "blocked",
+        "blockedReason": "The receipt cannot prove a timely second appeal against an order that did not yet exist."
+      },
+      {
+        "type": "application",
+        "title": "Skeleton delay condonation (hold until Act is read)",
+        "status": "blocked",
+        "blockedReason": "Section numbers and s. 5 availability are PENDING."
+      }
+    ],
+    "checklist": [
+      "Bare Act of Rajasthan Land Revenue Act 1956 (current reprint) — appeal / second-appeal chapter",
+      "Exact provision under which the Collector sat",
+      "Certified copy endorsement date vs order date vs four-month oral estimate",
+      "Whether any first-appeal memo and diary number exist",
+      "Fresh vakalatnama for Board of Revenue",
+      "Whether a civil suit is already pending on the same jamabandi"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Hold the second appeal until the Act is read and the receipt is explained",
+      "rationale": "Four months plus a receipt that predates the order is a limitation trap. Filing today with a guessed section number would be the previous advocate's error, repeated.",
+      "nextAction": "Read the appeal chapter, compute limitation from the certified-copy dates (not from memory), and only then decide condonation vs. a different forum."
+    },
+    "teachingNotes": [
+      "Revenue second appeals die of the wrong ladder more often than of the wrong ground.",
+      "A fee receipt is not a filing. If it is dated before the order, it is evidence of a different payment.",
+      "Section numbers left PENDING are the lesson. Inventing them is how a Board of Revenue memo gets returned."
+    ],
+    "commonMistakes": [
+      "Citing a remembered section from an old commentary.",
+      "Treating the receipt as proof of limitation.",
+      "Filing in civil court because 'Board will take time'.",
+      "Using the old vakalatnama without a Board-specific appointment."
+    ],
+    "seniorVariants": [
+      "Tabulate order date, certified-copy date, and statutory period in one line before any ground of appeal.",
+      "If s. 5 is unavailable, say so and stop — do not dress a dead appeal as a writ without a supervising revenue lawyer.",
+      "Ask whether the Collector order is appealable at all; some orders are revisable, not appealable."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The only dated paper that looks like 'we filed in time' is a receipt from before the Collector order. If that is the previous advocate's limitation story, it collapses on inspection.",
+    "unresolvedFacts": [
+      "Exact Collector order date vs certified-copy date — UNCONFIRMED beyond 'about four months'",
+      "Appeal chapter section numbers — PENDING",
+      "Whether s. 5 Limitation Act applies — PENDING",
+      "Whether a civil suit is pending — UNKNOWN"
+    ],
+    "jurisdictionNote": "Bhilwara land, Collector order, Board of Revenue at Ajmer. High Court (Jodhpur side) is not the first next step unless the Board route is closed."
+  }
+}

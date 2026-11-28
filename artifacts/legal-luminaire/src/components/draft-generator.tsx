@@ -26,12 +26,21 @@ const LANGUAGES = [
 
 interface DraftGeneratorProps {
   sessionId: number;
+  /** Pre-filled intake text — e.g. a tutorial pair's `input.text`. */
+  initialQuery?: string;
+  initialDraftType?: string;
+  initialLanguage?: string;
 }
 
-export function DraftGenerator({ sessionId }: DraftGeneratorProps) {
-  const [query, setQuery] = useState("");
-  const [draftType, setDraftType] = useState("discharge_application");
-  const [language, setLanguage] = useState("hindi");
+export function DraftGenerator({
+  sessionId,
+  initialQuery = "",
+  initialDraftType = "discharge_application",
+  initialLanguage = "hindi",
+}: DraftGeneratorProps) {
+  const [query, setQuery] = useState(initialQuery);
+  const [draftType, setDraftType] = useState(initialDraftType);
+  const [language, setLanguage] = useState(initialLanguage);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { state, generateDraft } = useDraftStream();

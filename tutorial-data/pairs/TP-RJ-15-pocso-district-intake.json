@@ -1,0 +1,229 @@
+{
+  "id": "TP-RJ-15",
+  "title": "POCSO intake, fourteen-year-old, tuition teacher, three-week reporting delay",
+  "stage": "initial",
+  "level": "intermediate",
+  "forum": "district",
+  "district": "Kota",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, beti chaudah saal ki hai. Tuition teacher ne galat kiya. School ki counsellor ko bataya tha pehle, teen hafte baad mummy ko bataya. Ab FIR ho gayi hai POCSO ki, kal hui hai. Teacher pakda nahi gaya, Kota mein hi hai. Beti ka statement Magistrate ke saamne hua hai ya nahi pata nahi. FIR ki copy laaye hain. Beti bahut chup hai, school jaane se mana kar rahi hai. Hum kya karein — bail ka virodh karna hai? Aur beti ka statement dobara hoga kya?",
+    "attachments": [
+      "FIR copy (POCSO, sections visible)",
+      "School counsellor's note (undated)",
+      "Child's school ID"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "POCSO FIR at Special Court stage, accused at large and local, child's statement status unknown, and a child who is refusing school. The statement record is the first thing to establish, not the bail."
+    },
+    "issueMap": [
+      {
+        "issue": "Which POCSO section the FIR actually invokes",
+        "status": "OPEN",
+        "note": "Penetrative assault, sexual assault and harassment carry very different consequences. Read the FIR's sections before advising anything."
+      },
+      {
+        "issue": "Whether the child's statement has been recorded before a Magistrate",
+        "status": "OPEN",
+        "note": "This decides whether the child will be called again. It is the question the mother did not know to ask and the one that matters most to the child."
+      },
+      {
+        "issue": "Whether the three-week delay damages the case",
+        "status": "OPEN",
+        "note": "There is no limitation in POCSO. Delay goes to weight, not maintainability, and the counsellor's note is the bridge."
+      },
+      {
+        "issue": "Whether the counsellor's note is undated and what that costs",
+        "status": "CONFLICT",
+        "note": "It is the only contemporaneous record of the first disclosure. Undated, it is still valuable but easier to attack."
+      },
+      {
+        "issue": "Whether the family should oppose bail",
+        "status": "OPEN",
+        "note": "POCSO offences are non-bailable, but opposition is a choice with a cost — an opposed bail means the child is examined sooner and more than once."
+      },
+      {
+        "issue": "Whether support persons and compensation have been considered",
+        "status": "UNCONFIRMED",
+        "note": "Neither has been mentioned. Both are routine and both are being missed."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "c. 3 weeks before FIR",
+        "event": "First disclosure to school counsellor",
+        "source": "counsellor's note",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Recent",
+        "event": "Disclosure to mother",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Yesterday",
+        "event": "FIR registered",
+        "source": "FIR",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in; accused not arrested",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Penetrative sexual assault",
+        "provision": "POCSO Act 2012, s. 3 read with s. 4",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "2019 amendment inserted graded sub-sections; the sub-section must be read from the FIR. Official bare-Act link added."
+      },
+      {
+        "proposition": "Sexual assault",
+        "provision": "POCSO Act 2012, s. 7 read with s. 8",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Punishment range revised in 2019; confirm the current text. Official bare-Act link added."
+      },
+      {
+        "proposition": "Sexual harassment",
+        "provision": "POCSO Act 2012, s. 11 read with s. 12",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Usually the fallback if the assault allegation thins. Official bare-Act link added."
+      },
+      {
+        "proposition": "Recording of the child's statement",
+        "provision": "BNSS 2023, s. 183 [formerly CrPC s. 164A]",
+        "legacyEquivalent": "CrPC s. 164A",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Mapping to be confirmed; the substance is what matters. Official bare-Act link added."
+      },
+      {
+        "proposition": "Child not to be called repeatedly; child-friendly procedure",
+        "provision": "POCSO Act 2012, s. 33(5) read with s. 36",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Sub-section numbering to be confirmed against the bare Act. Official bare-Act link added."
+      },
+      {
+        "proposition": "Compensation to the child",
+        "provision": "POCSO Act 2012, s. 33(8) with the Rajasthan Victim Compensation Scheme",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Scheme name and current version unverified; do not quantify."
+      },
+      {
+        "proposition": "Recording of statement and the child's support person",
+        "provision": "POCSO Act 2012, s. 19, s. 24, s. 39",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Support person and reporting duties; sections to be confirmed. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "KNOWN",
+    "drafts": [
+      {
+        "type": "memo",
+        "title": "Triage Memo — Statement Status and Child Welfare First",
+        "status": "intake-only",
+        "blockedReason": null
+      },
+      {
+        "type": "instruction",
+        "title": "Parent Brief — What Happens Next, in Plain Hindi",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nPARENT BRIEF — WHAT HAPPENS NEXT (plain Hindi / Hinglish)\n(Kota, POCSO matter; beti chaudah saal ki)\n\nYeh brief maa-baap ko padh kar sunayein. Aaram se, ek-ek point.\n\n1. Case Special Court (POCSO), Kota mein chalega. FIR kal hui hai; aaropi abhi pakda nahi gaya, Kota mein hi hai.\n2. Sabse pehla sawaal: beti ka statement Magistrate ke saamne hua hai ya nahi. Yeh pata karna zaroori hai — isse tay hota hai ki beti ko dobara kitni baar bula sakte hain. [PENDING — statement record confirm karna.]\n3. Statement record karne ka provision — BNSS 2023, s. 183 [pehle CrPC s. 164A]. Mapping confirm karni hai.\n4. Teen hafte ki deri case ko khatm nahi karti — POCSO mein koi limitation nahi. Deri sirf evidence ka wazan hai; school counsellor ki note pul ka kaam karti hai. [PENDING — note undated hai, isliye counsellor se original confirm karna.]\n5. Beti ko baar-baar nahi bulaya ja sakta — POCSO Act 2012, s. 33(5) read with s. 36. [PENDING — sub-section numbering bare Act se confirm karni hai.]\n6. Support person aur compensation ki baat abhi tak nahi hui — dono routine hain.\n   - Support person aur reporting duties — POCSO Act 2012, s. 19, s. 24, s. 39.\n   - Compensation — [PENDING — POCSO s. 33(8) aur scheme ka current version unverified; amount nahi batana.]\n7. Bail par: POCSO ke aarop non-bailable hain, par bail ka virodh ek choice hai — virodh ka matlab beti ki jaldi aur baar-baar examination. FIR mein kaun sa section hai abhi unread — pehle woh padho, phir position lo.\n\nKuch bhi counter par beti se dobara mat poochna."
+      },
+      {
+        "type": "checklist",
+        "title": "Document and Support Checklist",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nDOCUMENT AND SUPPORT CHECKLIST (Kota, POCSO)\n\n[ ] Read the FIR's sections and the child's recorded words verbatim\n[ ] Establish whether a s. 183 BNSS statement has been recorded and before whom\n[ ] Counsellor's note — original, plus the counsellor's availability as a witness\n[ ] Age proof: school record or birth certificate, not oral age\n[ ] Whether a support person has been assigned — POCSO Act 2012, s. 19, s. 24, s. 39\n[ ] Whether the child needs a s. 36 accommodation request for the trial\n[ ] Medical examination record, if any\n[ ] Whether compensation has been applied for — [PENDING — POCSO s. 33(8) and the scheme's current version unverified; do not quantify]\n[ ] Whether the accused has applied for bail and in which court\n[ ] [PENDING — confirm current sub-section numbering of POCSO s. 33(5) read with s. 36 against the bare Act]"
+      },
+      {
+        "type": "application",
+        "title": "Bail Opposition Note",
+        "status": "blocked",
+        "blockedReason": "Sections in the FIR not yet read; opposition cannot be framed without them."
+      }
+    ],
+    "checklist": [
+      "Read the FIR's sections and the child's recorded words verbatim",
+      "Establish whether a s. 183 BNSS statement has been recorded and before whom",
+      "Counsellor's note — original, plus the counsellor's availability as a witness",
+      "Age proof: school record or birth certificate, not oral age",
+      "Whether a support person has been assigned",
+      "Whether the child needs a s. 36 accommodation request for the trial",
+      "Medical examination record, if any",
+      "Whether compensation has been applied for",
+      "Whether the accused has applied for bail and in which court"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Review the statement record and the sections before framing any bail position",
+      "rationale": "The family has asked about bail because bail is what they have heard of. But the child's exposure to repeated examination is the thing that will still matter in a year. Section choice and statement status decide both, and neither is known yet.",
+      "nextAction": "Read the FIR today, confirm whether the statement is recorded, then take a bail position and file the support and compensation requests."
+    },
+    "teachingNotes": [
+      "Every POCSO parent asks about bail. Answer it, but not first. The first answer is about the child's statement, because that decides how many times she is examined.",
+      "There is no limitation in POCSO. The three-week delay is a weight question and the counsellor's note is the answer to it — which is why its missing date is a real problem, not a formality.",
+      "The child refusing school is clinical information, not sentiment. It belongs in the file and it can ground an accommodation request.",
+      "Note the engine's limitation gate is KNOWN, not UNKNOWN. That is the one gate that is easy here, and the trainee should notice that the easy gate is the least important."
+    ],
+    "commonMistakes": [
+      "Framing a bail opposition before reading which section is invoked.",
+      "Treating the three-week delay as a weakness of the case rather than of the evidence.",
+      "Asking the child to repeat her account at the counter, in front of the parent.",
+      "Missing the support person and the compensation route entirely.",
+      "Using the parent's account as if it were the child's account."
+    ],
+    "seniorVariants": [
+      "Read the FIR and separate three columns: what the child said, what the mother says the child said, what the counsellor recorded. They will not match, and the mismatches are the trial.",
+      "Confirm the statement position, then request a s. 36 accommodation in writing if the child cannot face the accused.",
+      "Frame bail opposition on the child's school attendance and the accused's local roots, not on rhetoric about the offence.",
+      "File the compensation request early and separately; it is not contingent on conviction in the same way as sentence.",
+      "Brief the mother in plain Hindi on what the child will face, so she is not surprised at the next date."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The counsellor's note is undated and the counsellor may no longer be at the school. If both are true, the first-disclosure bridge to the three-week delay is thin, and the mother's account carries it alone.",
+    "unresolvedFacts": [
+      "Sections actually invoked — UNREAD",
+      "Whether a s. 183 BNSS statement exists — UNKNOWN",
+      "Child's exact recorded words — UNKNOWN",
+      "Whether bail has been sought — UNKNOWN",
+      "Whether a support person is assigned — UNKNOWN"
+    ],
+    "jurisdictionNote": "Kota district, Special Court under POCSO. Kota is on the Jodhpur side for High Court purposes; bail would go to the Special Court first."
+  }
+}

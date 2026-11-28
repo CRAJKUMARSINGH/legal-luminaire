@@ -1,0 +1,180 @@
+{
+  "id": "TP-RJ-10",
+  "title": "Second opinion on a compromise already signed, client wants to back out",
+  "stage": "mid-journey",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Bikaner",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "second-opinion",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, humne ek samjhauta sign kar diya court mein, do hafte pehle. Ab lagta hai humein thaga gaya. Zameen ka case tha, humne 8 lakh mein hissa chhod diya, par ab pata chala ki zameen ki keemat 20 lakh hai. Vakil ne bola tha theek hai. Ab hum mana kar sakte hain? Compromise ke baad kuch ho sakta hai? Agla order 10 December ko hai. Papers: compromise deed, order sheet, valuation report jo humne ab nikala hai.",
+    "attachments": [
+      "Compromise deed",
+      "Order sheet",
+      "Client's valuation report (private)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "moderate",
+      "documentCompleteness": "partial",
+      "requestClarity": "unclear",
+      "oneLineRead": "Signed compromise, two weeks old, undervalue complaint, and no plea of fraud or coercion yet. The answer depends entirely on whether the compromise has been acted on and whether the court has passed a decree on it."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether a compromise can be undone after signing",
+        "status": "OPEN",
+        "note": "A lawful compromise is binding. It can be challenged only on a narrow set of grounds — fraud, misrepresentation, coercion, or a legal bar."
+      },
+      {
+        "issue": "Whether undervaluation is itself a ground",
+        "status": "OPEN",
+        "note": "No. A bad bargain is not a vitiating factor. 'The land was worth more' is not a case; 'the other side misrepresented the extent or title' might be."
+      },
+      {
+        "issue": "Whether a decree has been passed on the compromise",
+        "status": "UNCONFIRMED",
+        "note": "If a compromise decree exists, the route changes from withdrawal to challenge. The order sheet must be read."
+      },
+      {
+        "issue": "Whether the compromise was in a pending suit or before a panchayat",
+        "status": "CONFLICT",
+        "note": "The client says 'court mein' but the deed may be a private document. Different consequences."
+      },
+      {
+        "issue": "Whether the 10 December date is for disposal or for recording the compromise",
+        "status": "OPEN",
+        "note": "Determines whether there is still time to act before the decree."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Two weeks ago",
+        "event": "Compromise signed in court",
+        "source": "deed + client",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Since then",
+        "event": "Client obtains a private valuation of 20 lakh",
+        "source": "report",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "10 December",
+        "event": "Next order date",
+        "source": "order sheet",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Compromise recorded in a pending suit",
+        "provision": "CPC 1908, O. 23 r. 3",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Lawful agreement is recorded and the suit is disposed of. Official bare-Act link added."
+      },
+      {
+        "proposition": "Challenge to a compromise decree on fraud or misrepresentation",
+        "provision": "CPC 1908, s. 47 / O. 23 r. 3A read with s. 151",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Route depends on whether a decree has actually been drawn. Official bare-Act link added."
+      },
+      {
+        "proposition": "Court fee on a compromise is ordinarily on the compromise amount",
+        "provision": "Rajasthan Court Fees and Suits Valuation Act 1961 — section unverified",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18719",
+        "sourceUrlNote": "Matters only if the compromise is renegotiated. Official bare-Act link added."
+      },
+      {
+        "proposition": "Undervaluation alone is not a ground to reopen",
+        "proposition_note": null,
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs authority; it is the client's only ground at present."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "UNKNOWN",
+    "drafts": [
+      {
+        "type": "memo",
+        "title": "Second-Opinion Memo — What Can and Cannot Be Undone",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate hain.\n\nINTERNAL FILE MEMO — SECOND OPINION: COMPROMISE KE BAAD KYA HO SAKTA HAI\nClient: [naam], Bikaner. Zameen ka case. Compromise do hafte pehle court mein sign kiya (deed + client, UNCONFIRMED). Agla order: 10 December.\n\n1. Short answer (pehle do lines mein): Ek lawful compromise binding hota hai. Sirf undervaluation ke aadhar par use undo nahi kiya ja sakta. Zameen ki keemat badhna fraud nahi hai. Client ko yeh seedha, shuru mein bata dena chahiye.\n\n2. Kya challenge ho sakta hai (narrow grounds only): fraud, misrepresentation, coercion, ya koi legal bar. Compromise recorded in court — CPC 1908, O. 23 r. 3 (VERIFIED). Challenge route — CPC 1908, s. 47 / O. 23 r. 3A r/w s. 151 (SECONDARY — route depends on whether a decree has been drawn). Undervaluation akele ground nahi [PENDING — no named authority in file; client ka abhi ka ekmatra ground yahi hai].\n\n3. Do facts jo sab decide karte hain (dono abhi UNKNOWN):\n  (a) Kya compromise par decree ban chuka hai aur seal hua hai? -> Order sheet padhna zaroori.\n  (b) Kya koi consideration ya possession move hua? -> Partly performed compromise ko attack karna bahut mushkil (adverse fact).\n  Note: Client kehta hai \"court mein\" tha, par deed private document bhi ho sakta hai — consequences alag hain. [PENDING.]\n\n4. Route (order sheet padhne ke baad):\n  - Koi challenge nahi — agar lawful compromise hai.\n  - Renegotiation / supplementary deed — agar 10 December se pehle decree ban raha hai.\n  - Narrow fraud/misrepresentation application — sirf agar deed mein extent/title ki koi misstatement nikle.\n  Court fee angle (agar renegotiate karte hain): Rajasthan Court Fees and Suits Valuation Act 1961 — section unverified (SECONDARY).\n\n5. Next step: certified order sheet aur deed padho; client ko 10 December par gayab hone ki salah mat do."
+      },
+      {
+        "type": "chronology",
+        "title": "Compromise and Order-Sheet Chronology",
+        "status": "intake-only",
+        "blockedReason": null
+      },
+      {
+        "type": "application",
+        "title": "Application to Recall / Challenge the Compromise",
+        "status": "blocked",
+        "blockedReason": "Not known whether a compromise decree has been drawn; the application route differs."
+      }
+    ],
+    "checklist": [
+      "Read the order sheet for the exact date and the court's recording of the compromise",
+      "Whether a decree on compromise has been drawn and whether it is sealed",
+      "The compromise deed — is it signed by all parties and their counsel, and are the boundaries and extent stated",
+      "Whether any part of the consideration has been paid or possession handed over",
+      "Whether the valuation report is of comparable land or of this parcel",
+      "Whether there is any written representation about extent or title that turns out wrong",
+      "Whether 10 December is for disposal or further recording"
+    ],
+    "terminalOutcome": {
+      "kind": "refer",
+      "label": "Refer back after the order sheet is read — the client may not need a challenge at all",
+      "rationale": "The client's only stated ground is undervaluation, which is the weakest possible ground. Before advising a challenge, someone has to read the order sheet and the deed to see whether a decree exists, whether the compromise is even lawful on its face, and whether anything was misrepresented.",
+      "nextAction": "Obtain a certified order sheet and read the deed, then advise on one of three routes: no challenge, renegotiation, or a narrow fraud/misrepresentation application."
+    },
+    "teachingNotes": [
+      "Beginners deliver the hard truth badly: the compromise is probably binding and the client probably will not like it. Say so early, in the second sentence, not the twentieth.",
+      "Undervaluation is the most common second-opinion complaint in Rajasthan land matters and almost never a ground. The price of land going up is not fraud.",
+      "Two facts decide everything and the client has neither: is there a decree, and was anything misrepresented. Ask for both before drafting.",
+      "The engine's terminal outcome is 'refer', not 'proceed'. The client came for an answer and the honest answer is 'we need the order sheet first'."
+    ],
+    "commonMistakes": [
+      "Filing a recall application on the strength of the client's valuation report.",
+      "Advising the client to simply not appear on 10 December.",
+      "Assuming the compromise is a court compromise without reading the order sheet.",
+      "Not checking whether consideration has moved — a partly performed compromise is much harder to attack."
+    ],
+    "seniorVariants": [
+      "Read the order sheet and the deed before saying anything on the merits; check whether the deed even states the extent and boundaries.",
+      "If there is a decree and no fraud, advise honestly that the money is in a fresh sale rather than in litigation.",
+      "If the deed omits material particulars or misstates the extent, frame the application narrowly on that misstatement, not on price.",
+      "If 10 December is before decree, seek a short adjournment and negotiate a supplementary deed instead of a challenge."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If consideration has been paid and possession given, the client's bargaining position is close to nil regardless of value.",
+    "unresolvedFacts": [
+      "Whether a compromise decree exists — UNKNOWN",
+      "Whether any consideration has moved — UNKNOWN",
+      "Whether the compromise was recorded in court or private — UNCONFIRMED",
+      "Whether the deed states extent and boundaries — UNKNOWN"
+    ],
+    "jurisdictionNote": "Bikaner district. If a decree exists, the challenge lies to the court that passed it, and a separate suit may be barred."
+  }
+}

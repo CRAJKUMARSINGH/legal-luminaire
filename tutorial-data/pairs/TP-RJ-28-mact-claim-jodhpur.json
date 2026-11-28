@@ -1,0 +1,166 @@
+{
+  "id": "TP-RJ-28",
+  "title": "Roadways bus killed the father — MACT claim, Jodhpur, touter offering ₹5–6 lakh",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Jodhpur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, hamare papa ko Jodhpur Roadways ki bus ne kaat diya, 03.10.2026, Pal Road. FIR PS Pratap Nagar. Papa 52 saal, private job ~₹21,000 mahina, ghar ke ek hi kamaane wale. Mummy, do school-going bacche. Koi touter chamber ke bahar mila, bola ₹50,000 advance do, ₹5–6 lakh guaranteed, 2 mahine mein. Hum nahi dena chahte. Claim kaise karein, kitna banega, interim compensation mil sakti hai? s.166 ya s.164? Papers: FIR copy, post-mortem, salary slips incomplete, bus number mama ko yaad hai.",
+    "attachments": [
+      "FIR copy",
+      "Post-mortem (photo)",
+      "Aadhaar of widow and children",
+      "Incomplete salary slips",
+      "No driving licence / permit papers of the bus"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "moderate",
+      "documentCompleteness": "partial",
+      "requestClarity": "overbroad",
+      "oneLineRead": "A genuine MACT intake polluted by a touter's guaranteed figure; quantum cannot be a promise and s.164 vs s.166 is an election, not a slogan."
+    },
+    "issueMap": [
+      {
+        "issue": "s. 164 structured compensation vs s. 166 fault claim",
+        "status": "OPEN",
+        "note": "Election depends on proof of income, negligence, and what the family can actually document."
+      },
+      {
+        "issue": "Quantum",
+        "status": "UNCONFIRMED",
+        "note": "₹21,000 × 12 is a working sheet, not an award. Multiplier, future prospects, deductions — all PENDING without proof."
+      },
+      {
+        "issue": "Limitation",
+        "status": "OPEN",
+        "note": "Accident 03.10.2026; still within a comfortable window if dates hold, but do not sleep."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "03.10.2026",
+        "event": "Fatal accident, Pal Road, Jodhpur",
+        "source": "FIR",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in after touter approach",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Claim petition for compensation",
+        "provision": "Motor Vehicles Act 1988, s. 166",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1798",
+        "sourceUrlNote": "Confirm the current MV Act provision for a claim petition before treating this as settled. Official bare-Act link added."
+      },
+      {
+        "proposition": "Structured compensation without proving fault",
+        "provision": "Motor Vehicles Act 1988, s. 164",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1798",
+        "sourceUrlNote": "Confirm current notified scheme / schedule before advising the election. Official bare-Act link added."
+      },
+      {
+        "proposition": "Interim compensation",
+        "provision": "MV Act 1988, s. 140 / current analogue — confirm",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Do not cite a repealed no-fault section from memory."
+      },
+      {
+        "proposition": "Multiplier method",
+        "provision": "case law — [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "No named SC multiplier table in this fixture."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "KNOWN",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Statement of claim — MACT Jodhpur (skeleton)",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Transparent quantum working sheet (not a guarantee)",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate. Yeh guarantee NAHI hai.\n\nQUANTUM WORKING SHEET — MACT Jodhpur (accident 03.10.2026, Pal Road)\nDeceased: 52 saal, ghar ke ek hi kamaane wale, private job ~₹21,000/mahina (income proof adhura).\nClaimants: widow + 2 school-going bacche.\n\n| Component | Value | Status |\n|---|---|---|\n| Monthly income | ~₹21,000 | [UNCONFIRMED — slips adhure; cash ho to notional mana ja sakta hai] |\n| Annual income | ₹21,000 × 12 = ₹2,52,000 | Working figure only |\n| Future prospects (%) | [PENDING — method/citation graded nahi] | PENDING |\n| Multiplier (age 52) | [PENDING — method/citation graded nahi] | PENDING |\n| Personal-expense deduction | [PENDING] | PENDING |\n| Dependency | widow + 2 bacche | FACT (Aadhaar) |\n| Interim compensation | [PENDING — enabling provision confirm, memory se cite nahi] | PENDING |\n\nElection: s. 164 (structured, no-fault) vs s. 166 (fault claim) — Motor Vehicles Act 1988. s. 166 VERIFIED; s. 164 SECONDARY (notified schedule confirm karna hai).\n\nTouter ne ₹5–6 lakh 'guaranteed' bola tha — koi guarantee nahi. Yeh sheet client ko deductions samjhane ke liye hai, WhatsApp forward ke liye nahi."
+      },
+      {
+        "type": "instruction",
+        "title": "Anti-touter advisory to the family",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nADVISORY TO THE FAMILY (likhit me) — MACT Jodhpur\n\n1. Koi bhi 'guaranteed' figure (₹5–6 lakh / 2 mahine) adalat nahi de sakti. Award ya timeline ki guarantee koi nahi de sakta.\n2. Touter ko ₹50,000 advance NA dein; jo vakalatnama touter laaye, us par sign na karein.\n3. Claim MACT Jodhpur me file hoga. s. 164 (structured, no-fault) ya s. 166 (fault) — election supervisor review ke baad, likhit me (Motor Vehicles Act 1988).\n4. Papers: certified FIR + post-mortem, income proof (Form 16 / bank / employer letter), legal-heir/dependency proof, vehicle no./owner/insurer RTO se, deceased ki age proof.\n5. Bus number mama ko yaad hai — likhwa kar do; owner/insurer RTO se confirm karenge.\n6. Interim compensation ka raasta [PENDING — enabling provision graded nahi]; abhi koi vaada nahi.\n\nLikha hua do; zubaani promise nahi."
+      },
+      {
+        "type": "application",
+        "title": "Interim compensation application",
+        "status": "blocked",
+        "blockedReason": "Enabling section is PENDING in this fixture."
+      }
+    ],
+    "checklist": [
+      "Certified FIR and PM",
+      "Proof of income (Form 16 / bank / employer letter)",
+      "Legal heir / dependency proof",
+      "Vehicle number, owner, insurer from RTO",
+      "Age proof of deceased"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Prepare a claim skeleton and a working sheet; do not promise ₹21 lakh or ₹5 lakh",
+      "rationale": "The family needs a tribunal claim, not a touter. Quantum without income proof is theatre.",
+      "nextAction": "Collect income and vehicle/insurer particulars, elect s.164 vs s.166 in writing after supervisor review, refuse any guaranteed figure."
+    },
+    "teachingNotes": [
+      "A touter's 'guaranteed' number is the first fraud in a MACT file.",
+      "s.164 vs s.166 is an election with consequences for proof. Do not file both as if they are the same prayer.",
+      "The working sheet is for the client to understand deductions, not for WhatsApp forwards."
+    ],
+    "commonMistakes": [
+      "Signing a vakalatnama that the touter brought.",
+      "Writing ₹21 lakh as 'minimum entitled'.",
+      "Omitting the insurer because the bus is 'Roadways so government will pay'."
+    ],
+    "seniorVariants": [
+      "Implead owner, driver, insurer, and RSRTC as the papers justify.",
+      "Keep the quantum sheet with every assumption tagged UNCONFIRMED.",
+      "Warn in writing that no one can guarantee an award or a timeline."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the ₹21,000 figure is cash-in-hand with no slip, the tribunal may treat income as notional and the working sheet will look like an overclaim.",
+    "unresolvedFacts": [
+      "Employer and actual pay — UNCONFIRMED",
+      "Insurer of the bus — UNKNOWN",
+      "Contributory negligence facts — UNKNOWN"
+    ],
+    "jurisdictionNote": "MACT, Jodhpur. High Court (Jodhpur principal seat) is the appeal rung under the MV Act."
+  }
+}

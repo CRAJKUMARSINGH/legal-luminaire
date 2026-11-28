@@ -1,0 +1,215 @@
+{
+  "id": "TP-RJ-17",
+  "title": "Bail opposition where the bench has already indicated it will grant",
+  "stage": "reply",
+  "level": "advanced",
+  "forum": "district",
+  "district": "Kota",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "reply-instruction",
+    "language": "en",
+    "channel": "walk-in",
+    "text": "Same matter as before — tuition teacher, POCSO. Charge-sheet is filed under 7/8. Accused has applied for bail before the Special Judge. Grounds are the three-week delay, no medical corroboration, sole breadwinner, permanent address, and 'the child is not going to be re-examined for months'. The Judge remarked at the first listing that delay is 'a serious question' and asked us to come prepared. Hearing is Thursday. Mother wants it opposed hard. Child's 183 statement is in the charge-sheet — she gives one date in her account and the counsellor's note suggests another. Also the accused has been messaging the mother on WhatsApp, ordinary messages, asking about the child's health. Do we oppose and how hard?",
+    "attachments": [
+      "Bail application",
+      "Charge-sheet (partial)",
+      "Child's 183 statement copy",
+      "Counsellor's note (undated)",
+      "WhatsApp screenshots from the accused (11)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "critical",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Opposable, but the court has already leaned. The opposition has to win on tampering and on the statement, not on the gravity of the offence — and the date inconsistency in the child's statement will be handed back to us."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the delay ground survives the counsellor's note",
+        "status": "OPEN",
+        "note": "The note is the answer to delay but it is undated, so it half-answers."
+      },
+      {
+        "issue": "Whether the absence of medical corroboration is really a bail factor",
+        "status": "OPEN",
+        "note": "Medical goes to trial. Say so."
+      },
+      {
+        "issue": "Whether the WhatsApp messages amount to a tampering risk",
+        "status": "CONFLICT",
+        "note": "Ordinary messages are not tampering; continued access to the household is the risk."
+      },
+      {
+        "issue": "Whether the date inconsistency in the 183 statement is fatal or a trial question",
+        "status": "OPEN",
+        "note": "On bail it is a 'serious question'; at trial it is a discrepancy to be explained."
+      },
+      {
+        "issue": "Whether conditions can neutralise the risk instead of custody",
+        "status": "OPEN",
+        "note": "Hostile benches are won on workable conditions, not on refusal speeches."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Three weeks before FIR",
+        "event": "First disclosure to counsellor",
+        "source": "note",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "FIR date",
+        "event": "FIR registered",
+        "source": "FIR",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Since FIR",
+        "event": "Eleven messages from the accused to the mother",
+        "source": "screenshots",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Recent",
+        "event": "Charge-sheet filed under ss. 7/8",
+        "source": "charge-sheet",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Thursday",
+        "event": "Bail hearing",
+        "source": "notice",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Sexual assault and its punishment",
+        "provision": "POCSO Act 2012, s. 7 read with s. 8",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Charge-sheeted sections; read the sub-section as charged. Official bare-Act link added."
+      },
+      {
+        "proposition": "Bail in a non-bailable offence before the Special Court",
+        "provision": "BNSS 2023, s. 483 [formerly CrPC s. 439]",
+        "legacyEquivalent": "CrPC s. 439",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Special Court exercises Sessions powers; confirm the enabling route before citing it. Official bare-Act link added."
+      },
+      {
+        "proposition": "Child not to be called repeatedly; child-friendly procedure",
+        "provision": "POCSO Act 2012, s. 33(5) read with s. 36",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Sub-section numbering to be confirmed. Official bare-Act link added."
+      },
+      {
+        "proposition": "Timely completion of trial",
+        "provision": "POCSO Act 2012, s. 42A",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2079",
+        "sourceUrlNote": "Useful against the 'months' assertion. Official bare-Act link added."
+      },
+      {
+        "proposition": "Delay in lodging the FIR is not fatal",
+        "provision": "case law — no named authority in fixture [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "The bench has already raised delay; this needs a named holding."
+      },
+      {
+        "proposition": "Continued contact with the complainant household as a tampering risk",
+        "provision": "case law — no named authority in fixture [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs authority; it is the strongest ground and cannot go in bare."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "KNOWN",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Reply Affidavit Opposing Bail",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Message Chronology and Condition Proposals",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nKota — POCSO (charge-sheet under ss. 7/8). Bail opposition working table: message chronology + condition proposals.\n\nPart A — Messages from the accused to the mother (since FIR):\n| # | Date | Content (nature) | Asks about the case? | Relevance |\n|---|---|---|---|---|\n| 1-11 | [PENDING — dates to be read off the screenshots] | Ordinary messages about the child's health | [PENDING — UNREAD] | Access/tampering risk, not per se tampering |\n\nNote: Ordinary messages are not tampering; continued access to the complainant household is the point. The strongest ground cannot go in bare — [PENDING — authority for continued contact as a tampering risk].\n\nPart B — Timeline anchors:\n| Date | Event | Source | Confidence |\n|---|---|---|---|\n| Three weeks before FIR | First disclosure to counsellor | note | UNCONFIRMED (undated) |\n| FIR date | FIR registered | FIR | CONFIRMED |\n| Since FIR | Eleven messages to mother | screenshots | CONFIRMED |\n| Recent | Charge-sheet filed under ss. 7/8 | charge-sheet | CONFIRMED |\n| Thursday | Bail hearing | notice | CONFIRMED |\n\nPart C — Condition proposals (alternative to refusal):\n- No contact with the child or the complainant household.\n- Passport deposit.\n- Local surety.\n- Do not concede the \"months\" assertion without checking the Special Court board first.\n\nProvisions (as per fixture): bail before the Special Court — BNSS 2023, s. 483 [formerly CrPC s. 439]. Charge-sheeted sections — POCSO Act 2012, s. 7 r/w s. 8 (VERIFIED). Child-friendly procedure — POCSO Act 2012, s. 33(5) r/w s. 36. Timely trial — POCSO Act 2012, s. 42A."
+      },
+      {
+        "type": "application",
+        "title": "Vakalatnama from the Mother as Guardian",
+        "status": "blocked",
+        "blockedReason": "Not yet executed; without it the opposition is unrepresented on Thursday."
+      },
+      {
+        "type": "memo",
+        "title": "Concession List — What We Do Not Contest",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nInternal file memo — Concessions. Kota, POCSO ss. 7/8, bail opposition before the Special Judge.\nPurpose: a bench that has already leaned on delay will not be moved by gravity. Win on conditions and on a live access point; concede the rest openly.\n\nCONCEDE (do not contest):\n- No medical corroboration — this goes to trial, not to bail. Say it once.\n- No flight risk on the permanent address (sole breadwinner, fixed address).\n- Delay in lodging the FIR is not, by itself, fatal — [PENDING — named holding required; do not argue it bare].\n\nDO NOT CONCEDE:\n- The date discrepancy in the child's 183 statement — raise it ourselves, first.\n- Continued contact/access to the complainant household — [PENDING — authority for the tampering-risk framing].\n\nLead order (per senior variant): (1) the 183 statement, (2) the messages, (3) close on conditions recorded in the order itself.\nCharge-sheeted sections: POCSO Act 2012, s. 7 r/w s. 8 (VERIFIED). Bail: BNSS 2023, s. 483 [formerly CrPC s. 439].\n\nVakalatnama from the mother as guardian is still unexecuted — without it we are unrepresented on Thursday. This memo is review-needed: supervising advocate to sign the concession list before Thursday."
+      }
+    ],
+    "checklist": [
+      "Vakalatnama from the mother as guardian — today",
+      "The 183 statement read line by line, with the date discrepancy isolated",
+      "Counsellor's note and the counsellor's availability to depose",
+      "All eleven messages with dates, and whether any asks about the case",
+      "The Special Court's board to test the 'months' assertion",
+      "Condition proposals: no contact with the child, passport deposit, local surety"
+    ],
+    "terminalOutcome": {
+      "kind": "proceed",
+      "label": "Oppose, but oppose on conditions rather than on refusal",
+      "rationale": "The bench has leaned and gravity will not move it. What can move it is a workable conditions package plus a live access/tampering point.",
+      "nextAction": "File the vakalatnama and the reply today, lead with the messages and the statement, concede what cannot be contested, and close on the conditions."
+    },
+    "teachingNotes": [
+      "A hostile bench is telling you what it needs. Gravity speeches will not supply it.",
+      "Medical corroboration is not a bail factor. Say it once.",
+      "The date discrepancy is yours to raise first."
+    ],
+    "commonMistakes": [
+      "Arguing gravity of the offence as the main ground.",
+      "Calling ordinary WhatsApp messages tampering.",
+      "Conceding the 'months' assertion without checking the board.",
+      "Asking for refusal with no conditions in the alternative."
+    ],
+    "seniorVariants": [
+      "Lead with the statement and the messages, in that order.",
+      "Concede openly: no medical corroboration, no flight risk on the address.",
+      "Close on conditions recorded in the order itself."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The 183 statement's date is not the counsellor's date. If the child's own words put the incident after the first disclosure, the delay ground strengthens for the defence.",
+    "unresolvedFacts": [
+      "Whether any message asks about the case — UNREAD",
+      "The Special Court's actual listing timeline — UNKNOWN",
+      "Whether the accused has a prior record — UNKNOWN",
+      "Whether an earlier bail application exists — UNKNOWN"
+    ],
+    "jurisdictionNote": "Kota district, Special Court. Bail before the Special Judge; the High Court is the next rung."
+  }
+}

@@ -173,6 +173,27 @@ export default function Home() {
       {/* ── Demo Mode (1 click) ──────────────────────────────────────────── */}
       <DemoModeCard />
 
+      {/* ── Rajasthan Tutorial Samples (landing entry point) ─────────────── */}
+      <Link href="/tutorial-pairs">
+        <Card className="glass-surface hover-elevate cursor-pointer group border-primary/20">
+          <CardContent className="flex items-center gap-4 p-5">
+            <div className="rounded-lg bg-emerald-500/10 p-3 group-hover:bg-emerald-500/20 transition-colors">
+              <FileText className="h-6 w-6 text-emerald-600" />
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-foreground flex items-center gap-2">
+                Rajasthan Tutorial Samples
+                <Badge variant="outline" className="text-[10px]">30 pairs</Badge>
+              </p>
+              <p className="text-xs text-muted-foreground">
+                District &amp; High Court intake → repository-draw samples (beginner → expert).
+              </p>
+            </div>
+            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-emerald-600 transition-colors" />
+          </CardContent>
+        </Card>
+      </Link>
+
       {/* ── All content below only renders when a case is loaded ─────── */}
       {selectedCase && (<>
 

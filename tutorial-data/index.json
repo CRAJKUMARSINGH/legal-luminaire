@@ -1,0 +1,217 @@
+{
+  "corpus": "rajasthan-tutorial-pairs",
+  "version": "1.1.0",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "pairs": [
+    {
+      "id": "TP-RJ-01",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-01-kabza-forum-split.json"
+    },
+    {
+      "id": "TP-RJ-02",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-02-ni-act-notice-as-security.json"
+    },
+    {
+      "id": "TP-RJ-03",
+      "stage": "initial",
+      "level": "intermediate",
+      "forum": "district",
+      "file": "pairs/TP-RJ-03-fir-420-406-kota.json"
+    },
+    {
+      "id": "TP-RJ-04",
+      "stage": "reply",
+      "level": "intermediate",
+      "forum": "district",
+      "file": "pairs/TP-RJ-04-ni-act-reply-s139.json"
+    },
+    {
+      "id": "TP-RJ-05",
+      "stage": "initial",
+      "level": "advanced",
+      "forum": "district",
+      "file": "pairs/TP-RJ-05-injunction-title-bundle.json"
+    },
+    {
+      "id": "TP-RJ-06",
+      "stage": "appeal",
+      "level": "advanced",
+      "forum": "high-court",
+      "file": "pairs/TP-RJ-06-jail-appeal-conviction.json"
+    },
+    {
+      "id": "TP-RJ-07",
+      "stage": "appeal",
+      "level": "expert",
+      "forum": "high-court",
+      "file": "pairs/TP-RJ-07-civil-first-appeal-delay.json"
+    },
+    {
+      "id": "TP-RJ-08",
+      "stage": "mid-journey",
+      "level": "intermediate",
+      "forum": "district",
+      "file": "pairs/TP-RJ-08-lawyer-change-handover.json"
+    },
+    {
+      "id": "TP-RJ-09",
+      "stage": "reply",
+      "level": "advanced",
+      "forum": "high-court",
+      "file": "pairs/TP-RJ-09-writ-showcause-reply.json"
+    },
+    {
+      "id": "TP-RJ-10",
+      "stage": "mid-journey",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-10-compromise-second-opinion.json"
+    },
+    {
+      "id": "TP-RJ-11",
+      "stage": "initial",
+      "level": "expert",
+      "forum": "rera",
+      "file": "pairs/TP-RJ-11-rera-defect-demand.json"
+    },
+    {
+      "id": "TP-RJ-12",
+      "stage": "reply",
+      "level": "advanced",
+      "forum": "district",
+      "file": "pairs/TP-RJ-12-maintenance-reply-hindi.json"
+    },
+    {
+      "id": "TP-RJ-13",
+      "stage": "appeal",
+      "level": "expert",
+      "forum": "revenue",
+      "file": "pairs/TP-RJ-13-board-of-revenue-second-appeal.json"
+    },
+    {
+      "id": "TP-RJ-14",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "revenue",
+      "file": "pairs/TP-RJ-14-name-deleted-from-jamabandi.json"
+    },
+    {
+      "id": "TP-RJ-15",
+      "stage": "initial",
+      "level": "intermediate",
+      "forum": "district",
+      "file": "pairs/TP-RJ-15-pocso-district-intake.json"
+    },
+    {
+      "id": "TP-RJ-16",
+      "stage": "appeal",
+      "level": "intermediate",
+      "forum": "revenue",
+      "file": "pairs/TP-RJ-16-collector-appeal-defective-sdo-order.json"
+    },
+    {
+      "id": "TP-RJ-17",
+      "stage": "reply",
+      "level": "advanced",
+      "forum": "district",
+      "file": "pairs/TP-RJ-17-pocso-hostile-bail-opposition.json"
+    },
+    {
+      "id": "TP-RJ-18",
+      "stage": "trial",
+      "level": "expert",
+      "forum": "district",
+      "file": "pairs/TP-RJ-18-pocso-trial-examination.json"
+    },
+    {
+      "id": "TP-RJ-19",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-19-kirayedar-bedi-notice.json"
+    },
+    {
+      "id": "TP-RJ-20",
+      "stage": "reply",
+      "level": "intermediate",
+      "forum": "district",
+      "file": "pairs/TP-RJ-20-sarfaesi-13-2-uttar.json"
+    },
+    {
+      "id": "TP-RJ-21",
+      "stage": "appeal",
+      "level": "advanced",
+      "forum": "high-court",
+      "file": "pairs/TP-RJ-21-bharan-poshan-ke-viruddh-punaravagyan.json"
+    },
+    {
+      "id": "TP-RJ-22",
+      "stage": "mid-journey",
+      "level": "expert",
+      "forum": "district",
+      "file": "pairs/TP-RJ-22-bhoo-arjan-sandarbh-hastantaran.json"
+    },
+    {
+      "id": "TP-RJ-23",
+      "stage": "appeal",
+      "level": "expert",
+      "forum": "high-court",
+      "file": "pairs/TP-RJ-23-pocso-bail-no-appeal.json"
+    },
+    {
+      "id": "TP-RJ-24",
+      "stage": "appeal",
+      "level": "expert",
+      "forum": "revenue",
+      "file": "pairs/TP-RJ-24-commissioner-revenue-reply.json"
+    },
+    {
+      "id": "TP-RJ-25",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-25-304a-regular-bail-udaipur.json"
+    },
+    {
+      "id": "TP-RJ-26",
+      "stage": "reply",
+      "level": "intermediate",
+      "forum": "commercial",
+      "file": "pairs/TP-RJ-26-commercial-ws-section8-jaipur.json"
+    },
+    {
+      "id": "TP-RJ-27",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-27-ni138-demand-window-expired.json"
+    },
+    {
+      "id": "TP-RJ-28",
+      "stage": "initial",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-28-mact-claim-jodhpur.json"
+    },
+    {
+      "id": "TP-RJ-29",
+      "stage": "reply",
+      "level": "advanced",
+      "forum": "district",
+      "file": "pairs/TP-RJ-29-pc-act-discharge-jaipur.json"
+    },
+    {
+      "id": "TP-RJ-30",
+      "stage": "appeal",
+      "level": "beginner",
+      "forum": "district",
+      "file": "pairs/TP-RJ-30-rent-tribunal-appeal-kota.json"
+    }
+  ]
+}

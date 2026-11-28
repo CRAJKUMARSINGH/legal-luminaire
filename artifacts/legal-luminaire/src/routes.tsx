@@ -64,6 +64,9 @@ const LDR_CommonPage          = lazy(() => import("@/pages/LDR_CommonPage"));
 const UserManualPrintPage     = lazy(() => import("@/pages/UserManualPrintPage"));
 // Week 01 Kiro — Drafting Intake Examples EX-001..EX-011
 const IntakeExamplesPage      = lazy(() => import("@/pages/IntakeExamplesPage"));
+// Rajasthan Tutorial Samples — 30 intake → repository-draw pairs (tutorial-data/)
+const TutorialPairsPage       = lazy(() => import("@/pages/TutorialPairsPage"));
+const TutorialPairDraftPage   = lazy(() => import("@/pages/TutorialPairDraftPage"));
 
 // Week 04 Drafting Intake Examples EX-033..EX-041
 const Example33Page = lazy(() => import("@/pages/Example33Page"));
@@ -390,6 +393,9 @@ export function Router() {
           {/* Week 01 Kiro — Drafting Intake Examples */}
           <Route path="/intake-examples"      component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
           <Route path="/drafting-examples"    component={() => Wrap(<IntakeExamplesPage />,       "IntakeExamplesPage")} />
+          {/* Rajasthan Tutorial Samples — 30 intake → repository-draw pairs */}
+          <Route path="/tutorial-pairs"       component={() => Wrap(<TutorialPairsPage />,        "TutorialPairsPage")} />
+          <Route path="/tutorial-pairs/:id"   component={() => Wrap(<TutorialPairDraftPage />,   "TutorialPairDraftPage")} />
           {/* Week 04 Drafting Intake Examples */}
           <Route path="/example-33" component={() => Wrap(<Example33Page />, "Example33Page")} />
           <Route path="/example-34" component={() => Wrap(<Example34Page />, "Example34Page")} />

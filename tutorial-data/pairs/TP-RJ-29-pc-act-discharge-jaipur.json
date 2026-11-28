@@ -1,0 +1,177 @@
+{
+  "id": "TP-RJ-29",
+  "title": "ACB trap against a Junior Engineer — discharge before the Special Judge, Jaipur",
+  "stage": "reply",
+  "level": "advanced",
+  "forum": "district",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "en",
+    "channel": "email",
+    "text": "Lawyer-to-lawyer. Client is a JE, PHED. ACB trap case, alleged demand 14.08.2026 for passing a contractor's bill. Charge-sheet before Special Judge (PC Act), Jaipur. Sanction is two lines. The bill itself was approved on 02.08.2026 — twelve days before the alleged demand. Recovery memo p. 31 is from a third person, not from the JE. Question: BNSS 250 or 262? Is the sanction vulnerable at discharge? I want a four-ground discharge, COURT_SAFE only, no PENDING names. Hearing in three weeks.",
+    "attachments": [
+      "Charge-sheet (partial)",
+      "Sanction order (two lines)",
+      "Recovery memo p. 31",
+      "Bill approval note 02.08.2026",
+      "Trap mahazar"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Charge-stage PC Act file where chronology and recovery already fight the demand story; the section choice (250 vs 262) is the first professional question."
+    },
+    "issueMap": [
+      {
+        "issue": "Correct discharge provision before the Special Judge",
+        "status": "OPEN",
+        "note": "Map BNSS 250 / 262 against the old 239 / 227 vocabulary. Do not mix them in the heading."
+      },
+      {
+        "issue": "Whether a two-line sanction shows application of mind",
+        "status": "OPEN",
+        "note": "Discharge is a high bar on sanction; say so."
+      },
+      {
+        "issue": "Demand vs prior bill approval",
+        "status": "CONFLICT",
+        "note": "Approval on 02.08 undercuts a 14.08 demand for the same bill — if the papers are the same bill."
+      },
+      {
+        "issue": "Recovery from a third person",
+        "status": "OPEN",
+        "note": "Memo p. 31 is a fact. It is not yet a legal conclusion of 'no recovery'."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "02.08.2026",
+        "event": "Bill approved (client's paper)",
+        "source": "approval note",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "14.08.2026",
+        "event": "Alleged demand",
+        "source": "charge-sheet",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Trap date (unspecified)",
+        "event": "Trap and recovery from third person (p. 31)",
+        "source": "mahazar",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Discharge before framing of charge",
+        "provision": "BNSS 2023, s. 250 / s. 262 — map to forum",
+        "legacyEquivalent": "CrPC ss. 239, 227",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Pick one after reading the Special Judge's procedure; do not plead both as if interchangeable. Official bare-Act link added."
+      },
+      {
+        "proposition": "Public servant bribery / trap",
+        "provision": "PC Act 1988, ss. 7, 13(1)(b) as charged",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1558",
+        "sourceUrlNote": "Read the charge-sheet's actual sections. Official bare-Act link added."
+      },
+      {
+        "proposition": "Sanction to prosecute",
+        "provision": "PC Act 1988, s. 19 / s. 17A as applicable",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1558",
+        "sourceUrlNote": "Which sanction section applies depends on the date and the nature of the official act. Official bare-Act link added."
+      },
+      {
+        "proposition": "Demand is sine qua non",
+        "provision": "case law — [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Named SC holdings stay out of the export until graded."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "KNOWN",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Discharge application — four-ground matrix",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Chronology: approval 02.08 vs demand 14.08 vs recovery p. 31",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nCHRONOLOGY — ACB trap, JE (PHED), Special Judge (PC Act), Jaipur\n\n| Date | Event | Source | Confidence |\n|---|---|---|---|\n| 02.08.2026 | Bill approved (client's paper) | approval note | UNCONFIRMED |\n| 14.08.2026 | Alleged demand (for passing contractor's bill) | charge-sheet | CONFIRMED |\n| [PENDING — trap date unspecified] | Trap and recovery from a third person (memo p. 31) | mahazar | CONFIRMED |\n\nReading:\n- Approval 02.08 precedes the alleged demand of 14.08 by 12 days. If it is the SAME bill, the demand story is undercut — [UNCONFIRMED — bill-number identity across 02.08 and 14.08].\n- Recovery memo p. 31 names a third person, not the JE. That is a fact, not yet a conclusion of 'no recovery'. [PENDING — identity of the person from whom recovery was made].\n- Demand as sine qua non: [PENDING — named SC holding not graded].\n\nDo NOT write 'demand not proved' here — that is a trial argument, not a discharge ground."
+      },
+      {
+        "type": "memo",
+        "title": "250 vs 262 mapping note",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nFILE MEMO — 250 vs 262 mapping (JE / ACB trap, Special Judge, Jaipur)\nTo: Supervising advocate\nRe: discharge application — correct provision and heading\n\n1. Discharge before framing of charge: BNSS 2023, s. 250 / s. 262 — map to the forum. Legacy equivalent: CrPC ss. 239, 227. Status SECONDARY: pick ONE after reading the Special Judge's procedure; do not plead both as if interchangeable.\n2. Why it matters: 250 vs 262 is the maintainability of the application, not style. The heading must carry a single section.\n3. Legacy trap: pleading CrPC 227 in 2026 without a savings-clause explanation is a beginner tell; if 227 appears at all it is as the legacy equivalent, not the live provision.\n4. Charge sections: PC Act 1988, ss. 7, 13(1)(b) as charged (VERIFIED — read the charge-sheet's actual sections).\n5. Sanction: PC Act 1988, s. 19 / s. 17A as applicable (SECONDARY) — which one depends on the date and the nature of the official act. Whether 17A applies on these facts: [UNCONFIRMED].\n6. Four grounds for the matrix: (a) hearsay demand; (b) third-party recovery (p. 31); (c) chronology 02.08 vs 14.08; (d) two-line sanction.\n7. Any case-law name stays out until COURT_SAFE. A separate inherent/supervisory filing is its own proceeding — [PENDING — separate provision to be confirmed]; not a paragraph here.\n\nRecommendation: fix the heading to one BNSS section after the supervisor confirms the forum procedure."
+      },
+      {
+        "type": "no-filing-note",
+        "title": "PENDING demand authorities blocked",
+        "status": "blocked",
+        "blockedReason": "No COURT_SAFE named holding in this fixture."
+      }
+    ],
+    "checklist": [
+      "Complete charge-sheet and list of witnesses",
+      "Original sanction file not just the two-line order",
+      "Whether 17A applied on these facts",
+      "Identity of the person from whom recovery was made",
+      "Bill number identity across 02.08 and 14.08"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Supervised four-ground discharge draft; export without PENDING names",
+      "rationale": "The file has a real chronology fight, but discharge is still a high bar and the section heading must be right.",
+      "nextAction": "Map 250 vs 262, keep the four grounds (hearsay demand / third-party recovery / chronology / sanction) in a table, supervisor to grade any case-law names."
+    },
+    "teachingNotes": [
+      "250 vs 262 is not a style choice. It is the maintainability of the application.",
+      "A two-line sanction is a ground, not a magic wand. Discharge courts still ask whether the charge is groundless on the papers.",
+      "If the 02.08 bill is a different bill, the chronology point evaporates. Check the number."
+    ],
+    "commonMistakes": [
+      "Pleading CrPC 227 in 2026 without a savings-clause explanation.",
+      "Writing 'demand not proved' as if this were a trial argument.",
+      "Citing a famous trap judgment from memory."
+    ],
+    "seniorVariants": [
+      "Ground 1 facts (papers), Ground 2 law (provision), no names until COURT_SAFE.",
+      "Ask for the sanction file under the accused's right to copies before the discharge date.",
+      "Keep a fallback: if discharge fails, a s. 528 BNSS / inherent argument is a different filing, not a paragraph in this one."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If p. 31's 'third person' is the JE's own staff acting on his instruction, the recovery point flips from defence to corroboration.",
+    "unresolvedFacts": [
+      "Whether 02.08 and 14.08 concern the same bill — UNCONFIRMED",
+      "Correct discharge section for this Special Court — OPEN",
+      "s. 17A applicability — UNCONFIRMED"
+    ],
+    "jurisdictionNote": "Special Judge (PC Act / ACB), Jaipur. High Court Jaipur Bench for revision."
+  }
+}

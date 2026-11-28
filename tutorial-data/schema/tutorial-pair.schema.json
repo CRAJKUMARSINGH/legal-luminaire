@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/CRAJKUMARSINGH/legal-luminaire/tutorial-data/schema/tutorial-pair.schema.json",
+  "title": "TutorialPair",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "stage", "level", "forum", "district", "input", "expected", "accuracy", "syntheticLabel"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^TP-RJ-[0-9]{2}$" },
+    "title": { "type": "string", "minLength": 8 },
+    "stage": { "enum": ["initial", "reply", "trial", "appeal", "mid-journey"] },
+    "level": { "enum": ["beginner", "intermediate", "advanced", "expert"] },
+    "forum": { "enum": ["district", "high-court", "revenue", "rera", "family", "commercial"] },
+    "district": { "type": "string" },
+    "syntheticLabel": { "const": "SYNTHETIC / DEMO" },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "language", "channel", "text", "attachments"],
+      "properties": {
+        "kind": { "enum": ["query", "demand", "submit", "notice-text", "fir", "reply-instruction", "handover", "second-opinion"] },
+        "language": { "enum": ["en", "hi", "hinglish"] },
+        "channel": { "enum": ["walk-in", "whatsapp", "email", "phone", "portal", "counter"] },
+        "text": { "type": "string", "minLength": 40 },
+        "attachments": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["triage", "issueMap", "chronology", "verification", "citationGate", "limitationGate", "drafts", "checklist", "terminalOutcome", "teachingNotes", "commonMistakes", "seniorVariants"],
+      "properties": {
+        "triage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["urgency", "documentCompleteness", "requestClarity", "oneLineRead"],
+          "properties": {
+            "urgency": { "enum": ["routine", "moderate", "urgent", "critical"] },
+            "documentCompleteness": { "enum": ["complete", "partial", "incomplete", "unreadable"] },
+            "requestClarity": { "enum": ["clear", "overbroad", "unclear", "conflicting"] },
+            "oneLineRead": { "type": "string" }
+          }
+        },
+        "issueMap": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["issue", "status", "note"],
+            "properties": {
+              "issue": { "type": "string" },
+              "status": { "enum": ["SETTLED", "OPEN", "CONFLICT", "UNCONFIRMED"] },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "chronology": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "event", "source", "confidence"],
+            "properties": {
+              "date": { "type": "string" },
+              "event": { "type": "string" },
+              "source": { "type": "string" },
+              "confidence": { "enum": ["CONFIRMED", "UNCONFIRMED", "CONFLICT"] }
+            }
+          }
+        },
+        "verification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["proposition", "provision", "legacyEquivalent", "status", "blockedFromDraft", "sourceUrl", "sourceUrlNote"],
+            "properties": {
+              "proposition": { "type": "string" },
+              "proposition_note": { "type": ["string", "null"] },
+              "provision": { "type": "string" },
+              "legacyEquivalent": { "type": ["string", "null"] },
+              "status": { "enum": ["COURT_SAFE", "VERIFIED", "SECONDARY", "PENDING"] },
+              "blockedFromDraft": { "type": "boolean" },
+              "sourceUrl": { "type": ["string", "null"] },
+              "sourceUrlNote": { "type": "string" }
+            }
+          }
+        },
+        "citationGate": { "enum": ["BLOCKED", "PENDING", "SECONDARY"] },
+        "limitationGate": { "enum": ["KNOWN", "UNKNOWN", "URGENT", "EXPIRED-RISK"] },
+        "drafts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "title", "status", "blockedReason"],
+            "properties": {
+              "type": { "enum": ["notice", "pleading", "application", "affidavit", "memo", "chronology", "checklist", "index", "letter", "table", "instruction", "no-filing-note"] },
+              "title": { "type": "string" },
+              "status": { "enum": ["intake-only", "research-needed", "draft", "review-needed", "ready-for-supervising-advocate", "blocked"] },
+              "blockedReason": { "type": ["string", "null"] },
+              "body": {
+                "type": ["string", "null"],
+                "description": "Worked-example document text. Gate-shaped, never filing-ready: any unverified citation is rendered as an explicit [PENDING — …] hole, never a filled guess. Present for productive statuses (draft / review-needed / ready-for-supervising-advocate); null for blocked / intake-only / research-needed."
+              }
+            }
+          }
+        },
+        "checklist": { "type": "array", "items": { "type": "string" } },
+        "terminalOutcome": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "label", "rationale", "nextAction"],
+          "properties": {
+            "kind": { "enum": ["proceed", "hold", "review", "refer", "no-filing"] },
+            "label": { "type": "string" },
+            "rationale": { "type": "string" },
+            "nextAction": { "type": "string" }
+          }
+        },
+        "teachingNotes": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+        "commonMistakes": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+        "seniorVariants": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "accuracy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adverseFact", "unresolvedFacts", "jurisdictionNote"],
+      "properties": {
+        "adverseFact": { "type": "string" },
+        "unresolvedFacts": { "type": "array", "items": { "type": "string" } },
+        "jurisdictionNote": { "type": "string" }
+      }
+    }
+  }
+}

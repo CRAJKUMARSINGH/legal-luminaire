@@ -1,0 +1,174 @@
+{
+  "id": "TP-RJ-01",
+  "title": "Oral encroachment claim, no papers, tehsildar said 'go to civil court'",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Sir, hamare khet ki zameen par padosi ne kabza kar liya hai, teen saal se. Jamabandi mein naam hamara hai. Tehsildar ke paas gaya tha, bola civil court jao. Kya karein? Koi notice nahi aaya, kuch papers nahi laaye, bas Aadhaar laaye hain. Khasra number yaad nahi. Padosi ka naam Bhanwar Lal hai, gaon Sanganer ke paas.",
+    "attachments": [
+      "Aadhaar photocopy (front only)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "moderate",
+      "documentCompleteness": "partial",
+      "requestClarity": "overbroad",
+      "oneLineRead": "Possession dispute on agricultural land; forum is not yet decidable and the file has no khasra, jamabandi copy or date anchor."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the land is khatedari (revenue) or held under a civil title",
+        "status": "UNCONFIRMED",
+        "note": "Oral 'jamabandi mein naam hai' is not proof of khatedari; the record of rights must be seen."
+      },
+      {
+        "issue": "Whether the civil court has jurisdiction at all",
+        "status": "CONFLICT",
+        "note": "Tehsildar's advice is not a legal opinion. Suits between tenants and for agricultural land are ordinarily barred from civil courts, with exceptions."
+      },
+      {
+        "issue": "Limitation period for recovery of possession",
+        "status": "UNCONFIRMED",
+        "note": "Depends on whether the claim is framed as tenancy ejectment or title-based possession. Oral 'three years' is unverified."
+      },
+      {
+        "issue": "Whether interim protection is available",
+        "status": "OPEN",
+        "note": "No injunction is meaningful until title documents and a khasra are on file."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "c. 2023 (month unknown)",
+        "event": "Alleged encroachment begins",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Date unknown",
+        "event": "Approach to tehsildar; oral direction to civil court",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in intake; Aadhaar only",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Civil court jurisdiction over agricultural land is barred where a revenue suit lies",
+        "provision": "Rajasthan Tenancy Act 1955, s. 207",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18540",
+        "sourceUrlNote": "Bare Act text needed; the repo holds no certified copy. Official bare-Act link added."
+      },
+      {
+        "proposition": "Khatedar tenant's right to sue for possession",
+        "provision": "Rajasthan Tenancy Act 1955, s. 183 (with s. 42 / s. 53 basis)",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/18540",
+        "sourceUrlNote": "Chapter numbering unverified; confirm against a current bare Act before pleading. Official bare-Act link added."
+      },
+      {
+        "proposition": "Interim injunction standard",
+        "provision": "CPC 1908, O. 39 rr. 1–2",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Well-established; no paragraph-level holding in this fixture. Official bare-Act link added."
+      },
+      {
+        "proposition": "Declaration and injunction",
+        "provision": "Specific Relief Act 1963, ss. 34, 38",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1583",
+        "sourceUrlNote": "Post-2018 numbering; s. 34 declaration survives. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "UNKNOWN",
+    "drafts": [
+      {
+        "type": "memo",
+        "title": "Triage Memo — Forum Not Yet Settled",
+        "status": "intake-only",
+        "blockedReason": null
+      },
+      {
+        "type": "instruction",
+        "title": "Bilingual Requisition List (khasra, jamabandi, naksha, girdawari)",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes deliberate.\n\nBILINGUAL REQUISITION LIST — client se dastavez maangne ke liye\n(For collection of documents from the client — Jaipur / Sanganer)\n\nKripya niche likhe papers counter par laayein; inke bina forum ka faisla nahi ho sakta:\n1. Khasra number aur naksha (field map) — khet ki exact pehchaan ke liye. [PENDING — khasra number client ko yaad nahi]\n2. Certified jamabandi copy — chalu saal aur teen pichle saal ki. Jamabandi ko \"maalki ka kagaz\" na samjhein; yeh record of rights hai.\n3. Khasra girdawari entries — kabza kiski thi, iska record.\n4. Koi bhi patwari / tehsildar order ya oral-entry note.\n5. Date-stamped photographs — kabza kab shuru hua.\n6. Panchayat record, agar koi ho.\n7. Khatedari proof aur client ka ID (Aadhaar ke alawa).\n\nForum-teaching note: forum abhi tay nahi. Civil court jurisdiction ka sawaal Rajasthan Tenancy Act 1955 s. 207 par khada hai. [PENDING — s. 207 ki certified / bare Act text repo mein nahi, verify karein.] Khatedar tenant ka possession suit s. 183 par hoga, lekin chapter numbering unverified. [PENDING — s. 183 ke saath s. 42 / s. 53 ki basis verify karein.]\n\nCourt mein plaint se pehle: O. 39 rr. 1-2 CPC aur Specific Relief Act 1963 ss. 34, 38 ke adhar par interim protection ka vichar — lekin khasra aur jamabandi ke bina kuch bhi file na karein."
+      },
+      {
+        "type": "no-filing-note",
+        "title": "No-Filing Note — No Khasra, No Forum",
+        "status": "blocked",
+        "blockedReason": "Khasra number, jamabandi copy and encroachment date are all absent; a plaint would be filed blind."
+      }
+    ],
+    "checklist": [
+      "Certified jamabandi copy for the current and three prior years",
+      "Khasra number and naksha (field map)",
+      "Khasra girdawari entries showing possession",
+      "Any patwari / tehsildar order, even an oral-entry note",
+      "Photographs with date stamps of the encroachment",
+      "Panchayat record or s. 133 BNSS police report, if any",
+      "Client's ID and khatedari proof",
+      "Whether any revenue suit is already pending"
+    ],
+    "terminalOutcome": {
+      "kind": "refer",
+      "label": "Refer for document collection before any forum is chosen",
+      "rationale": "The revenue/civil forum question is genuinely open on these facts, and the file cannot support a plaint either way. Choosing a court today would be a guess.",
+      "nextAction": "Issue the requisition list, obtain the jamabandi and khasra, then re-run the forum check with a revenue-law supervisor."
+    },
+    "teachingNotes": [
+      "Jamabandi is a record of rights, not a title deed. It is evidence, not proof, and beginners routinely call it 'papers of ownership' in the plaint and get picked apart.",
+      "'Tehsildar said go to civil court' is the single most repeated sentence at district counters and the single most misleading. The tehsildar decides nothing about jurisdiction.",
+      "The forum question here is the whole case. A plaint filed in civil court over khatedari land can be dismissed on a jurisdiction issue that costs the client two years and a court fee.",
+      "Notice that the engine refuses to pick a forum rather than picking the likelier one. That refusal is the product."
+    ],
+    "commonMistakes": [
+      "Drafting a civil suit for declaration plus injunction without pleading why s. 207 of the Tenancy Act does not bar it.",
+      "Writing 'three years' as the limitation period because the client said three years, without saying which Article and which cause of action.",
+      "Attaching only Aadhaar and treating it as a title document.",
+      "Filing an injunction application with no khasra, so the court cannot even describe the suit property in the interim order."
+    ],
+    "seniorVariants": [
+      "Frame the plaint in the alternative: a revenue suit under s. 183 with a s. 42/53 khatedari basis, and a civil suit with an express paragraph on why s. 207 does not apply on these facts.",
+      "Before filing, requisition the girdawari and the naksha — possession evidence decides the O. 39 application, and the map decides whether the encroachment is even within the client's khasra.",
+      "Consider a parallel s. 133 BNSS police report for a recent, forcible encroachment to create a dated record.",
+      "Ask whether the encroacher claims a tenancy. If yes, the forum answer flips."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The client says jamabandi carries his name but cannot give the khasra. If the jamabandi turns out to be in a joint or ancestral name, the client may not be the sole person entitled to sue.",
+    "unresolvedFacts": [
+      "Khasra number — UNKNOWN",
+      "Jamabandi contents — UNCONFIRMED",
+      "Encroachment date — UNCONFIRMED",
+      "Whether any tenancy is claimed by the encroacher — UNKNOWN",
+      "Whether a revenue suit is already pending — UNKNOWN"
+    ],
+    "jurisdictionNote": "Sanganer area, Jaipur district. Civil Judge jurisdiction and revenue court jurisdiction overlap on the facts; no forum is fixed by this fixture."
+  }
+}

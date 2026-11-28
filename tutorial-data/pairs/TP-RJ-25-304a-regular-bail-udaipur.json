@@ -1,0 +1,165 @@
+{
+  "id": "TP-RJ-25",
+  "title": "Regular bail for a tractor driver after a fatal NH-8 accident — Sessions, Udaipur",
+  "stage": "initial",
+  "level": "beginner",
+  "forum": "district",
+  "district": "Udaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "hinglish",
+    "channel": "walk-in",
+    "text": "Namaste. Main naya enrolled advocate hoon, District & Sessions Court Udaipur. Client Ramesh Chandra Meena, 34, Mavli ke paas gaon, tractor chala raha tha 12.11.2026 ko NH-8 par shaam 7:45. Motorcycle se takkar, ek vyakti hospital mein expire. FIR 142/2026 PS Mavli, 279/304A IPC (BNS corresponding) + MV Act. Judicial custody 14.11.2026 se. Koi purana criminal record nahi, do bacche, kisan. Kal subah Sessions Judge ke saamne regular bail chahiye — §483 BNSS / §439 CrPC, custody calculation, COURT_SAFE citations only, English + simple Hindi grounds. Family bahar baithe hain.",
+    "attachments": [
+      "Oral instructions",
+      "Aadhaar photocopy",
+      "No FIR certified copy yet",
+      "No arrest memo"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "incomplete",
+      "requestClarity": "clear",
+      "oneLineRead": "First regular bail on a 304A/BNS 106-type allegation; file has almost no papers and default-bail arithmetic cannot be completed."
+    },
+    "issueMap": [
+      {
+        "issue": "Correct bail provision (CJM vs Sessions)",
+        "status": "OPEN",
+        "note": "Beginners file under the wrong section. Map BNSS 480/483 against CrPC 437/439 before drafting the cause title."
+      },
+      {
+        "issue": "Whether the facts even attract the fleeing-aggravated limb",
+        "status": "UNCONFIRMED",
+        "note": "Family says he stopped and informed police. That fact, if true, kills a harsher limb — but it is oral."
+      },
+      {
+        "issue": "Default bail / outer limit under BNSS 187 / CrPC 167",
+        "status": "UNCONFIRMED",
+        "note": "No remand order date, no charge-sheet status."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "12.11.2026 ~19:45",
+        "event": "Alleged collision on NH-8 Mavli stretch",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "14.11.2026",
+        "event": "Judicial custody begins (family account)",
+        "source": "oral",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Today",
+        "event": "Walk-in for tomorrow's listing",
+        "source": "counter",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Regular bail by the Court of Session",
+        "provision": "BNSS 2023, s. 483 [formerly CrPC s. 439]",
+        "legacyEquivalent": "CrPC s. 439",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Cause-title provision only; no paragraph holding. Official bare-Act link added."
+      },
+      {
+        "proposition": "Rash/negligent driving causing death — current code mapping",
+        "provision": "BNS 2023, s. 106(1) [formerly IPC s. 304A] with BNS s. 281 / IPC s. 279",
+        "legacyEquivalent": "IPC ss. 279, 304A",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/20062",
+        "sourceUrlNote": "Confirm the FIR's actual sections as printed, not as remembered. Official bare-Act link added."
+      },
+      {
+        "proposition": "Bail is the rule in non-heinous negligence cases",
+        "provision": "case law — [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Do not drop a remembered SC line into tomorrow's application."
+      },
+      {
+        "proposition": "Default-bail outer limit",
+        "provision": "BNSS 2023, s. 187 [formerly CrPC s. 167]",
+        "legacyEquivalent": "CrPC s. 167",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Arithmetic needs remand and charge-sheet dates. Official bare-Act link added."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "UNKNOWN",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Regular Bail Application — Sessions, Udaipur (skeleton)",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Custody / default-bail board",
+        "status": "blocked",
+        "blockedReason": "Cannot compute without remand order and charge-sheet status."
+      },
+      {
+        "type": "no-filing-note",
+        "title": "Export blocked — PENDING bail authorities",
+        "status": "blocked",
+        "blockedReason": "No COURT_SAFE named holding is in the registry for this fixture."
+      }
+    ],
+    "checklist": [
+      "Certified FIR",
+      "Arrest memo / custody certificate",
+      "Remand order dates",
+      "Site plan / MLC of deceased",
+      "Proof of residence and sureties",
+      "Vakalatnama"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Proceed to supervised review of a skeleton bail application — do not export citations yet",
+      "rationale": "The facts support a regular-bail attempt, but the papers and the authorities are not yet on the file.",
+      "nextAction": "Collect FIR and custody papers today, keep citations out of the export, bilingual grounds only after supervisor review."
+    },
+    "teachingNotes": [
+      "A beginner’s first 304A bail is lost on the cause title and on a remembered citation, not on sympathy.",
+      "Default bail is a calculation, not a vibe. Without remand dates the engine must say CANNOT_COMPUTE.",
+      "Bilingual grounds are for the family and the court; they are not a licence to file unverified holdings."
+    ],
+    "commonMistakes": [
+      "Citing a famous SC bail case without a paragraph and a COURT_SAFE tag.",
+      "Filing before the CJM when the Sessions Court is the right forum, or the reverse.",
+      "Writing 'no antecedents' as a proved fact from the family's mouth."
+    ],
+    "seniorVariants": [
+      "Cause title: Sessions Judge, Udaipur; FIR 142/2026 PS Mavli; BNSS 483 with CrPC 439 in parentheses.",
+      "Put the 'stopped at the spot' fact as an oral instruction, not as evidence.",
+      "Ask for local sureties and a no-contact / driving-licence condition in the alternative."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If the FIR actually records fleeing the spot, the family's 'he stopped' story is an adverse fact that will be read against the accused at the first listing.",
+    "unresolvedFacts": [
+      "Certified FIR sections — UNCONFIRMED",
+      "Remand date — UNCONFIRMED",
+      "Charge-sheet status — UNKNOWN",
+      "Antecedents — UNCONFIRMED"
+    ],
+    "jurisdictionNote": "Sessions Court, Udaipur. High Court (Jodhpur principal seat) is the next bail rung, not the first."
+  }
+}

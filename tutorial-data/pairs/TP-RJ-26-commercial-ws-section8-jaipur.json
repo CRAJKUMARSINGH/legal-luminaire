@@ -1,0 +1,172 @@
+{
+  "id": "TP-RJ-26",
+  "title": "Order XXXVII recovery plus a 2024 arbitration clause — Commercial Court, Jaipur",
+  "stage": "reply",
+  "level": "intermediate",
+  "forum": "commercial",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "reply-instruction",
+    "language": "en",
+    "channel": "email",
+    "text": "I am an advocate of intermediate standing at the Commercial Court, Jaipur. Plaintiff M/s Rajasthan Agro Supplies Pvt. Ltd. vs my client M/s Udaipur Agro Traders. Recovery of about ₹48.70 lakh under Order XXXVII CPC on unpaid invoices 2023–2025. Plaint 03.09.2026, appearance and leave to defend already taken, plaintiff has filed replication. Client: several invoices unsigned by any authorised partner; Dealership Agreement 15.03.2024 Clause 18 arbitration; some invoices look more than three years old. I need a paragraph-wise written statement, a Section 8 application, limitation matrix, COURT_SAFE commercial-bench citations only, English + Hindi. Next date approaching.",
+    "attachments": [
+      "Plaint",
+      "Leave-to-defend order",
+      "Replication",
+      "2024 Agreement (to be uploaded)",
+      "Invoice bundle (partial)"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "moderate",
+      "documentCompleteness": "partial",
+      "requestClarity": "clear",
+      "oneLineRead": "Reply-stage commercial recovery where the arbitration clause and limitation flags must be verified against paper, not against the client's summary."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether s. 8 can still be taken with the written statement",
+        "status": "OPEN",
+        "note": "Must be before the first statement on the substance of the dispute — timing is the trap."
+      },
+      {
+        "issue": "Whether Clause 18 actually covers invoice disputes",
+        "status": "UNCONFIRMED",
+        "note": "Client paraphrased the clause. Read the agreement."
+      },
+      {
+        "issue": "Limitation on each invoice",
+        "status": "OPEN",
+        "note": "Three-year lookback from 03.09.2026 is a table, not a speech."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "15.03.2024",
+        "event": "Dealership / supply agreement (alleged Clause 18)",
+        "source": "client",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "03.09.2026",
+        "event": "Plaint presented",
+        "source": "plaint",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "After leave",
+        "event": "Replication filed",
+        "source": "replication",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Reference to arbitration before first statement on merits",
+        "provision": "Arbitration and Conciliation Act 1996, s. 8",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1978",
+        "sourceUrlNote": "Provision only; clause coverage still unconfirmed. Official bare-Act link added."
+      },
+      {
+        "proposition": "Specific denial",
+        "provision": "CPC 1908, Order 8 rules 3–5",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Well-established pleading rule. Official bare-Act link added."
+      },
+      {
+        "proposition": "Summary procedure",
+        "provision": "CPC 1908, Order XXXVII",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/2191",
+        "sourceUrlNote": "Leave already granted; do not re-argue the summons. Official bare-Act link added."
+      },
+      {
+        "proposition": "Rajasthan commercial-bench holdings on s. 8 vs civil suit",
+        "provision": "case law — [verify citation — DEMO PLACEHOLDER]",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "No named holding in this fixture."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "URGENT",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Written Statement / Additional WS — specific denials",
+        "status": "review-needed",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nIN THE COURT OF THE COMMERCIAL JUDGE, JAIPUR\nSuit No. ____ of 2026\nM/s Rajasthan Agro Supplies Pvt. Ltd.  ... Plaintiff\nv.\nM/s Udaipur Agro Traders  ... Defendant\n\nWRITTEN STATEMENT ON BEHALF OF THE DEFENDANT (review skeleton)\n\nPRELIMINARY\n1. The suit is for recovery of about ₹48.70 lakh on unpaid invoices 2023–2025 under Order XXXVII CPC (CPC 1908, Order XXXVII). Leave to defend was granted vide order dated [PENDING — leave-to-defend order date]; appearance and leave are already taken. This WS does not re-argue the summons.\n\nPARA-WISE SPECIFIC DENIALS (CPC 1908, Order 8 rules 3–5 — specific, not general)\n2. Para 1 of the plaint: [PENDING — reproduce each plaint paragraph and deny it specifically].\n3. The invoices relied on are unsigned by any authorised partner of the Defendant; each invoice is separately denied, invoice-wise, in the limitation matrix.\n\nARBITRATION BAR\n4. The Dealership Agreement dated 15.03.2024 contains Clause 18 (arbitration). Whether it covers invoice disputes is [UNCONFIRMED] — Clause 18 must be quoted from the agreement, not from the client's summary. If covered, the plaintiff is to be referred to arbitration under the Arbitration and Conciliation Act 1996, s. 8. Any commercial-bench holding on s. 8 vs civil suit is [PENDING — no named holding in this fixture].\n5. No decision is cited from memory. The plea is kept bare, without a named case.\n\nPRAYER\n6. Dismiss the suit with costs; alternatively refer the parties to arbitration. [PENDING — supervised review before signature.]"
+      },
+      {
+        "type": "application",
+        "title": "Section 8 application with affidavit",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Invoice limitation matrix",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nINVOICE LIMITATION MATRIX — M/s Rajasthan Agro Supplies v. M/s Udaipur Agro Traders\nSuit filed 03.09.2026. Three-year lookback from 03.09.2026 is the test; limitation is pleaded invoice-wise (CPC 1908, Order XXXVII).\n\n| # | Invoice no. | Invoice date | Amount (₹) | Signed by authorised partner? | On/before 03.09.2023 ⇒ time-barred? | Plea |\n|---|---|---|---|---|---|---|\n| 1 | [PENDING — bundle partial] | [PENDING] | [PENDING] | [UNCONFIRMED] | Compute vs 03.09.2023 | Deny if unsigned / barred |\n| 2 | [PENDING] | [PENDING] | [PENDING] | [UNCONFIRMED] | Compute vs 03.09.2023 | Deny if unsigned / barred |\n| 3 | [PENDING] | [PENDING] | [PENDING] | [UNCONFIRMED] | Compute vs 03.09.2023 | Deny if unsigned / barred |\n\nNote: some invoices appear more than three years old; each date and signatory is [PENDING]. Aggregate claimed: about ₹48.70 lakh across invoices 2023–2025. Limitation is a table, not a speech."
+      },
+      {
+        "type": "no-filing-note",
+        "title": "Export blocked until Clause 18 is read",
+        "status": "blocked",
+        "blockedReason": "Arbitration coverage is a quote from the agreement, not from the client."
+      }
+    ],
+    "checklist": [
+      "Upload 15.03.2024 agreement — Clause 18 full text",
+      "Invoice dates and alleged signatures",
+      "Leave-to-defend order",
+      "Supporting affidavit for s. 8",
+      "Vakalatnama"
+    ],
+    "terminalOutcome": {
+      "kind": "review",
+      "label": "Clarify Clause 18 and invoice dates, then supervised review of WS + s. 8",
+      "rationale": "The reply is the right stage, but the two winning points (arbitration and limitation) are still document-dependent.",
+      "nextAction": "Read Clause 18 against the plaint, complete the invoice table, keep PENDING citations out of export."
+    },
+    "teachingNotes": [
+      "A general denial in a commercial written statement is a gift to the plaintiff.",
+      "Section 8 is lost by filing a merits-heavy WS first and the application later.",
+      "Limitation is pleaded invoice-wise or it is not pleaded."
+    ],
+    "commonMistakes": [
+      "Copy-pasting a 'standard WS' with 'contents of para 1 are wrong' for every paragraph.",
+      "Citing a remembered commercial-bench case without a COURT_SAFE tag.",
+      "Forgetting Hindi for the partners and English for the court as two audiences, not two truths."
+    ],
+    "seniorVariants": [
+      "Open with the arbitration bar, then limitation, then unsigned invoices.",
+      "Annex the agreement as the first exhibit of the s. 8 application, not of the WS.",
+      "If leave was conditional, check whether the condition has been complied with before attacking the plaint."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "If Clause 18 is a 'management dispute' clause and not a supplies clause, the entire s. 8 strategy fails and a late application may be treated as the first statement on merits.",
+    "unresolvedFacts": [
+      "Exact Clause 18 wording — UNCONFIRMED",
+      "Each invoice date and signatory — PARTIAL",
+      "Whether s. 8 is still in time vis-à-vis the WS — OPEN"
+    ],
+    "jurisdictionNote": "Commercial Court, Jaipur. Rajasthan High Court Jaipur Bench is the appeal/revision rung, not the first filing."
+  }
+}

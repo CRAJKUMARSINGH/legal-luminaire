@@ -1,0 +1,196 @@
+{
+  "id": "TP-RJ-06",
+  "title": "Jail appeal against conviction, three weeks left, legal aid file nearly empty",
+  "stage": "appeal",
+  "level": "advanced",
+  "forum": "high-court",
+  "district": "Jodhpur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "query",
+    "language": "en",
+    "channel": "phone",
+    "text": "Undertrial in Jodhpur Central Jail, convicted last month under 307 and 324 IPC, seven years RI. He was on legal aid in the trial; the legal aid counsel has not met him since conviction. Family engaged us yesterday. We have only the judgment copy and the deposition summary from the family. Certified copies not applied for. He wants to appeal and wants suspension of sentence. Three weeks have gone since judgment. What is the sequence and can we file without certified copies?",
+    "attachments": [
+      "Judgment copy (23 pages)",
+      "Family's deposition notes",
+      "Vakalatnama signed by brother"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "critical",
+      "documentCompleteness": "incomplete",
+      "requestClarity": "clear",
+      "oneLineRead": "Custodial appellant, limitation running, no certified copies, no trial-court record, and a vakalatnama signed by the brother rather than the appellant. Three separate defects, all fixable, all urgent."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the appeal period is running and from which date",
+        "status": "OPEN",
+        "note": "Limitation runs from the judgment, not from the family's decision to change counsel. Three weeks may be most of the window."
+      },
+      {
+        "issue": "Whether a vakalatnama signed by the brother is sufficient",
+        "status": "OPEN",
+        "note": "It is not, for the appellant personally. The appellant must sign, or a power of attorney route must be used. The jail visiting route exists for exactly this."
+      },
+      {
+        "issue": "Whether the appeal can be filed without certified copies",
+        "status": "CONFLICT",
+        "note": "Practice differs. Some courts entertain a copy with an application; the safer course is to apply for certified copies today and file the appeal on the available copy with a condonation/leave application."
+      },
+      {
+        "issue": "Whether suspension of sentence is a separate, earlier relief than the appeal itself",
+        "status": "OPEN",
+        "note": "Yes. It should be pressed immediately and independently, not buried in the appeal memo."
+      },
+      {
+        "issue": "Whether legal aid counsel must be discharged formally",
+        "status": "UNCONFIRMED",
+        "note": "A parallel legal aid counsel and a private counsel can create confusion over the record and the fee."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "Last month",
+        "event": "Conviction and sentence",
+        "source": "judgment",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "Three weeks ago (approx.)",
+        "event": "Judgment delivered; limitation begins",
+        "source": "inferred",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Yesterday",
+        "event": "Family engages us",
+        "source": "oral",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Appeal from conviction to the High Court",
+        "provision": "BNSS 2023, s. 415 [formerly CrPC s. 374(2)]",
+        "legacyEquivalent": "CrPC s. 374(2)",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Forum is the High Court for a Sessions conviction. Official bare-Act link added."
+      },
+      {
+        "proposition": "Suspension of sentence pending appeal",
+        "provision": "BNSS 2023, s. 440 [formerly CrPC s. 389]",
+        "legacyEquivalent": "CrPC s. 389",
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Must be pressed as a standalone application. Official bare-Act link added."
+      },
+      {
+        "proposition": "Appeal limitation",
+        "provision": "Limitation Act 1963, Art. 115 (appeal from sentence in a criminal case)",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/1565",
+        "sourceUrlNote": "90 days; the article reference should be confirmed before it is pleaded in any delay application. Official bare-Act link added."
+      },
+      {
+        "proposition": "Right of a convict to be heard through counsel of choice",
+        "provision": "Constitution of India, Art. 22(1) read with s. 304 CrPC / s. 341 BNSS",
+        "legacyEquivalent": "CrPC s. 304",
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://www.indiacode.nic.in/handle/123456789/21419",
+        "sourceUrlNote": "Grounds the vakalatnama cure. Official bare-Act link added."
+      },
+      {
+        "proposition": "Suspension in a 307 conviction is not automatic",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs a named judgment on parity and short-sentence considerations."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "application",
+        "title": "Application for Suspension of Sentence (s. 440 BNSS)",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "pleading",
+        "title": "Memo of Appeal — Grounds Skeleton",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nMEMO OF APPEAL — GROUNDS SKELETON\nIn the High Court of Judicature for Rajasthan at Jodhpur. (Criminal appeal from a conviction: BNSS 2023, s. 415, VERIFIED.)\n\nCause title (complete from the judgment copy):\n  Appellant: [name], confined at Jodhpur Central Jail, District Jodhpur.\n  Respondent: State of Rajasthan.\n  Against: conviction under IPC ss. 307 and 324, sentence seven years RI, judgment dated [PENDING — exact date UNCONFIRMED; approx. three weeks ago].\n\nStatutory frame (only items with status VERIFIED/SECONDARY carried in):\n  - Appeal to High Court — BNSS 2023, s. 415 [formerly CrPC s. 374(2)] (VERIFIED).\n  - Counsel of choice / vakalatnama cure — Constitution of India, Art. 22(1) r/w s. 304 CrPC / s. 341 BNSS (SECONDARY).\n  - Limitation — Limitation Act 1963, Art. 115, 90 days (SECONDARY; confirm the article before it is pleaded).\nGate from the file: citationGate BLOCKED; limitationGate EXPIRED-RISK.\n\nDrafting basis / caveat: drafted on the judgment copy (23 pages) and the family's deposition notes ONLY. Certified copies of judgment, charge, depositions and exhibits not applied for. The family's notes are NOT the depositions.\n\nGROUNDS (skeleton — reasoning-led, not a retrial of facts):\n  1. Perversity of the trial court's reasoning on the 307 finding — the exact finding to be attacked only once the certified depositions are read. [PENDING — depositions not on record.]\n  2. Parity — whether any co-accused was acquitted or given a lesser sentence needs checking. [PENDING — UNKNOWN from the file.]\n  3. Sentence — whether seven years RI warrants interference on length/custody — no named authority in the file. [PENDING — parity / short-sentence authority to be sourced.]\n\nPrayer: set aside the conviction and sentence. Suspension of sentence is NOT to be buried here — it is pressed separately under BNSS 2023, s. 440 (VERIFIED).\n\nNote to advocate: do not file until the appellant's OWN vakalatnama (not the brother's) is regular and the certified-copy application is on the file."
+      },
+      {
+        "type": "application",
+        "title": "Application for Leave to File on Copy / Condonation",
+        "status": "blocked",
+        "blockedReason": "Certified copies not applied for; the leave application depends on the record position."
+      },
+      {
+        "type": "instruction",
+        "title": "Jail Visiting Checklist — Vakalatnama and Instructions",
+        "status": "ready-for-supervising-advocate",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nJAIL VISITING CHECKLIST — VAKALATNAMA AND INSTRUCTIONS\nPurpose: cure the vakalatnama defect (a relative's signature is insufficient) and take the appellant's own instructions before anything is filed. Provision carried in: Constitution of India, Art. 22(1) r/w s. 304 CrPC / s. 341 BNSS (SECONDARY).\n\nCarry today:\n  - Fresh vakalatnama for the appellant's OWN signature and thumb impression.\n  - Judgment copy (23 pages) for reference.\n  - Plain paper for a short signed note in the appellant's own words.\n\nAt the jail, obtain / confirm:\n  1. Appellant's signature and thumb impression on the vakalatnama (replaces the brother's).\n  2. His version of the incident in his own words — do not paraphrase.\n  3. Exact judgment date and the sentence commencement date. [PENDING — UNCONFIRMED.]\n  4. Whether any co-accused was acquitted or given a lesser sentence (parity). [PENDING — UNKNOWN.]\n  5. Whether the appellant has any prior convictions. [PENDING — UNKNOWN.]\n  6. Custody status and how the seven-year RI runs.\n  7. Whether he is unwell — jail medical record if so.\n  8. Whether the legal aid counsel has met him or filed anything since conviction. [PENDING — UNKNOWN.]\n\nOffice follow-up, same day:\n  - Apply for certified copies of judgment, charge, depositions and exhibits.\n  - Intimation / no-objection to the legal aid counsel.\n\nSequence carried in from the file: certified copies -> jail vakalatnama -> suspension application (BNSS 2023, s. 440) -> appeal memo."
+      }
+    ],
+    "checklist": [
+      "Apply for certified copies of judgment, charge, depositions and exhibits today",
+      "Jail visit with vakalatnama for the appellant's own signature and thumb impression",
+      "Written instructions from the appellant on grounds, in his words",
+      "Intimation to the legal aid counsel and, if needed, a no-objection",
+      "Surrender/ custody status and the exact sentence commencement date",
+      "Whether any co-accused was acquitted or given a lesser sentence — parity",
+      "Whether the appellant has prior convictions",
+      "Jail medical record if the appellant is unwell"
+    ],
+    "terminalOutcome": {
+      "kind": "proceed",
+      "label": "Proceed, but in this order: certified copies, jail vakalatnama, suspension application, then the appeal",
+      "rationale": "Every element is fixable within days and the limitation risk is real. The sequence matters more than the drafting: an appeal memo without a signed vakalatnama and a record is a defective filing that burns the very time it needs.",
+      "nextAction": "Apply for certified copies and visit the jail today; file the s. 440 application as soon as the vakalatnama is regular, with the appeal memo to follow."
+    },
+    "teachingNotes": [
+      "The instinct is to draft grounds. The instinct is wrong. The appeal dies on the vakalatnama and the record long before it dies on the grounds.",
+      "A vakalatnama signed by a relative is a common and quiet defect. It surfaces at the filing counter or, worse, at the first hearing.",
+      "Suspension is not a paragraph in the appeal. It is an application with its own affidavit and its own urgency, and in a 307 conviction it will not be waved through.",
+      "The engine flags EXPIRED-RISK, not UNKNOWN. Three weeks into a ninety-day window with no record is a risk state, not an unknown one."
+    ],
+    "commonMistakes": [
+      "Filing the appeal memo with the brother's vakalatnama and hoping the counter does not notice.",
+      "Burying the suspension prayer inside the appeal and losing two weeks.",
+      "Arguing the merits of the 307 finding in the suspension application instead of custody, parity and sentence length.",
+      "Leaving the legal aid counsel in place, so two counsel appear and the record splits."
+    ],
+    "seniorVariants": [
+      "File the suspension application first, on the record already available, with the certified-copy application annexed to show diligence.",
+      "Take the jail visit on the same day and get the appellant's own vakalatnama and a short signed note of his version.",
+      "Ask the trial court record for the earliest possible reconstruction and identify the two or three depositions that actually carry the conviction.",
+      "Frame grounds on the trial court's reasoning, not on a retrial of facts — appellate courts in Rajasthan read the reasoning first."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The family's deposition notes are not the depositions. If they are wrong on the injured witness's account, the grounds drafted from them will attack the wrong finding.",
+    "unresolvedFacts": [
+      "Exact judgment date — UNCONFIRMED",
+      "Whether co-accused were acquitted — UNKNOWN",
+      "Whether the appellant has prior convictions — UNKNOWN",
+      "Whether legal aid counsel has filed anything — UNKNOWN"
+    ],
+    "jurisdictionNote": "Appeal lies to the Rajasthan High Court, Jodhpur. Suspension application goes with the appeal, not before the Sessions Court."
+  }
+}

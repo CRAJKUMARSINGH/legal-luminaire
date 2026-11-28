@@ -1,0 +1,202 @@
+{
+  "id": "TP-RJ-09",
+  "title": "Reply to a show-cause in a writ where the client's own affidavit is thin",
+  "stage": "reply",
+  "level": "advanced",
+  "forum": "high-court",
+  "district": "Jaipur",
+  "syntheticLabel": "SYNTHETIC / DEMO",
+  "input": {
+    "kind": "reply-instruction",
+    "language": "en",
+    "channel": "email",
+    "text": "Writ filed by our client for compensation on acquisition; State has filed a counter and the Court has issued a show-cause why the writ should not be dismissed for delay and for the petitioner's failure to pursue the reference. Client's affidavit says he 'came to know of the award in 2023'. Acquisition was 2016, award 2017, possession 2017, compensation paid in 2018 to his elder brother. Client is a co-sharer and says he never got his share. Court wants a reply in two weeks. Draft the reply. Be honest about the delay — the bench is strict on land matters.",
+    "attachments": [
+      "Writ petition",
+      "Counter affidavit",
+      "Award copy",
+      "Possession memo",
+      "Payment voucher to brother",
+      "Mutation extract",
+      "Show-cause order"
+    ]
+  },
+  "expected": {
+    "triage": {
+      "urgency": "urgent",
+      "documentCompleteness": "complete",
+      "requestClarity": "clear",
+      "oneLineRead": "Delay is real and partly the client's own. The reply must concede the dates, isolate the surviving grievance to the un-paid co-sharer share, and keep the writ alive on continuing cause of action rather than on explanation alone."
+    },
+    "issueMap": [
+      {
+        "issue": "Whether the delay is fatal or condonable in a writ",
+        "status": "CONFLICT",
+        "note": "Art. 226 has no fixed limitation but laches are enforced. Delay in land compensation is usually answered by a continuing right, not by explanation."
+      },
+      {
+        "issue": "Whether a co-sharer has an independent right to his share of compensation",
+        "status": "OPEN",
+        "note": "This is the surviving case. If the payment to the brother was for the whole holding, the client's share is still unpaid."
+      },
+      {
+        "issue": "Whether the client should have sought a reference and whether that bars the writ",
+        "status": "OPEN",
+        "note": "An alternative remedy is a discretion factor, not an absolute bar; the reply must address it rather than ignore it."
+      },
+      {
+        "issue": "Whether the 2023 knowledge claim survives the mutation extract",
+        "status": "OPEN",
+        "note": "The mutation may show the client was on record earlier. If so, the affidavit's 'came to know in 2023' is over-claimed and must be corrected, not defended."
+      },
+      {
+        "issue": "Whether the brother is a necessary party",
+        "status": "CONFLICT",
+        "note": "He received the money. If his share and the client's are entangled, he should be on record."
+      }
+    ],
+    "chronology": [
+      {
+        "date": "2016",
+        "event": "Acquisition notification",
+        "source": "record",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "2017",
+        "event": "Award; possession taken",
+        "source": "award + memo",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "2018",
+        "event": "Compensation paid to elder brother",
+        "source": "voucher",
+        "confidence": "CONFIRMED"
+      },
+      {
+        "date": "2023",
+        "event": "Client claims knowledge of the award",
+        "source": "affidavit",
+        "confidence": "UNCONFIRMED"
+      },
+      {
+        "date": "Now",
+        "event": "Show-cause issued",
+        "source": "order",
+        "confidence": "CONFIRMED"
+      }
+    ],
+    "verification": [
+      {
+        "proposition": "Writ for enforcement of a right to compensation",
+        "provision": "Constitution of India, Art. 226",
+        "legacyEquivalent": null,
+        "status": "VERIFIED",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://indiacode.nic.in/handle/123456789/8305",
+        "sourceUrlNote": "Discretionary jurisdiction; laches relevant. Official bare-Act link added."
+      },
+      {
+        "proposition": "Delay in Art. 226 is judged on laches, not a fixed period",
+        "provision": "Constitution of India, Art. 226 — no statutory limitation",
+        "legacyEquivalent": null,
+        "status": "SECONDARY",
+        "blockedFromDraft": false,
+        "sourceUrl": "https://indiacode.nic.in/handle/123456789/8305",
+        "sourceUrlNote": "Settled but case-law driven; no named authority in fixture. Official bare-Act link added."
+      },
+      {
+        "proposition": "Reference to the land acquisition court for apportionment",
+        "provision": "Right to Fair Compensation and Transparency in Land Acquisition, Rehabilitation and Resettlement Act 2013 — section unverified for a 2016 acquisition",
+        "legacyEquivalent": "Land Acquisition Act 1894, s. 30",
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Critical: which Act governs a 2016 notification decides the apportionment route, and it is not settled in the file."
+      },
+      {
+        "proposition": "Co-sharer's right to a share of compensation",
+        "provision": "case law — no named authority in fixture",
+        "legacyEquivalent": null,
+        "status": "PENDING",
+        "blockedFromDraft": true,
+        "sourceUrl": null,
+        "sourceUrlNote": "Needs authority on apportionment between co-sharers."
+      }
+    ],
+    "citationGate": "BLOCKED",
+    "limitationGate": "EXPIRED-RISK",
+    "drafts": [
+      {
+        "type": "pleading",
+        "title": "Reply Affidavit to Show-Cause — Delay and Apportionment",
+        "status": "research-needed",
+        "blockedReason": null
+      },
+      {
+        "type": "table",
+        "title": "Date and Payment Reconciliation Table",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nDATE AND PAYMENT RECONCILIATION TABLE\nWrit for compensation — Constitution of India, Art. 226 (VERIFIED). Delay is judged on laches, no fixed statutory period (SECONDARY).\n\n| Date | Event | Source | Confidence |\n|------|-------|--------|------------|\n| 2016 | Acquisition notification | record | CONFIRMED |\n| 2017 | Award; possession taken | award + possession memo | CONFIRMED |\n| 2018 | Compensation paid to elder brother | payment voucher | CONFIRMED |\n| 2023 | Client claims knowledge of the award | client affidavit | UNCONFIRMED |\n| Now | Show-cause issued by the Court | order | CONFIRMED |\n\nOpen columns / holes:\n  - Whether the 2018 voucher covered the whole holding or only the brother's share — [PENDING — UNKNOWN from the voucher.]\n  - Whether the mutation names the client, and from which year — [PENDING — mutation extract to be read.]\n  - Which Act governs a 2016 notification (1894 Act or RFCTLARR Act 2013) — [PENDING — decisive for the apportionment route.]\n  - Whether any reference was filed and its outcome — [PENDING — UNKNOWN.]\n\nReading note: possession and payment (2017/2018) are not in dispute. The surviving grievance is the client's unpaid co-sharer share — a continuing claim, not merely a delay explanation."
+      },
+      {
+        "type": "application",
+        "title": "Application to Bring the Co-Sharer Brother on Record",
+        "status": "draft",
+        "blockedReason": null,
+        "body": "SYNTHETIC / DEMO — gate-shaped worked example; NOT filing-ready. [PENDING] holes are deliberate.\n\nAPPLICATION FOR IMPLEADMENT — TO BRING THE CO-SHARER BROTHER ON RECORD\nIn the High Court of Judicature for Rajasthan at Jaipur Bench. Writ for compensation — Constitution of India, Art. 226 (VERIFIED). Acquisition 2016; award 2017; possession 2017; payment 2018.\n\nCause title (to be completed): Petitioner [client], co-sharer; Respondent [State]; proposed Respondent [elder brother].\n\nFacts: the compensation for the acquired holding was paid in 2018 to the petitioner's elder brother (payment voucher, CONFIRMED). The petitioner is a co-sharer and says his share was never paid. The brother received the money and his share and the petitioner's are said to be entangled.\n\nGrounds (skeleton):\n  1. The brother received the compensation and is a proper party to any apportionment. (Core: Art. 226, VERIFIED.)\n  2. Co-sharer's right to a share of compensation — the apportionment route to be identified. [PENDING — which Act governs a 2016 notification, and authority on apportionment between co-sharers, are not settled in the file.]\n  3. Scope of the 2018 voucher — whole holding or one share only? [PENDING — UNKNOWN.]\n\nPrayer: permit impleadment of the co-sharer brother so that his and the petitioner's shares may be determined on the record, and direct production of the payment voucher and the mutation extract.\n\nCaveat: the reply is held pending a corrected knowledge-date affidavit and identification of the governing Act; this application is filed without prejudice and on record facts only."
+      },
+      {
+        "type": "affidavit",
+        "title": "Corrected Client Affidavit on Knowledge Date",
+        "status": "blocked",
+        "blockedReason": "Mutation extract may contradict the 2023 knowledge claim; correction depends on reading it."
+      }
+    ],
+    "checklist": [
+      "Read the mutation extract against the 2023 knowledge claim before swearing anything",
+      "Payment voucher and the brother's receipt — was it for the whole holding or his share only",
+      "Whether the 1894 Act or the 2013 Act governs a 2016 notification",
+      "Whether any reference was filed and its outcome",
+      "Whether the brother is already on record in any proceeding",
+      "Certified copies of award, possession memo and voucher",
+      "Client's share per the mutation, with the basis"
+    ],
+    "terminalOutcome": {
+      "kind": "hold",
+      "label": "Hold the reply until the knowledge-date conflict is resolved and the governing Act is identified",
+      "rationale": "The reply is being asked for by a bench that is strict on land matters, and the client's own affidavit is the weak point. Filing a defensive reply that repeats an over-claimed date, or pleads under the wrong Act, converts a survivable case into a dismissible one.",
+      "nextAction": "Read the mutation, fix the knowledge date in a corrected affidavit, confirm the governing Act, then file the reply with the reconciliation table and the impleadment application."
+    },
+    "teachingNotes": [
+      "On a show-cause for delay, the beginner instinct is to explain the delay. The advanced instinct is to find the part of the case the delay cannot touch — here, the unpaid share.",
+      "The client's affidavit is often the worst document in the file. When the record contradicts it, correct it in the reply; do not defend it and hope.",
+      "An alternative remedy of reference is a real objection. Ignoring it looks evasive; addressing it as a discretion factor is the answer.",
+      "The engine blocks the reply on a point of Act-identity. Which Act governs a 2016 notification is not a technicality — it decides the whole apportionment route."
+    ],
+    "commonMistakes": [
+      "Replying that the client 'came to know in 2023' without checking the mutation.",
+      "Pleading apportionment under the 1894 Act for a 2016 notification without checking.",
+      "Ignoring the reference objection and being told the writ is not maintainable.",
+      "Leaving the brother out while claiming his receipt was not for the client's share."
+    ],
+    "seniorVariants": [
+      "Concede the dates openly and reframe: possession and payment are not in dispute, but the client's undivided share was never paid and that is a continuing grievance.",
+      "File a corrected affidavit rather than a supplemental one, so there are not two versions on record.",
+      "Implead the brother and plead the voucher's scope precisely.",
+      "Address the reference objection head-on: identify the governing Act, and if a reference lies, say why the writ is still the shorter remedy for an admitted non-payment."
+    ]
+  },
+  "accuracy": {
+    "adverseFact": "The mutation extract may show the client was mutated in 2018 alongside the brother. If so, 'came to know in 2023' is false on the record and the delay becomes much harder.",
+    "unresolvedFacts": [
+      "Whether the mutation names the client — UNCONFIRMED",
+      "Whether the voucher covered the whole holding or one share — UNKNOWN",
+      "Which Act governs a 2016 notification — UNRESOLVED",
+      "Whether a reference was filed — UNKNOWN"
+    ],
+    "jurisdictionNote": "Writ before the Rajasthan High Court, Jaipur bench (Jaipur division). The land is in the Jaipur division; confirm the district from the award."
+  }
+}
